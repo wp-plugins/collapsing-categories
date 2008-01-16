@@ -63,7 +63,7 @@ class collapsCat {
 
 	function get_head() {
 		$url = get_settings('siteurl');
-		echo "<script type=\"text/javascript\" src=\"$url/wp-content/plugins/collapsCat/collapsCat.js\"></script>\n";
+		echo "<script type=\"text/javascript\" src=\"$url/wp-content/plugins/collapsing-categories/collapsCat.js\"></script>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
 		echo "// These variables are part of the Collapsing Categories Plugin\n// Copyright 2007 Robert Felty (robfelty.com)\n";
