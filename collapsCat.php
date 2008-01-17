@@ -32,18 +32,18 @@ This file is part of Collapsing Categories
 */ 
 
 add_action( 'wp_head', array('collapsCat','get_head'));
-add_action('activate_fancy-categories/fancy-categories.php', array('collapsCat','fancy_init'));
-add_action('admin_menu', array('collapsCat','fancy_setup'));
+add_action('activate_collapsing-categories/collapsCat.php', array('collapsCat','init'));
+add_action('admin_menu', array('collapsCat','setup'));
 
 class collapsCat {
 
-	function fancy_init() {
+	function init() {
 		if( function_exists('add_option') ) {
 			add_option( 'collapsCatShowPostCount', 'yes' );
 		}
 	}
 
-	function fancy_setup() {
+	function setup() {
 		if( function_exists('add_options_page') ) {
 			add_options_page(__('Collapsing Categories'),__('Collapsing Categories'),1,basename(__FILE__),array('collapsCat','ui'));
 		}
