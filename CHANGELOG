@@ -1,4 +1,14 @@
 Fancy Categories Changelog
+
+* 0.2.1: 
+    * Added collapsing class to <li>s with triangles for CSS styling
+    * Added style information to make triangles bigger and give a pointer
+      cursor over them
+    * Added title tags to triangles to indicate functionality
+		* Checking whether some of the same functionality from collapsing-archives
+		  has already been loaded (for example the javascript file) in order to
+		  avoid redundancy
+
 * 0.2: 
     * Changed name from Fancy Archives to Collapsing Archives
     * Changed author from Andrew Rader to Robert Felty

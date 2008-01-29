@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 0.2
+Version: 0.2.1
 Author URI: http://robfelty.com
 
 Copyright 2007 Robert Felty
@@ -63,12 +63,8 @@ class collapsCat {
 
 	function get_head() {
 		$url = get_settings('siteurl');
-		echo "<script type=\"text/javascript\" src=\"$url/wp-content/plugins/collapsing-categories/collapsCat.js\"></script>\n";
-		echo "<script type=\"text/javascript\">\n";
-		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin\n// Copyright 2007 Robert Felty (robfelty.com)\n";
-		echo "// ]]>\n</script>\n";
     if (!function_exists('collapsArch')) {
+			echo "<script type=\"text/javascript\" src=\"$url/wp-content/plugins/collapsing-categories/collapsCat.js\"></script>\n";
 			echo "
 				 <style type='text/css'>
 	/* a bit more style for the collapsing class used in the fancy categories and fancy archives */
@@ -83,6 +79,10 @@ class collapsCat {
 				 </style>
 					 ";
     }
+		echo "<script type=\"text/javascript\">\n";
+		echo "// <![CDATA[\n";
+		echo "// These variables are part of the Collapsing Categories Plugin\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+		echo "// ]]>\n</script>\n";
 	}
 }
 

@@ -4,7 +4,7 @@ Donate link: http://blog.robfelty.com/wordpress-plugins
 Tags: categories
 Requires at least: 2.0
 Tested up to: 2.3
-Stable tag: 0.2
+Stable tag: 0.2.1
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -62,7 +62,8 @@ None yet.
 
 == Screenshots ==
 
-None yet.
+1. available options 
+2. a few expanded categories with default theme
 
 == Demo ==
 

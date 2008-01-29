@@ -1,7 +1,7 @@
 <?php
 /*
 
-Collapsing Categories 0.2
+Collapsing Categories 0.2.1
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader

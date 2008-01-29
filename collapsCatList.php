@@ -1,7 +1,7 @@
 <?php
 /*
 
-Collapsing Categories 0.2
+Collapsing Categories 0.2.1
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -75,10 +75,10 @@ function print_category( $cat, $categories, $taxonomy, $nested = false ) {
 
     $url = get_settings('siteurl');
     if( empty( $posts ) && empty($categories)) {
-        print( "<span class='collapsing show' title='click to expand' onclick='hideNestedList(event); return false'>&#9660;&nbsp;</span>" );
+        print( "<span class='collapsing hide' title='click to collapse' onclick='hideNestedList(event); return false'>&#9660;&nbsp;</span>" );
     }
     else {
-        print( "<span class='collapsing hide' title='click to collapse' onclick='hideNestedList(event); return false'>&#9658;&nbsp;</span>" );
+        print( "<span class='collapsing show' title='click to expand' onclick='hideNestedList(event); return false'>&#9658;&nbsp;</span>" );
     }
 
     print( $link );
