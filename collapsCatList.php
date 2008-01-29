@@ -62,7 +62,7 @@ function print_category( $cat, $categories, $taxonomy, $nested = false ) {
       $link .= ' ('.intval($cat->category_count).')';
     }
   }
-  print( "<li>\n" );
+  print( "<li class='collapsing'>\n" );
 
 // this statement works from the command line. It returns all the post titles for a given category. 
 //echo "taxonomy = $taxonomy\n";
@@ -89,7 +89,7 @@ function print_category( $cat, $categories, $taxonomy, $nested = false ) {
         foreach ($posts as $post ) {
           $date=preg_replace("/-/", '/', $post->date);
           $name=$post->post_name;
-          echo "<li><a href='$url/$date/$name'>" .  $post->post_title . "</a></li>\n";
+          echo "<li class='collapsing'><a href='$url/$date/$name'>" .  $post->post_title . "</a></li>\n";
         }
         print( "\n</ul>\n" );
         //echo "-->\n";

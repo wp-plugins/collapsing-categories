@@ -68,16 +68,21 @@ class collapsCat {
 		echo "// <![CDATA[\n";
 		echo "// These variables are part of the Collapsing Categories Plugin\n// Copyright 2007 Robert Felty (robfelty.com)\n";
 		echo "// ]]>\n</script>\n";
-    echo "
-       <style type='text/css'>
-         #sidebar ul ul li:before {content:'';}        
-         span.collapsing {border:0;
-           font-size:1em; 
-           padding:0; 
-           margin:0; 
-           cursor:default}
-       </style>
-         ";
+    if (!function_exists('collapsArch') {
+			echo "
+				 <style type='text/css'>
+	/* a bit more style for the collapsing class used in the fancy categories and fancy archives */
+					 /*#sidebar ul ul li:before {content:'';}        */
+					 span.collapsing {border:0;
+						 padding:0; 
+						 margin:0; 
+						 cursor:pointer;
+						font-size:1.3em;
+					 }
+					 li.collapsing: before {content:'';} 
+				 </style>
+					 ";
+    }
 	}
 }
 
