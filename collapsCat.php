@@ -79,7 +79,7 @@ class collapsCat {
 						 cursor:pointer;
 						font-size:1.3em;
 					 }
-					 li.collapsing: before {content:'';} 
+           #sidebar li.collapsing:before {content:'';} 
 				 </style>
 					 ";
     }

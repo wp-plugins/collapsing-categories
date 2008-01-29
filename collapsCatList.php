@@ -89,7 +89,7 @@ function print_category( $cat, $categories, $taxonomy, $nested = false ) {
         foreach ($posts as $post ) {
           $date=preg_replace("/-/", '/', $post->date);
           $name=$post->post_name;
-          echo "<li class='collapsing'><a href='$url/$date/$name'>" .  $post->post_title . "</a></li>\n";
+          echo "<li><a href='$url/$date/$name'>" .  $post->post_title . "</a></li>\n";
         }
         print( "\n</ul>\n" );
         //echo "-->\n";
