@@ -68,7 +68,7 @@ class collapsCat {
 		echo "// <![CDATA[\n";
 		echo "// These variables are part of the Collapsing Categories Plugin\n// Copyright 2007 Robert Felty (robfelty.com)\n";
 		echo "// ]]>\n</script>\n";
-    if (!function_exists('collapsArch') {
+    if (!function_exists('collapsArch')) {
 			echo "
 				 <style type='text/css'>
 	/* a bit more style for the collapsing class used in the fancy categories and fancy archives */
