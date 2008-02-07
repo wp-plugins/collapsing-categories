@@ -1,5 +1,8 @@
 Fancy Categories Changelog
 
+* 0.2.2: 
+    * Added option to show pages in list or not
+
 * 0.2.1: 
     * Added collapsing class to <li>s with triangles for CSS styling
     * Added style information to make triangles bigger and give a pointer
