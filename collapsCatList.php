@@ -66,8 +66,12 @@ function print_category( $cat, $categories, $taxonomy, $nested = false ) {
 
 // this statement works from the command line. It returns all the post titles for a given category. 
 //echo "taxonomy = $taxonomy\n";
+  $isPage='';
+  if (get_option('collapsCatIncludePages'=='no')) {
+    $isPage="AND $wpdb->posts.post_type='post'";
+  }
   if ($taxonomy==1) {
-    $postquery = "SELECT $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.ID = $wpdb->term_relationships.object_id AND $wpdb->term_taxonomy.term_taxonomy_id=$cat->term_id AND $wpdb->posts.post_status='publish' AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id";
+    $postquery = "SELECT $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.ID = $wpdb->term_relationships.object_id AND $wpdb->term_taxonomy.term_taxonomy_id=$cat->term_id AND $wpdb->posts.post_status='publish' AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id $isPage";
   } else {
     $postquery = "SELECT $wpdb->posts.post_title, $wpdb->posts.post_name, DATE($wpdb->posts.post_date) AS 'date' FROM $wpdb->posts, $wpdb->post2cat, $wpdb->categories where $wpdb->post2cat.category_id = $cat->cat_ID and $wpdb->posts.ID = $wpdb->post2cat.post_id and $wpdb->categories.cat_ID = $wpdb->post2cat.category_id and $wpdb->posts.post_status = 'publish' and $wpdb->categories.category_count>0";
   }

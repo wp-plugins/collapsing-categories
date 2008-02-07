@@ -40,6 +40,7 @@ class collapsCat {
 	function init() {
 		if( function_exists('add_option') ) {
 			add_option( 'collapsCatShowPostCount', 'yes' );
+			add_option( 'collapsCatShowPages', 'no' );
 		}
 	}
 

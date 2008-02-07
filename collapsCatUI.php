@@ -35,6 +35,12 @@ check_admin_referer();
         else {
 					update_option( 'collapsCatShowPostCount', 'no' );
         }
+        if( isset($_POST['showPages']) ) {
+					update_option( 'collapsCatShowPages', 'yes' );
+        }
+        else {
+					update_option( 'collapsCatShowPages', 'no' );
+        }
     }
 ?>
 <div class=wrap>
@@ -45,6 +51,9 @@ check_admin_referer();
    <ul style="list-style-type: none;">
     <li>
      <input type="checkbox" name="showPostCount" <?php if(get_option('collapsCatShowPostCount')=='yes') echo 'checked'; ?> id="showPostCount"></input> <label for="showPostCount">Show Post Count in Category Links</label>
+    </li>
+    <li>
+     <input type="checkbox" name="showPages" <?php if(get_option('collapsCatShowPages')=='yes') echo 'checked'; ?> id="showPages"></input> <label for="showPages">Show Pages as well as posts</label>
     </li>
    </ul>
   </fieldset>
