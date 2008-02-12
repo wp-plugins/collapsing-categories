@@ -113,10 +113,66 @@ if ($taxonomy==true) {
 } else {
   $query = "SELECT cat_ID, cat_name, category_nicename, category_description, category_parent, category_count FROM $wpdb->categories WHERE cat_ID > 0 AND category_parent = 0 AND category_count > 0";
 }
+  /* changing to use only one query 
+   * don't forget to exclude pages if so desired
+   */
+  if ($taxonomy==1) {
+    $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' AND $wpdb->posts.post_status='publish' ORDER BY $wpdb-terms.term_id";
+ // might need some these in the WHERE clause
+//$wpdb->posts.ID = $wpdb->term_relationships.object_idAND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id 
+  } else {
+    $postquery = "SELECT $wpdb->posts.post_title, $wpdb->posts.post_name, DATE($wpdb->posts.post_date) AS 'date' FROM $wpdb->posts, $wpdb->post2cat, $wpdb->categories where $wpdb->post2cat.category_id = $cat->cat_ID and $wpdb->posts.ID = $wpdb->post2cat.post_id and $wpdb->categories.cat_ID = $wpdb->post2cat.category_id and $wpdb->posts.post_status = 'publish' and $wpdb->categories.category_count>0";
+  }
   $categories = $wpdb->get_results($query);
-
+  $lastCat=-1;
   foreach( $categories as $cat ) {
-      print_category( $cat, $categories,$taxonomy );
+    if ($cat->terms.term_id!=$lastCat) {
+      // close <ul> and <li> before starting a new category
+      if ($lastCat!=-1) {
+        echo "</ul>  </li> <!-- ending category -->\n";
+      }
+			$url = get_settings('siteurl');
+      $lastCat= $cat->terms.term_id;
+      // print out category name 
+			if ($taxonomy==true) {
+				$link = '<a href="'.$cat->slug.'" ';
+			} else {
+				$link = '<a href="'.get_category_link($cat->cat_ID).'" ';
+			}
+			if ( empty($cat->category_description) ) {
+			  $link .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat->name)) . '"';
+			} else {
+				$link .= 'title="' . wp_specialchars(apply_filters('category_description',$cat->category_description,$cat)) . '"';
+			}
+			$link .= '>';
+			if ($taxonomy==true) {
+				$link .= apply_filters('list_cats', $cat->name, $cat).'</a>';
+			} else {
+				$link .= apply_filters('list_cats', $cat->cat_name, $cat).'</a>';
+			}
+
+			if( get_option('collapsCatShowPostCount')=='yes') {
+				if ($taxonomy==true) {
+					$link .= ' ('.intval($cat->count).')';
+				} else {
+					$link .= ' ('.intval($cat->category_count).')';
+				}
+      }
+      // TODO not sure why we are checking for this at all TODO
+			if( empty( $posts ) && empty($categories)) {
+				print( "<span class='collapsing show' onclick='hideNestedList(event); return false'>&#9660;&nbsp;</span>" );
+			} else {
+				print( "<span class='collapsing show' onclick='hideNestedList(event); return false'>&#9658;&nbsp;</span>" );
+			}
+			print( $link );
+			print( "\n<ul style=\"display:none;\">\n" );
+    } 
+    // Now print out the post info
+		if( ! empty($posts) ) {
+			$date=preg_replace("/-/", '/', $cat->date);
+			$name=$cat->post_name;
+			echo "<li><a href='$url/$date/$name'>" .  $cat->post_title . "</a></li>\n";
+		}
   }
 ?>
 </ul>
