@@ -3,7 +3,7 @@
 Plugin Name: Collapsing categories widget
 Plugin URI: http://robfelty.com
 Description: Use the Collapsing Categories plugin as a widget
-Version: 0.2.2
+Version: 0.3
 Author: Robert Felty
 Author URI: http://robfelty.com
 */

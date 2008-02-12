@@ -1,4 +1,7 @@
 Fancy Categories Changelog
+* 0.3
+    * Now uses only 2 database queries instead of 1 + 2*(count(categories))
+    * Now supports infinite levels of subcategories
 
 * 0.2.2: 
     * Added option to show pages in list or not
