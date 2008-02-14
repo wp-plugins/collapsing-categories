@@ -1,4 +1,9 @@
 Fancy Categories Changelog
+* 0.3.1
+    * Added option to make post links to index.php, root, or archive.php, like
+      collapsing-archives
+    * Fixed link to category listings
+
 * 0.3
     * Now uses only 2 database queries instead of 1 + 2*(count(categories))
     * Now supports infinite levels of subcategories

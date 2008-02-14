@@ -1,7 +1,7 @@
 <?php
 /*
 
-Collapsing Categories version: 0.3
+Collapsing Categories version: 0.3.1
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -30,77 +30,21 @@ This file is part of Collapsing Categories
 
 /* the category and tagging database structures changed drastically between wordpress 2.1 and 2.3. We will use different queries for category based vs. term_taxonomy based database structures */
 //$taxonomy=false;
+if (get_option('collapsCatLinkToArchives')=='archives') {
+  $archives='archives.php/';
+} elseif (get_option('collapsCatLinkToArchives')=='index') {
+  $archives='index.php/';
+} elseif (get_option('collapsCatLinkToArchives')=='root') {
+  $archives='';
+}
 $taxonomy=true;
 $tables = $wpdb->query("show tables like 'wp_term_relationships'"); 
 if ($tables==0) {
   $taxonomy=false;
 }
-function print_category( $cat, $categories, $taxonomy, $nested = false ) {
-  global $wpdb;
-  if ($taxonomy==true) {
-    $link = '<a href="'.$cat->slug.'" ';
-  } else {
-    $link = '<a href="'.get_category_link($cat->cat_ID).'" ';
-  }
-  if ( empty($cat->category_description) ) {
-      $link .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat->name)) . '"';
-  }
-  else {
-      $link .= 'title="' . wp_specialchars(apply_filters('category_description',$cat->category_description,$cat)) . '"';
-  }
-  $link .= '>';
-  if ($taxonomy==true) {
-    $link .= apply_filters('list_cats', $cat->name, $cat).'</a>';
-  } else {
-    $link .= apply_filters('list_cats', $cat->cat_name, $cat).'</a>';
-  }
-
-  if( get_option('collapsCatShowPostCount')=='yes') {
-    if ($taxonomy==true) {
-      $link .= ' ('.intval($cat->count).')';
-    } else {
-      $link .= ' ('.intval($cat->category_count).')';
-    }
-  }
-  print( "<li class='collapsing'>\n" );
-
-// this statement works from the command line. It returns all the post titles for a given category. 
-//echo "taxonomy = $taxonomy\n";
-  $isPage='';
-  if (get_option('collapsCatIncludePages'=='no')) {
-    $isPage="AND $wpdb->posts.post_type='post'";
-  }
-  if ($taxonomy==1) {
-    //$postquery = "SELECT $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.ID = $wpdb->term_relationships.object_id AND $wpdb->term_taxonomy.term_taxonomy_id=$cat->term_id AND $wpdb->posts.post_status='publish' AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id $isPage";
-  } else {
-    //$postquery = "SELECT $wpdb->posts.post_title, $wpdb->posts.post_name, DATE($wpdb->posts.post_date) AS 'date' FROM $wpdb->posts, $wpdb->post2cat, $wpdb->categories where $wpdb->post2cat.category_id = $cat->cat_ID and $wpdb->posts.ID = $wpdb->post2cat.post_id and $wpdb->categories.cat_ID = $wpdb->post2cat.category_id and $wpdb->posts.post_status = 'publish' and $wpdb->categories.category_count>0";
-  }
-  //$posts= $wpdb->get_results($postquery); 
-
-    $url = get_settings('siteurl');
-    if( empty( $posts ) && empty($categories)) {
-        print( "<span class='collapsing hide' title='click to collapse' onclick='hideNestedList(event); return false'>&#9660;&nbsp;</span>" );
-    }
-    else {
-        print( "<span class='collapsing show' title='click to expand' onclick='hideNestedList(event); return false'>&#9658;&nbsp;</span>" );
-    }
-
-    print( $link );
-
-    if( ! empty($posts) ) {
-        //echo "<!--\n";
-        print( "\n<ul style=\"display:none;\">\n" );
-        foreach ($posts as $post ) {
-          $date=preg_replace("/-/", '/', $post->date);
-          $name=$post->post_name;
-          echo "<li><a href='$url/$date/$name'>" .  $post->post_title . "</a></li>\n";
-        }
-        print( "\n</ul>\n" );
-        //echo "-->\n";
-    }
-
-
-    print( "\n</li>\n" );
+$isPage='';
+if (get_option('collapsCatIncludePages'=='no')) {
+  $isPage="AND $wpdb->posts.post_type='post'";
 }
 ?>
 
@@ -109,26 +53,18 @@ function print_category( $cat, $categories, $taxonomy, $nested = false ) {
     global $wpdb;
 
 if ($taxonomy==true) {
-  $query = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category'";
+    $catquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category'";
+    $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.ID = $wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish' AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id $isPage";
 } else {
-  $query = "SELECT cat_ID, cat_name, category_nicename, category_description, category_parent, category_count FROM $wpdb->categories WHERE cat_ID > 0 AND category_parent = 0 AND category_count > 0";
+  $catquery = "SELECT cat_ID, cat_name, category_nicename, category_description, category_parent, category_count FROM $wpdb->categories WHERE cat_ID > 0 AND category_parent = 0 AND category_count > 0";
+  $postquery = "SELECT $wpdb->posts.post_title, $wpdb->posts.post_name, DATE($wpdb->posts.post_date) AS 'date' FROM $wpdb->posts, $wpdb->post2cat, $wpdb->categories where $wpdb->post2cat.category_id = $cat->cat_ID and $wpdb->posts.ID = $wpdb->post2cat.post_id and $wpdb->categories.cat_ID = $wpdb->post2cat.category_id and $wpdb->posts.post_status = 'publish' and $wpdb->categories.category_count>0 $isPage";
 }
   /* changing to use only one query 
    * don't forget to exclude pages if so desired
    */
-  if ($taxonomy==1) {
-    $catquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category'";
-    $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.ID = $wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish' AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id $isPage";
-    //$postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' AND $wpdb->posts.post_status='publish' ORDER BY $wpdb-terms.term_id";
- // might need some these in the WHERE clause
-//$wpdb->posts.ID = $wpdb->term_relationships.object_idAND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id 
-  } else {
-    $postquery = "SELECT $wpdb->posts.post_title, $wpdb->posts.post_name, DATE($wpdb->posts.post_date) AS 'date' FROM $wpdb->posts, $wpdb->post2cat, $wpdb->categories where $wpdb->post2cat.category_id = $cat->cat_ID and $wpdb->posts.ID = $wpdb->post2cat.post_id and $wpdb->categories.cat_ID = $wpdb->post2cat.category_id and $wpdb->posts.post_status = 'publish' and $wpdb->categories.category_count>0";
-  }
-  $categories = $wpdb->get_results($catquery);
-  $posts= $wpdb->get_results($postquery); 
-  //$parents=conv_obj($categories);
-  $parents=array();
+$categories = $wpdb->get_results($catquery);
+$posts= $wpdb->get_results($postquery); 
+$parents=array();
   foreach ($categories as $cat) {
     if ($cat->parent!=0) {
       array_push($parents, $cat->parent);
@@ -145,12 +81,13 @@ if ($taxonomy==true) {
   foreach( $categories as $cat ) {
     if ($cat->parent==0) {
 			$url = get_settings('siteurl');
+      $home=$url;
       $lastCat= $cat->term_id;
       // print out category name 
 			if ($taxonomy==true) {
-				$link = '<a href="'.$cat->slug.'" ';
+				$link = "<a href='$url/category/".$cat->slug."' ";
 			} else {
-				$link = '<a href="'.get_category_link($cat->cat_ID).'" ';
+				$link = "<a href='$url/category/".get_category_link($cat->cat_ID)."' ";
 			}
 			if ( empty($cat->category_description) ) {
 			  $link .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat->name)) . '"';
@@ -188,38 +125,15 @@ if ($taxonomy==true) {
           if ($post->term_id == $cat->term_id) {
             $date=preg_replace("/-/", '/', $post->date);
             $name=$post->post_name;
-            echo "<li><a href='$url/$date/$name'>" .  $post->post_title . "</a></li>\n";
+            echo "<li><a href='$url/$archives$date/$name'>" .  $post->post_title . "</a></li>\n";
           }
         }
         // close <ul> and <li> before starting a new category
           echo "</ul>  </li> <!-- ending category -->\n";
-        //}
       } 
 		}
   }
-function conv_obj($Data){
-     if(is_object($Data)){
-         foreach(get_object_vars($Data) as $key=>$val){
-             if(is_object($val)){
-                 $ret[$key]=conv_obj($val);
-             }else{
-                 $ret[$key]=$val;
-             }
-         }
-         return $ret;
-     }elseif(is_array($Data)){
-         foreach($Data as $key=>$val){
-             if(is_object($val)){
-                 $ret[$key]=conv_obj($val);
-             }else{
-                 $ret[$key]=$val;
-             }
-         }
-         return $ret;
-     }else{
-         return $Data;
-     }
- }
+
 function getSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) {
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
@@ -227,9 +141,9 @@ function getSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) 
         // print out category name 
         $subCatLinks.=( "<li><span class='collapsing show' onclick='hideNestedList(event); return false'>&#9658;&nbsp;</span>" );
         if ($taxonomy==true) {
-          $link2 = '<a href="'.$cat2->slug.'" ';
+          $link2 = "<a href=$url/'".$cat2->slug."' ";
         } else {
-          $link2 = '<a href="'.get_category_link($cat2->cat_ID).'" ';
+          $link2 = "<a href=$url/'".get_category_link($cat2->cat_ID)."' ";
         }
         if ( empty($cat2->category_description) ) {
           $link2 .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat2->name)) . '"';
@@ -259,7 +173,7 @@ function getSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) 
             if ($post2->term_id == $cat2->term_id) {
               $date=preg_replace("/-/", '/', $post2->date);
               $name=$post2->post_name;
-              $subCatLinks.= "<li><a href='$url/$date/$name'>" .  $post2->post_title . "</a></li>\n";
+              $subCatLinks.= "<li><a href='$url/$archives$date/$name'>" .  $post2->post_title . "</a></li>\n";
             }
           }
         } else {

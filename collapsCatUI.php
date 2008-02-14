@@ -1,7 +1,7 @@
 <?php
 /*
 
-Collapsing Categories version: 0.3
+Collapsing Categories version: 0.3.1
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -28,20 +28,27 @@ This file is part of Collapsing Categories
 
 check_admin_referer();
 
-    if( isset($_POST['infoUpdate']) ) {
-        if( isset($_POST['showPostCount']) ) {
-					update_option( 'collapsCatShowPostCount', 'yes' );
-        }
-        else {
-					update_option( 'collapsCatShowPostCount', 'no' );
-        }
-        if( isset($_POST['showPages']) ) {
-					update_option( 'collapsCatShowPages', 'yes' );
-        }
-        else {
-					update_option( 'collapsCatShowPages', 'no' );
-        }
-    }
+if( isset($_POST['infoUpdate']) ) {
+  if( isset($_POST['showPostCount']) ) {
+    update_option( 'collapsCatShowPostCount', 'yes' );
+  }
+  else {
+    update_option( 'collapsCatShowPostCount', 'no' );
+  }
+  if( isset($_POST['showPages']) ) {
+    update_option( 'collapsCatShowPages', 'yes' );
+  }
+  else {
+    update_option( 'collapsCatShowPages', 'no' );
+  }
+  if($_POST['archives'] == 'root') {
+    update_option( 'collapsCatLinkToArchives', 'root' );
+  } elseif ($_POST['archives'] == 'archives') {
+    update_option( 'collapsCatLinkToArchives', 'archives' );
+  } elseif ($_POST['archives'] == 'index') {
+    update_option( 'collapsCatLinkToArchives', 'index' );
+  }
+}
 ?>
 <div class=wrap>
  <form method="post">
@@ -54,6 +61,11 @@ check_admin_referer();
     </li>
     <li>
      <input type="checkbox" name="showPages" <?php if(get_option('collapsCatShowPages')=='yes') echo 'checked'; ?> id="showPages"></input> <label for="showPages">Show Pages as well as posts</label>
+    </li>
+    <li>
+     <input type="radio" name="archives" <?php if(get_option('collapsCatLinkToArchives')=='root') echo 'checked'; ?> id="archivesRoot" value='root'></input> <label for="archivesRoot">Links based on site root (default)</label>
+     <input type="radio" name="archives" <?php if(get_option('collapsCatLinkToArchives')=='index') echo 'checked'; ?> id="archivesIndex" value='index'></input> <label for="archivesIndex">Links based on index.php </label>
+     <input type="radio" name="archives" <?php if(get_option('collapsCatLinkToArchives')=='archives') echo 'checked'; ?> id="archivesArchives" value='archives'></input> <label for="archivesArchives">Links based on archives.php</label>
     </li>
    </ul>
   </fieldset>
