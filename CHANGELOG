@@ -1,4 +1,9 @@
 Fancy Categories Changelog
+* 0.3.2
+    * posts now have the class "collapsCatPost" and can be styled with CSS.
+      Some styling has been added in collapsCat.php
+    * removed list icons in front of triangles
+
 * 0.3.1
     * Added option to make post links to index.php, root, or archive.php, like
       collapsing-archives
