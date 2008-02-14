@@ -65,10 +65,11 @@ class collapsCat {
 
 	function get_head() {
 		$url = get_settings('siteurl');
+    echo "
+       <style type='text/css'>\n";
     if (!function_exists('collapsArch')) {
 			echo "<script type=\"text/javascript\" src=\"$url/wp-content/plugins/collapsing-categories/collapsCat.js\"></script>\n";
-			echo "
-				 <style type='text/css'>
+    echo "
 	/* a bit more style for the collapsing class used in the fancy categories and fancy archives */
 					 /*#sidebar ul ul li:before {content:'';}        */
 					 span.collapsing {border:0;
@@ -79,9 +80,13 @@ class collapsCat {
 					 }
            #sidebar li.collapsing:before {content:'';} 
           #sidebar li.collapsing {list-style-type:none}
-				 </style>
 					 ";
     }
+    echo "
+          #sidebar li.collapsCatPost {padding:0 0 0 .1em;
+                         margin:0 0 0 1em;}
+				 </style>
+         ";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
 		echo "// These variables are part of the Collapsing Categories Plugin version: 0.3.1\n// Copyright 2007 Robert Felty (robfelty.com)\n";
