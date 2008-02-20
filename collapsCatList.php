@@ -1,7 +1,7 @@
 <?php
 /*
 
-Collapsing Categories version: 0.3.2
+Collapsing Categories version: 0.3.3
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -141,7 +141,7 @@ function getSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) 
         // print out category name 
         $subCatLinks.=( "<li class='collapsing'><span class='collapsing show' onclick='hideNestedList(event); return false'>&#9658;&nbsp;</span>" );
         if ($taxonomy==true) {
-          $link2 = "<a href=$url/'".$cat2->slug."' ";
+          $link2 = "<a href='$url/category/".$cat2->slug."' ";
         } else {
           $link2 = "<a href=$url/'".get_category_link($cat2->cat_ID)."' ";
         }

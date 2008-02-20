@@ -1,4 +1,8 @@
 Fancy Categories Changelog
+* 0.3.3
+    * fixed bug in headers when collapsArch is not loaded
+    * fixed a few minor markup issues to make it valid xhtml
+
 * 0.3.2
     * posts now have the class "collapsCatPost" and can be styled with CSS.
       Some styling has been added in collapsCat.php
