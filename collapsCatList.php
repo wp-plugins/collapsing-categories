@@ -1,7 +1,7 @@
 <?php
 /*
 
-Collapsing Categories version: 0.3.3
+Collapsing Categories version: 0.3.4
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -46,6 +46,16 @@ $isPage='';
 if (get_option('collapsCatIncludePages'=='no')) {
   $isPage="AND $wpdb->posts.post_type='post'";
 }
+if (get_option('collapsCatSort')!='') {
+  if (get_option('collapsCatSort')=='catName') {
+    $sortColumn="ORDER BY $wpdb->terms.name";
+  } elseif (get_option('collapsCatSort')=='catId') {
+    $sortColumn="ORDER BY $wpdb->terms.term_id";
+  }
+  $sortOrder = get_option('collapsCatSortOrder');
+} 
+
+
 ?>
 
 <ul id="collapsCat" class="collapsCat">
@@ -53,7 +63,7 @@ if (get_option('collapsCatIncludePages'=='no')) {
     global $wpdb;
 
 if ($taxonomy==true) {
-    $catquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category'";
+    $catquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' $sortColumn $sortOrder";
     $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.ID = $wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish' AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id $isPage";
 } else {
   $catquery = "SELECT cat_ID, cat_name, category_nicename, category_description, category_parent, category_count FROM $wpdb->categories WHERE cat_ID > 0 AND category_parent = 0 AND category_count > 0";

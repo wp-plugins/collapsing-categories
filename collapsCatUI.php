@@ -1,7 +1,7 @@
 <?php
 /*
 
-Collapsing Categories version: 0.3.3
+Collapsing Categories version: 0.3.4
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -48,6 +48,19 @@ if( isset($_POST['infoUpdate']) ) {
   } elseif ($_POST['archives'] == 'index') {
     update_option( 'collapsCatLinkToArchives', 'index' );
   }
+  if($_POST['sortOrder'] == 'ASC') {
+    update_option( 'collapsCatSortOrder', 'ASC' );
+  } elseif ($_POST['sortOrder'] == 'DESC') {
+    update_option( 'collapsCatSortOrder', 'DESC' );
+  }
+  if($_POST['sort'] == 'catName') {
+    update_option( 'collapsCatSort', 'catName' );
+  } elseif ($_POST['sort'] == 'catId') {
+    update_option( 'collapsCatSort', 'catId' );
+  } elseif ($_POST['sort'] == '') {
+    update_option( 'collapsCatSort', '' );
+    update_option( 'collapsCatSortOrder', '' );
+  }
 }
 ?>
 <div class=wrap>
@@ -66,6 +79,14 @@ if( isset($_POST['infoUpdate']) ) {
      <input type="radio" name="archives" <?php if(get_option('collapsCatLinkToArchives')=='root') echo 'checked'; ?> id="archivesRoot" value='root'></input> <label for="archivesRoot">Links based on site root (default)</label>
      <input type="radio" name="archives" <?php if(get_option('collapsCatLinkToArchives')=='index') echo 'checked'; ?> id="archivesIndex" value='index'></input> <label for="archivesIndex">Links based on index.php </label>
      <input type="radio" name="archives" <?php if(get_option('collapsCatLinkToArchives')=='archives') echo 'checked'; ?> id="archivesArchives" value='archives'></input> <label for="archivesArchives">Links based on archives.php</label>
+    </li>
+    <li>
+     <input type="radio" name="sort" <?php if(get_option('collapsCatSort')=='catName') echo 'checked'; ?> id="sortCatName" value='catName'></input> <label for="sortCatName">Sort by category name</label>
+     <input type="radio" name="sort" <?php if(get_option('collapsCatSort')=='catId') echo 'checked'; ?> id="sortCatId" value='catId'></input> <label for="sortCatId">Sort by category id</label>
+    </li>
+    <li>
+     <input type="radio" name="sortOrder" <?php if(get_option('collapsCatSortOrder')=='ASC') echo 'checked'; ?> id="sortASC" value='ASC'></input> <label for="sortASC">Sort in ascending order</label>
+     <input type="radio" name="sortOrder" <?php if(get_option('collapsCatSortOrder')=='DESC') echo 'checked'; ?> id="sortDESC" value='DESC'></input> <label for="sortDESC">Sort in descending order</label>
     </li>
    </ul>
   </fieldset>

@@ -1,4 +1,8 @@
 Fancy Categories Changelog
+
+* 0.3.4
+    * Added option to sort categories by id or name
+
 * 0.3.3
     * fixed bug in headers when collapsArch is not loaded
     * fixed a few minor markup issues to make it valid xhtml
