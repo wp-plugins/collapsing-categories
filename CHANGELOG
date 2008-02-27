@@ -1,5 +1,9 @@
 Fancy Categories Changelog
 
+* 0.3.5
+    * Now links should work with all sorts of permalink structures. Thanks to
+      Krysthora http://krysthora.free.fr/ for finding this bug
+
 * 0.3.4
     * Added option to sort categories by id or name
 

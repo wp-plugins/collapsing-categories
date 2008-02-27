@@ -1,7 +1,7 @@
 <?php
 /*
 
-Collapsing Categories version: 0.3.4
+Collapsing Categories version: 0.3.5
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -95,9 +95,10 @@ $parents=array();
       $lastCat= $cat->term_id;
       // print out category name 
 			if ($taxonomy==true) {
-				$link = "<a href='$url/category/".$cat->slug."' ";
+				//$link = "<a href='$url/category/".$cat->slug."' ";
+				$link = "<a href='".get_category_link($cat->term_id)."' ";
 			} else {
-				$link = "<a href='$url/category/".get_category_link($cat->cat_ID)."' ";
+				$link = "<a href='".get_category_link($cat->cat_ID)."' ";
 			}
 			if ( empty($cat->category_description) ) {
 			  $link .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat->name)) . '"';
@@ -135,7 +136,8 @@ $parents=array();
           if ($post->term_id == $cat->term_id) {
             $date=preg_replace("/-/", '/', $post->date);
             $name=$post->post_name;
-            echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post->post_title . "</a></li>\n";
+            //echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post->post_title . "</a></li>\n";
+            echo "<li class='collapsCatPost'><a href='".get_permalink($post->id)."'>" .  $post->post_title . "</a></li>\n";
           }
         }
         // close <ul> and <li> before starting a new category
@@ -151,9 +153,11 @@ function getSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) 
         // print out category name 
         $subCatLinks.=( "<li class='collapsing'><span class='collapsing show' onclick='hideNestedList(event); return false'>&#9658;&nbsp;</span>" );
         if ($taxonomy==true) {
-          $link2 = "<a href='$url/category/".$cat2->slug."' ";
+          $link2 = "<a href='".get_category_link($cat2->term_id)."' ";
+          //$link2 = "<a href='$url/category/".$cat2->slug."' ";
         } else {
-          $link2 = "<a href=$url/'".get_category_link($cat2->cat_ID)."' ";
+          $link2 = "<a href='".get_category_link($cat2->cat_ID)."' ";
+          //$link2 = "<a href=$url/'".get_category_link($cat2->cat_ID)."' ";
         }
         if ( empty($cat2->category_description) ) {
           $link2 .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat2->name)) . '"';
@@ -183,7 +187,8 @@ function getSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) 
             if ($post2->term_id == $cat2->term_id) {
               $date=preg_replace("/-/", '/', $post2->date);
               $name=$post2->post_name;
-              $subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post2->post_title . "</a></li>\n";
+              $subCatLinks.= "<li class='collapsCatPost'><a href='".get_permalink($post2->id)."'>" .  $post2->post_title . "</a></li>\n";
+              //$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post2->post_title . "</a></li>\n";
             }
           }
         } else {
