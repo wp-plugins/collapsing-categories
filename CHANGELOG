@@ -1,5 +1,8 @@
 Fancy Categories Changelog
 
+* 0.3.7
+    * strips html tags from post titles now
+
 * 0.3.6
     * Fixed bug introduced in version 0.3.5 where all links in a category
       pointed to the same post

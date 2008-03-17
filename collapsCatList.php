@@ -1,7 +1,11 @@
 <?php
 /*
 
-Collapsing Categories version: 0.3.6
+<<<<<<< .mine
+Collapsing Categories version: 0.3.7
+=======
+Collapsing Categories version: 0.3.7
+>>>>>>> .r35195
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -136,8 +140,12 @@ $parents=array();
           if ($post->term_id == $cat->term_id) {
             $date=preg_replace("/-/", '/', $post->date);
             $name=$post->post_name;
+<<<<<<< .mine
+            echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post->post_title) . "</a></li>\n";
+=======
             //echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post->post_title . "</a></li>\n";
             echo "<li class='collapsCatPost'><a href='".get_permalink($post->id)."'>" .  $post->post_title . "</a></li>\n";
+>>>>>>> .r35195
           }
         }
         // close <ul> and <li> before starting a new category
@@ -187,8 +195,12 @@ function getSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) 
             if ($post2->term_id == $cat2->term_id) {
               $date=preg_replace("/-/", '/', $post2->date);
               $name=$post2->post_name;
+<<<<<<< .mine
+              $subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post2->post_title) . "</a></li>\n";
+=======
               $subCatLinks.= "<li class='collapsCatPost'><a href='".get_permalink($post2->id)."'>" .  $post2->post_title . "</a></li>\n";
               //$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post2->post_title . "</a></li>\n";
+>>>>>>> .r35195
             }
           }
         } else {
