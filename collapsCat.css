@@ -1,6 +1,27 @@
-/* a bit more style for the collapsCat class used in the fancy categories and fancy archives */
+/*
+collapsCat Categories version: 0.4
+Copyright 2007 Robert Felty
 
-/*#sidebar ul ul li:before {content:'';}        */
+This work is largely based on the Fancy Categories plugin by Andrew Rader
+(http://voidsplat.org), which was also distributed under the GPLv2. See the
+CHANGELOG file for more information.
+
+This file is part of collapsCat Categories
+
+		collapsCat Categories is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License as published by 
+    the Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+
+    collapsCat Categories is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with collapsCat Categories; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 span.collapsCat {border:0;
  padding:0; 
