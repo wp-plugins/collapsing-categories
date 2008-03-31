@@ -12,6 +12,6 @@ font-size:1.3em;
 #sidebar li.collapsCat:before {content:'';} 
 #sidebar li.collapsCat {list-style-type:none}
 #sidebar li.collapsCatPost {
-             text-indent:0em;
-             list-style-type:square;
+             text-indent:-1em;
              margin:0 0 0 1em;}
+#sidebar li.collapsCatPost:before {content:'» ';} 
