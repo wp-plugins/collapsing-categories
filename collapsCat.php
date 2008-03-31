@@ -6,6 +6,7 @@ Description: Uses javascript to expand and collapse categories to show the posts
 Author: Robert Felty
 Version: 0.4
 Author URI: http://robfelty.com
+Tags: sidebar, widget, categories
 
 Copyright 2007 Robert Felty
 
