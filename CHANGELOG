@@ -1,5 +1,11 @@
 Fancy Categories Changelog
 
+* 0.4
+    * Verified to work with wordpress 2.5
+    * Now has custom styling option through the collapsCat.css stylesheet
+    * updated screenshots
+    * moved javascript into collapsArch.php and got rid of separate file
+
 * 0.3.7
     * strips html tags from post titles now
 

@@ -2,9 +2,9 @@
 /*
 
 <<<<<<< .mine
-Collapsing Categories version: 0.3.7
+Collapsing Categories version: 0.4
 =======
-Collapsing Categories version: 0.3.7
+Collapsing Categories version: 0.4
 >>>>>>> .r35195
 Copyright 2007 Robert Felty
 
@@ -62,7 +62,7 @@ if (get_option('collapsCatSort')!='') {
 
 ?>
 
-<ul id="collapsCat" class="collapsCat">
+<ul id="collapsCatList">
 <?php
     global $wpdb;
 
@@ -118,9 +118,9 @@ $parents=array();
 
       // TODO not sure why we are checking for this at all TODO
 			if( empty( $posts ) && empty($categories)) {
-				print( "<li class='collapsing'><span class='collapsing hide' onclick='hideNestedList(event); return false'>&#9660;&nbsp;</span>" );
+				print( "<li class='collapsCat'><span class='collapsCat hide' onclick='expandCat(event); return false'>&#9660;&nbsp;</span>" );
 			} else {
-				print( "<li class='collapsing'><span class='collapsing show' onclick='hideNestedList(event); return false'>&#9658;&nbsp;</span>" );
+				print( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
 			}
       $subCatCount=0;
       list ($subCatLinks, $subCatCount)=getSubCat($cat, $categories, $parents, $posts,$taxonomy,$subCatCount);
@@ -155,7 +155,7 @@ function getSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) 
     foreach ($categories as $cat2) {
       if ($cat->term_id==$cat2->parent) {
         // print out category name 
-        $subCatLinks.=( "<li class='collapsing'><span class='collapsing show' onclick='hideNestedList(event); return false'>&#9658;&nbsp;</span>" );
+        $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
         if ($taxonomy==true) {
           $link2 = "<a href='".get_category_link($cat2->term_id)."' ";
           //$link2 = "<a href='$url/category/".$cat2->slug."' ";

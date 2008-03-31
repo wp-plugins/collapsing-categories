@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 0.3.7
+Version: 0.4
 Author URI: http://robfelty.com
 
 Copyright 2007 Robert Felty
@@ -67,32 +67,49 @@ class collapsCat {
 
 	function get_head() {
 		$url = get_settings('siteurl');
-    if (!function_exists('collapsArch')) {
-			echo "<script type=\"text/javascript\" src=\"$url/wp-content/plugins/collapsing-categories/collapsCat.js\"></script>\n";
-    echo "
-       <style type='text/css'>
-	/* a bit more style for the collapsing class used in the fancy categories and fancy archives */
-					 /*#sidebar ul ul li:before {content:'';}        */
-					 span.collapsing {border:0;
-						 padding:0; 
-						 margin:0; 
-						 cursor:pointer;
-						font-size:1.3em;
-					 }
-           #sidebar li.collapsing:before {content:'';} 
-          #sidebar li.collapsing {list-style-type:none}
-				 </style>
-					 ";
-    }
-    echo "
-       <style type='text/css'>
-          #sidebar li.collapsCatPost {padding:0 0 0 .1em;
-                         margin:0 0 0 1em;}
-				 </style>
-         ";
+    echo "<style type='text/css'>
+		@import '$url/wp-content/plugins/collapsing-categories/collapsCat.css';
+    </style>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.3.7\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+		echo "// These variables are part of the Collapsing Categories Plugin version: 0.4\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+    echo "function expandCat( e ) {
+    if( e.target ) {
+      src = e.target;
+    }
+    else {
+      src = window.event.srcElement;
+    }
+
+    srcList = src.parentNode;
+    childList = null;
+
+    for( i = 0; i < srcList.childNodes.length; i++ ) {
+      if( srcList.childNodes[i].nodeName.toLowerCase() == 'ul' ) {
+        childList = srcList.childNodes[i];
+      }
+    }
+
+    if( src.getAttribute( 'class' ) == 'collapsArch hide' ) {
+      childList.style.display = 'none';
+      src.setAttribute('class','collapsArch show');
+      src.setAttribute('title','click to expand');
+      src.innerHTML='&#9658&nbsp;';
+    }
+    else {
+      childList.style.display = '';
+      src.setAttribute('class','collapsArch hide');
+      src.setAttribute('title','click to collapse');
+      src.innerHTML='&#9660&nbsp;';
+    }
+
+    if( e.preventDefault ) {
+      e.preventDefault();
+    }
+
+    return false;
+  }\n";
+
 		echo "// ]]>\n</script>\n";
 	}
 }
