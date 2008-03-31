@@ -12,7 +12,7 @@ Author URI: http://robfelty.com
 ?>
     <?php echo $before_widget; ?>
     <?php echo $before_title . $title . $after_title; ?>
-      <li><h2>Categories</h2>
+      <li class='widget widget_collapsCat'><h2>Categories</h2>
 
       <?php
        if( function_exists('collapsCat') ) {
