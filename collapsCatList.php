@@ -1,11 +1,6 @@
 <?php
 /*
-
-<<<<<<< .mine
 Collapsing Categories version: 0.4
-=======
-Collapsing Categories version: 0.4
->>>>>>> .r35195
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
