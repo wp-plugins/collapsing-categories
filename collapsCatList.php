@@ -118,7 +118,7 @@ $parents=array();
 				print( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
 			}
       $subCatCount=0;
-      list ($subCatLinks, $subCatCount)=getSubCat($cat, $categories, $parents, $posts,$taxonomy,$subCatCount);
+      list ($subCatLinks, $subCatCount)=getCollapsSubCat($cat, $categories, $parents, $posts,$taxonomy,$subCatCount);
 			if( get_option('collapsCatShowPostCount')=='yes') {
 				if ($taxonomy==true) {
 					$link .= ' ('.intval($cat->count + $subCatCount).')';
@@ -145,7 +145,7 @@ $parents=array();
 		}
   }
 
-function getSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) {
+function getCollapsSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) {
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
       if ($cat->term_id==$cat2->parent) {
@@ -191,7 +191,7 @@ function getSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) 
             }
           }
         } else {
-          list ($subCatLink2, $subCatCount)= getSubCat($cat2, $categories, $parents, $posts,$taxonomy,$subCatCount);
+          list ($subCatLink2, $subCatCount)= getCollapsSubCat($cat2, $categories, $parents, $posts,$taxonomy,$subCatCount);
           $subCatLinks.="$subCatLink2";
         }
         // close <ul> and <li> before starting a new category
