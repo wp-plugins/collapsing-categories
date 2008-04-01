@@ -113,6 +113,62 @@ class collapsCat {
 
 		echo "// ]]>\n</script>\n";
 	}
+	function getCollapsSubCat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) {
+		if (in_array($cat->term_id, $parents)) {
+			foreach ($categories as $cat2) {
+				if ($cat->term_id==$cat2->parent) {
+					// print out category name 
+					$subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
+					if ($taxonomy==true) {
+						$link2 = "<a href='".get_category_link($cat2->term_id)."' ";
+						//$link2 = "<a href='$url/category/".$cat2->slug."' ";
+					} else {
+						$link2 = "<a href='".get_category_link($cat2->cat_ID)."' ";
+						//$link2 = "<a href=$url/'".get_category_link($cat2->cat_ID)."' ";
+					}
+					if ( empty($cat2->category_description) ) {
+						$link2 .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat2->name)) . '"';
+					} else {
+						$link2 .= 'title="' . wp_specialchars(apply_filters('category_description',$cat2->category_description,$cat2)) . '"';
+					}
+					$link2 .= '>';
+					if ($taxonomy==true) {
+						$link2 .= apply_filters('list_cats', $cat2->name, $cat2).'</a>';
+					} else {
+						$link2 .= apply_filters('list_cats', $cat2->cat_name, $cat2).'</a>';
+					}
+
+					if( get_option('collapsCatShowPostCount')=='yes') {
+						if ($taxonomy==true) {
+							$link2 .= ' ('.intval($cat2->count).')';
+						} else {
+							$link2 .= ' ('.intval($cat2->category_count).')';
+						}
+					}
+					$subCatLinks.= $link2 ;
+					$subCatLinks.="\n<ul style=\"display:none;\">\n";
+					if (!in_array($cat2->term_id, $parents)) {
+						$subCatCount=$subCatCount+$cat2->count;
+					//if( !empty($posts)) {
+						foreach ($posts as $post2) {
+							if ($post2->term_id == $cat2->term_id) {
+								$date=preg_replace("/-/", '/', $post2->date);
+								$name=$post2->post_name;
+								$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post2->post_title) . "</a></li>\n";
+								//$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post2->post_title . "</a></li>\n";
+							}
+						}
+					} else {
+						list ($subCatLink2, $subCatCount)= getCollapsSubCat($cat2, $categories, $parents, $posts,$taxonomy,$subCatCount);
+						$subCatLinks.="$subCatLink2";
+					}
+					// close <ul> and <li> before starting a new category
+					$subCatLinks.= "</ul>  </li> <!-- ending subcategory -->\n";
+				}
+			}
+		}
+		return array($subCatLinks,$subCatCount);
+	}
 }
 
 function collapsCat() {
