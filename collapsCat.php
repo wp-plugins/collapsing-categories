@@ -58,13 +58,6 @@ class collapsCat {
 		include_once( 'collapsCatUI.php' );
 	}
 
-	function list_categories() {
-		global $wpdb;
-
-		include( 'collapsCatList.php' );
-
-		return;
-	}
 
 	function get_head() {
 		$url = get_settings('siteurl');
@@ -115,7 +108,9 @@ class collapsCat {
 	}
 }
 
+
+		include( 'collapsCatList.php' );
 function collapsCat() {
-	collapsCat::list_categories();
+	list_categories();
 }
 ?>

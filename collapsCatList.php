@@ -85,6 +85,8 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
 
 /* the category and tagging database structures changed drastically between wordpress 2.1 and 2.3. We will use different queries for category based vs. term_taxonomy based database structures */
 //$taxonomy=false;
+function list_categories() {
+		global $wpdb;
 if (get_option('collapsCatLinkToArchives')=='archives') {
   $archives='archives.php/';
 } elseif (get_option('collapsCatLinkToArchives')=='index') {
@@ -192,6 +194,6 @@ foreach( $categories as $cat ) {
 		} 
 	}
 }
-
+}
 ?>
 </ul>
