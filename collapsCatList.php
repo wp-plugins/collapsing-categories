@@ -67,7 +67,9 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
             if ($post2->term_id == $cat2->term_id) {
               $date=preg_replace("/-/", '/', $post2->date);
               $name=$post2->post_name;
-              $subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post2->post_title) . "</a></li>\n";
+              //$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post2->post_title) . "</a></li>\n";
+              $subCatLinks.= "<li class='collapsCatPost'><a href='".get_permalink($post2->id)."'>" .  strip_tags($post2->post_title) . "</a></li>\n";
+
               //$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post2->post_title . "</a></li>\n";
             }
           }
@@ -180,7 +182,7 @@ function list_categories() {
           if ($post->term_id == $cat->term_id) {
             $date=preg_replace("/-/", '/', $post->date);
             $name=$post->post_name;
-            echo "          <li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post->post_title) . "</a></li>\n";
+            echo "          <li class='collapsCatPost'><a href='".  get_permalink($post->id)."'>" .  strip_tags($post->post_title) . "</a></li>\n";
             //echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post->post_title . "</a></li>\n";
           }
         }
