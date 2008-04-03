@@ -1,6 +1,5 @@
 <?php
 /*
-
 Collapsing Categories version: 0.4.4
 Copyright 2007 Robert Felty
 

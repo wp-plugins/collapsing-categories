@@ -5,6 +5,7 @@ Fancy Categories Changelog
 
 * 0.4.3
     * nicer list indenting
+    * re-fixed permalink bug introduced sometime after version 0.3.5
 
 * 0.4.2
     * fixed bug with extraneous <ul>
