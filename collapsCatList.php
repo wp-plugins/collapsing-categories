@@ -135,6 +135,7 @@ function list_categories() {
     }
   }
   foreach( $categories as $cat ) {
+    echo "<!-- parent = " . $cat->parent . "-->\n";
     if ($cat->parent==0) {
       $url = get_settings('siteurl');
       $home=$url;
@@ -179,7 +180,7 @@ function list_categories() {
       // Now print out the post info
       if( ! empty($posts) ) {
         foreach ($posts as $post) {
-          if ($post->term_id == $cat->term_id) {
+          if (($post->term_id == $cat->term_id)  && (in_array($cat->term_id, $parents))) {
             $date=preg_replace("/-/", '/', $post->date);
             $name=$post->post_name;
             echo "          <li class='collapsCatPost'><a href='".  get_permalink($post->id)."'>" .  strip_tags($post->post_title) . "</a></li>\n";
