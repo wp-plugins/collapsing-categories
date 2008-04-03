@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.2
 Tested up to: 2.5
-Stable tag: 0.4.2
+Stable tag: 0.4.4
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.

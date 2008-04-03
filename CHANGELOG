@@ -1,5 +1,8 @@
 Fancy Categories Changelog
 
+* 0.4.4
+    * using unicode number codes in css stylesheet
+
 * 0.4.3
     * nicer list indenting
 
