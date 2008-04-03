@@ -35,4 +35,4 @@ font-size:1.3em;
 #sidebar li.collapsCatPost {
              text-indent:-1em;
              margin:0 0 0 1em;}
-#sidebar li.collapsCatPost:before {content:'» ';} 
+#sidebar li.collapsCatPost:before {content:'&raquo; ';} 
