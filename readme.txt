@@ -88,6 +88,16 @@ behavior in wordpress anyways)
 
 == HISTORY ==
 
+* 0.4.3
+    * nicer list indenting
+
+* 0.4.2
+    * fixed bug with extraneous <ul>
+
+* 0.4.1
+		* fixed bug with get_sub_cat definition problem in WP 2.5. Looks like it
+		  had something to do with nested functions maybe
+
 * 0.4
     * Verified to work with wordpress 2.5
     * Now has custom styling option through the collapsCat.css stylesheet
