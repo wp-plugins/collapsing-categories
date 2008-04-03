@@ -1,5 +1,8 @@
 Fancy Categories Changelog
 
+* 0.4.3
+    * nicer list indenting
+
 * 0.4.2
     * fixed bug with extraneous <ul>
 

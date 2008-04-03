@@ -76,7 +76,7 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
           $subCatLinks.="$subCatLink2";
         }
         // close <ul> and <li> before starting a new category
-        $subCatLinks.= "</ul>  </li> <!-- ending subcategory -->\n";
+        $subCatLinks.= "          </ul>\n          </li> <!-- ending subcategory -->\n";
       }
     }
   }
@@ -112,7 +112,7 @@ function list_categories() {
     $sortOrder = get_option('collapsCatSortOrder');
   } 
 
-  echo "<ul id='collapsCatList'>\n";
+  echo "\n    <ul id='collapsCatList'>\n";
 
   if ($taxonomy==true) {
       $catquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' $sortColumn $sortOrder";
@@ -158,9 +158,9 @@ function list_categories() {
 
       // TODO not sure why we are checking for this at all TODO
       if( empty( $posts ) && empty($categories)) {
-        print( "<li class='collapsCat'><span class='collapsCat hide' onclick='expandCat(event); return false'>&#9660;&nbsp;</span>" );
+        print( "      <li class='collapsCat'><span class='collapsCat hide' onclick='expandCat(event); return false'>&#9660;&nbsp;</span>" );
       } else {
-        print( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
+        print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
       }
       $subCatCount=0;
       list ($subCatLinks, $subCatCount)=get_sub_cat($cat, $categories, $parents, $posts,$taxonomy,$subCatCount);
@@ -172,7 +172,7 @@ function list_categories() {
         }
       }
       print( $link );
-      print( "\n<ul style=\"display:none;\">\n" );
+      print( "\n        <ul style=\"display:none;\">\n" );
       echo $subCatLinks;
       // Now print out the post info
       if( ! empty($posts) ) {
@@ -180,15 +180,15 @@ function list_categories() {
           if ($post->term_id == $cat->term_id) {
             $date=preg_replace("/-/", '/', $post->date);
             $name=$post->post_name;
-            echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post->post_title) . "</a></li>\n";
+            echo "          <li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post->post_title) . "</a></li>\n";
             //echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post->post_title . "</a></li>\n";
           }
         }
         // close <ul> and <li> before starting a new category
-          echo "</ul>  </li> <!-- ending category -->\n";
+          echo "        </ul>\n      </li> <!-- ending category -->\n";
       } 
     }
   }
-  echo "</ul>\n";
+  echo "    </ul> <!-- ending collapsCat -->\n";
 }
 ?>
