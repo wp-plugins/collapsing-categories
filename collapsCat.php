@@ -66,11 +66,7 @@ class collapsCat {
     </style>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-<<<<<<< .mine
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.4.3\n// Copyright 2007 Robert Felty (robfelty.com)\n";
-=======
 		echo "// These variables are part of the Collapsing Categories Plugin version: 0.4.4\n// Copyright 2007 Robert Felty (robfelty.com)\n";
->>>>>>> .r38100
     echo "function expandCat( e ) {
     if( e.target ) {
       src = e.target;
