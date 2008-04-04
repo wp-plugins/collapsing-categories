@@ -92,8 +92,13 @@ behavior in wordpress anyways)
 
 == HISTORY ==
 
+* 0.4.4
+    * using unicode number codes in css stylesheet
+    * fixed bug with duplicate entries in subcategories
+
 * 0.4.3
     * nicer list indenting
+    * re-fixed permalink bug introduced sometime after version 0.3.5
 
 * 0.4.2
     * fixed bug with extraneous <ul>
