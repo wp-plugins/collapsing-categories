@@ -27,6 +27,7 @@ This file is part of Collapsing Categories
 
 // Helper functions
 function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount) {
+  $subCatPosts=array();
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
       if ($cat->term_id==$cat2->parent) {
@@ -65,6 +66,7 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
         //if( !empty($posts)) {
           foreach ($posts as $post2) {
             if ($post2->term_id == $cat2->term_id) {
+							array_push($subCatPosts, $post2->id);
               $date=preg_replace("/-/", '/', $post2->date);
               $name=$post2->post_name;
               //$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post2->post_title) . "</a></li>\n";
@@ -74,7 +76,7 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
             }
           }
         } else {
-          list ($subCatLink2, $subCatCount)= get_sub_cat($cat2, $categories, $parents, $posts,$taxonomy,$subCatCount);
+          list ($subCatLink2, $subCatCount,$subCatPosts)= get_sub_cat($cat2, $categories, $parents, $posts,$taxonomy,$subCatCount);
           $subCatLinks.="$subCatLink2";
         }
         // close <ul> and <li> before starting a new category
@@ -82,7 +84,7 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
       }
     }
   }
-  return array($subCatLinks,$subCatCount);
+  return array($subCatLinks,$subCatCount,$subCatPosts);
 }
 
 /* the category and tagging database structures changed drastically between wordpress 2.1 and 2.3. We will use different queries for category based vs. term_taxonomy based database structures */
@@ -166,7 +168,7 @@ function list_categories() {
         print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
       }
       $subCatCount=0;
-      list ($subCatLinks, $subCatCount)=get_sub_cat($cat, $categories, $parents, $posts,$taxonomy,$subCatCount);
+      list ($subCatLinks, $subCatCount, $subCatPosts)=get_sub_cat($cat, $categories, $parents, $posts,$taxonomy,$subCatCount);
       if( get_option('collapsCatShowPostCount')=='yes') {
         if ($taxonomy==true) {
           $link .= ' ('.intval($cat->count + $subCatCount).')';
@@ -180,7 +182,7 @@ function list_categories() {
       // Now print out the post info
       if( ! empty($posts) ) {
         foreach ($posts as $post) {
-          if (($post->term_id == $cat->term_id)  && (in_array($cat->term_id, $parents))) {
+          if (($post->term_id == $cat->term_id)  && (!in_array($post->id, $subCatPosts))) {
             $date=preg_replace("/-/", '/', $post->date);
             $name=$post->post_name;
             echo "          <li class='collapsCatPost'><a href='".  get_permalink($post->id)."'>" .  strip_tags($post->post_title) . "</a></li>\n";
