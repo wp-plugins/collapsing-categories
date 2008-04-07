@@ -31,8 +31,22 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
       if ($cat->term_id==$cat2->parent) {
-        // print out category name 
-        $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
+        if (!in_array($cat2->term_id, $parents)) {
+          // check to see if there are more subcategories under this one
+          $subCatCount=$subCatCount+$cat2->count;
+          if (get_option('collapsCatShowPosts')=='yes') {
+            $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
+          } else {
+            $subCatLinks.=( "<li class='collapsCat'>&nbsp;&nbsp;" );
+          }
+        } else {
+          list ($subCatLink2, $subCatCount,$subCatPosts)= get_sub_cat($cat2, $categories, $parents, $posts,$taxonomy,$subCatCount);
+          if (get_option('collapsCatShowPosts')=='yes') {
+            $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
+          } else {
+            $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
+          }
+        }
         if ($taxonomy==true) {
           $link2 = "<a href='".get_category_link($cat2->term_id)."' ";
           //$link2 = "<a href='$url/category/".$cat2->slug."' ";
@@ -61,9 +75,6 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
         }
         $subCatLinks.= $link2 ;
         $subCatLinks.="\n<ul style=\"display:none;\">\n";
-        if (!in_array($cat2->term_id, $parents)) {
-          $subCatCount=$subCatCount+$cat2->count;
-          //if( !empty($posts)) {
           if (get_option('collapsCatShowPosts')=='yes') {
             foreach ($posts as $post2) {
               if ($post2->term_id == $cat2->term_id) {
@@ -77,10 +88,8 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
               }
             }
           }
-        } else {
-          list ($subCatLink2, $subCatCount,$subCatPosts)= get_sub_cat($cat2, $categories, $parents, $posts,$taxonomy,$subCatCount);
-          $subCatLinks.="$subCatLink2";
-        }
+        // add in additional subcategory information
+        $subCatLinks.="$subCatLink2";
         // close <ul> and <li> before starting a new category
         $subCatLinks.= "          </ul>\n          </li> <!-- ending subcategory -->\n";
       }
@@ -168,13 +177,24 @@ function list_categories() {
       }
 
       // TODO not sure why we are checking for this at all TODO
-      if( empty( $posts ) && empty($categories)) {
-        print( "      <li class='collapsCat'><span class='collapsCat hide' onclick='expandCat(event); return false'>&#9660;&nbsp;</span>" );
-      } else {
-        print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
-      }
       $subCatCount=0;
       list ($subCatLinks, $subCatCount, $subCatPosts)=get_sub_cat($cat, $categories, $parents, $posts,$taxonomy,$subCatCount);
+      
+      if (get_option('collapsCatShowPosts')=='yes') {
+        if( empty( $posts ) && empty($categories)) {
+          print( "      <li class='collapsCat'><span class='collapsCat hide' onclick='expandCat(event); return false'>&#9660;&nbsp;</span>" );
+        } else {
+          print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
+        }
+      } else {
+        // don't include the triangles if posts are not shown and there are no
+        // more subcategories
+        if ($subCatCount>0) {
+          print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
+        } else {
+          print( "      <li class='collapsCat'>&nbsp;&nbsp;" );
+        } 
+      }
       if( get_option('collapsCatShowPostCount')=='yes') {
         if ($taxonomy==true) {
           $link .= ' ('.intval($cat->count + $subCatCount).')';
@@ -183,7 +203,9 @@ function list_categories() {
         }
       }
       print( $link );
-      print( "\n        <ul style=\"display:none;\">\n" );
+      if (($subCatCount>0) || (get_option('collapsCatShowPosts')=='yes')) {
+        print( "\n     <ul style=\"display:none;\">\n" );
+      }
       echo $subCatLinks;
       // Now print out the post info
       if( ! empty($posts) ) {
@@ -198,7 +220,10 @@ function list_categories() {
           }
           // close <ul> and <li> before starting a new category
         } 
-        echo "        </ul>\n      </li> <!-- ending category -->\n";
+      if ($subCatCount>0 || get_option('collapsCatShowPosts')=='yes') {
+        echo "        </ul>\n";
+      }
+      echo "      </li> <!-- ending category -->\n";
       }
     }
   }

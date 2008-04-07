@@ -1,5 +1,8 @@
 Fancy Categories Changelog
 
+* 0.5
+    * Added option to not show posts
+
 * 0.4.4
     * using unicode number codes in css stylesheet
     * fixed bug with duplicate entries in subcategories
