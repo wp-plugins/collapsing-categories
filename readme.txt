@@ -3,7 +3,7 @@ Contributors: robfelty
 Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
-Requires at least: 2.2
+Requires at least: 2.3
 Tested up to: 2.5
 Stable tag: 0.4.4
 

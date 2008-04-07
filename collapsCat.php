@@ -45,6 +45,7 @@ class collapsCat {
 			add_option( 'collapsCatLinkToArchives', 'root' );
 			add_option( 'collapsCatSort', 'catName' );
 			add_option( 'collapsCatSortOrder', 'ASC' );
+			add_option( 'collapsCatShowPosts', 'yes' );
 		}
 	}
 

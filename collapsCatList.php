@@ -63,16 +63,18 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
         $subCatLinks.="\n<ul style=\"display:none;\">\n";
         if (!in_array($cat2->term_id, $parents)) {
           $subCatCount=$subCatCount+$cat2->count;
-        //if( !empty($posts)) {
-          foreach ($posts as $post2) {
-            if ($post2->term_id == $cat2->term_id) {
-							array_push($subCatPosts, $post2->id);
-              $date=preg_replace("/-/", '/', $post2->date);
-              $name=$post2->post_name;
-              //$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post2->post_title) . "</a></li>\n";
-              $subCatLinks.= "<li class='collapsCatPost'><a href='".get_permalink($post2->id)."'>" .  strip_tags($post2->post_title) . "</a></li>\n";
+          //if( !empty($posts)) {
+          if (get_option('collapsCatShowPosts')=='yes') {
+            foreach ($posts as $post2) {
+              if ($post2->term_id == $cat2->term_id) {
+                array_push($subCatPosts, $post2->id);
+                $date=preg_replace("/-/", '/', $post2->date);
+                $name=$post2->post_name;
+                //$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  strip_tags($post2->post_title) . "</a></li>\n";
+                $subCatLinks.= "<li class='collapsCatPost'><a href='".get_permalink($post2->id)."'>" .  strip_tags($post2->post_title) . "</a></li>\n";
 
-              //$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post2->post_title . "</a></li>\n";
+                //$subCatLinks.= "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post2->post_title . "</a></li>\n";
+              }
             }
           }
         } else {
@@ -150,7 +152,11 @@ function list_categories() {
         $link = "<a href='".get_category_link($cat->cat_ID)."' ";
       }
       if ( empty($cat->category_description) ) {
-        $link .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat->name)) . '"';
+        if( get_option('collapsCatShowPostCount')=='yes') {
+          $link .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat->name)) . '"';
+        } else {
+          $link .= "title='View all subcategories'";
+        }
       } else {
         $link .= 'title="' . wp_specialchars(apply_filters('category_description',$cat->category_description,$cat)) . '"';
       }
@@ -181,17 +187,19 @@ function list_categories() {
       echo $subCatLinks;
       // Now print out the post info
       if( ! empty($posts) ) {
-        foreach ($posts as $post) {
-          if (($post->term_id == $cat->term_id)  && (!in_array($post->id, $subCatPosts))) {
-            $date=preg_replace("/-/", '/', $post->date);
-            $name=$post->post_name;
-            echo "          <li class='collapsCatPost'><a href='".  get_permalink($post->id)."'>" .  strip_tags($post->post_title) . "</a></li>\n";
-            //echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post->post_title . "</a></li>\n";
+        if (get_option('collapsCatShowPosts')=='yes') {
+          foreach ($posts as $post) {
+            if (($post->term_id == $cat->term_id)  && (!in_array($post->id, $subCatPosts))) {
+              $date=preg_replace("/-/", '/', $post->date);
+              $name=$post->post_name;
+              echo "          <li class='collapsCatPost'><a href='".  get_permalink($post->id)."'>" .  strip_tags($post->post_title) . "</a></li>\n";
+              //echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post->post_title . "</a></li>\n";
+            }
           }
-        }
-        // close <ul> and <li> before starting a new category
-          echo "        </ul>\n      </li> <!-- ending category -->\n";
-      } 
+          // close <ul> and <li> before starting a new category
+        } 
+        echo "        </ul>\n      </li> <!-- ending category -->\n";
+      }
     }
   }
   echo "    </ul> <!-- ending collapsCat -->\n";

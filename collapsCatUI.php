@@ -60,6 +60,11 @@ if( isset($_POST['infoUpdate']) ) {
     update_option( 'collapsCatSort', '' );
     update_option( 'collapsCatSortOrder', '' );
   }
+  if($_POST['showPosts'] == 'yes') {
+    update_option( 'collapsCatShowPosts', 'yes' );
+  } elseif ($_POST['showPosts'] == 'no') {
+    update_option( 'collapsCatShowPosts', 'no' );
+  }
 }
 ?>
 <div class=wrap>
@@ -86,6 +91,10 @@ if( isset($_POST['infoUpdate']) ) {
     <li>
      <input type="radio" name="sortOrder" <?php if(get_option('collapsCatSortOrder')=='ASC') echo 'checked'; ?> id="sortASC" value='ASC'></input> <label for="sortASC">Sort in ascending order</label>
      <input type="radio" name="sortOrder" <?php if(get_option('collapsCatSortOrder')=='DESC') echo 'checked'; ?> id="sortDESC" value='DESC'></input> <label for="sortDESC">Sort in descending order</label>
+    </li>
+    <li>
+     <input type="radio" name="showPosts" <?php if(get_option('collapsCatShowPosts')=='yes') echo 'checked'; ?> id="showPostsYes" value='yes'></input> <label for="showPostsYes">Expanding shows posts</label>
+     <input type="radio" name="showPosts" <?php if(get_option('collapsCatShowPosts')=='no') echo 'checked'; ?> id="showPostsNo" value='no'></input> <label for="showPostsNO">Expanding only shows subcategories</label>
     </li>
    </ul>
   </fieldset>
