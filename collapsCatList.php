@@ -30,6 +30,8 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
   $subCatPosts=array();
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
+      //$subCatLinks.= "cat2 =". $cat2->term_id;
+        $subCatLink2=''; // clear info from subCatLink2
       if ($cat->term_id==$cat2->parent) {
         if (!in_array($cat2->term_id, $parents)) {
           // check to see if there are more subcategories under this one
