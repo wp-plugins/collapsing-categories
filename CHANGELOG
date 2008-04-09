@@ -2,6 +2,8 @@ Fancy Categories Changelog
 
 * 0.5
     * Added option to not show posts
+    * Added option to change title in widget
+    * Now is condensed into one plugin
 
 * 0.4.4
     * using unicode number codes in css stylesheet

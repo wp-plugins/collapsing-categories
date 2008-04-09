@@ -114,4 +114,5 @@ class collapsCat {
 function collapsCat() {
 	list_categories();
 }
+include('collapsCatWidget.php');
 ?>

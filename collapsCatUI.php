@@ -72,31 +72,7 @@ if( isset($_POST['infoUpdate']) ) {
   <h2>Collapsing Categories Options</h2>
   <fieldset name="Collapsing Categories Options">
    <legend><?php _e('Display Options:'); ?></legend>
-   <ul style="list-style-type: none;">
-    <li>
-     <input type="checkbox" name="showPostCount" <?php if(get_option('collapsCatShowPostCount')=='yes') echo 'checked'; ?> id="showPostCount"></input> <label for="showPostCount">Show Post Count in Category Links</label>
-    </li>
-    <li>
-     <input type="checkbox" name="showPages" <?php if(get_option('collapsCatShowPages')=='yes') echo 'checked'; ?> id="showPages"></input> <label for="showPages">Show Pages as well as posts</label>
-    </li>
-    <li>
-     <input type="radio" name="archives" <?php if(get_option('collapsCatLinkToArchives')=='root') echo 'checked'; ?> id="archivesRoot" value='root'></input> <label for="archivesRoot">Links based on site root (default)</label>
-     <input type="radio" name="archives" <?php if(get_option('collapsCatLinkToArchives')=='index') echo 'checked'; ?> id="archivesIndex" value='index'></input> <label for="archivesIndex">Links based on index.php </label>
-     <input type="radio" name="archives" <?php if(get_option('collapsCatLinkToArchives')=='archives') echo 'checked'; ?> id="archivesArchives" value='archives'></input> <label for="archivesArchives">Links based on archives.php</label>
-    </li>
-    <li>
-     <input type="radio" name="sort" <?php if(get_option('collapsCatSort')=='catName') echo 'checked'; ?> id="sortCatName" value='catName'></input> <label for="sortCatName">Sort by category name</label>
-     <input type="radio" name="sort" <?php if(get_option('collapsCatSort')=='catId') echo 'checked'; ?> id="sortCatId" value='catId'></input> <label for="sortCatId">Sort by category id</label>
-    </li>
-    <li>
-     <input type="radio" name="sortOrder" <?php if(get_option('collapsCatSortOrder')=='ASC') echo 'checked'; ?> id="sortASC" value='ASC'></input> <label for="sortASC">Sort in ascending order</label>
-     <input type="radio" name="sortOrder" <?php if(get_option('collapsCatSortOrder')=='DESC') echo 'checked'; ?> id="sortDESC" value='DESC'></input> <label for="sortDESC">Sort in descending order</label>
-    </li>
-    <li>
-     <input type="radio" name="showPosts" <?php if(get_option('collapsCatShowPosts')=='yes') echo 'checked'; ?> id="showPostsYes" value='yes'></input> <label for="showPostsYes">Expanding shows posts</label>
-     <input type="radio" name="showPosts" <?php if(get_option('collapsCatShowPosts')=='no') echo 'checked'; ?> id="showPostsNo" value='no'></input> <label for="showPostsNO">Expanding only shows subcategories</label>
-    </li>
-   </ul>
+   <?php include('options.txt'); ?>
   </fieldset>
   <div class="submit">
    <input type="submit" name="infoUpdate" value="<?php _e('Update options', 'Collapsing Categories'); ?> &raquo;" />

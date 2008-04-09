@@ -1,20 +1,14 @@
 <?php
-/*
-Plugin Name: Collapsing categories widget
-Plugin URI: http://robfelty.com
-Description: Use the Collapsing Categories plugin as a widget
-Version: 0.4.4
-Author: Robert Felty
-Author URI: http://robfelty.com
-*/
 
-  function collapsCatWidget() {
-?>
-    <?php echo $before_widget; ?>
-    <?php echo $before_title . $title . $after_title; ?>
-      <li class='widget widget_collapsCat'><h2>Categories</h2>
+function collapsCatWidget($args) {
+  extract($args);
+  $options = get_option('collapsCatWidget');
+  $title = ($options['title'] != "") ? $options['title'] : ""; 
 
-      <?php
+  //$title = $options['title'];
+
+    echo $before_widget . $before_title . $title . $after_title;
+    
        if( function_exists('collapsCat') ) {
         collapsCat();
        } else {
@@ -22,17 +16,16 @@ Author URI: http://robfelty.com
         wp_list_cats('sort_column=name&optioncount=1&hierarchical=0');
         echo "</ul>\n";
        }
-      ?>
 
-      </li>
-    <?php echo $after_widget; ?>
-<?php
+    echo $after_widget;
   }
 
 
 function collapsCatWidgetInit() {
+	$widget_ops = array('classname' => 'collapsCatWidget', 'description' => __('Categories expand and collapse to show subcategories and/or posts'));
 	if (function_exists('register_sidebar_widget')) {
-		register_sidebar_widget('Collapsing Categories Widget', 'collapsCatWidget');
+    register_sidebar_widget('Collapsing Categories', 'collapsCatWidget');
+    register_widget_control('Collapsing Categories', 'collapsCatWidgetControl','300px');
 	}
 }
 
@@ -49,4 +42,35 @@ if (function_exists('collapsCat')) {
 	exit;
 }
 
+	function collapsCatWidgetControl() {
+		$options = get_option('collapsCatWidget');
+    if ( !is_array($options) ) {
+      $options = array('title'=>'Categories'
+     //   'cache'=> '',
+      //  'lastcheck' => 0,
+       // 'apikey' => '9vmtth9uar6ykr8qa5cjx46n',
+    //    'url' => '',
+     //   'cachetime' => '3600',
+      //  'imagesize' => 'large',
+       // 'content' => ''
+      );
+     }
+
+		if ( $_POST['collapsCat-submit'] ) {
+			//$newoptions['zip']	= strip_tags(stripslashes($_POST['get_weather-zip']));
+			//$newoptions['location']	= strip_tags(stripslashes($_POST['get_weather-location']));
+			//$newoptions['options']	= strip_tags(stripslashes($_POST['get_weather-options']));
+			$options['title']	= strip_tags(stripslashes($_POST['collapsCat-title']));
+		}
+    update_option('collapsCatWidget', $options);
+		$title		= wp_specialchars($options['title']);
+    // Here is our little form segment. Notice that we don't need a
+    // complete form. This will be embedded into the existing form.
+    echo '<p style="text-align:right;"><label for="collapsCat-title">' . __('Title:') . '<input class="widefat" style="width: 200px;" id="collapsCat-title" name="collapsCat-title" type="text" value="'.$title.'" /></label></p>';
+    include('options.txt');
+   ?>
+   <?php
+    echo '<input type="hidden" id="collapsCat-submit" name="collapsCat-submit" value="1" />';
+
+	}
 ?>
