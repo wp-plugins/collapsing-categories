@@ -65,7 +65,7 @@ if (function_exists('collapsCat')) {
 		}
     print_r($_POST);
     foreach ($_POST as $key=>$value) {
-      echo "<script type='text/javascript'>alert('key = $key')</script>\n";
+      echo "key = $key\n";
       echo "<script type='text/javascript'>alert('value = $value')</script>\n";
     }
     update_option('collapsCatWidget', $options);
