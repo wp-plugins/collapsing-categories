@@ -63,7 +63,8 @@ if (function_exists('collapsCat')) {
 			$options['title']	= strip_tags(stripslashes($_POST['collapsCat-title']));
 			include('updateOptions.php');
 		}
-    print_r($_POST);
+    print($_POST['collapsCat-title']);
+    print($_POST['archives']);
     foreach ($_POST as $key=>$value) {
       echo "key = $key\n";
       echo "<script type='text/javascript'>alert('value = $value')</script>\n";
