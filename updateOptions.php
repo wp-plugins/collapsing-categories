@@ -1,3 +1,4 @@
+<?php
   if( isset($_POST['showPostCount']) ) {
     update_option( 'collapsCatShowPostCount', 'yes' );
   }
@@ -35,3 +36,4 @@
   } elseif ($_POST['showPosts'] == 'no') {
     update_option( 'collapsCatShowPosts', 'no' );
   }
+?>
