@@ -61,13 +61,13 @@ if (function_exists('collapsCat')) {
 			//$newoptions['location']	= strip_tags(stripslashes($_POST['get_weather-location']));
 			//$newoptions['options']	= strip_tags(stripslashes($_POST['get_weather-options']));
 			$options['title']	= strip_tags(stripslashes($_POST['collapsCat-title']));
+			include('updateOptions.php');
 		}
     foreach ($_POST as $key=>$value) {
-      echo "key = $key<br />\n";
-      echo "value = $value<br />\n";
+      echo "<script type='text/javascript'>alert('key = $key')</script>\n";
+      echo "<script type='text/javascript'>alert('value = $value')</script>\n";
     }
     update_option('collapsCatWidget', $options);
-    include('updateOptions.php');
 		$title		= wp_specialchars($options['title']);
     // Here is our little form segment. Notice that we don't need a
     // complete form. This will be embedded into the existing form.
