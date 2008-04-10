@@ -62,13 +62,13 @@ if (function_exists('collapsCat')) {
 			//$newoptions['options']	= strip_tags(stripslashes($_POST['get_weather-options']));
 			$options['title']	= strip_tags(stripslashes($_POST['collapsCat-title']));
 			include('updateOptions.php');
-		}
     print($_POST['collapsCat-title']);
     print($_POST['archives']);
     foreach ($_POST as $key=>$value) {
       echo "key = $key\n";
       echo "<script type='text/javascript'>alert('value = $value')</script>\n";
     }
+		}
     update_option('collapsCatWidget', $options);
 		$title		= wp_specialchars($options['title']);
     // Here is our little form segment. Notice that we don't need a
