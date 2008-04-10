@@ -63,6 +63,7 @@ if (function_exists('collapsCat')) {
 			$options['title']	= strip_tags(stripslashes($_POST['collapsCat-title']));
 		}
     update_option('collapsCatWidget', $options);
+    include('updateOptions.php');
 		$title		= wp_specialchars($options['title']);
     // Here is our little form segment. Notice that we don't need a
     // complete form. This will be embedded into the existing form.
