@@ -231,4 +231,29 @@ function list_categories() {
   }
   echo "    </ul> <!-- ending collapsCat -->\n";
 }
+/*
+
+we will want to refer to this from taxonomy.php to implement the exclusion of categories
+	if ( !empty($inclusions) )
+		$inclusions .= ')';
+	$where .= $inclusions;
+
+	$exclusions = '';
+	if ( !empty($exclude) ) {
+		$exterms = preg_split('/[\s,]+/',$exclude);
+		if ( count($exterms) ) {
+			foreach ( $exterms as $exterm ) {
+				if (empty($exclusions))
+					$exclusions = ' AND ( t.term_id <> ' . intval($exterm) . ' ';
+				else
+					$exclusions .= ' AND t.term_id <> ' . intval($exterm) . ' ';
+			}
+		}
+	}
+
+	if ( !empty($exclusions) )
+		$exclusions .= ')';
+	$exclusions = apply_filters('list_terms_exclusions', $exclusions, $args );
+	$where .= $exclusions;
+*/
 ?>
