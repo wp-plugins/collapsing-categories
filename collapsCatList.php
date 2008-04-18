@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.5.1
+Collapsing Categories version: 0.5.2
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -111,6 +111,23 @@ function list_categories() {
   } elseif (get_option('collapsCatLinkToArchives')=='root') {
     $archives='';
   }
+  $exclude=get_option('collapsCatExclude');
+	$exclusions = '';
+	if ( !empty($exclude) ) {
+		$exterms = preg_split('/[,]+/',$exclude);
+		if ( count($exterms) ) {
+			foreach ( $exterms as $exterm ) {
+				if (empty($exclusions))
+					$exclusions = " AND ( $wpdb->terms.slug <> '" . sanitize_title($exterm) . "' ";
+				else
+					$exclusions .= " AND $wpdb->terms.slug <> '" . sanitize_title($exterm) . "' ";
+			}
+		}
+	}
+	if ( !empty($exclusions) ) {
+		$exclusions .= ')';
+  }
+
   $taxonomy=true;
   $tables = $wpdb->query("show tables like 'wp_term_relationships'"); 
   if ($tables==0) {
@@ -125,6 +142,8 @@ function list_categories() {
       $sortColumn="ORDER BY $wpdb->terms.name";
     } elseif (get_option('collapsCatSort')=='catId') {
       $sortColumn="ORDER BY $wpdb->terms.term_id";
+    } elseif (get_option('collapsCatSort')=='catSlug') {
+      $sortColumn="ORDER BY $wpdb->terms.slug";
     }
     $sortOrder = get_option('collapsCatSortOrder');
   } 
@@ -132,7 +151,7 @@ function list_categories() {
   echo "\n    <ul id='collapsCatList'>\n";
 
   if ($taxonomy==true) {
-      $catquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' $sortColumn $sortOrder";
+      $catquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' $exclusions $sortColumn $sortOrder";
       $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.id, $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.id = $wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish' AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id AND $wpdb->term_taxonomy.taxonomy = 'category' $isPage";
   } else {
     $catquery = "SELECT cat_ID, cat_name, category_nicename, category_description, category_parent, category_count FROM $wpdb->categories WHERE cat_ID > 0 AND category_parent = 0 AND category_count > 0";
@@ -231,29 +250,4 @@ function list_categories() {
   }
   echo "    </ul> <!-- ending collapsCat -->\n";
 }
-/*
-
-we will want to refer to this from taxonomy.php to implement the exclusion of categories
-	if ( !empty($inclusions) )
-		$inclusions .= ')';
-	$where .= $inclusions;
-
-	$exclusions = '';
-	if ( !empty($exclude) ) {
-		$exterms = preg_split('/[\s,]+/',$exclude);
-		if ( count($exterms) ) {
-			foreach ( $exterms as $exterm ) {
-				if (empty($exclusions))
-					$exclusions = ' AND ( t.term_id <> ' . intval($exterm) . ' ';
-				else
-					$exclusions .= ' AND t.term_id <> ' . intval($exterm) . ' ';
-			}
-		}
-	}
-
-	if ( !empty($exclusions) )
-		$exclusions .= ')';
-	$exclusions = apply_filters('list_terms_exclusions', $exclusions, $args );
-	$where .= $exclusions;
-*/
 ?>

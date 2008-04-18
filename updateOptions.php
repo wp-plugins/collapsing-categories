@@ -27,6 +27,8 @@
     update_option( 'collapsCatSort', 'catName' );
   } elseif ($_POST['sort'] == 'catId') {
     update_option( 'collapsCatSort', 'catId' );
+  } elseif ($_POST['sort'] == 'catSlug') {
+    update_option( 'collapsCatSort', 'catSlug' );
   } elseif ($_POST['sort'] == '') {
     update_option( 'collapsCatSort', '' );
     update_option( 'collapsCatSortOrder', '' );
@@ -35,5 +37,10 @@
     update_option( 'collapsCatShowPosts', 'yes' );
   } elseif ($_POST['showPosts'] == 'no') {
     update_option( 'collapsCatShowPosts', 'no' );
+  }
+  if($_POST['exclude']) {
+    $excludeSafe=addslashes($_POST['exclude']);
+    //$excludeSafe=wp_texturize($_POST['exclude']);
+    update_option( 'collapsCatExclude', $excludeSafe);
   }
 ?>

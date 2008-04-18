@@ -1,5 +1,9 @@
 Fancy Categories Changelog
 
+* 0.5.2
+    * Added option to exclude certain categories
+    * Added option to sort categories by slug
+
 * 0.5.1
     * options in widget seem to work now
     * removed duplicate entries due to tag + category
