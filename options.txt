@@ -1,4 +1,3 @@
-   <ul style="list-style-type: none;width:300px;margin:0;padding:0;">
     <li>
      <input type="checkbox" name="showPostCount" <?php if(get_option('collapsCatShowPostCount')=='yes') echo 'checked'; ?> id="showPostCount"></input> <label for="showPostCount">Show Post Count in Category Links</label>
     </li>
@@ -21,4 +20,3 @@
     <li>Exclude these categories (separated by commas):<br />
      <input type="text" name="exclude" value="<?php echo get_option('collapsCatExclude') ?>" id="exclude"</input> 
     </li>
-  </ul>

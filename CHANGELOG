@@ -1,5 +1,8 @@
 Fancy Categories Changelog
 
+* 0.5.3
+    * count is now correct for all subcategories
+
 * 0.5.2
     * Added option to exclude certain categories
     * Added option to sort categories by slug

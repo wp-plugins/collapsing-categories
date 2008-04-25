@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.5.2
+Collapsing Categories version: 0.5.3
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -36,6 +36,7 @@ if( isset($_POST['infoUpdate']) ) {
   <h2>Collapsing Categories Options</h2>
   <fieldset name="Collapsing Categories Options">
    <legend><?php _e('Display Options:'); ?></legend>
+   <ul style="list-style-type: none;">
    <?php include('options.txt'); ?>
   </fieldset>
   <div class="submit">

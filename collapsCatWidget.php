@@ -46,20 +46,10 @@ if (function_exists('collapsCat')) {
 		$options = get_option('collapsCatWidget');
     if ( !is_array($options) ) {
       $options = array('title'=>'Categories'
-     //   'cache'=> '',
-      //  'lastcheck' => 0,
-       // 'apikey' => '9vmtth9uar6ykr8qa5cjx46n',
-    //    'url' => '',
-     //   'cachetime' => '3600',
-      //  'imagesize' => 'large',
-       // 'content' => ''
       );
      }
 
 		if ( $_POST['collapsCat-submit'] ) {
-			//$newoptions['zip']	= strip_tags(stripslashes($_POST['get_weather-zip']));
-			//$newoptions['location']	= strip_tags(stripslashes($_POST['get_weather-location']));
-			//$newoptions['options']	= strip_tags(stripslashes($_POST['get_weather-options']));
 			$options['title']	= strip_tags(stripslashes($_POST['collapsCat-title']));
 			include('updateOptions.php');
     //print($_POST['collapsCat-title']);
@@ -74,7 +64,9 @@ if (function_exists('collapsCat')) {
     // Here is our little form segment. Notice that we don't need a
     // complete form. This will be embedded into the existing form.
     echo '<p style="text-align:right;"><label for="collapsCat-title">' . __('Title:') . '<input class="widefat" style="width: 200px;" id="collapsCat-title" name="collapsCat-title" type="text" value="'.$title.'" /></label></p>';
+  echo "<ul style='list-style-type:none;width:300px;margin:0;padding:0;'>";
     include('options.txt');
+  echo "</ul>\n";
    ?>
    <?php
     echo '<input type="hidden" id="collapsCat-submit" name="collapsCat-submit" value="1" />';

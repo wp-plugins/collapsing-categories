@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.5.2
+Collapsing Categories version: 0.5.3
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -33,9 +33,9 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
       //$subCatLinks.= "cat2 =". $cat2->term_id;
         $subCatLink2=''; // clear info from subCatLink2
       if ($cat->term_id==$cat2->parent) {
-        if (!in_array($cat2->term_id, $parents)) {
           // check to see if there are more subcategories under this one
           $subCatCount=$subCatCount+$cat2->count;
+        if (!in_array($cat2->term_id, $parents)) {
           if (get_option('collapsCatShowPosts')=='yes') {
             $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>&#9658;&nbsp;</span>" );
           } else {
@@ -69,8 +69,10 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
         }
 
         if( get_option('collapsCatShowPostCount')=='yes') {
+          list ($subCatLink3, $subCatCount2,$subCatPosts2)= get_sub_cat($cat2, $categories, $parents, $posts,$taxonomy,0);
+          $theCount=$subCatCount2 + $cat2->count;
           if ($taxonomy==true) {
-            $link2 .= ' ('.intval($cat2->count).')';
+            $link2 .= ' ('.$theCount.')';
           } else {
             $link2 .= ' ('.intval($cat2->category_count).')';
           }
@@ -151,7 +153,7 @@ function list_categories() {
   echo "\n    <ul id='collapsCatList'>\n";
 
   if ($taxonomy==true) {
-      $catquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' $exclusions $sortColumn $sortOrder";
+      $catquery = "SELECT $wpdb->term_taxonomy.count as 'count', $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' $exclusions $sortColumn $sortOrder";
       $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.id, $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.id = $wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish' AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id AND $wpdb->term_taxonomy.taxonomy = 'category' $isPage";
   } else {
     $catquery = "SELECT cat_ID, cat_name, category_nicename, category_description, category_parent, category_count FROM $wpdb->categories WHERE cat_ID > 0 AND category_parent = 0 AND category_count > 0";
@@ -169,7 +171,6 @@ function list_categories() {
     }
   }
   foreach( $categories as $cat ) {
-    echo "<!-- parent = " . $cat->parent . "-->\n";
     if ($cat->parent==0) {
       $url = get_settings('siteurl');
       $home=$url;
@@ -217,8 +218,10 @@ function list_categories() {
         } 
       }
       if( get_option('collapsCatShowPostCount')=='yes') {
+        $theCount=$cat->count+$subCatCount;
+          //$link .= "$taxonomy (".intval($cat->count) + $subCatCount.')';
         if ($taxonomy==true) {
-          $link .= ' ('.intval($cat->count + $subCatCount).')';
+          $link .= '(' . $theCount.')';
         } else {
           $link .= ' ('.intval($cat->category_count).')';
         }
