@@ -4,8 +4,8 @@ Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.3
-Tested up to: 2.5
-Stable tag: 0.5.3
+Tested up to: 2.5.1
+Stable tag: 0.5.4
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -87,6 +87,10 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.5.4
+    * fixed bug - was using hard-coded wp_ prefix in one SQL query. 
+      Now using $wpdb-> instead
 
 * 0.5.3
     * count is now correct for all subcategories

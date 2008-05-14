@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.5.3
+Collapsing Categories version: 0.5.4
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -131,7 +131,7 @@ function list_categories() {
   }
 
   $taxonomy=true;
-  $tables = $wpdb->query("show tables like 'wp_term_relationships'"); 
+  $tables = $wpdb->query("show tables like '$wpdb->term_relationships'"); 
   if ($tables==0) {
     $taxonomy=false;
   }

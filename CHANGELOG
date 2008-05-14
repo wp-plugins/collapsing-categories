@@ -1,5 +1,9 @@
 Fancy Categories Changelog
 
+* 0.5.4
+    * fixed bug - was using hard-coded wp_ prefix in one SQL query. 
+      Now using $wpdb-> instead
+
 * 0.5.3
     * count is now correct for all subcategories
 
