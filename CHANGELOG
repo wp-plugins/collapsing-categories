@@ -1,5 +1,10 @@
 Fancy Categories Changelog
 
+* 0.5.5 (2008/05/19)
+    * fixed bug - html now validates when not displaying posts
+    * new option - choose between arrows or +- for expanding and collapsing
+    * tweaked exclude option to function better with collapsing archives
+
 * 0.5.4
     * fixed bug - was using hard-coded wp_ prefix in one SQL query. 
       Now using $wpdb-> instead

@@ -5,7 +5,7 @@
   else {
     update_option( 'collapsCatShowPostCount', 'no' );
   }
-  if( isset($_POST['showPages']) ) {
+  if( isset($_POST['collapsCatShowPages']) ) {
     update_option( 'collapsCatShowPages', 'yes' );
   }
   else {
@@ -38,9 +38,14 @@
   } elseif ($_POST['showPosts'] == 'no') {
     update_option( 'collapsCatShowPosts', 'no' );
   }
-  if($_POST['exclude']) {
-    $excludeSafe=addslashes($_POST['exclude']);
+  if($_POST['collapsCatExpand'] == '0') {
+    update_option( 'collapsCatExpand', 0 );
+  } elseif ($_POST['collapsCatExpand'] == '1') {
+    update_option( 'collapsCatExpand', 1 );
+  }
+  //if($_POST['collapsCatExclude']) {
+    $excludeSafe=addslashes($_POST['collapsCatExclude']);
     //$excludeSafe=wp_texturize($_POST['exclude']);
     update_option( 'collapsCatExclude', $excludeSafe);
-  }
+  //}
 ?>

@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 0.5.4
+Version: 0.5.5
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories
 
@@ -47,6 +47,7 @@ class collapsCat {
 			add_option( 'collapsCatSortOrder', 'ASC' );
 			add_option( 'collapsCatShowPosts', 'yes' );
 			add_option( 'collapsCatExclude', '' );
+			add_option( 'collapsCatExpand', 0 );
 		}
 	}
 
@@ -62,13 +63,20 @@ class collapsCat {
 
 
 	function get_head() {
+    $expand='&#9658;';
+    $collapse='&#9660;';
+
+    if (get_option('collapsCatExpand')==1) {
+      $expand='+';
+      $collapse='&mdash;';
+    }
 		$url = get_settings('siteurl');
     echo "<style type='text/css'>
 		@import '$url/wp-content/plugins/collapsing-categories/collapsCat.css';
     </style>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.5.4\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+		echo "// These variables are part of the Collapsing Categories Plugin version: 0.5.5\n// Copyright 2007 Robert Felty (robfelty.com)\n";
     echo "function expandCat( e ) {
     if( e.target ) {
       src = e.target;
@@ -90,13 +98,13 @@ class collapsCat {
       childList.style.display = 'none';
       src.setAttribute('class','collapsArch show');
       src.setAttribute('title','click to expand');
-      src.innerHTML='&#9658&nbsp;';
+      src.innerHTML='$expand&nbsp;';
     }
     else {
       childList.style.display = '';
       src.setAttribute('class','collapsArch hide');
       src.setAttribute('title','click to collapse');
-      src.innerHTML='&#9660&nbsp;';
+      src.innerHTML='$collapse&nbsp;';
     }
 
     if( e.preventDefault ) {
