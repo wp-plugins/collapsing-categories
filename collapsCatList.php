@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.5.5
+Collapsing Categories version: 0.5.6
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -27,6 +27,7 @@ This file is part of Collapsing Categories
 
 // Helper functions
 function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount,$subCatPostCount) {
+  global $expand, $collapse;
   $subCatPosts=array();
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
@@ -114,7 +115,7 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
 /* the category and tagging database structures changed drastically between wordpress 2.1 and 2.3. We will use different queries for category based vs. term_taxonomy based database structures */
 //$taxonomy=false;
 function list_categories() {
-  global $wpdb;
+  global $wpdb, $expand, $collapse;
   $expand='&#9658;';
   $collapse='&#9660;';
 
@@ -169,7 +170,7 @@ function list_categories() {
   echo "\n    <ul id='collapsCatList'>\n";
 
   if ($taxonomy==true) {
-      $catquery = "SELECT $wpdb->term_taxonomy.count as 'count', $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.count >0 AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' $exclusions $sortColumn $sortOrder";
+      $catquery = "SELECT $wpdb->term_taxonomy.count as 'count', $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' $exclusions $sortColumn $sortOrder";
       $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.id, $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.id = $wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish' AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id AND $wpdb->term_taxonomy.taxonomy = 'category' $isPage";
   } else {
     $catquery = "SELECT cat_ID, cat_name, category_nicename, category_description, category_parent, category_count FROM $wpdb->categories WHERE cat_ID > 0 AND category_parent = 0 AND category_count > 0";
@@ -191,6 +192,7 @@ function list_categories() {
   echo "</pre>";
   */
   foreach( $categories as $cat ) {
+    //echo $cat->name;
     if ($cat->parent==0) {
       $url = get_settings('siteurl');
       $home=$url;
@@ -221,54 +223,56 @@ function list_categories() {
       $subCatPostCount=0;
       $subCatCount=0;
       list ($subCatLinks, $subCatCount,$subCatPostCount, $subCatPosts)=get_sub_cat($cat, $categories, $parents, $posts,$taxonomy,$subCatCount,$subCatPostCount);
-      
-      if (get_option('collapsCatShowPosts')=='yes') {
-        if( empty( $posts ) && empty($categories)) {
-          print( "      <li class='collapsCat'><span class='collapsCat hide' onclick='expandCat(event); return false'>$collapse&nbsp;</span>" );
-        } else {
-          print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand&nbsp;</span>" );
-        }
-      } else {
-        // don't include the triangles if posts are not shown and there are no
-        // more subcategories
-        if ($subCatPostCount>0) {
-          print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand&nbsp;</span>" );
-        } else {
-          print( "      <li class='collapsCat'>&nbsp;&nbsp;" );
-        } 
-      }
-      if( get_option('collapsCatShowPostCount')=='yes') {
-        $theCount=$cat->count+$subCatPostCount;
-          //$link .= "$taxonomy (".intval($cat->count) + $subCatPostCount.')';
-        if ($taxonomy==true) {
-          $link .= '(' . $theCount.')';
-        } else {
-          $link .= ' ('.intval($cat->category_count).')';
-        }
-      }
-      print( $link );
-      if (($subCatPostCount>0) || (get_option('collapsCatShowPosts')=='yes')) {
-        print( "\n     <ul style=\"display:none;count=$subCatCount\">\n" );
-      }
-      echo $subCatLinks;
-      // Now print out the post info
-      if( ! empty($posts) ) {
+        
+      $theCount=$cat->count+$subCatPostCount;
+      if ($theCount>0) {
         if (get_option('collapsCatShowPosts')=='yes') {
-          foreach ($posts as $post) {
-            if (($post->term_id == $cat->term_id)  && (!in_array($post->id, $subCatPosts))) {
-              $date=preg_replace("/-/", '/', $post->date);
-              $name=$post->post_name;
-              echo "          <li class='collapsCatPost'><a href='".  get_permalink($post->id)."'>" .  strip_tags($post->post_title) . "</a></li>\n";
-              //echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post->post_title . "</a></li>\n";
-            }
+          if( empty( $posts ) && empty($categories)) {
+            print( "      <li class='collapsCat'><span class='collapsCat hide' onclick='expandCat(event); return false'>$collapse&nbsp;</span>" );
+          } else {
+            print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand&nbsp;</span>" );
           }
-          // close <ul> and <li> before starting a new category
-        } 
-      if ($subCatPostCount>0 || get_option('collapsCatShowPosts')=='yes') {
-        echo "        </ul>\n";
-      }
-      echo "      </li> <!-- ending category -->\n";
-      }
+        } else {
+          // don't include the triangles if posts are not shown and there are no
+          // more subcategories
+          if ($subCatPostCount>0) {
+            print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand&nbsp;</span>" );
+          } else {
+            print( "      <li class='collapsCat'>&nbsp;&nbsp;" );
+          } 
+        }
+        if( get_option('collapsCatShowPostCount')=='yes') {
+            //$link .= "$taxonomy (".intval($cat->count) + $subCatPostCount.')';
+          if ($taxonomy==true) {
+            $link .= '(' . $theCount.')';
+          } else {
+            $link .= ' ('.intval($cat->category_count).')';
+          }
+        }
+          print( $link );
+        if (($subCatPostCount>0) || (get_option('collapsCatShowPosts')=='yes')) {
+          print( "\n     <ul style=\"display:none;count=$subCatCount\">\n" );
+        }
+        echo $subCatLinks;
+        // Now print out the post info
+        if( ! empty($posts) ) {
+          if (get_option('collapsCatShowPosts')=='yes') {
+            foreach ($posts as $post) {
+              if (($post->term_id == $cat->term_id)  && (!in_array($post->id, $subCatPosts))) {
+                $date=preg_replace("/-/", '/', $post->date);
+                $name=$post->post_name;
+                echo "          <li class='collapsCatPost'><a href='".  get_permalink($post->id)."'>" .  strip_tags($post->post_title) . "</a></li>\n";
+                //echo "<li class='collapsCatPost'><a href='$url/$archives$date/$name'>" .  $post->post_title . "</a></li>\n";
+              }
+            }
+            // close <ul> and <li> before starting a new category
+          } 
+        if ($subCatPostCount>0 || get_option('collapsCatShowPosts')=='yes') {
+          echo "        </ul>\n";
+        }
+        echo "      </li> <!-- ending category -->\n";
+        }
+      } // end if theCount>0
     }
   }
   echo "    </ul> <!-- ending collapsCat -->\n";

@@ -1,5 +1,13 @@
 Fancy Categories Changelog
 
+* 0.5.6 (2008/05/23)
+    * fixed bug such that subcategories would not display the expand and
+      collapse icons
+    * fixed bug that categories with subcategories that have posts, but do not
+      have posts themselves will be displayed
+    * Thanks to [Andy] (http://www.onkelandy.com/blog) for both of these bug
+      notices
+
 * 0.5.5 (2008/05/19)
     * fixed bug - html now validates when not displaying posts
     * new option - choose between arrows or +- for expanding and collapsing
