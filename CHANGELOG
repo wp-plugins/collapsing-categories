@@ -1,5 +1,10 @@
 Fancy Categories Changelog
 
+* 0.5.7 (2008/05/23)
+    * fixed misnamed class in javascript (collapsArch -> collapsCat)
+    * added font-family definition to css to make it monospace for +/- 
+    * added another option with brackets around the +/-
+
 * 0.5.6 (2008/05/23)
     * fixed bug such that subcategories would not display the expand and
       collapse icons

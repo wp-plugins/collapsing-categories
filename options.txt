@@ -20,6 +20,7 @@
     <li>Expanding and collapse characters:<br />
      <input type="radio" name="collapsCatExpand" <?php if(get_option('collapsCatExpand')==0) echo 'checked'; ?> id="expand0" value='0'></input> <label for="expand0">&#9658;&nbsp;&#9660;</label>
      <input type="radio" name="collapsCatExpand" <?php if(get_option('collapsCatExpand')==1) echo 'checked'; ?> id="expand1" value='1'></input> <label for="expand1">+&nbsp;&mdash;</label>
+     <input type="radio" name="collapsCatExpand" <?php if(get_option('collapsCatExpand')==2) echo 'checked'; ?> id="expand2" value='2'></input> <label for="expand1">[+]&nbsp;[&mdash;]</label>
     </li>
     <li>Exclude these categories (separated by commas):<br />
      <input type="text" name="collapsCatExclude" value="<?php echo get_option('collapsCatExclude') ?>" id="collapsCatExclude"</input> 

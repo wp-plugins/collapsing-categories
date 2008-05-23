@@ -69,6 +69,9 @@ class collapsCat {
     if (get_option('collapsCatExpand')==1) {
       $expand='+';
       $collapse='&mdash;';
+    } elseif (get_option('collapsCatExpand')==2) {
+      $expand='[+]';
+      $collapse='[&mdash;]';
     }
 		$url = get_settings('siteurl');
     echo "<style type='text/css'>
@@ -94,17 +97,17 @@ class collapsCat {
       }
     }
 
-    if( src.getAttribute( 'class' ) == 'collapsArch hide' ) {
+    if( src.getAttribute( 'class' ) == 'collapsCat hide' ) {
       childList.style.display = 'none';
-      src.setAttribute('class','collapsArch show');
+      src.setAttribute('class','collapsCat show');
       src.setAttribute('title','click to expand');
-      src.innerHTML='$expand&nbsp;';
+      src.innerHTML='$expand';
     }
     else {
       childList.style.display = '';
-      src.setAttribute('class','collapsArch hide');
+      src.setAttribute('class','collapsCat hide');
       src.setAttribute('title','click to collapse');
-      src.innerHTML='$collapse&nbsp;';
+      src.innerHTML='$collapse';
     }
 
     if( e.preventDefault ) {

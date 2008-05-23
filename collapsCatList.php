@@ -39,7 +39,7 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
         if (!in_array($cat2->term_id, $parents)) {
           $subCatCount=0;
           if (get_option('collapsCatShowPosts')=='yes') {
-            $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand&nbsp;</span>" );
+            $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand</span> " );
           } else {
             $subCatLinks.=( "<li class='collapsCat'>&nbsp;&nbsp;" );
           }
@@ -49,9 +49,9 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
           $subCatCount=1;
           //echo "subCatCount = $subCatCount ... after calling get_sub_cat\n";
           if (get_option('collapsCatShowPosts')=='yes') {
-            $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand&nbsp;</span>" );
+            $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand</span> " );
           } else {
-            $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand&nbsp;</span>" );
+            $subCatLinks.=( "<li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand</span> " );
           }
         }
         if ($taxonomy==true) {
@@ -122,6 +122,9 @@ function list_categories() {
   if (get_option('collapsCatExpand')==1) {
     $expand='+';
     $collapse='&mdash;';
+  } elseif (get_option('collapsCatExpand')==2) {
+    $expand='[+]';
+    $collapse='[&mdash;]';
   }
   if (get_option('collapsCatLinkToArchives')=='archives') {
     $archives='archives.php/';
@@ -228,15 +231,15 @@ function list_categories() {
       if ($theCount>0) {
         if (get_option('collapsCatShowPosts')=='yes') {
           if( empty( $posts ) && empty($categories)) {
-            print( "      <li class='collapsCat'><span class='collapsCat hide' onclick='expandCat(event); return false'>$collapse&nbsp;</span>" );
+            print( "      <li class='collapsCat'><span class='collapsCat hide' onclick='expandCat(event); return false'>$collapse</span> " );
           } else {
-            print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand&nbsp;</span>" );
+            print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand</span> " );
           }
         } else {
           // don't include the triangles if posts are not shown and there are no
           // more subcategories
           if ($subCatPostCount>0) {
-            print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand&nbsp;</span>" );
+            print( "      <li class='collapsCat'><span class='collapsCat show' onclick='expandCat(event); return false'>$expand</span> " );
           } else {
             print( "      <li class='collapsCat'>&nbsp;&nbsp;" );
           } 

@@ -42,6 +42,8 @@
     update_option( 'collapsCatExpand', 0 );
   } elseif ($_POST['collapsCatExpand'] == '1') {
     update_option( 'collapsCatExpand', 1 );
+  } elseif ($_POST['collapsCatExpand'] == '2') {
+    update_option( 'collapsCatExpand', 2 );
   }
   //if($_POST['collapsCatExclude']) {
     $excludeSafe=addslashes($_POST['collapsCatExclude']);
