@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.3
 Tested up to: 2.5.1
-Stable tag: 0.5.6
+Stable tag: 0.5.7
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -59,8 +59,28 @@ drag over the Collapsing Categories Widget.
 
 == Frequently Asked Questions ==
 
-None yet.
+=  How do I change the style of the collapsing categories lists? =
 
+  The collapsing categories plugin uses several ids and classes which can be
+  styled with CSS. I have provided a few defaults in the collapsCat.css file.
+  You can modify the collapsCat.css file to your liking. Alternatively, you
+  can copy those rules into your themes style file. You may have to rename
+  some of the id statements. For example, if your sidebar is called
+  "myawesomesidebar", you would rewrite the line 
+
+  #sidebar li.collapsCat {list-style-type:none}
+  to
+  #myawesomesidebar li.collapsCat {list-style-type:none}
+
+= The stylesheet doesn't seem to be having any effect? =
+ 
+  Check this url in your browser:
+  http://yourblogaddress/wp-content/plugins/collapsing-categories/collapsCat.css
+  If you don't see a plaintext file with css style rules, there may be
+  something wrong with your .htaccess file (mod_rewrite). If you don't know
+  how to fix this, you can copy the style rules there into your themes style
+  file.
+   
 == Screenshots ==
 
 1. a few expanded categories with default theme, showing nested categories
@@ -75,7 +95,7 @@ I use this plugin in my blog at http://blog.robfelty.com
 
   * Show post counts in Category links
   * Show pages as well as posts
-  * Links point to root, index.php or archives.php
+  * Links point to root, index.php or categories.php
   * Sort by category name or category id
   * Sort in ascending or descending order
 
@@ -91,7 +111,7 @@ behavior in wordpress anyways)
 * 0.5.5 (2008/05/19)
     * fixed bug - html now validates when not displaying posts
     * new option - choose between arrows or +- for expanding and collapsing
-    * tweaked exclude option to function better with collapsing archives
+    * tweaked exclude option to function better with collapsing categories
 
 * 0.5.4
     * fixed bug - was using hard-coded wp_ prefix in one SQL query. 
@@ -132,7 +152,7 @@ behavior in wordpress anyways)
     * Verified to work with wordpress 2.5
     * Now has custom styling option through the collapsCat.css stylesheet
     * updated screenshots
-    * moved javascript into collapsArch.php and got rid of separate file
+    * moved javascript into collapsCat.php and got rid of separate file
 
 * 0.3.7
     * strips html tags from post titles now
@@ -149,7 +169,7 @@ behavior in wordpress anyways)
     * Added option to sort categories by id or name
 
 * 0.3.3
-    * fixed bug in headers when collapsArch is not loaded
+    * fixed bug in headers when collapsCat is not loaded
     * fixed a few minor markup issues to make it valid xhtml
 
 * 0.3.2
@@ -159,7 +179,7 @@ behavior in wordpress anyways)
 
 * 0.3.1
     * Added option to make post links to index.php, root, or archive.php, like
-      collapsing-archives
+      collapsing-categories
     * Fixed link to category listings
 
 * 0.3
@@ -174,16 +194,16 @@ behavior in wordpress anyways)
     * Added style information to make triangles bigger and give a pointer
       cursor over them
     * Added title tags to triangles to indicate functionality
-		* Checking whether some of the same functionality from collapsing-archives
+		* Checking whether some of the same functionality from collapsing-categories
 		  has already been loaded (for example the javascript file) in order to
 		  avoid redundancy
 
 * 0.2: 
-    * Changed name from Fancy Archives to Collapsing Archives
+    * Changed name from Fancy categories to Collapsing categories
     * Changed author from Andrew Rader to Robert Felty
     * Added triangles which mark the collapsing and expanding features
       That is, clicking on the triangle collapses or expands, while clicking
-      on a month or year links to the archives for the said category.
+      on a category links to the category list for the said category.
       This uses html entities (dings) instead of images, for a variety of 
       reasons
     * Lists the titles of posts, instead of just listing subcategories

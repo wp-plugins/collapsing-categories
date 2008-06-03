@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.5.6
+Collapsing Categories version: 0.5.7
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
