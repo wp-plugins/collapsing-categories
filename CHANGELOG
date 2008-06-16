@@ -1,5 +1,10 @@
 Fancy Categories Changelog
 
+* 0.5.8 (2008/06/15)
+		* bug fix - category description now correctly appears in title attribute
+		  if there is a description for a given category
+    * implemented a few more changes to work towards internationalization
+
 * 0.5.7 (2008/05/23)
     * fixed misnamed class in javascript (collapsArch -> collapsCat)
     * added font-family definition to css to make it monospace for +/- 

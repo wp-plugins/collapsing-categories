@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 0.5.7
+Version: 0.5.8
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories
 
@@ -14,6 +14,12 @@ This work is largely based on the Fancy Categories plugin by Andrew Rader
 (http://nymb.us), which was also distributed under the GPLv2. I have tried
 contacting him, but his website has been down for quite some time now. See the
 CHANGELOG file for more information.
+
+TODO
+* Add option so that clicking on category name either goes to the category
+	listing page, or it expands the category
+* serialize options
+* allow more than one instance of the widget
 
 This file is part of Collapsing Categories
 
@@ -79,7 +85,7 @@ class collapsCat {
     </style>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.5.7\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+		echo "// These variables are part of the Collapsing Categories Plugin version: 0.5.8\n// Copyright 2007 Robert Felty (robfelty.com)\n";
     echo "function expandCat( e ) {
     if( e.target ) {
       src = e.target;

@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.5.7
+Collapsing Categories version: 0.5.8
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -61,10 +61,10 @@ function get_sub_cat($cat, $categories, $parents, $posts, $taxonomy,$subCatCount
           $link2 = "<a href='".get_category_link($cat2->cat_ID)."' ";
           //$link2 = "<a href=$url/'".get_category_link($cat2->cat_ID)."' ";
         }
-        if ( empty($cat2->category_description) ) {
+        if ( empty($cat2->description) ) {
           $link2 .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat2->name)) . '"';
         } else {
-          $link2 .= 'title="' . wp_specialchars(apply_filters('category_description',$cat2->category_description,$cat2)) . '"';
+          $link2 .= 'title="' . wp_specialchars(apply_filters('description',$cat2->description,$cat2)) . '"';
         }
         $link2 .= '>';
         if ($taxonomy==true) {
@@ -173,8 +173,23 @@ function list_categories() {
   echo "\n    <ul id='collapsCatList'>\n";
 
   if ($taxonomy==true) {
-      $catquery = "SELECT $wpdb->term_taxonomy.count as 'count', $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.parent FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->terms.name != 'Blogroll' AND $wpdb->term_taxonomy.taxonomy = 'category' $exclusions $sortColumn $sortOrder";
-      $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.id, $wpdb->posts.post_title, $wpdb->posts.post_name, date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.id = $wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish' AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id AND $wpdb->term_taxonomy.taxonomy = 'category' $isPage";
+		$catquery = "SELECT $wpdb->term_taxonomy.count as 'count',
+			$wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug,
+			$wpdb->term_taxonomy.parent, $wpdb->term_taxonomy.description FROM
+			$wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id =
+			$wpdb->term_taxonomy.term_id AND $wpdb->terms.name != 'Blogroll' AND
+			$wpdb->term_taxonomy.taxonomy = 'category' $exclusions $sortColumn
+			$sortOrder";
+		$postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name,
+			$wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.id,
+			$wpdb->posts.post_title, $wpdb->posts.post_name,
+			date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms,
+			$wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.id =
+			$wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish'
+			AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND
+			$wpdb->term_relationships.term_taxonomy_id =
+			$wpdb->term_taxonomy.term_taxonomy_id AND $wpdb->term_taxonomy.taxonomy =
+			'category' $isPage";
   } else {
     $catquery = "SELECT cat_ID, cat_name, category_nicename, category_description, category_parent, category_count FROM $wpdb->categories WHERE cat_ID > 0 AND category_parent = 0 AND category_count > 0";
     $postquery = "SELECT $wpdb->posts.post_title, $wpdb->posts.post_name, DATE($wpdb->posts.post_date) AS 'date' FROM $wpdb->posts, $wpdb->post2cat, $wpdb->categories where $wpdb->post2cat.category_id = $cat->cat_ID and $wpdb->posts.ID = $wpdb->post2cat.post_id and $wpdb->categories.cat_ID = $wpdb->post2cat.category_id and $wpdb->posts.post_status = 'publish' and $wpdb->categories.category_count>0 $isPage";
@@ -190,10 +205,10 @@ function list_categories() {
       array_push($parents, $cat->parent);
     }
   }
-  /*echo "<pre>";
-  print_r($parents);
-  echo "</pre>";
-  */
+  //echo "<pre>";
+  //print_r($categories);
+  //echo "</pre>";
+  
   foreach( $categories as $cat ) {
     //echo $cat->name;
     if ($cat->parent==0) {
@@ -207,14 +222,14 @@ function list_categories() {
       } else {
         $link = "<a href='".get_category_link($cat->cat_ID)."' ";
       }
-      if ( empty($cat->category_description) ) {
+      if ( empty($cat->description) ) {
         if( get_option('collapsCatShowPostCount')=='yes') {
           $link .= 'title="'. sprintf(__("View all posts filed under %s"), wp_specialchars($cat->name)) . '"';
         } else {
-          $link .= "title='View all subcategories'";
+          $link .= 'title='. __('View all subcategories');
         }
       } else {
-        $link .= 'title="' . wp_specialchars(apply_filters('category_description',$cat->category_description,$cat)) . '"';
+        $link .= 'title="' . wp_specialchars(apply_filters('description',$cat->description,$cat)) . '"';
       }
       $link .= '>';
       if ($taxonomy==true) {
