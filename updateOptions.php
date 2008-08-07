@@ -23,12 +23,21 @@
   } elseif ($_POST['sortOrder'] == 'DESC') {
     update_option( 'collapsCatSortOrder', 'DESC' );
   }
+  if($_POST['sortPostOrder'] == 'ASC') {
+    update_option( 'collapsCatPostSortOrder', 'ASC' );
+  } elseif ($_POST['sortPostOrder'] == 'DESC') {
+    update_option( 'collapsCatPostSortOrder', 'DESC' );
+  }
   if($_POST['sort'] == 'catName') {
     update_option( 'collapsCatSort', 'catName' );
   } elseif ($_POST['sort'] == 'catId') {
     update_option( 'collapsCatSort', 'catId' );
   } elseif ($_POST['sort'] == 'catSlug') {
     update_option( 'collapsCatSort', 'catSlug' );
+  } elseif ($_POST['sort'] == 'catOrder') {
+    update_option( 'collapsCatSort', 'catOrder' );
+  } elseif ($_POST['sort'] == 'catCount') {
+    update_option( 'collapsCatSort', 'catCount' );
   } elseif ($_POST['sort'] == '') {
     update_option( 'collapsCatSort', '' );
     update_option( 'collapsCatSortOrder', '' );

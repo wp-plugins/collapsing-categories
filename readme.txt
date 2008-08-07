@@ -4,8 +4,8 @@ Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.3
-Tested up to: 2.5.1
-Stable tag: 0.5.8
+Tested up to: 2.6
+Stable tag: 0.5.9
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -69,7 +69,9 @@ drag over the Collapsing Categories Widget.
   "myawesomesidebar", you would rewrite the line 
 
   #sidebar li.collapsCat {list-style-type:none}
+
   to
+
   #myawesomesidebar li.collapsCat {list-style-type:none}
 
 = The stylesheet doesn't seem to be having any effect? =
@@ -107,6 +109,32 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.5.9 (2008/08/07)
+    * minor bug fix - added space before category count
+    * Added option to sort by category (term) order
+    * Added option to sort by category (term) count (note that it sorts by the
+      count of the parent category, so categories with many subcategories, but
+      not many posts themselves will be out of order
+    * Added option to sort posts within categories
+
+* 0.5.8 (2008/06/15)
+		* bug fix - category description now correctly appears in title attribute
+		  if there is a description for a given category
+    * implemented a few more changes to work towards internationalization
+
+* 0.5.7 (2008/05/23)
+    * fixed misnamed class in javascript (collapsArch -> collapsCat)
+    * added font-family definition to css to make it monospace for +/- 
+    * added another option with brackets around the +/-
+
+* 0.5.6 (2008/05/23)
+    * fixed bug such that subcategories would not display the expand and
+      collapse icons
+    * fixed bug that categories with subcategories that have posts, but do not
+      have posts themselves will be displayed
+    * Thanks to [Andy] (http://www.onkelandy.com/blog) for both of these bug
+      notices
 
 * 0.5.5 (2008/05/19)
     * fixed bug - html now validates when not displaying posts

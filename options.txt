@@ -4,14 +4,22 @@
     <li>
      <input type="checkbox" name="collapsCatShowPages" <?php if(get_option('collapsCatShowPages')=='yes') echo 'checked'; ?> id="collapsCatShowPages"></input> <label for="collapsCatShowPages">Show Pages as well as posts</label>
     </li>
-    <li>Sort by:<br />
-     <input type="radio" name="sort" <?php if(get_option('collapsCatSort')=='catName') echo 'checked'; ?> id="sortCatName" value='catName'></input> <label for="sortCatName">Category name</label>
-     <input type="radio" name="sort" <?php if(get_option('collapsCatSort')=='catId') echo 'checked'; ?> id="sortCatId" value='catId'></input> <label for="sortCatId">Category id</label>
-     <input type="radio" name="sort" <?php if(get_option('collapsCatSort')=='catSlug') echo 'checked'; ?> id="sortCatSlug" value='catSlug'></input> <label for="sortCatSlug">Category Slug</label>
+    <li>Sort Categories by:<br />
+     <select name="sort">
+     <option <?php if(get_option('collapsCatSort')=='catName') echo 'selected'; ?> id="sortCatName" value='catName'>Category name</option>
+     <option <?php if(get_option('collapsCatSort')=='catId') echo 'selected'; ?> id="sortCatId" value='catId'>Category id</option>
+     <option <?php if(get_option('collapsCatSort')=='catSlug') echo 'selected'; ?> id="sortCatSlug" value='catSlug'>Category Slug</option>
+     <option <?php if(get_option('collapsCatSort')=='catOrder') echo 'selected'; ?> id="sortCatOrder" value='catOrder'>Category (term) Order</option>
+     <option <?php if(get_option('collapsCatSort')=='catCount') echo 'selected'; ?> id="sortCatCount" value='catCount'>Category Count</option>
+    </select>
     </li>
-    <li>Sort order:<br />
+    <li>Category Sort order:<br />
      <input type="radio" name="sortOrder" <?php if(get_option('collapsCatSortOrder')=='ASC') echo 'checked'; ?> id="sortASC" value='ASC'></input> <label for="sortASC">Ascending</label>
      <input type="radio" name="sortOrder" <?php if(get_option('collapsCatSortOrder')=='DESC') echo 'checked'; ?> id="sortDESC" value='DESC'></input> <label for="sortDESC">Descending</label>
+    </li>
+    <li>Post Sort order:<br />
+     <input type="radio" name="postSortOrder" <?php if(get_option('collapsCatPostSortOrder')=='ASC') echo 'checked'; ?> id="sortPostASC" value='ASC'></input> <label for="sortPostASC">Chronologically</label>
+     <input type="radio" name="postSortOrder" <?php if(get_option('collapsCatPostSortOrder')=='DESC') echo 'checked'; ?> id="sortPostDESC" value='DESC'></input> <label for="sortPostDESC">Reverse Chronologically</label>
     </li>
     <li>Expanding shows:<br />
      <input type="radio" name="showPosts" <?php if(get_option('collapsCatShowPosts')=='yes') echo 'checked'; ?> id="showPostsYes" value='yes'></input> <label for="showPostsYes">Sub-categories and Posts</label>

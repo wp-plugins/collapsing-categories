@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.5.8
+Collapsing Categories version: 0.5.9
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -166,8 +166,19 @@ function list_categories() {
       $sortColumn="ORDER BY $wpdb->terms.term_id";
     } elseif (get_option('collapsCatSort')=='catSlug') {
       $sortColumn="ORDER BY $wpdb->terms.slug";
+    } elseif (get_option('collapsCatSort')=='catOrder') {
+      $sortColumn="ORDER BY $wpdb->terms.term_order";
+    } elseif (get_option('collapsCatSort')=='catCount') {
+      $sortColumn="ORDER BY $wpdb->term_taxonomy.count";
     }
     $sortOrder = get_option('collapsCatSortOrder');
+  } 
+  if (get_option('collapsCatPostSort')!='') {
+    if (get_option('collapsCatPostSort')=='ASC') {
+      $sortColumn="ORDER BY $wpdb->posts.post_date ASC";
+    } elseif (get_option('collapsCatPostSort')=='DESC') {
+      $sortColumn="ORDER BY $wpdb->posts.post_date DESC";
+    }
   } 
 
   echo "\n    <ul id='collapsCatList'>\n";
@@ -262,7 +273,7 @@ function list_categories() {
         if( get_option('collapsCatShowPostCount')=='yes') {
             //$link .= "$taxonomy (".intval($cat->count) + $subCatPostCount.')';
           if ($taxonomy==true) {
-            $link .= '(' . $theCount.')';
+            $link .= ' (' . $theCount.')';
           } else {
             $link .= ' ('.intval($cat->category_count).')';
           }

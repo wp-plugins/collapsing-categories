@@ -1,5 +1,13 @@
 Fancy Categories Changelog
 
+* 0.5.9 (2008/08/07)
+    * minor bug fix - added space before category count
+    * Added option to sort by category (term) order
+    * Added option to sort by category (term) count (note that it sorts by the
+      count of the parent category, so categories with many subcategories, but
+      not many posts themselves will be out of order
+    * Added option to sort posts within categories
+
 * 0.5.8 (2008/06/15)
 		* bug fix - category description now correctly appears in title attribute
 		  if there is a description for a given category
