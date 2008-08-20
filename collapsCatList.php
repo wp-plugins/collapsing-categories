@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.5.9
+Collapsing Categories version: 0.5.10
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -156,7 +156,7 @@ function list_categories() {
     $taxonomy=false;
   }
   $isPage='';
-  if (get_option('collapsCatIncludePages'=='no')) {
+  if (get_option('collapsCatShowPages')=='no') {
     $isPage="AND $wpdb->posts.post_type='post'";
   }
   if (get_option('collapsCatSort')!='') {
@@ -217,7 +217,8 @@ function list_categories() {
     }
   }
   //echo "<pre>";
-  //print_r($categories);
+  ////print_r($categories);
+  //echo "$postquery\n";
   //echo "</pre>";
   
   foreach( $categories as $cat ) {
