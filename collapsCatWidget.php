@@ -115,9 +115,9 @@ if (function_exists('collapsCat')) {
       if($widget_collapsCat['linkToCat'] == 'no') {
         $linkToCat= 'no' ;
       }
-      $showPostCount= 'yes' ;
-      if($widget_collapsCat['showPostCount'] == 'no') {
-        $showPostCount= 'no' ;
+      $showPostCount= 'no' ;
+      if($widget_collapsCat['showPostCount'] == 'yes') {
+        $showPostCount= 'yes' ;
       }
       $showPages= 'no' ;
       if($widget_collapsCat['showPages'] == 'yes') {
