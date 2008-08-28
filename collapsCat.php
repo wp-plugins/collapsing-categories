@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 0.5.10
+Version: 0.6
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories
 
@@ -15,11 +15,6 @@ This work is largely based on the Fancy Categories plugin by Andrew Rader
 contacting him, but his website has been down for quite some time now. See the
 CHANGELOG file for more information.
 
-TODO
-* Add option so that clicking on category name either goes to the category
-	listing page, or it expands the category
-* serialize options
-* allow more than one instance of the widget
 
 This file is part of Collapsing Categories
 
@@ -40,54 +35,35 @@ This file is part of Collapsing Categories
 
 add_action( 'wp_head', array('collapsCat','get_head'));
 add_action('activate_collapsing-categories/collapsCat.php', array('collapsCat','init'));
-add_action('admin_menu', array('collapsCat','setup'));
 
 class collapsCat {
 
 	function init() {
-		if( function_exists('add_option') ) {
-			add_option( 'collapsCatShowPostCount', 'yes' );
-			add_option( 'collapsCatShowPages', 'no' );
-			add_option( 'collapsCatLinkToArchives', 'root' );
-			add_option( 'collapsCatSort', 'catName' );
-			add_option( 'collapsCatSortOrder', 'ASC' );
-			add_option( 'collapsCatPostSortOrder', 'DESC' );
-			add_option( 'collapsCatShowPosts', 'yes' );
-			add_option( 'collapsCatExclude', '' );
-			add_option( 'collapsCatExpand', 0 );
-		}
 	}
 
 	function setup() {
-		if( function_exists('add_options_page') ) {
-			add_options_page(__('Collapsing Categories'),__('Collapsing Categories'),1,basename(__FILE__),array('collapsCat','ui'));
-		}
 	}
-
-	function ui() {
-		include_once( 'collapsCatUI.php' );
-	}
-
 
 	function get_head() {
-    $expand='&#9658;';
-    $collapse='&#9660;';
-
-    if (get_option('collapsCatExpand')==1) {
-      $expand='+';
-      $collapse='&mdash;';
-    } elseif (get_option('collapsCatExpand')==2) {
-      $expand='[+]';
-      $collapse='[&mdash;]';
-    }
 		$url = get_settings('siteurl');
     echo "<style type='text/css'>
 		@import '$url/wp-content/plugins/collapsing-categories/collapsCat.css';
     </style>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.5.10\n// Copyright 2007 Robert Felty (robfelty.com)\n";
-    echo "function expandCat( e ) {
+		echo "// These variables are part of the Collapsing Categories Plugin version: 0.6\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+    echo "function expandCat( e, expand ) {
+    if (expand==1) {
+      expand='+';
+      collapse='&mdash;';
+    } else if (expand==2) {
+      expand='[+]';
+      collapse='[&mdash;]';
+    } else {
+      expand='&#9658;';
+      collapse='&#9660;';
+    }
+
     if( e.target ) {
       src = e.target;
     }
@@ -108,13 +84,13 @@ class collapsCat {
       childList.style.display = 'none';
       src.setAttribute('class','collapsCat show');
       src.setAttribute('title','click to expand');
-      src.innerHTML='$expand';
+      src.innerHTML=src.innerHTML.replace(/^.* /,expand+' ');
     }
     else {
       childList.style.display = '';
       src.setAttribute('class','collapsCat hide');
       src.setAttribute('title','click to collapse');
-      src.innerHTML='$collapse';
+      src.innerHTML=src.innerHTML.replace(/^.* /,collapse+' ');
     }
 
     if( e.preventDefault ) {
@@ -130,8 +106,8 @@ class collapsCat {
 
 
 		include( 'collapsCatList.php' );
-function collapsCat() {
-	list_categories();
+function collapsCat($number) {
+	list_categories($number);
 }
 include('collapsCatWidget.php');
 ?>

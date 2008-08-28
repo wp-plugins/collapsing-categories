@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.3
 Tested up to: 2.6
-Stable tag: 0.5.10
+Stable tag: 0.6
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -20,42 +20,9 @@ It is largely based off of the Fancy Categories Plugin by Andrew Rader
 
 == Installation ==
 
-MANUAL INSTALLATION
-(the only option for pre 2.3 wordpress, unless you have the widget plugin installed)
-
-Unpackage contents to wp-content/plugins/ so that the files are in
-a collapsCat directory. Now enable the plugin. To use the plugin,
-change the following where appropriate	(most likely sidebar.php):
-
-	<ul>
-	 `<?php wp_list_cats(...); ?>`
-	</ul>
-
-To something of the following:
-`
-	<?php
-	  if( function_exists('collapsCat') ) {
-	  collapsCat();
-	} else {
-	  echo "<ul>\n";
-	  wp_list_cats(...);
-	  echo "</ul>\n";
-	}
-	?>
-`
-
-The above will fall back to the WP function for categories if you disable
-the plugin.
-
-WIDGET INSTALLATION
-
-For those who have widget capabilities, (default in Wordpress 2.3+), installation is easier. 
-
-Unpackage contents to wp-content/plugins/ so that the files are in a collapsCat
-directory. There should be 2 new plugins in your Wordpress Admin interface --
-Collapsing Categories, and Collapsing Categories Widget. You must enable both
-of them, in that order. Then simply go the Presentation > Widgets section and
-drag over the Collapsing Categories Widget.
+Unpackage contents to wp-content/plugins/ so that the files are in a
+collapsing-categories directory. Activate the plugin, then simply go the
+Presentation > Widgets section and drag over the Collapsing Categories Widget.
 
 == Frequently Asked Questions ==
 
@@ -109,6 +76,14 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.6 (2008/08/27)
+    * Can have multiple instances of widgets, each with separate options
+    * No longer works as non-widget
+    * All options are stored in one database row
+    * Added more sorting options
+    * Added option to include or exclude certain categories
+    * Added option to expand certain categories by default
 
 * 0.5.10 (2008/08/20)
     * minor bug fix. Fixed option to optionally show pages

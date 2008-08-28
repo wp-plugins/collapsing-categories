@@ -1,4 +1,12 @@
-Fancy Categories Changelog
+Collapsing Categories Changelog
+
+* 0.6 (2008/08/27)
+    * Can have multiple instances of widgets, each with separate options
+    * No longer works as non-widget
+    * All options are stored in one database row
+    * Added more sorting options
+    * Added option to include or exclude certain categories
+    * Added option to expand certain categories by default
 
 * 0.5.10 (2008/08/20)
     * minor bug fix. Fixed option to optionally show pages
