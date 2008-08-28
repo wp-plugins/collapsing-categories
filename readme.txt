@@ -3,8 +3,8 @@ Contributors: robfelty
 Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
-Requires at least: 2.3
-Tested up to: 2.6
+Requires at least: 2.6
+Tested up to: 2.6.1
 Stable tag: 0.6
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
@@ -84,6 +84,8 @@ behavior in wordpress anyways)
     * Added more sorting options
     * Added option to include or exclude certain categories
     * Added option to expand certain categories by default
+    * Added option to have category names either link to category archive or to
+      activate expanding and collapsing
 
 * 0.5.10 (2008/08/20)
     * minor bug fix. Fixed option to optionally show pages
