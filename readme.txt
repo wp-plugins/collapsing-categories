@@ -49,7 +49,17 @@ Presentation > Widgets section and drag over the Collapsing Categories Widget.
   something wrong with your .htaccess file (mod_rewrite). If you don't know
   how to fix this, you can copy the style rules there into your themes style
   file.
-   
+  
+= I don't like the fixed width fonts for the category names =
+
+I decided to use a fixed-width font for the expanding and collapsing
+characters, because otherwise the spacing can change a bit (especially between
++/-). The problem is, if you enable the option to have the category name
+trigger expanding and collapsing instead of linking to the category, then you
+get ugly fixed-width text as well. If you don't mind the fact that that the
+(+/-) have slightly different widths, then you can remove the line in the css
+file that specifies the fixed with font
+
 == Screenshots ==
 
 1. a few expanded categories with default theme, showing nested categories
