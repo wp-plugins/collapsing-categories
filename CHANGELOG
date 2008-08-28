@@ -7,6 +7,8 @@ Collapsing Categories Changelog
     * Added more sorting options
     * Added option to include or exclude certain categories
     * Added option to expand certain categories by default
+    * Added option to have category names either link to category archive or to
+      activate expanding and collapsing
 
 * 0.5.10 (2008/08/20)
     * minor bug fix. Fixed option to optionally show pages
