@@ -54,7 +54,7 @@ if ( !$options = get_option('collapsCatOptions') )
 
 // Run our code later in case this loads prior to any required plugins.
 if (function_exists('collapsCat')) {
-	add_action('plugins_loaded', 'collapsCatWidgetInit');
+	add_action('widgets_init', 'collapsCatWidgetInit');
 } else {
 	$fname = basename(__FILE__);
 	$current = get_settings('active_plugins');
