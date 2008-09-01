@@ -55,15 +55,14 @@ class collapsCat {
     echo "function expandCat( e, expand ) {
     if (expand==1) {
       expand='+';
-      collapse='&mdash;';
+      collapse='—';
     } else if (expand==2) {
       expand='[+]';
-      collapse='[&mdash;]';
+      collapse='[—]';
     } else {
       expand='&#9658;';
       collapse='&#9660;';
     }
-
     if( e.target ) {
       src = e.target;
     }
@@ -72,6 +71,10 @@ class collapsCat {
     }
 
     srcList = src.parentNode;
+    if (srcList.nodeName.toLowerCase() == 'span') {
+      srcList= srcList.parentNode;
+      src= src.parentNode;
+    }
     childList = null;
 
     for( i = 0; i < srcList.childNodes.length; i++ ) {
@@ -84,13 +87,23 @@ class collapsCat {
       childList.style.display = 'none';
       src.setAttribute('class','collapsCat show');
       src.setAttribute('title','click to expand');
-      src.innerHTML=src.innerHTML.replace(/^.* /,expand+' ');
+      //src.innerHTML=src.innerHTML.replace(/collapse/g,'expand');
+      //src.innerHTML=src.innerHTML.replace(/^[^<]* /,expand+' ');
+      var pattern = collapse;
+      var replace = expand;
+      //alert(src.innerHTML + 'pattern=' + pattern + 'replace=' +replace);
+      src.innerHTML=src.innerHTML.replace(pattern,replace);
     }
     else {
-      childList.style.display = '';
+      childList.style.display = 'block';
       src.setAttribute('class','collapsCat hide');
       src.setAttribute('title','click to collapse');
-      src.innerHTML=src.innerHTML.replace(/^.* /,collapse+' ');
+      var pattern = expand;
+      var replace = collapse;
+      //alert(src.innerHTML + 'pattern=' + pattern + 'replace=' +replace);
+      src.innerHTML=src.innerHTML.replace(pattern,replace);
+      //alert(src.innerHTML);
+      //src.innerHTML=src.innerHTML.replace(/^[^<]* /,collapse+' ');
     }
 
     if( e.preventDefault ) {

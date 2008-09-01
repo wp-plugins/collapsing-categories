@@ -153,13 +153,7 @@ if (function_exists('collapsCat')) {
         $postSort= '' ;
         $postSortOrder= '' ;
       }
-      if($widget_collapsCat['expand'] == '0') {
-        $expand= 0 ;
-      } elseif ($widget_collapsCat['expand'] == '1') {
-        $expand= 1 ;
-      } elseif ($widget_collapsCat['expand'] == '2') {
-        $expand= 2 ;
-      }
+      $expand= $widget_collapsCat['expand'];
       $inExclude= 'include' ;
       if($widget_collapsCat['inExclude'] == 'exclude') {
         $inExclude= 'exclude' ;
@@ -186,7 +180,7 @@ if (function_exists('collapsCat')) {
     $postSortOrder = 'ASC';
     $defaultExpand='';
     $number = '%i%';
-    $expand='0';
+    $expand='1';
     $inExclude='include';
     $inExcludeCats='';
     $showPosts='yes';
@@ -262,9 +256,18 @@ if (function_exists('collapsCat')) {
      sub-categories and/or Posts</label>
     </p>
     <p>Expanding and collapse characters:<br />
-     <input type="radio" name="collapsCat[<?php echo $number ?>][expand]" <?php if($expand==0) echo 'checked'; ?> id="expand0" value='0'></input> <label for="expand0">&#9658;&nbsp;&#9660;</label>
+     html: <input type="radio" name="collapsCat[<?php echo $number ?>][expand]" <?php if($expand==0) echo 'checked'; ?> id="expand0" value='0'></input> <label for="expand0">&#9658;&nbsp;&#9660;</label>
      <input type="radio" name="collapsCat[<?php echo $number ?>][expand]" <?php if($expand==1) echo 'checked'; ?> id="expand1" value='1'></input> <label for="expand1">+&nbsp;&mdash;</label>
-     <input type="radio" name="collapsCat[<?php echo $number ?>][expand]" <?php if($expand==2) echo 'checked'; ?> id="expand2" value='2'></input> <label for="expand1">[+]&nbsp;[&mdash;]</label>
+     <input type="radio" name="collapsCat[<?php echo $number ?>][expand]"
+     <?php if($expand==2) echo 'checked'; ?> id="expand2" value='2'></input>
+     <label for="expand2">[+]&nbsp;[&mdash;]</label><br />
+     images:
+     <input type="radio" name="collapsCat[<?php echo $number ?>][expand]"
+     <?php if($expand==3) echo 'checked'; ?> id="expand0" value='3'></input>
+     <label for="expand3"><img src='<?php echo get_settings('siteurl') .
+     "/wp-content/plugins/collapsing-categories/" ?>img/collapse.gif' />&nbsp;<img
+     src='<?php echo get_settings('siteurl') .
+     "/wp-content/plugins/collapsing-categories/" ?>img/expand.gif' /></label>
     </p>
     <p>Auto-expand these link categories (separated by commas):<br />
      <input type="text" name="collapsCat[<?php echo $number ?>][defaultExpand]" value="<?php echo $defaultExpand ?>" id="collapsCat-defaultExpand-<?php echo $number ?>"</input> 

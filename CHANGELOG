@@ -1,5 +1,14 @@
 Collapsing Categories Changelog
 
+* 0.6.1 (2008/09/01)
+    * Improved styling so that collapsing and expanding symbols use a
+      fixed-width font, but category names do not
+    * When using the option to have category names trigger expansion, and not
+      showing posts, categories with no subcategories now link to the category
+    * Added option to use images instead of html for collapse/expand characters
+    * +/- now uses UTF-8 encoding instead of html entities (may not work for
+      pages not encoded in UTF-8
+    
 * 0.6 (2008/08/27)
     * Can have multiple instances of widgets, each with separate options
     * No longer works as non-widget
