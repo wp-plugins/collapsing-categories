@@ -33,10 +33,10 @@ This file is part of Collapsing Categories
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */ 
 
-add_action( 'wp_head', array('collapsCat','get_head'));
-add_action('activate_collapsing-categories/collapsCat.php', array('collapsCat','init'));
+add_action( 'wp_head', array('collapscat','get_head'));
+add_action('activate_collapsing-categories/collapscat.php', array('collapscat','init'));
 
-class collapsCat {
+class collapscat {
 
 	function init() {
 	}
@@ -47,7 +47,7 @@ class collapsCat {
 	function get_head() {
 		$url = get_settings('siteurl');
     echo "<style type='text/css'>
-		@import '$url/wp-content/plugins/collapsing-categories/collapsCat.css';
+		@import '$url/wp-content/plugins/collapsing-categories/collapscat.css';
     </style>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
@@ -83,9 +83,9 @@ class collapsCat {
       }
     }
 
-    if( src.getAttribute( 'class' ) == 'collapsCat hide' ) {
+    if( src.getAttribute( 'class' ) == 'collapscat hide' ) {
       childList.style.display = 'none';
-      src.setAttribute('class','collapsCat show');
+      src.setAttribute('class','collapscat show');
       src.setAttribute('title','click to expand');
       //src.innerHTML=src.innerHTML.replace(/collapse/g,'expand');
       //src.innerHTML=src.innerHTML.replace(/^[^<]* /,expand+' ');
@@ -96,7 +96,7 @@ class collapsCat {
     }
     else {
       childList.style.display = 'block';
-      src.setAttribute('class','collapsCat hide');
+      src.setAttribute('class','collapscat hide');
       src.setAttribute('title','click to collapse');
       var pattern = expand;
       var replace = collapse;
@@ -118,9 +118,9 @@ class collapsCat {
 }
 
 
-		include( 'collapsCatList.php' );
-function collapsCat($number) {
+		include( 'collapscatlist.php' );
+function collapscat($number) {
 	list_categories($number);
 }
-include('collapsCatWidget.php');
+include('collapscatwidget.php');
 ?>
