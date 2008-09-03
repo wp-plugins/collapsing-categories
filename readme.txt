@@ -60,6 +60,16 @@ get ugly fixed-width text as well. If you don't mind the fact that that the
 (+/-) have slightly different widths, then you can remove the line in the css
 file that specifies the fixed with font
 
+= How do I use different symbols for collapsing and expanding? =
+
+If you want to use images, you can upload your own images to
+http://yourblogaddress/wp-content/plugins/collapsing-categories/img/collapse.gif
+and expand.gif
+
+If you want to use text (recommended), you can change a few lines in
+collapsCat.php and collapsCatList.php (search for expandSym), or suggest some
+other characters, and I might include them as an option.
+
 == Screenshots ==
 
 1. a few expanded categories with default theme, showing nested categories
