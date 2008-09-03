@@ -60,8 +60,8 @@ class collapsCat {
       expand='[+]';
       collapse='[—]';
     } else {
-      expand='&#9658;';
-      collapse='&#9660;';
+      expand='►';
+      collapse='▼';
     }
     if( e.target ) {
       src = e.target;
