@@ -270,7 +270,7 @@ if (function_exists('collapsCat')) {
      "/wp-content/plugins/collapsing-categories/" ?>img/expand.gif' /></label>
     </p>
     <p>Auto-expand these link categories (separated by commas):<br />
-     <input type="text" name="collapsCat[<?php echo $number ?>][defaultExpand]" value="<?php echo $defaultExpand ?>" id="collapsCat-defaultExpand-<?php echo $number ?>"</input> 
+     <input type="text" name="collapsCat[<?php echo $number ?>][defaultExpand]" value="<?php echo $defaultExpand ?>" id="collapsCat-defaultExpand-<?php echo $number ?>"></input> 
     </p>
     <p> 
      <select name="collapsCat[<?php echo $number ?>][inExclude]">
@@ -278,7 +278,7 @@ if (function_exists('collapsCat')) {
      <option  <?php if($inExclude=='exclude') echo 'selected'; ?> id="inExcludeExclude-<?php echo $number ?>" value='exclude'>Exclude</option>
      </select>
      these link categories (separated by commas):<br />
-    <input type="text" name="collapsCat[<?php echo $number ?>][inExcludeCats]" value="<?php echo $inExcludeCats ?>" id="collapsCat-inExcludeCats-<?php echo $number ?>"</input> 
+    <input type="text" name="collapsCat[<?php echo $number ?>][inExcludeCats]" value="<?php echo $inExcludeCats ?>" id="collapsCat-inExcludeCats-<?php echo $number ?>"></input> 
     </p>
    <?php
     echo '<input type="hidden" id="collapsCat-submit-'.$number.'" name="collapsCat['.$number.'][submit]" value="1" />';

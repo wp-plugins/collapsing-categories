@@ -83,9 +83,9 @@ class collapscat {
       }
     }
 
-    if( src.getAttribute( 'class' ) == 'collapscat hide' ) {
+    if( src.getAttribute( 'class' ) == 'collapsCat hide' ) {
       childList.style.display = 'none';
-      src.setAttribute('class','collapscat show');
+      src.setAttribute('class','collapsCat show');
       src.setAttribute('title','click to expand');
       //src.innerHTML=src.innerHTML.replace(/collapse/g,'expand');
       //src.innerHTML=src.innerHTML.replace(/^[^<]* /,expand+' ');
@@ -93,10 +93,9 @@ class collapscat {
       var replace = expand;
       //alert(src.innerHTML + 'pattern=' + pattern + 'replace=' +replace);
       src.innerHTML=src.innerHTML.replace(pattern,replace);
-    }
-    else {
+    } else {
       childList.style.display = 'block';
-      src.setAttribute('class','collapscat hide');
+      src.setAttribute('class','collapsCat hide');
       src.setAttribute('title','click to collapse');
       var pattern = expand;
       var replace = collapse;
