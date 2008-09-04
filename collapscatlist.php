@@ -31,7 +31,7 @@ add depth option
 
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$number,$expanded) {
-  global $options,$expandSym, $collapseSym;
+  global $options,$expandSym, $collapseSym, $autoExpand;
   extract($options[$number]);
   $subCatPosts=array();
   $link2='';
@@ -104,6 +104,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           list ($subCatLink2, $subCatCount,$subCatPostCount,$subCatPosts)= 
               get_sub_cat($cat2, $categories, $parents, $posts, $subCatCount,
               $subCatPostCount, $number,$expanded);
+          $expanded='none';
+          if (in_array($cat2->name, $autoExpand) ||
+              in_array($cat2->slug, $autoExpand)) {
+            $expanded='block';
+          }
           $subCatCount=1;
           if ($linkToCat=='yes') {
             if ($showPosts=='yes') {
@@ -185,7 +190,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 }
 
 function list_categories($number) {
-  global $expandSym,$collapsSym,$wpdb,$options;
+  global $expandSym,$collapsSym,$wpdb,$options, $autoExpand;
   $options=get_option('collapsCatOptions');
   extract($options[$number]);
   if ($expand==1) {
