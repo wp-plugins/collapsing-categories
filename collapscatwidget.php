@@ -99,10 +99,6 @@ if (function_exists('collapsCat')) {
       if ( !isset($widget_collapsCat['title']) && isset($options[$widget_number]) ) // user clicked cancel
         continue;
       $title = strip_tags(stripslashes($widget_collapsCat['title']));
-      $showLinkCount= 'no' ;
-      if( isset($widget_collapsCat['showLinkCount']) ) {
-        $showLinkCount= 'yes' ;
-      }  
       $catSortOrder= 'ASC' ;
       if($widget_collapsCat['catSortOrder'] == 'DESC') {
         $catSortOrder= 'DESC' ;
@@ -116,11 +112,11 @@ if (function_exists('collapsCat')) {
         $linkToCat= 'no' ;
       }
       $showPostCount= 'no' ;
-      if($widget_collapsCat['showPostCount'] == 'yes') {
+      if( isset($widget_collapsCat['showPostCount'])) {
         $showPostCount= 'yes' ;
       }
       $showPages= 'no' ;
-      if($widget_collapsCat['showPages'] == 'yes') {
+      if( isset($widget_collapsCat['showPages'])) {
         $showPages= 'yes' ;
       }
       if($widget_collapsCat['catSort'] == 'catName') {
@@ -173,7 +169,7 @@ if (function_exists('collapsCat')) {
     /* default options go here */
     $title = 'Categories';
     $text = '';
-    $showPostCount = 'no';
+    $showPostCount = 'yes';
     $catSort = 'catName';
     $catSortOrder = 'ASC';
     $postSort = 'postTitle';
@@ -185,7 +181,7 @@ if (function_exists('collapsCat')) {
     $inExcludeCats='';
     $showPosts='yes';
     $linkToCat='yes';
-    $showPages='yes';
+    $showPages='no';
   } else {
     $title = attribute_escape($options[$number]['title']);
     $showPostCount = $options[$number]['showPostCount'];
