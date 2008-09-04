@@ -265,7 +265,7 @@ if (function_exists('collapsCat')) {
      src='<?php echo get_settings('siteurl') .
      "/wp-content/plugins/collapsing-categories/" ?>img/expand.gif' /></label>
     </p>
-    <p>Auto-expand these link categories (separated by commas):<br />
+    <p>Auto-expand these categories (separated by commas):<br />
      <input type="text" name="collapsCat[<?php echo $number ?>][defaultExpand]" value="<?php echo $defaultExpand ?>" id="collapsCat-defaultExpand-<?php echo $number ?>"></input> 
     </p>
     <p> 
@@ -273,7 +273,7 @@ if (function_exists('collapsCat')) {
      <option  <?php if($inExclude=='include') echo 'selected'; ?> id="inExcludeInclude-<?php echo $number ?>" value='include'>Include</option>
      <option  <?php if($inExclude=='exclude') echo 'selected'; ?> id="inExcludeExclude-<?php echo $number ?>" value='exclude'>Exclude</option>
      </select>
-     these link categories (separated by commas):<br />
+     these categories (separated by commas):<br />
     <input type="text" name="collapsCat[<?php echo $number ?>][inExcludeCats]" value="<?php echo $inExcludeCats ?>" id="collapsCat-inExcludeCats-<?php echo $number ?>"></input> 
     </p>
    <?php
