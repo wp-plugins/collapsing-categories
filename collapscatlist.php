@@ -60,7 +60,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             if ($showPosts=='yes') {
               if ($expanded=='block') {
                 $subCatLinks.=( "<li class='collapsCat'>".
-                    "<span class='collapsCat show' style='font-family:monospace;font-size:2em;'".
+                    "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;'".
                     "onclick='expandCat(event,$collapse); return false'>" . 
                     "$collapseSym </span>" );
               } else {
