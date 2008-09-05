@@ -70,6 +70,17 @@ If you want to use text (recommended), you can change a few lines in
 collapsCat.php and collapsCatList.php (search for expandSym), or suggest some
 other characters, and I might include them as an option.
 
+= I have selected a category to expand by default, but it doesn't seem to work =
+
+If you select a sub-category to expand by default, but not the parent
+category, you will not see the sub-category expanded until you expand the
+parent category.  You probably want to add both the parent and the
+sub-category into the expand by default list.
+
+= I can't get including or excluding to work = 
+
+Make sure you specify category names, not ids.
+
 == Screenshots ==
 
 1. a few expanded categories with default theme, showing nested categories
