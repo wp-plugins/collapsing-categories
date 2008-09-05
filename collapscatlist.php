@@ -59,9 +59,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                 '</a>';
             if ($showPosts=='yes') {
               if ($expanded=='block') {
+  //echo $cat->name . " $expanded, ";
                 $subCatLinks.=( "<li class='collapsCat'>".
                     "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;'".
-                    "onclick='expandCat(event,$collapse); return false'>" . 
+                    "onclick='expandCat(event,$expand); return false'>" . 
                     "$collapseSym </span>" );
               } else {
                 $subCatLinks.=( "<li class='collapsCat'>".
@@ -111,17 +112,19 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
           $subCatCount=1;
           if ($linkToCat=='yes') {
-            if ($showPosts=='yes') {
+            if ($expanded=='block') {
+//echo $cat->name . " $expanded, ";
               $subCatLinks.=( "<li class='collapsCat'>".
-                  "<span class='collapsCat show' style='font-family:monospace;font-size:2em;'".
-                  "onclick='expandCat(event,$expand); return false'>".
-                  "$expandSym </span>" );
+                  "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;'".
+                  "onclick='expandCat(event,$expand); return false'>" . 
+                  "$collapseSym </span>" );
             } else {
               $subCatLinks.=( "<li class='collapsCat'>".
                   "<span class='collapsCat show' style='font-family:monospace;font-size:2em;'".
-                  "onclick='expandCat(event,$expand); return false'>".
+                  "onclick='expandCat(event,$expand); return false'>" . 
                   "$expandSym </span>" );
             }
+
                 $link2 = "<a href='".get_category_link($cat2->term_id)."' ";
                 if ( empty($cat2->description) ) {
                   $link2 .= 'title="'. 
@@ -190,15 +193,15 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 }
 
 function list_categories($number) {
-  global $expandSym,$collapsSym,$wpdb,$options, $autoExpand;
+  global $expandSym,$collapseSym,$wpdb,$options, $autoExpand;
   $options=get_option('collapsCatOptions');
   extract($options[$number]);
   if ($expand==1) {
     $expandSym='+';
-    $collapseSym='&mdash;';
+    $collapseSym='—';
   } elseif ($expand==2) {
     $expandSym='[+]';
-    $collapseSym='[&mdash;]';
+    $collapseSym='[—]';
   } elseif ($expand==3) {
     $expandSym="<img src='". get_settings('siteurl') .
          "/wp-content/plugins/collapsing-categories/" . 
@@ -207,8 +210,8 @@ function list_categories($number) {
          "/wp-content/plugins/collapsing-categories/" . 
          "img/collapse.gif' alt='collapse' />";
   } else {
-    $expandSym='&#9658;';
-    $collapseSym='&#9660;';
+    $expandSym='►';
+    $collapseSym='▼';
   }
 	$inExclusions = array();
 	if ( !empty($inExclude) && !empty($inExcludeCats) ) {
