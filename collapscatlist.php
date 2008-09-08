@@ -61,12 +61,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               if ($expanded=='block') {
   //echo $cat->name . " $expanded, ";
                 $subCatLinks.=( "<li class='collapsCat'>".
-                    "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;'".
+                    "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;' ".
                     "onclick='expandCat(event,$expand); return false'>" . 
                     "$collapseSym </span>" );
               } else {
                 $subCatLinks.=( "<li class='collapsCat'>".
-                    "<span class='collapsCat show' style='font-family:monospace;font-size:2em;'".
+                    "<span class='collapsCat show' style='font-family:monospace;font-size:2em;' ".
                     "onclick='expandCat(event,$expand); return false'>" . 
                     "$expandSym </span>" );
               }
@@ -115,12 +115,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             if ($expanded=='block') {
 //echo $cat->name . " $expanded, ";
               $subCatLinks.=( "<li class='collapsCat'>".
-                  "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;'".
+                  "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;' ".
                   "onclick='expandCat(event,$expand); return false'>" . 
                   "$collapseSym </span>" );
             } else {
               $subCatLinks.=( "<li class='collapsCat'>".
-                  "<span class='collapsCat show' style='font-family:monospace;font-size:2em;'".
+                  "<span class='collapsCat show' style='font-family:monospace;font-size:2em;' ".
                   "onclick='expandCat(event,$expand); return false'>" . 
                   "$expandSym </span>" );
             }
@@ -148,7 +148,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   "<span style='font-family:monospace;font-size:2em;'>$expandSym </span>";
             } else {
               $subCatLinks.="<li class='collapsCat'>".
-                  "<span class='collapsCat show'".
+                  "<span class='collapsCat show' ".
                   "onclick='expandCat(event,$expand); return false'>".
                   "<span style='font-family:monospace;font-size:2em;'>$expandSym </span>";
               $link2 = apply_filters('list_cats', $cat2->name,
@@ -339,12 +339,12 @@ function list_categories($number) {
           if ($showPosts=='yes' || $subCatPostCount>0) {
             if ($expanded=='block') {
               print( "      <li class='collapsCat'>".
-                  "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;'".
+                  "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;' ".
                   "onclick='expandCat(event,$expand); return false'>".
                   "$collapseSym </span>" );
             } else {
               print( "      <li class='collapsCat'>".
-                  "<span class='collapsCat show' style='font-family:monospace;font-size:2em;'".
+                  "<span class='collapsCat show' style='font-family:monospace;font-size:2em;' ".
                   "onclick='expandCat(event,$expand); return false'>".
                   "$expandSym </span>" );
             }
