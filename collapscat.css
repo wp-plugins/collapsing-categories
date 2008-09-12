@@ -1,5 +1,5 @@
 /*
-collapsCat Categories version: 0.6.1
+collapsCat Categories version: 0.6.2
 Copyright 2007 Robert Felty
 
 This work is largely based on the Fancy Categories plugin by Andrew Rader
@@ -37,3 +37,6 @@ span.collapsCat {border:0;
              margin:0 0 0 1em;}
 li.widget.collapsCat ul {margin-left:.5em;}
 #sidebar li.collapsCatPost:before {content: "\00BB \00A0" !important;} 
+.sym {font-family:monospace;
+      font-size:1.5em;
+      padding-right:5px;}

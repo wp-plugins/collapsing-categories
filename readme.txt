@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.6
 Tested up to: 2.6.1
-Stable tag: 0.6.1
+Stable tag: 0.6.2
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -108,6 +108,19 @@ behavior in wordpress anyways)
 
 == HISTORY ==
 
+* 0.6.2 (2008/09/11)
+    * Fixed display of expand and collapse symbols when using images
+    * Improved font handling and styling of text symbols
+
+* 0.6.1 (2008/09/01)
+    * Improved styling so that collapsing and expanding symbols use a
+      fixed-width font, but category names do not
+    * When using the option to have category names trigger expansion, and not
+      showing posts, categories with no subcategories now link to the category
+    * Added option to use images instead of html for collapse/expand characters
+    * +/- now uses UTF-8 encoding instead of html entities (may not work for
+      pages not encoded in UTF-8
+    
 * 0.6 (2008/08/27)
     * Can have multiple instances of widgets, each with separate options
     * No longer works as non-widget

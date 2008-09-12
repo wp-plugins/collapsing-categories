@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 0.6.1
+Version: 0.6.2
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories
 
@@ -51,7 +51,13 @@ class collapscat {
     </style>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.6.1\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+		echo "// These variables are part of the Collapsing Categories Plugin version: 0.6.2\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+    $expandSym="<img src='". get_settings('siteurl') .
+         "/wp-content/plugins/collapsing-categories/" . 
+         "img/expand.gif' alt='expand' />";
+    $collapseSym="<img src='". get_settings('siteurl') .
+         "/wp-content/plugins/collapsing-categories/" . 
+         "img/collapse.gif' alt='collapse' />";
     echo "function expandCat( e, expand ) {
     if (expand==1) {
       expand='+';
@@ -59,6 +65,9 @@ class collapscat {
     } else if (expand==2) {
       expand='[+]';
       collapse='[—]';
+    } else if (expand==3) {
+      expand=\"$expandSym\";
+      collapse=\"$collapseSym\";
     } else {
       expand='►';
       collapse='▼';
@@ -70,7 +79,12 @@ class collapscat {
       src = window.event.srcElement;
     }
 
+    if (src.nodeName.toLowerCase() == 'img') {
+      src=src.parentNode;
+      //alert('it is an image');
+    }
     srcList = src.parentNode;
+    //alert(srcList)
     if (srcList.nodeName.toLowerCase() == 'span') {
       srcList= srcList.parentNode;
       src= src.parentNode;
@@ -85,24 +99,26 @@ class collapscat {
 
     if( src.getAttribute( 'class' ) == 'collapsCat hide' ) {
       childList.style.display = 'none';
+      var theSpan = src.childNodes[0];
       src.setAttribute('class','collapsCat show');
       src.setAttribute('title','click to expand');
-      //src.innerHTML=src.innerHTML.replace(/collapse/g,'expand');
-      //src.innerHTML=src.innerHTML.replace(/^[^<]* /,expand+' ');
-      var pattern = collapse;
-      var replace = expand;
-      //alert(src.innerHTML + 'pattern=' + pattern + 'replace=' +replace);
-      src.innerHTML=src.innerHTML.replace(pattern,replace);
+      //src.setAttribute('class','collapsCat show');
+      //src.setAttribute('title','click to expand');
+      //var pattern = collapse;
+      //var replace = expand;
+      //src.innerHTML=src.innerHTML.replace(/\"/,\"'\");
+      //src.innerHTML=src.innerHTML.replace(pattern,replace);
+      theSpan.innerHTML=expand;
     } else {
       childList.style.display = 'block';
+      var theSpan = src.childNodes[0];
       src.setAttribute('class','collapsCat hide');
       src.setAttribute('title','click to collapse');
       var pattern = expand;
       var replace = collapse;
       //alert(src.innerHTML + 'pattern=' + pattern + 'replace=' +replace);
-      src.innerHTML=src.innerHTML.replace(pattern,replace);
-      //alert(src.innerHTML);
-      //src.innerHTML=src.innerHTML.replace(/^[^<]* /,collapse+' ');
+      theSpan.innerHTML=collapse;
+      //src.innerHTML=src.innerHTML.replace(pattern,replace);
     }
 
     if( e.preventDefault ) {

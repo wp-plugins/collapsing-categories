@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.6.1
+Collapsing Categories version: 0.6.2
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -61,14 +61,14 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               if ($expanded=='block') {
   //echo $cat->name . " $expanded, ";
                 $subCatLinks.=( "<li class='collapsCat'>".
-                    "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;' ".
+                    "<span class='collapsCat hide' ".
                     "onclick='expandCat(event,$expand); return false'>" . 
-                    "$collapseSym </span>" );
+                    "<span class='sym'>$collapseSym</span></span>" );
               } else {
                 $subCatLinks.=( "<li class='collapsCat'>".
-                    "<span class='collapsCat show' style='font-family:monospace;font-size:2em;' ".
+                    "<span class='collapsCat show' ".
                     "onclick='expandCat(event,$expand); return false'>" . 
-                    "$expandSym </span>" );
+                    "<span class='sym'>$expandSym</span></span>" );
               }
             } else {
               $subCatLinks.=( "<li class='collapsCatPost'>" );
@@ -96,7 +96,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   "<span class='collapsCat show' ".
                   "onclick='expandCat(event,$expand);".
                   "return false'>".
-                  "<span style='font-family:monospace;font-size:2em;'>$expandSym </span>";
+                  "<span class='sym'>$expandSym</span>";
             } else {
               $subCatLinks.=( "<li class='collapsCatPost'>" );
             }
@@ -115,14 +115,14 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             if ($expanded=='block') {
 //echo $cat->name . " $expanded, ";
               $subCatLinks.=( "<li class='collapsCat'>".
-                  "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;' ".
+                  "<span class='collapsCat hide' ".
                   "onclick='expandCat(event,$expand); return false'>" . 
-                  "$collapseSym </span>" );
+                  "<span class='sym'>$collapseSym</span></span>" );
             } else {
               $subCatLinks.=( "<li class='collapsCat'>".
-                  "<span class='collapsCat show' style='font-family:monospace;font-size:2em;' ".
+                  "<span class='collapsCat show' ".
                   "onclick='expandCat(event,$expand); return false'>" . 
-                  "$expandSym </span>" );
+                  "<span class='sym'>$expandSym</span></span>" );
             }
 
                 $link2 = "<a href='".get_category_link($cat2->term_id)."' ";
@@ -145,12 +145,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $subCatLinks.="<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
                   "onclick=\"expandCat(event,$expand); return false\">".
-                  "<span style='font-family:monospace;font-size:2em;'>$expandSym </span>";
+                  "<span class='sym'>$expandSym</span>";
             } else {
               $subCatLinks.="<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
                   "onclick='expandCat(event,$expand); return false'>".
-                  "<span style='font-family:monospace;font-size:2em;'>$expandSym </span>";
+                  "<span class='sym'>$expandSym</span>";
               $link2 = apply_filters('list_cats', $cat2->name,
                   $cat2).'</span>';
             }
@@ -339,14 +339,14 @@ function list_categories($number) {
           if ($showPosts=='yes' || $subCatPostCount>0) {
             if ($expanded=='block') {
               print( "      <li class='collapsCat'>".
-                  "<span class='collapsCat hide' style='font-family:monospace;font-size:2em;' ".
+                  "<span class='collapsCat hide' ".
                   "onclick='expandCat(event,$expand); return false'>".
-                  "$collapseSym </span>" );
+                  "<span class='sym'>$collapseSym</span></span>" );
             } else {
               print( "      <li class='collapsCat'>".
-                  "<span class='collapsCat show' style='font-family:monospace;font-size:2em;' ".
+                  "<span class='collapsCat show' ".
                   "onclick='expandCat(event,$expand); return false'>".
-                  "$expandSym </span>" );
+                  "<span class='sym'>$expandSym</span></span>" );
             }
           } else {
             print( "      <li class='collapsCatPost'>" );
@@ -358,12 +358,12 @@ function list_categories($number) {
               print( "      <li class='collapsCat'>".
                   "<span class='collapsCat hide' ".
                   "onclick='expandCat(event,$expand); return false'>".
-                  "<span style='font-family:monospace;font-size:2em;'>$collapseSym </span>");
+                  "<span class='sym'>$collapseSym</span>");
             } else {
               print( "      <li class='collapsCat'>".
                   "<span class='collapsCat show' ".
                   "onclick='expandCat(event,$expand); return false'>".
-                  "<span style='font-family:monospace;font-size:2em;'>$expandSym </span>");
+                  "<span class='sym'>$expandSym</span>");
             }
           } else {
             // don't include the triangles if posts are not shown and there
@@ -374,12 +374,12 @@ function list_categories($number) {
                 print( "      <li class='collapsCat'>".
                     "<span class='collapsCat hide' ".
                     "onclick='expandCat(event,$expand); return false'>".
-                    "<span style='font-family:monospace;font-size:2em;'>$collapseSym </span>");
+                    "<span class='sym'>$collapseSym</span>");
               } else {
                 print( "      <li class='collapsCat'>".
                     "<span class='collapsCat show' ".
                     "onclick='expandCat(event,$expand); return false'>".
-                    "<span style='font-family:monospace;font-size:2em;'>$expandSym </span>");
+                    "<span class='sym'>$expandSym</span>");
               }
             } else {
               $link = "<a href='".get_category_link($cat->term_id)."' ";

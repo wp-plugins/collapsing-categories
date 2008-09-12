@@ -1,5 +1,9 @@
 Collapsing Categories Changelog
 
+* 0.6.2 (2008/09/11)
+    * Fixed display of expand and collapse symbols when using images
+    * Improved font handling and styling of text symbols
+
 * 0.6.1 (2008/09/01)
     * Improved styling so that collapsing and expanding symbols use a
       fixed-width font, but category names do not
