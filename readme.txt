@@ -81,6 +81,18 @@ sub-category into the expand by default list.
 
 Make sure you specify category names, not ids.
 
+= How can I eliminate the line spacing between categories? =
+Add a line to the collapscat.css file in the .sym class, like so:
+
+.sym {font-family:monospace;
+      font-size:1.5em;
+      line-height:1.5em;
+      padding-right:5px;}
+
+= I upgraded from 0.5.? to 0.6.? and nothing works! =
+
+Try disabling, then re-enabling the plugin
+
 == Screenshots ==
 
 1. a few expanded categories with default theme, showing nested categories
