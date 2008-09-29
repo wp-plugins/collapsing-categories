@@ -33,6 +33,7 @@ This file is part of Collapsing Categories
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */ 
 
+add_action('wp_head', wp_enqueue_script('scriptaculous-effects'));
 add_action( 'wp_head', array('collapscat','get_head'));
 add_action('activate_collapsing-categories/collapscat.php', array('collapscat','init'));
 
@@ -98,7 +99,8 @@ class collapscat {
     }
 
     if( src.getAttribute( 'class' ) == 'collapsCat hide' ) {
-      childList.style.display = 'none';
+      //childList.style.display = 'none';
+      Effect.BlindUp(childList, {duration: 0.5});
       var theSpan = src.childNodes[0];
       src.setAttribute('class','collapsCat show');
       src.setAttribute('title','click to expand');
@@ -110,7 +112,8 @@ class collapscat {
       //src.innerHTML=src.innerHTML.replace(pattern,replace);
       theSpan.innerHTML=expand;
     } else {
-      childList.style.display = 'block';
+      //childList.style.display = 'block';
+      Effect.BlindDown(childList, {duration: 0.5});
       var theSpan = src.childNodes[0];
       src.setAttribute('class','collapsCat hide');
       src.setAttribute('title','click to collapse');
