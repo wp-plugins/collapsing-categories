@@ -1,5 +1,9 @@
 Collapsing Categories Changelog
 
+* 0.6.3 (2008/10/03)
+    * Added option to animate expanding and collapsing
+    * Added option to add rss feeds for each category
+
 * 0.6.2 (2008/09/11)
     * Fixed display of expand and collapse symbols when using images
     * Improved font handling and styling of text symbols

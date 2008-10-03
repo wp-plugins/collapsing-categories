@@ -150,15 +150,21 @@ if (function_exists('collapsCat')) {
         $postSortOrder= '' ;
       }
       $expand= $widget_collapsCat['expand'];
+      $catfeed= $widget_collapsCat['catfeed'];
       $inExclude= 'include' ;
       if($widget_collapsCat['inExclude'] == 'exclude') {
         $inExclude= 'exclude' ;
+      }
+      $animate='1';
+      if( !isset($widget_collapsCat['animate'])) {
+        $animate= '0' ;
       }
       $inExcludeCats=addslashes($widget_collapsCat['inExcludeCats']);
       $defaultExpand=addslashes($widget_collapsCat['defaultExpand']);
       $options[$widget_number] = compact( 'title','showPostCount','catSort',
           'catSortOrder','defaultExpand','expand','inExclude', 'showPosts',
-          'inExcludeCats','postSort','postSortOrder','showPages', 'linkToCat' );
+          'inExcludeCats','postSort','postSortOrder','showPages', 'linkToCat',
+          'catfeed','animate' );
     }
 
     update_option('collapsCatOptions', $options);
@@ -182,10 +188,13 @@ if (function_exists('collapsCat')) {
     $showPosts='yes';
     $linkToCat='yes';
     $showPages='no';
+    $catfeed='none';
+    $animate=1;
   } else {
     $title = attribute_escape($options[$number]['title']);
     $showPostCount = $options[$number]['showPostCount'];
     $expand = $options[$number]['expand'];
+    $catfeed = $options[$number]['catfeed'];
     $inExcludeCats = $options[$number]['inExcludeCats'];
     $inExclude = $options[$number]['inExclude'];
     $catSort = $options[$number]['catSort'];
@@ -196,6 +205,7 @@ if (function_exists('collapsCat')) {
     $showPosts = $options[$number]['showPosts'];
     $showPages = $options[$number]['showPages'];
     $linkToCat = $options[$number]['linkToCat'];
+    $animate = $options[$number]['animate'];
   }
 
 		//$title		= wp_specialchars($options['title']);
@@ -275,6 +285,26 @@ if (function_exists('collapsCat')) {
      </select>
      these categories (separated by commas):<br />
     <input type="text" name="collapsCat[<?php echo $number ?>][inExcludeCats]" value="<?php echo $inExcludeCats ?>" id="collapsCat-inExcludeCats-<?php echo $number ?>"></input> 
+   <p>
+   <input type="checkbox" name="collapsCat[<?php echo $number
+   ?>][animate]" <?php if ($animate=='1') echo
+   'checked'; ?> id="animate-<?php echo $number ?>"></input> <label
+   for="animate">Animate collapsing and expanding</label>
+   </p>
+    <p>Include RSS link
+     <input type="radio" name="collapsCat[<?php echo $number ?>][catfeed]"
+     <?php if($catfeed=='none') echo 'checked'; ?>
+     id="collapsCat-catfeedNone-<?php echo $number ?>"
+     value=''></input> <label for="collapsCat-catfeedNone">None</label>
+     <input type="radio" name="collapsCat[<?php echo $number ?>][catfeed]"
+     <?php if($catfeed=='text') echo 'checked'; ?>
+     id="collapsCat-catfeedText-<?php echo $number ?>"
+     value='text'></input> <label for="collapsCat-catfeedYes">text (RSS)</label>
+     <input type="radio" name="collapsCat[<?php echo $number ?>][catfeed]"
+     <?php if($catfeed=='image') echo 'checked'; ?>
+     id="collapsCat-catfeedImage-<?php echo $number ?>"
+     value='image'></input> <label for="catfeedImage">image <img src='../wp-includes/images/rss.png' /></label>
+    </p>
     </p>
    <?php
     echo '<input type="hidden" id="collapsCat-submit-'.$number.'" name="collapsCat['.$number.'][submit]" value="1" />';

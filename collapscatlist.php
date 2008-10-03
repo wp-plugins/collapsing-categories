@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.6.2
+Collapsing Categories version: 0.6.3
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -28,6 +28,19 @@ This file is part of Collapsing Categories
 /* TODO 
 add depth option
 */
+function addFeedLink($feed,$cat) {
+  if ($feed=='text') {
+    $rssLink= '<a href="' . get_category_feed_link($cat->term_id) .
+        '">&nbsp;(RSS)</a>';
+  } elseif ($feed='image') {
+    $rssLink= '<a href="' . get_category_feed_link($cat->term_id) .
+        '">&nbsp;<img src="' .get_settings(siteurl) .
+        '/wp-includes/images/rss.png" /></a>';
+  } else {
+    $rssLink='';
+  }
+  return $rssLink;
+}
 
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$number,$expanded) {
@@ -62,12 +75,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   //echo $cat->name . " $expanded, ";
                 $subCatLinks.=( "<li class='collapsCat'>".
                     "<span class='collapsCat hide' ".
-                    "onclick='expandCat(event,$expand); return false'>" . 
+                    "onclick='expandCat(event,$expand,$animate); return false'>" . 
                     "<span class='sym'>$collapseSym</span></span>" );
               } else {
                 $subCatLinks.=( "<li class='collapsCat'>".
                     "<span class='collapsCat show' ".
-                    "onclick='expandCat(event,$expand); return false'>" . 
+                    "onclick='expandCat(event,$expand,$animate); return false'>" . 
                     "<span class='sym'>$expandSym</span></span>" );
               }
             } else {
@@ -94,7 +107,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   "</span>";
               $subCatLinks.= "<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick='expandCat(event,$expand);".
+                  "onclick='expandCat(event,$expand,$animate);".
                   "return false'>".
                   "<span class='sym'>$expandSym</span>";
             } else {
@@ -116,12 +129,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 //echo $cat->name . " $expanded, ";
               $subCatLinks.=( "<li class='collapsCat'>".
                   "<span class='collapsCat hide' ".
-                  "onclick='expandCat(event,$expand); return false'>" . 
+                  "onclick='expandCat(event,$expand,$animate); return false'>" . 
                   "<span class='sym'>$collapseSym</span></span>" );
             } else {
               $subCatLinks.=( "<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick='expandCat(event,$expand); return false'>" . 
+                  "onclick='expandCat(event,$expand,$animate); return false'>" . 
                   "<span class='sym'>$expandSym</span></span>" );
             }
 
@@ -144,12 +157,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   $cat2).'</span>';
               $subCatLinks.="<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick=\"expandCat(event,$expand); return false\">".
+                  "onclick=\"expandCat(event,$expand,$animate); return false\">".
                   "<span class='sym'>$expandSym</span>";
             } else {
               $subCatLinks.="<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick='expandCat(event,$expand); return false'>".
+                  "onclick='expandCat(event,$expand,$animate); return false'>".
                   "<span class='sym'>$expandSym</span>";
               $link2 = apply_filters('list_cats', $cat2->name,
                   $cat2).'</span>';
@@ -165,6 +178,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           $link2 .= ' ('.$theCount.')';
         }
         $subCatLinks.= $link2 ;
+        $rssLink=addFeedLink($catfeed,$cat2);
+        $subCatLinks.=$rssLink;
         if (($subCatCount>0) || ($showPosts=='yes')) {
           $subCatLinks.="\n<ul style=\"display:$expanded\">\n";
         }
@@ -312,6 +327,7 @@ function list_categories($number) {
     if ($cat->parent==0) {
       //$lastCat= $cat->term_id;
 
+      $rssLink=addFeedLink($catfeed,$cat);
       $subCatPostCount=0;
       $subCatCount=0;
       list ($subCatLinks, $subCatCount,$subCatPostCount, $subCatPosts)=
@@ -340,12 +356,12 @@ function list_categories($number) {
             if ($expanded=='block') {
               print( "      <li class='collapsCat'>".
                   "<span class='collapsCat hide' ".
-                  "onclick='expandCat(event,$expand); return false'>".
+                  "onclick='expandCat(event,$expand,$animate); return false'>".
                   "<span class='sym'>$collapseSym</span></span>" );
             } else {
               print( "      <li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick='expandCat(event,$expand); return false'>".
+                  "onclick='expandCat(event,$expand,$animate); return false'>".
                   "<span class='sym'>$expandSym</span></span>" );
             }
           } else {
@@ -357,12 +373,12 @@ function list_categories($number) {
             if ($expanded=='block') {
               print( "      <li class='collapsCat'>".
                   "<span class='collapsCat hide' ".
-                  "onclick='expandCat(event,$expand); return false'>".
+                  "onclick='expandCat(event,$expand,$animate); return false'>".
                   "<span class='sym'>$collapseSym</span>");
             } else {
               print( "      <li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick='expandCat(event,$expand); return false'>".
+                  "onclick='expandCat(event,$expand,$animate); return false'>".
                   "<span class='sym'>$expandSym</span>");
             }
           } else {
@@ -373,12 +389,12 @@ function list_categories($number) {
               if ($expanded=='block') {
                 print( "      <li class='collapsCat'>".
                     "<span class='collapsCat hide' ".
-                    "onclick='expandCat(event,$expand); return false'>".
+                    "onclick='expandCat(event,$expand,$animate); return false'>".
                     "<span class='sym'>$collapseSym</span>");
               } else {
                 print( "      <li class='collapsCat'>".
                     "<span class='collapsCat show' ".
-                    "onclick='expandCat(event,$expand); return false'>".
+                    "onclick='expandCat(event,$expand,$animate); return false'>".
                     "<span class='sym'>$expandSym</span>");
               }
             } else {
@@ -400,6 +416,7 @@ function list_categories($number) {
         if( $showPostCount=='yes') {
           $link .= ' (' . $theCount.')';
         }
+        $link.=$rssLink;
           print( $link );
         if (($subCatPostCount>0) || ($showPosts=='yes')) {
           print( "\n     <ul style=\"display:$expanded\">\n" );
