@@ -32,7 +32,7 @@ function addFeedLink($feed,$cat) {
   if ($feed=='text') {
     $rssLink= '<a href="' . get_category_feed_link($cat->term_id) .
         '">&nbsp;(RSS)</a>';
-  } elseif ($feed='image') {
+  } elseif ($feed=='image') {
     $rssLink= '<a href="' . get_category_feed_link($cat->term_id) .
         '">&nbsp;<img src="' .get_settings(siteurl) .
         '/wp-includes/images/rss.png" /></a>';
