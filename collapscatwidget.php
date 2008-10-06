@@ -188,13 +188,12 @@ if (function_exists('collapsCat')) {
     $showPosts='yes';
     $linkToCat='yes';
     $showPages='no';
-    $catfeed='none';
     $animate=1;
+    $catfeed='none';
   } else {
     $title = attribute_escape($options[$number]['title']);
     $showPostCount = $options[$number]['showPostCount'];
     $expand = $options[$number]['expand'];
-    $catfeed = $options[$number]['catfeed'];
     $inExcludeCats = $options[$number]['inExcludeCats'];
     $inExclude = $options[$number]['inExclude'];
     $catSort = $options[$number]['catSort'];
@@ -206,6 +205,7 @@ if (function_exists('collapsCat')) {
     $showPages = $options[$number]['showPages'];
     $linkToCat = $options[$number]['linkToCat'];
     $animate = $options[$number]['animate'];
+    $catfeed = $options[$number]['catfeed'];
   }
 
 		//$title		= wp_specialchars($options['title']);
@@ -295,7 +295,7 @@ if (function_exists('collapsCat')) {
      <input type="radio" name="collapsCat[<?php echo $number ?>][catfeed]"
      <?php if($catfeed=='none') echo 'checked'; ?>
      id="collapsCat-catfeedNone-<?php echo $number ?>"
-     value=''></input> <label for="collapsCat-catfeedNone">None</label>
+     value='none'></input> <label for="collapsCat-catfeedNone">None</label>
      <input type="radio" name="collapsCat[<?php echo $number ?>][catfeed]"
      <?php if($catfeed=='text') echo 'checked'; ?>
      id="collapsCat-catfeedText-<?php echo $number ?>"
