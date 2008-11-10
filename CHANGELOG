@@ -1,5 +1,9 @@
 Collapsing Categories Changelog
 
+* 0.6.4 (2008/11/10)
+    * Fixed a minor bug in with animation option not being properly set by
+      default
+
 * 0.6.3 (2008/10/03)
     * Added option to animate expanding and collapsing
     * Added option to add rss feeds for each category

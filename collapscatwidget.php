@@ -188,7 +188,7 @@ if (function_exists('collapsCat')) {
     $showPosts='yes';
     $linkToCat='yes';
     $showPages='no';
-    $animate=1;
+    $animate='1';
     $catfeed='none';
   } else {
     $title = attribute_escape($options[$number]['title']);

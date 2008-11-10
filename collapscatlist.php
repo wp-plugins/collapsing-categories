@@ -45,6 +45,7 @@ function addFeedLink($feed,$cat) {
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$number,$expanded) {
   global $options,$expandSym, $collapseSym, $autoExpand;
+  print_r($options[number]);
   extract($options[$number]);
   $subCatPosts=array();
   $link2='';
@@ -72,7 +73,6 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                 '</a>';
             if ($showPosts=='yes') {
               if ($expanded=='block') {
-  //echo $cat->name . " $expanded, ";
                 $subCatLinks.=( "<li class='collapsCat'>".
                     "<span class='collapsCat hide' ".
                     "onclick='expandCat(event,$expand,$animate); return false'>" . 
@@ -126,7 +126,6 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           $subCatCount=1;
           if ($linkToCat=='yes') {
             if ($expanded=='block') {
-//echo $cat->name . " $expanded, ";
               $subCatLinks.=( "<li class='collapsCat'>".
                   "<span class='collapsCat hide' ".
                   "onclick='expandCat(event,$expand,$animate); return false'>" . 
