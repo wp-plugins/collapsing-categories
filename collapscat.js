@@ -70,9 +70,10 @@ function autoExpand() {
           theSpan=thisli.childNodes[j];
             //alert(theSpan.getAttribute('style'));
             // Can't seem to get getAttribute to work in IE
-          if (theSpan.getAttribute('class') =='collapsCat show') {
-            var theOnclick=theSpan.getAttribute('onclick');
-            var expand=theOnclick.replace(/.*event,([0-9]),[0-9].*/, '$1');
+          if (theSpan.className =='collapsCat show') {
+            var theOnclick=theSpan.onclick+"";
+            var matches=theOnclick.match(/.*\(event, ?([0-9]).*\)/);
+            var expand=matches[1];
             expandCat(theSpan,expand,0);
           }
         } 

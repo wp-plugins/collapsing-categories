@@ -76,7 +76,7 @@ class collapscat {
     }
     if( e.target ) {
       src = e.target;
-    } else if (e.getAttribute('class')=='collapsCat show') {
+    } else if (e.className=='collapsCat show') {
       src=e;
     } else {
       try {
