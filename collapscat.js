@@ -23,6 +23,10 @@ This file is part of Collapsing Categories
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+String.prototype.trim = function() {
+  return this.replace(/^\s+|\s+$/g,"");
+}
+
 function createCookie(name,value,days) {
   if (days) {
     var date = new Date();
@@ -52,3 +56,44 @@ function readCookie(name) {
 function eraseCookie(name) {
   createCookie(name,"",-1);
 }
+
+function autoExpand() {
+  var cookies = document.cookie.split(';');
+  for (i=0; i<cookies.length; i++) {
+    var cookieparts= cookies[i].split('=');
+    var cookiename=cookieparts[0].trim();
+    if (cookiename.match(/collapsCat-[0-9]+/)) {
+      var expand= document.getElementById(cookiename);
+      var thisli = expand.parentNode;
+      for (j=0; j< thisli.childNodes.length; j++) {
+        if (thisli.childNodes[j].nodeName.toLowerCase() == 'span') {
+          theSpan=thisli.childNodes[j];
+            //alert(theSpan.getAttribute('style'));
+            // Can't seem to get getAttribute to work in IE
+          if (theSpan.getAttribute('class') =='collapsCat show') {
+            var theOnclick=theSpan.getAttribute('onclick');
+            var expand=theOnclick.replace(/.*event,([0-9]),[0-9].*/, '$1');
+            expandCat(theSpan,expand,0);
+          }
+        } 
+      }
+    }
+  }
+}
+function addLoadEvent(func) {
+  var oldonload = window.onload;
+  if (typeof window.onload != 'function') {
+    window.onload = func;
+  } else {
+    window.onload = function() {
+      if (oldonload) {
+        oldonload();
+      }
+      func();
+    }
+  }
+}
+
+addLoadEvent(function() {
+  autoExpand();
+});

@@ -76,9 +76,13 @@ class collapscat {
     }
     if( e.target ) {
       src = e.target;
-    }
-    else {
-      src = window.event.srcElement;
+    } else if (e.getAttribute('class')=='collapsCat show') {
+      src=e;
+    } else {
+      try {
+        src = window.event.srcElement;
+      } catch (err) {
+      }
     }
 
     if (src.nodeName.toLowerCase() == 'img') {

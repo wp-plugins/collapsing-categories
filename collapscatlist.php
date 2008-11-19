@@ -56,7 +56,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         // check to see if there are more subcategories under this one
         $subCatPostCount=$subCatPostCount+$cat2->count;
         $expanded='none';
-        $theID='collapsCat-' . $cat2->term_id;
+        $theID='collapsCat' . $cat2->term_id;
         //echo "theID=$theID";
         if (in_array($cat2->name, $autoExpand) ||
             in_array($cat2->slug, $autoExpand) ||
@@ -340,7 +340,7 @@ function list_categories($number) {
       $theCount=$cat->count+$subCatPostCount;
       if ($theCount>0) {
         $expanded='none';
-        $theID='collapsCat-' . $cat->term_id;
+        $theID='collapsCat' . $cat->term_id;
         if (in_array($cat->name, $autoExpand) ||
             in_array($cat->slug, $autoExpand) ||
             in_array($theID, array_keys($_COOKIE))) {
