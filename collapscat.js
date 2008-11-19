@@ -59,17 +59,15 @@ function eraseCookie(name) {
 
 function autoExpand() {
   var cookies = document.cookie.split(';');
-  for (i=0; i<cookies.length; i++) {
-    var cookieparts= cookies[i].split('=');
+  for (var cookieIndex=0; cookieIndex<cookies.length; cookieIndex++) {
+    var cookieparts= cookies[cookieIndex].split('=');
     var cookiename=cookieparts[0].trim();
     if (cookiename.match(/collapsCat-[0-9]+/)) {
       var expand= document.getElementById(cookiename);
       var thisli = expand.parentNode;
-      for (j=0; j< thisli.childNodes.length; j++) {
-        if (thisli.childNodes[j].nodeName.toLowerCase() == 'span') {
-          theSpan=thisli.childNodes[j];
-            //alert(theSpan.getAttribute('style'));
-            // Can't seem to get getAttribute to work in IE
+      for (var childI=0; childI< thisli.childNodes.length; childI++) {
+        if (thisli.childNodes[childI].nodeName.toLowerCase() == 'span') {
+          theSpan=thisli.childNodes[childI];
           if (theSpan.className =='collapsCat show') {
             var theOnclick=theSpan.onclick+"";
             var matches=theOnclick.match(/.*\(event, ?([0-9]).*\)/);
