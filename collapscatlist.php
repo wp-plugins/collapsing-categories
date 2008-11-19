@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.6.4
+Collapsing Categories version: 0.6.5
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -55,6 +55,14 @@ function get_sub_cat($cat, $categories, $parents, $posts,
       if ($cat->term_id==$cat2->parent) {
         // check to see if there are more subcategories under this one
         $subCatPostCount=$subCatPostCount+$cat2->count;
+        $expanded='none';
+        $theID='collapsCat-' . $cat2->term_id;
+        //echo "theID=$theID";
+        if (in_array($cat2->name, $autoExpand) ||
+            in_array($cat2->slug, $autoExpand) ||
+            in_array($theID, array_keys($_COOKIE))) {
+          $expanded='block';
+        }
         if (!in_array($cat2->term_id, $parents)) {
           $subCatCount=0;
           if ($linkToCat=='yes') {
@@ -118,11 +126,6 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           list ($subCatLink2, $subCatCount,$subCatPostCount,$subCatPosts)= 
               get_sub_cat($cat2, $categories, $parents, $posts, $subCatCount,
               $subCatPostCount, $number,$expanded);
-          $expanded='none';
-          if (in_array($cat2->name, $autoExpand) ||
-              in_array($cat2->slug, $autoExpand)) {
-            $expanded='block';
-          }
           $subCatCount=1;
           if ($linkToCat=='yes') {
             if ($expanded=='block') {
@@ -180,7 +183,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $rssLink=addFeedLink($catfeed,$cat2);
         $subCatLinks.=$rssLink;
         if (($subCatCount>0) || ($showPosts=='yes')) {
-          $subCatLinks.="\n<ul style=\"display:$expanded\">\n";
+          $subCatLinks.="\n<ul id='collapsCat-" . $cat2->term_id . 
+              "'style=\"display:$expanded\">\n";
         }
           if ($showPosts=='yes') {
             foreach ($posts as $post2) {
@@ -336,8 +340,10 @@ function list_categories($number) {
       $theCount=$cat->count+$subCatPostCount;
       if ($theCount>0) {
         $expanded='none';
+        $theID='collapsCat-' . $cat->term_id;
         if (in_array($cat->name, $autoExpand) ||
-            in_array($cat->slug, $autoExpand)) {
+            in_array($cat->slug, $autoExpand) ||
+            in_array($theID, array_keys($_COOKIE))) {
           $expanded='block';
         }
         if ($linkToCat=='yes') {
@@ -418,7 +424,8 @@ function list_categories($number) {
         $link.=$rssLink;
           print( $link );
         if (($subCatPostCount>0) || ($showPosts=='yes')) {
-          print( "\n     <ul style=\"display:$expanded\">\n" );
+          print( "\n     <ul id='collapsCat-" . $cat->term_id .
+              "' style=\"display:$expanded\">\n" );
         }
         echo $subCatLinks;
         // Now print out the post info

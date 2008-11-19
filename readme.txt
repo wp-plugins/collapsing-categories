@@ -4,7 +4,7 @@ Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.6
-Tested up to: 2.6.1
+Tested up to: 2.6.3
 Stable tag: 0.6.4
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
@@ -119,6 +119,17 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.6.5 (2008/11/18)
+    * Now uses cookies to keep categories expanded if they have been clicked on
+
+* 0.6.4 (2008/11/10)
+    * Fixed a minor bug in with animation option not being properly set by
+      default
+
+* 0.6.3 (2008/10/03)
+    * Added option to animate expanding and collapsing
+    * Added option to add rss feeds for each category
 
 * 0.6.2 (2008/09/11)
     * Fixed display of expand and collapse symbols when using images

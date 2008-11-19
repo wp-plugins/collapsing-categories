@@ -1,5 +1,8 @@
 Collapsing Categories Changelog
 
+* 0.6.5 (2008/11/18)
+    * Now uses cookies to keep categories expanded if they have been clicked on
+
 * 0.6.4 (2008/11/10)
     * Fixed a minor bug in with animation option not being properly set by
       default

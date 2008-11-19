@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 0.6.4
+Version: 0.6.5
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories
 
@@ -50,9 +50,10 @@ class collapscat {
     echo "<style type='text/css'>
 		@import '$url/wp-content/plugins/collapsing-categories/collapscat.css';
     </style>\n";
+		echo "<script type ='text/javascript' src='$url/wp-content/plugins/collapsing-categories/collapscat.js'></script>";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.6.4\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+		echo "// These variables are part of the Collapsing Categories Plugin version: 0.6.5\n// Copyright 2007 Robert Felty (robfelty.com)\n";
     $expandSym="<img src='". get_settings('siteurl') .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/expand.gif' alt='expand' />";
@@ -82,10 +83,8 @@ class collapscat {
 
     if (src.nodeName.toLowerCase() == 'img') {
       src=src.parentNode;
-      //alert('it is an image');
     }
     srcList = src.parentNode;
-    //alert(srcList)
     if (srcList.nodeName.toLowerCase() == 'span') {
       srcList= srcList.parentNode;
       src= src.parentNode;
@@ -105,6 +104,8 @@ class collapscat {
         childList.style.display = 'none';
       }
       var theSpan = src.childNodes[0];
+      var theId= childList.getAttribute('id');
+      eraseCookie(theId);
       src.setAttribute('class','collapsCat show');
       src.setAttribute('title','click to expand');
       theSpan.innerHTML=expand;
@@ -115,6 +116,8 @@ class collapscat {
         childList.style.display = 'block';
       }
       var theSpan = src.childNodes[0];
+      var theId= childList.getAttribute('id');
+      createCookie(theId,1,7);
       src.setAttribute('class','collapsCat hide');
       src.setAttribute('title','click to collapse');
       var pattern = expand;
