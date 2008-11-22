@@ -33,20 +33,32 @@ This file is part of Collapsing Categories
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */ 
 
+$url = get_settings('siteurl');
 add_action('wp_head', wp_enqueue_script('scriptaculous-effects'));
+add_action('wp_head', wp_enqueue_script('collapsFunctions', "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js"));
 add_action( 'wp_head', array('collapscat','get_head'));
-add_action('activate_collapsing-categories/collapscat.php', array('collapscat','init'));
+add_action('admin_menu', array('collapscat','setup'));
+//add_action('activate_collapsing-categories/collapscat.php', array('collapscat','init'));
 
 class collapscat {
 
+/*
 	function init() {
 	}
+*/
 
 	function setup() {
+		if( function_exists('add_options_page') ) {
+			add_options_page(__('Collapsing Categories'),__('Collapsing
+      Categories'),1,basename(__FILE__),array('collapscat','ui'));
+		}
+	}
+	function ui() {
+		include_once( 'collapscatUI.php' );
 	}
 
 	function get_head() {
-		$url = get_settings('siteurl');
+    $url = get_settings('siteurl');
     echo "<style type='text/css'>
 		@import '$url/wp-content/plugins/collapsing-categories/collapscat.css';
     </style>\n";
@@ -76,7 +88,7 @@ class collapscat {
     }
     if( e.target ) {
       src = e.target;
-    } else if (e.className=='collapsCat show') {
+    } else if (e.className.match(/^collapsCat/)) {
       src=e;
     } else {
       try {
@@ -109,7 +121,7 @@ class collapscat {
       }
       var theSpan = src.childNodes[0];
       var theId= childList.getAttribute('id');
-      eraseCookie(theId);
+      createCookie(theId,0,7);
       src.setAttribute('class','collapsCat show');
       src.setAttribute('title','click to expand');
       theSpan.innerHTML=expand;

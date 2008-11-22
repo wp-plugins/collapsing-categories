@@ -23,76 +23,34 @@ This file is part of Collapsing Categories
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-String.prototype.trim = function() {
-  return this.replace(/^\s+|\s+$/g,"");
-}
 
-function createCookie(name,value,days) {
-  if (days) {
-    var date = new Date();
-    date.setTime(date.getTime()+(days*24*60*60*1000));
-    var expires = "; expires="+date.toGMTString();
-  } else {
-    var expires = "";
-  }
-  document.cookie = name+"="+value+expires+"; path=/";
-}
-
-function readCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(';');
-  for(var i=0;i < ca.length;i++) {
-    var c = ca[i];
-    while (c.charAt(0)==' ') {
-      c = c.substring(1,c.length);
-    }
-    if (c.indexOf(nameEQ) == 0) {
-      return c.substring(nameEQ.length,c.length);
-    }
-  }
-  return null;
-}
-
-function eraseCookie(name) {
-  createCookie(name,"",-1);
-}
-
-function autoExpand() {
+function autoExpandCat() {
   var cookies = document.cookie.split(';');
   for (var cookieIndex=0; cookieIndex<cookies.length; cookieIndex++) {
     var cookieparts= cookies[cookieIndex].split('=');
     var cookiename=cookieparts[0].trim();
+    var cookievalue=cookieparts[1].trim();
     if (cookiename.match(/collapsCat-[0-9]+/)) {
       var expand= document.getElementById(cookiename);
       var thisli = expand.parentNode;
       for (var childI=0; childI< thisli.childNodes.length; childI++) {
         if (thisli.childNodes[childI].nodeName.toLowerCase() == 'span') {
           theSpan=thisli.childNodes[childI];
-          if (theSpan.className =='collapsCat show') {
-            var theOnclick=theSpan.onclick+"";
-            var matches=theOnclick.match(/.*\(event, ?([0-9]).*\)/);
-            var expand=matches[1];
-            expandCat(theSpan,expand,0);
+          if (theSpan.className.match(/^collapsCat/)) {
+            if ((theSpan.className == 'collapsCat show' && cookievalue ==1) ||
+                (theSpan.className == 'collapsCat hide' && cookievalue ==0)) {
+              var theOnclick=theSpan.onclick+"";
+              var matches=theOnclick.match(/.*\(event, ?([0-9]).*\)/);
+              var expand=matches[1];
+              expandCat(theSpan,expand,0);
+            }
           }
         } 
       }
     }
   }
 }
-function addLoadEvent(func) {
-  var oldonload = window.onload;
-  if (typeof window.onload != 'function') {
-    window.onload = func;
-  } else {
-    window.onload = function() {
-      if (oldonload) {
-        oldonload();
-      }
-      func();
-    }
-  }
-}
 
 addLoadEvent(function() {
-  autoExpand();
+  autoExpandCat();
 });
