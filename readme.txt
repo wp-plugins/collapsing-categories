@@ -93,6 +93,16 @@ Add a line to the collapscat.css file in the .sym class, like so:
 
 Try disabling, then re-enabling the plugin
 
+= There seems to be a newline between the collapsing/expanding symbol and the
+category name. How do I fix this? =
+
+If your theme has some css that says something like
+
+#sidebar li a {display:block}
+
+that is the problem. 
+You probably want to add a float:left to the .sym class
+
 == Screenshots ==
 
 1. a few expanded categories with default theme, showing nested categories
