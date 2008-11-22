@@ -26,7 +26,8 @@ This file is part of Collapsing Categories
 */
 
 /* TODO 
-add depth option
+* add depth option
+* add option to display number of comments
 */
 function addFeedLink($feed,$cat) {
   if ($feed=='text') {

@@ -39,5 +39,4 @@ li.widget.collapsCat ul {margin-left:.5em;}
 #sidebar li.collapsCatPost:before {content: "\00BB \00A0" !important;} 
 #sidebar li.collapsCat .sym {font-family:monospace;
       font-size:1.5em;
-      float:left;
       padding-right:5px;}
