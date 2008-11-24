@@ -3,6 +3,7 @@ Collapsing Categories Changelog
 * 0.7 (2008/11/22)
     * Cookie handling now affects categories that are expanded by default too
     * Can now be used either as a widget or manually
+    * Got rid of the stupid float left from 0.6.6
 
 * 0.6.6 (2008/11/21)
     * Added a float left to .sym css to make it compatible with more themes
