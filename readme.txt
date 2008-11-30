@@ -20,10 +20,28 @@ It is largely based off of the Fancy Categories Plugin by Andrew Rader
 
 == Installation ==
 
+
 Unpackage contents to wp-content/plugins/ so that the files are in a
-collapsing-categories directory. Activate the plugin, then simply go the
+collapsing-categories directory.
+
+= Widget installation = 
+
+ Activate the plugin, then simply go the
 Presentation > Widgets section and drag over the Collapsing Categories Widget.
 
+
+= Manual installation = 
+
+ Activate the plugin, then insert the following into your template: (probably
+in sidebar.php)
+<?php 
+if (function_exists('collapsCat')) {
+  collapsCat('%i%') 
+} else {
+  echo "<ul>\n";
+  wp_get_categories(your_options_here);
+  echo "</ul>\n";
+?>
 == Frequently Asked Questions ==
 
 =  How do I change the style of the collapsing categories lists? =
