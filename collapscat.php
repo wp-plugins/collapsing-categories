@@ -88,7 +88,7 @@ class collapscat {
     }
     if( e.target ) {
       src = e.target;
-    } else if (e.className.match(/^collapsCat/)) {
+    } else if (e.className && e.className.match(/^collapsCat/)) {
       src=e;
     } else {
       try {
