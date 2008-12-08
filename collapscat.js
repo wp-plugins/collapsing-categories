@@ -24,33 +24,3 @@ This file is part of Collapsing Categories
 */
 
 
-function autoExpandCat() {
-  var cookies = document.cookie.split(';');
-  for (var cookieIndex=0; cookieIndex<cookies.length; cookieIndex++) {
-    var cookieparts= cookies[cookieIndex].split('=');
-    var cookiename=cookieparts[0].trim();
-    var cookievalue=cookieparts[1].trim();
-    if (cookiename.match(/collapsCat-[0-9]+/)) {
-      var expand= document.getElementById(cookiename);
-      var thisli = expand.parentNode;
-      for (var childI=0; childI< thisli.childNodes.length; childI++) {
-        if (thisli.childNodes[childI].nodeName.toLowerCase() == 'span') {
-          theSpan=thisli.childNodes[childI];
-          if (theSpan.className.match(/^collapsCat/)) {
-            if ((theSpan.className == 'collapsCat show' && cookievalue ==1) ||
-                (theSpan.className == 'collapsCat hide' && cookievalue ==0)) {
-              var theOnclick=theSpan.onclick+"";
-              var matches=theOnclick.match(/.*\(event, ?([0-9]).*\)/);
-              var expand=matches[1];
-              expandCat(theSpan,expand,0);
-            }
-          }
-        } 
-      }
-    }
-  }
-}
-
-addLoadEvent(function() {
-  autoExpandCat();
-});

@@ -84,12 +84,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               if ($expanded=='block') {
                 $subCatLinks.=( "<li class='collapsCat'>".
                     "<span class='collapsCat hide' ".
-                    "onclick='expandCat(event,$expand,$animate); return false'>" . 
+                    "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>" . 
                     "<span class='sym'>$collapseSym</span></span>" );
               } else {
                 $subCatLinks.=( "<li class='collapsCat'>".
                     "<span class='collapsCat show' ".
-                    "onclick='expandCat(event,$expand,$animate); return false'>" . 
+                    "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>" . 
                     "<span class='sym'>$expandSym</span></span>" );
               }
             } else {
@@ -116,7 +116,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   "</span>";
               $subCatLinks.= "<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick='expandCat(event,$expand,$animate);".
+                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\");".
                   "return false'>".
                   "<span class='sym'>$expandSym</span>";
             } else {
@@ -132,12 +132,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             if ($expanded=='block') {
               $subCatLinks.=( "<li class='collapsCat'>".
                   "<span class='collapsCat hide' ".
-                  "onclick='expandCat(event,$expand,$animate); return false'>" . 
+                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>" . 
                   "<span class='sym'>$collapseSym</span></span>" );
             } else {
               $subCatLinks.=( "<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick='expandCat(event,$expand,$animate); return false'>" . 
+                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>" . 
                   "<span class='sym'>$expandSym</span></span>" );
             }
 
@@ -160,12 +160,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   $cat2).'</span>';
               $subCatLinks.="<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick=\"expandCat(event,$expand,$animate); return false\">".
+                  "onclick=\"expandCollapse(event, $expand, $animate, \"collapsCat\"); return false\">".
                   "<span class='sym'>$expandSym</span>";
             } else {
               $subCatLinks.="<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick='expandCat(event,$expand,$animate); return false'>".
+                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
                   "<span class='sym'>$expandSym</span>";
               $link2 = apply_filters('list_cats', $cat2->name,
                   $cat2).'</span>';
@@ -362,12 +362,12 @@ function list_categories($number) {
             if ($expanded=='block') {
               print( "      <li class='collapsCat'>".
                   "<span class='collapsCat hide' ".
-                  "onclick='expandCat(event,$expand,$animate); return false'>".
+                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
                   "<span class='sym'>$collapseSym</span></span>" );
             } else {
               print( "      <li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick='expandCat(event,$expand,$animate); return false'>".
+                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
                   "<span class='sym'>$expandSym</span></span>" );
             }
           } else {
@@ -379,12 +379,12 @@ function list_categories($number) {
             if ($expanded=='block') {
               print( "      <li class='collapsCat'>".
                   "<span class='collapsCat hide' ".
-                  "onclick='expandCat(event,$expand,$animate); return false'>".
+                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
                   "<span class='sym'>$collapseSym</span>");
             } else {
               print( "      <li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick='expandCat(event,$expand,$animate); return false'>".
+                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
                   "<span class='sym'>$expandSym</span>");
             }
           } else {
@@ -395,12 +395,12 @@ function list_categories($number) {
               if ($expanded=='block') {
                 print( "      <li class='collapsCat'>".
                     "<span class='collapsCat hide' ".
-                    "onclick='expandCat(event,$expand,$animate); return false'>".
+                    "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
                     "<span class='sym'>$collapseSym</span>");
               } else {
                 print( "      <li class='collapsCat'>".
                     "<span class='collapsCat show' ".
-                    "onclick='expandCat(event,$expand,$animate); return false'>".
+                    "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
                     "<span class='sym'>$expandSym</span>");
               }
             } else {

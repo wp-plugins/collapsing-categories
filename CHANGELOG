@@ -1,5 +1,10 @@
 Collapsing Categories Changelog
 
+* 0.7.2 (2008/12/08)
+    * fixed javascript bug where thisli.parentNode was null
+    * made javascript more flexible so that all collapsing X plugins can share
+      more code
+
 * 0.7.1 (2008/12/01)
     * fixed javascript bug in IE7
 

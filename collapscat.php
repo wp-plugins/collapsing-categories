@@ -62,7 +62,7 @@ class collapscat {
     echo "<style type='text/css'>
 		@import '$url/wp-content/plugins/collapsing-categories/collapscat.css';
     </style>\n";
-		echo "<script type ='text/javascript' src='$url/wp-content/plugins/collapsing-categories/collapscat.js'></script>";
+		//echo "<script type ='text/javascript' src='$url/wp-content/plugins/collapsing-categories/collapscat.js'></script>";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
 		echo "// These variables are part of the Collapsing Categories Plugin version: 0.7.1\n// Copyright 2007 Robert Felty (robfelty.com)\n";
@@ -72,81 +72,13 @@ class collapscat {
     $collapseSym="<img src='". get_settings('siteurl') .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/collapse.gif' alt='collapse' />";
-    echo "function expandCat( e, expand,animate ) {
-    if (expand==1) {
-      expand='+';
-      collapse='—';
-    } else if (expand==2) {
-      expand='[+]';
-      collapse='[—]';
-    } else if (expand==3) {
-      expand=\"$expandSym\";
-      collapse=\"$collapseSym\";
-    } else {
-      expand='►';
-      collapse='▼';
-    }
-    if( e.target ) {
-      src = e.target;
-    } else if (e.className && e.className.match(/^collapsCat/)) {
-      src=e;
-    } else {
-      try {
-        src = window.event.srcElement;
-      } catch (err) {
-      }
-    }
-
-    if (src.nodeName.toLowerCase() == 'img') {
-      src=src.parentNode;
-    }
-    srcList = src.parentNode;
-    if (srcList.nodeName.toLowerCase() == 'span') {
-      srcList= srcList.parentNode;
-      src= src.parentNode;
-    }
-    childList = null;
-
-    for( i = 0; i < srcList.childNodes.length; i++ ) {
-      if( srcList.childNodes[i].nodeName.toLowerCase() == 'ul' ) {
-        childList = srcList.childNodes[i];
-      }
-    }
-
-    if( src.getAttribute( 'class' ) == 'collapsCat hide' ) {
-      if (animate==1) {
-        Effect.BlindUp(childList, {duration: 0.5});
-      } else {
-        childList.style.display = 'none';
-      }
-      var theSpan = src.childNodes[0];
-      var theId= childList.getAttribute('id');
-      createCookie(theId,0,7);
-      src.setAttribute('class','collapsCat show');
-      src.setAttribute('title','click to expand');
-      theSpan.innerHTML=expand;
-    } else {
-      if (animate==1) {
-        Effect.BlindDown(childList, {duration: 0.5});
-      } else {
-        childList.style.display = 'block';
-      }
-      var theSpan = src.childNodes[0];
-      var theId= childList.getAttribute('id');
-      createCookie(theId,1,7);
-      src.setAttribute('class','collapsCat hide');
-      src.setAttribute('title','click to collapse');
-      var pattern = expand;
-      var replace = collapse;
-      theSpan.innerHTML=collapse;
-    }
-
-    if( e.preventDefault ) {
-      e.preventDefault();
-    }
-
-    return false;
-  }\n";
+    echo "var expandSym=$expandSym;";
+    echo "var collapseSym=$collapseSym;";
+    echo"
+    addLoadEvent(function() {
+      autoExpandCollapse('collapsCat');
+    });
+    ";
 
 		echo "// ]]>\n</script>\n";
 	}
