@@ -45,8 +45,9 @@ function addLoadEvent(func) {
   }
 }
 function autoExpandCollapse(collapsClass) {
+  alert(collapsClass);
   var cookies = document.cookie.split(';');
-  var cookiePattern = new RegExp(collapsClass+'-[0-9]+');
+  var cookiePattern = new RegExp(collapsClass+'(-[0-9]+|List-[0-9]+-[0-9]+)');
   var classPattern = new RegExp('^' + collapsClass);
   var hide = collapsClass + ' ' + 'hide'
   var show = collapsClass + ' ' + 'show'
@@ -78,6 +79,7 @@ function autoExpandCollapse(collapsClass) {
 }
 
 function expandCollapse( e, expand,animate, collapsClass ) {
+  var classPattern= new RegExp('^' + collapsClass);
   if (expand==1) {
     expand='+';
     collapse='—';
@@ -93,7 +95,7 @@ function expandCollapse( e, expand,animate, collapsClass ) {
   }
   if( e.target ) {
     src = e.target;
-  } else if (e.className && e.className.match(/^collapsCat/)) {
+  } else if (e.className && e.className.match(classPattern)) {
     src=e;
   } else {
     try {
