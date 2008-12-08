@@ -83,8 +83,8 @@ class collapscat {
     $collapseSym="<img src='". get_settings('siteurl') .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/collapse.gif' alt='collapse' />";
-    echo "var expandSym=$expandSym;";
-    echo "var collapseSym=$collapseSym;";
+    echo "var expandSym=\"$expandSym\";";
+    echo "var collapseSym=\"$collapseSym\";";
     echo"
     addLoadEvent(function() {
 //      autoExpandCollapse('collapsCat');

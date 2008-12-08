@@ -185,7 +185,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $subCatLinks.=$rssLink;
         if (($subCatCount>0) || ($showPosts=='yes')) {
           $subCatLinks.="\n<ul id='collapsCat-" . $cat2->term_id . 
-              "'style=\"display:$expanded\">\n";
+              "' style=\"display:$expanded\">\n";
         }
           if ($showPosts=='yes') {
             foreach ($posts as $post2) {
