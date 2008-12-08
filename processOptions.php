@@ -2,7 +2,6 @@
  if ( -1 == $number ) {
     /* default options go here */
     $title = 'Categories';
-    $text = '';
     $showPostCount = 'yes';
     $catSort = 'catName';
     $catSortOrder = 'ASC';

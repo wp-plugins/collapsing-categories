@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 0.7.1
+Version: 0.7.2
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories
 
@@ -38,14 +38,25 @@ add_action('wp_head', wp_enqueue_script('scriptaculous-effects'));
 add_action('wp_head', wp_enqueue_script('collapsFunctions', "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js"));
 add_action( 'wp_head', array('collapscat','get_head'));
 add_action('admin_menu', array('collapscat','setup'));
-//add_action('activate_collapsing-categories/collapscat.php', array('collapscat','init'));
+add_action('activate_collapsing-categories/collapscat.php', array('collapscat','init'));
 
 class collapscat {
 
-/*
 	function init() {
+    if (!get_option('collapsCatOptions')) {
+      $options=array('%i%' => array('title' => 'Categories',
+                   'showPostCount' => 'yes',
+                   'inExclude' => 'exclude', 'inExcludeCats' => '',
+                   'showPosts' => 'yes', 'showPages' => 'no',
+                   'linkToCat' => 'no',
+                   'catSortOrder' => 'ASC', 'catSort' => 'catName',
+                   'postSortOrder' => 'ASC', 'postSort' => 'postTitle',
+                   'expand' => '0', 'defaultExpand' => '', 
+                   'animate' => '1', 'catfeed' => 'none'));
+      update_option('collapsCatOptions', $options);
+    }
+
 	}
-*/
 
 	function setup() {
 		if( function_exists('add_options_page') ) {
@@ -65,7 +76,7 @@ class collapscat {
 		//echo "<script type ='text/javascript' src='$url/wp-content/plugins/collapsing-categories/collapscat.js'></script>";
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.7.1\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+		echo "// These variables are part of the Collapsing Categories Plugin version: 0.7.2\n// Copyright 2007 Robert Felty (robfelty.com)\n";
     $expandSym="<img src='". get_settings('siteurl') .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/expand.gif' alt='expand' />";
@@ -76,7 +87,7 @@ class collapscat {
     echo "var collapseSym=$collapseSym;";
     echo"
     addLoadEvent(function() {
-      autoExpandCollapse('collapsCat');
+//      autoExpandCollapse('collapsCat');
     });
     ";
 

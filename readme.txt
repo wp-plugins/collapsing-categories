@@ -4,7 +4,7 @@ Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.6
-Tested up to: 2.6.3
+Tested up to: 2.6.5
 Stable tag: 0.7.1
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
