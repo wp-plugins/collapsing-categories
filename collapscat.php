@@ -87,7 +87,7 @@ class collapscat {
     echo "var collapseSym=\"$collapseSym\";";
     echo"
     addLoadEvent(function() {
-//      autoExpandCollapse('collapsCat');
+      autoExpandCollapse('collapsCat');
     });
     ";
 
