@@ -90,7 +90,7 @@ li.widget.collapsCat ul {margin-left:.5em;}
 	}
 
 	function get_head() {
-    $style=get_option('collapsCatStyle');
+    $style=stripslashes(get_option('collapsCatStyle'));
     echo "<style type='text/css'>
     $style
     </style>\n";
