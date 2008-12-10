@@ -37,6 +37,7 @@ $url = get_settings('siteurl');
 add_action('wp_head', wp_enqueue_script('scriptaculous-effects'));
 add_action('wp_head', wp_enqueue_script('collapsFunctions', "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js"));
 add_action( 'wp_head', array('collapscat','get_head'));
+add_action( 'wp_footer', array('collapsCat','get_foot'));
 add_action('admin_menu', array('collapscat','setup'));
 add_action('activate_collapsing-categories/collapscat.php', array('collapscat','init'));
 
@@ -55,6 +56,26 @@ class collapscat {
                    'animate' => '1', 'catfeed' => 'none'));
       update_option('collapsCatOptions', $options);
     }
+    $style="span.collapsCat {border:0;
+ padding:0; 
+ margin:0; 
+ cursor:pointer;
+}
+
+#sidebar li.collapsCat:before {content:'';} 
+#sidebar li.collapsCat {list-style-type:none}
+#sidebar li.collapsCatPost {
+             text-indent:-1em;
+             margin:0 0 0 1em;}
+li.widget.collapsCat ul {margin-left:.5em;}
+#sidebar li.collapsCatPost:before {content: \"\00BB \00A0\" !important;} 
+#sidebar li.collapsCat .sym {
+               font-size:1.2em;
+               font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
+      padding-right:5px;}";
+    if( function_exists('add_option') ) {
+      add_option( 'collapsCatStyle', $style);
+    }
 
 	}
 
@@ -69,18 +90,20 @@ class collapscat {
 	}
 
 	function get_head() {
-    $url = get_settings('siteurl');
+    $style=get_option('collapsCatStyle');
     echo "<style type='text/css'>
-		@import '$url/wp-content/plugins/collapsing-categories/collapscat.css';
+    $style
     </style>\n";
-		//echo "<script type ='text/javascript' src='$url/wp-content/plugins/collapsing-categories/collapscat.js'></script>";
+	}
+  function get_foot() {
+    $url = get_settings('siteurl');
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
 		echo "// These variables are part of the Collapsing Categories Plugin version: 0.7.2\n// Copyright 2007 Robert Felty (robfelty.com)\n";
-    $expandSym="<img src='". get_settings('siteurl') .
+    $expandSym="<img src='". $url .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/expand.gif' alt='expand' />";
-    $collapseSym="<img src='". get_settings('siteurl') .
+    $collapseSym="<img src='". $url .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/collapse.gif' alt='collapse' />";
     echo "var expandSym=\"$expandSym\";";
@@ -92,7 +115,7 @@ class collapscat {
     ";
 
 		echo "// ]]>\n</script>\n";
-	}
+  }
 }
 
 

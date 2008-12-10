@@ -73,4 +73,6 @@ foreach ( (array) $_POST['collapsCat'] as $widget_number => $widget_collapsCat )
 
 update_option('collapsCatOptions', $options);
 $updated = true;
+$style=$_POST['collapsCatStyle'];
+update_option('collapsCatStyle', $style);
 ?>

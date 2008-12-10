@@ -1,10 +1,12 @@
 Collapsing Categories Changelog
 
-* 0.7.2 (2008/12/08)
+* 0.8 (2008/12/08)
     * fixed javascript bug where thisli.parentNode was null
     * made javascript more flexible so that all collapsing X plugins can share
       more code
     * Now adds default options to database upon activation for use manually
+    * styling now done through an option
+    * inline javascript moved to footer for faster page loading
 
 * 0.7.1 (2008/12/01)
     * fixed javascript bug in IE7

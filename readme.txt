@@ -20,6 +20,12 @@ It is largely based off of the Fancy Categories Plugin by Andrew Rader
 
 == Installation ==
 
+IMPORTANT!
+Please deactivate before upgrading, then re-activate the plugin. Also, note
+that in 2.7, adding the widget does not seem to work if you have "show all
+widgets" selected, but it does if you select "show unused widgets" from the
+widget editing menu. Hopefully this will be corrected eventually
+
 
 Unpackage contents to wp-content/plugins/ so that the files are in a
 collapsing-categories directory.
@@ -148,6 +154,17 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.8 (2008/12/08)
+    * fixed javascript bug where thisli.parentNode was null
+    * made javascript more flexible so that all collapsing X plugins can share
+      more code
+    * Now adds default options to database upon activation for use manually
+    * styling now done through an option
+    * inline javascript moved to footer for faster page loading
+
+* 0.7.1 (2008/12/01)
+    * fixed javascript bug in IE7
 
 * 0.7 (2008/11/22)
     * Cookie handling now affects categories that are expanded by default too
