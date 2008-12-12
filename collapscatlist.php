@@ -252,7 +252,7 @@ function list_categories($number) {
 	if ( empty($inExclusions) ) {
 		$inExcludeQuery = "''";
   } else {
-    $inExcludeQuery ="AND $wpdb->terms.name $in ($inExclusions)";
+    $inExcludeQuery ="AND $wpdb->terms.slug $in ($inExclusions)";
   }
 
   $isPage='';

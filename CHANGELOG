@@ -7,6 +7,7 @@ Collapsing Categories Changelog
     * Now adds default options to database upon activation for use manually
     * styling now done through an option
     * inline javascript moved to footer for faster page loading
+    * fixed exclusion/inclusion of multi-word categories
 
 * 0.7.1 (2008/12/01)
     * fixed javascript bug in IE7
