@@ -267,7 +267,7 @@ function list_categories($number) {
     } elseif ($catSort=='catSlug') {
       $catSortColumn="ORDER BY $wpdb->terms.slug";
     } elseif ($catSort=='catOrder') {
-      $catSortColumn="ORDER BY $wpdb->terms.term_order";
+      $catSortColumn="ORDER BY $wpdb->term_relationships.term_order";
     } elseif ($catSort=='catCount') {
       $catSortColumn="ORDER BY $wpdb->term_taxonomy.count";
     }
@@ -293,9 +293,11 @@ function list_categories($number) {
 
 		$catquery = "SELECT $wpdb->term_taxonomy.count as 'count',
 			$wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug,
-			$wpdb->term_taxonomy.parent, $wpdb->term_taxonomy.description FROM
-			$wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id =
-			$wpdb->term_taxonomy.term_id AND $wpdb->terms.name != 'Blogroll' AND
+			$wpdb->term_taxonomy.parent, $wpdb->term_taxonomy.description 
+			FROM $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships
+			WHERE $wpdb->terms.term_id =
+			$wpdb->term_taxonomy.term_id  = $wpdb->term_relationships.object_id 
+			AND $wpdb->terms.name != 'Blogroll' AND
 			$wpdb->term_taxonomy.taxonomy = 'category' $inExcludeQuery $catSortColumn
 			$catSortOrder";
 		$postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name,
@@ -319,13 +321,14 @@ function list_categories($number) {
       array_push($parents, $cat->parent);
     }
   }
-  /*
+	/*
   echo "<pre>";
   echo "$postquery\n";
   print_r($posts);
   echo "$catquery\n";
   echo "</pre>";
-  */
+	*/
+
   
   foreach( $categories as $cat ) {
     if ($cat->parent==0) {
