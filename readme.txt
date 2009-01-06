@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.6
 Tested up to: 2.7
-Stable tag: 0.8
+Stable tag: 0.8.1
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -21,11 +21,7 @@ It is largely based off of the Fancy Categories Plugin by Andrew Rader
 == Installation ==
 
 IMPORTANT!
-Please deactivate before upgrading, then re-activate the plugin. Also, note
-that in WP 2.7, adding the widget does not seem to work if you have "show all
-widgets" selected, but it does if you select "show unused widgets" from the
-widget editing menu. Hopefully this will be corrected eventually
-
+Please deactivate before upgrading, then re-activate the plugin. 
 
 Unpackage contents to wp-content/plugins/ so that the files are in a
 collapsing-categories directory.
@@ -40,6 +36,7 @@ Presentation > Widgets section and drag over the Collapsing Categories Widget.
 
  Activate the plugin, then insert the following into your template: (probably
 in sidebar.php)
+`
 <?php 
 if (function_exists('collapsCat')) {
   collapsCat('%i%') 
@@ -48,15 +45,15 @@ if (function_exists('collapsCat')) {
   wp_get_categories(your_options_here);
   echo "</ul>\n";
 ?>
+`
 
 == Frequently Asked Questions ==
 
 =  How do I change the style of the collapsing categories lists? =
 
   The collapsing categories plugin uses several ids and classes which can be
-  styled with CSS. I have provided a few defaults in the collapsCat.css file.
-  You can modify the collapsCat.css file to your liking. Alternatively, you
-  can copy those rules into your themes style file. You may have to rename
+  styled with CSS. You can change the default style from the collapsing
+categories options (settings) page. You may have to rename
   some of the id statements. For example, if your sidebar is called
   "myawesomesidebar", you would rewrite the line 
 
@@ -68,22 +65,7 @@ if (function_exists('collapsCat')) {
 
 = The stylesheet doesn't seem to be having any effect? =
  
-  Check this url in your browser:
-  http://yourblogaddress/wp-content/plugins/collapsing-categories/collapsCat.css
-  If you don't see a plaintext file with css style rules, there may be
-  something wrong with your .htaccess file (mod_rewrite). If you don't know
-  how to fix this, you can copy the style rules there into your themes style
-  file.
   
-= I don't like the fixed width fonts for the category names =
-
-I decided to use a fixed-width font for the expanding and collapsing
-characters, because otherwise the spacing can change a bit (especially between
-+/-). The problem is, if you enable the option to have the category name
-trigger expanding and collapsing instead of linking to the category, then you
-get ugly fixed-width text as well. If you don't mind the fact that that the
-(+/-) have slightly different widths, then you can remove the line in the css
-file that specifies the fixed with font
 
 = How do I use different symbols for collapsing and expanding? =
 
@@ -91,9 +73,7 @@ If you want to use images, you can upload your own images to
 http://yourblogaddress/wp-content/plugins/collapsing-categories/img/collapse.gif
 and expand.gif
 
-If you want to use text (recommended), you can change a few lines in
-collapsCat.php and collapsCatList.php (search for expandSym), or suggest some
-other characters, and I might include them as an option.
+There is an option for this.
 
 = I have selected a category to expand by default, but it doesn't seem to work =
 
@@ -114,9 +94,6 @@ Add a line to the collapscat.css file in the .sym class, like so:
       line-height:1.5em;
       padding-right:5px;}
 
-= I upgraded from 0.5.? to 0.6.? and nothing works! =
-
-Try disabling, then re-enabling the plugin
 
 = There seems to be a newline between the collapsing/expanding symbol and the
 category name. How do I fix this? =
@@ -138,14 +115,6 @@ You probably want to add a float:left to the .sym class
 I use this plugin in my blog at http://blog.robfelty.com
 
 
-== OPTIONS AND CONFIGURATIONS ==
-
-  * Show post counts in Category links
-  * Show pages as well as posts
-  * Links point to root, index.php or categories.php
-  * Sort by category name or category id
-  * Sort in ascending or descending order
-
 == CAVEAT ==
 
 Currently this plugin relies on Javascript to expand and collapse the links.
@@ -155,6 +124,11 @@ behavior in wordpress anyways)
 
 == HISTORY ==
 
+* 0.8.1 (2009/01/06)
+    * Finally fixed disappearing widget problem when trying to add to sidebar
+    * Added debugging option to show the query used and the output
+    * Moved style option to options page
+ 
 * 0.8 (2008/12/08)
     * fixed javascript bug where thisli.parentNode was null
     * made javascript more flexible so that all collapsing X plugins can share

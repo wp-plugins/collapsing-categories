@@ -90,8 +90,9 @@
      id="collapsCat-catfeedImage-<?php echo $number ?>"
      value='image'></input> <label for="catfeedImage">image <img src='../wp-includes/images/rss.png' /></label>
     </p>
-<label for="collapsCatStyle">Style info:</label>
-   <textarea cols='60' rows='6' id="collapsCatStyle" name="collapsCatStyle">
-    <?php echo stripslashes(get_option('collapsCatStyle')) ?>
-   </textarea>
+    <p>
+     <input type="checkbox" name="collapsCat[<?php echo $number ?>][debug]"
+<?php if ($debug=='1')  echo 'checked'; ?> id="collapsCat-debug-<?php echo
+$number ?>"></input> <label for="collapsCatDebug">Show debugging information
+(shows up as a hidden pre right after the title)</label>
     </p>

@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 0.8
+Version: 0.8.1
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories
 
@@ -44,18 +44,6 @@ add_action('activate_collapsing-categories/collapscat.php', array('collapscat','
 class collapscat {
 
 	function init() {
-    if (!get_option('collapsCatOptions')) {
-      $options=array('%i%' => array('title' => 'Categories',
-                   'showPostCount' => 'yes',
-                   'inExclude' => 'exclude', 'inExcludeCats' => '',
-                   'showPosts' => 'yes', 'showPages' => 'no',
-                   'linkToCat' => 'no',
-                   'catSortOrder' => 'ASC', 'catSort' => 'catName',
-                   'postSortOrder' => 'ASC', 'postSort' => 'postTitle',
-                   'expand' => '0', 'defaultExpand' => '', 
-                   'animate' => '1', 'catfeed' => 'none'));
-      update_option('collapsCatOptions', $options);
-    }
     $style="span.collapsCat {border:0;
  padding:0; 
  margin:0; 
@@ -68,12 +56,25 @@ class collapscat {
              text-indent:-1em;
              margin:0 0 0 1em;}
 li.widget.collapsCat ul {margin-left:.5em;}
-#sidebar li.collapsCatPost:before {content: \"\\\\00BB \\\\00A0\" !important;} 
+#sidebar li.collapsCatPost:before {content: '\\\\00BB \\\\00A0' !important;} 
 #sidebar li.collapsCat .sym {
                font-size:1.2em;
                font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
       padding-right:5px;}";
     if( function_exists('add_option') ) {
+      update_option( 'collapsCatOrigStyle', $style);
+    }
+    if (!get_option('collapsCatOptions')) {
+      $options=array('%i%' => array('title' => 'Categories',
+                   'showPostCount' => 'yes',
+                   'inExclude' => 'exclude', 'inExcludeCats' => '',
+                   'showPosts' => 'yes', 'showPages' => 'no',
+                   'linkToCat' => 'no',
+                   'catSortOrder' => 'ASC', 'catSort' => 'catName',
+                   'postSortOrder' => 'ASC', 'postSort' => 'postTitle',
+                   'expand' => '0', 'defaultExpand' => '', 'debug'=>'0',
+                   'animate' => '1', 'catfeed' => 'none'));
+      update_option('collapsCatOptions', $options);
       add_option( 'collapsCatStyle', $style);
     }
 
@@ -99,7 +100,7 @@ li.widget.collapsCat ul {margin-left:.5em;}
     $url = get_settings('siteurl');
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.8\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+		echo "// These variables are part of the Collapsing Categories Plugin version: 0.8.1\n// Copyright 2007 Robert Felty (robfelty.com)\n";
     $expandSym="<img src='". $url .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/expand.gif' alt='expand' />";

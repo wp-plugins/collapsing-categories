@@ -16,6 +16,7 @@
     $linkToCat='yes';
     $showPages='no';
     $animate='1';
+    $debug='0';
     $catfeed='none';
   } else {
     $title = attribute_escape($options[$number]['title']);
@@ -32,6 +33,7 @@
     $showPages = $options[$number]['showPages'];
     $linkToCat = $options[$number]['linkToCat'];
     $animate = $options[$number]['animate'];
+    $debug = $options[$number]['debug'];
     $catfeed = $options[$number]['catfeed'];
   }
 ?>

@@ -29,7 +29,7 @@ function collapsCatWidget($args, $widget_args=1) {
 function collapsCatWidgetInit() {
 if ( !$options = get_option('collapsCatOptions') )
     $options = array();
-  $control_ops = array('width' => 400, 'height' => 350, 'id_base' => 'collapsCat');
+  $control_ops = array('width' => 400, 'height' => 350, 'id_base' => 'collapscat');
 	$widget_ops = array('classname' => 'collapsCat', 'description' =>
   __('Categories expand and collapse to show subcategories and/or posts'));
   $name = __('Collapsing Categories');
@@ -39,15 +39,15 @@ if ( !$options = get_option('collapsCatOptions') )
     // Old widgets can have null values for some reason
     if ( !isset($options[$o]['title']) || !isset($options[$o]['title']) )
       continue;
-    $id = "collapsCat-$o"; // Never never never translate an id
+    $id = "collapscat-$o"; // Never never never translate an id
     wp_register_sidebar_widget($id, $name, 'collapsCatWidget', $widget_ops, array( 'number' => $o ));
     wp_register_widget_control($id, $name, 'collapsCatWidgetControl', $control_ops, array( 'number' => $o ));
   }
 
   // If there are none, we register the widget's existance with a generic template
   if ( !$id ) {
-    wp_register_sidebar_widget( 'collapsCat-1', $name, 'collapsCatWidget', $widget_ops, array( 'number' => -1 ) );
-    wp_register_widget_control( 'collapsCat-1', $name, 'collapsCatWidgetControl', $control_ops, array( 'number' => -1 ) );
+    wp_register_sidebar_widget( 'collapscat-1', $name, 'collapsCatWidget', $widget_ops, array( 'number' => -1 ) );
+    wp_register_widget_control( 'collapscat-1', $name, 'collapsCatWidgetControl', $control_ops, array( 'number' => -1 ) );
   }
 
 }
@@ -103,6 +103,7 @@ if (function_exists('collapsCat')) {
     echo '<p style="text-align:right;"><label for="collapsCat-title-'.$number.'">' . __('Title:') . '<input class="widefat" style="width: 200px;" id="collapsCat-title-'.$number.'" name="collapsCat['.$number.'][title]" type="text" value="'.$title.'" /></label></p>';
     include('options.txt');
   ?>
+  <p>Style can be set from the options page</p>
    
    <?php
     echo '<input type="hidden" id="collapsCat-submit-'.$number.'" name="collapsCat['.$number.'][submit]" value="1" />';

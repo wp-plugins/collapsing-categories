@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.8
+Collapsing Categories version: 0.8.1
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -291,7 +291,7 @@ function list_categories($number) {
 
   echo "\n    <ul id='collapsCatList'>\n";
 
-		$catquery = "SELECT $wpdb->term_taxonomy.count as 'count',
+  $catquery = "SELECT $wpdb->term_taxonomy.count as 'count',
 			$wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug,
 			$wpdb->term_taxonomy.parent, $wpdb->term_taxonomy.description 
 			FROM $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships
@@ -300,7 +300,7 @@ function list_categories($number) {
 			AND $wpdb->terms.name != 'Blogroll' AND
 			$wpdb->term_taxonomy.taxonomy = 'category' $inExcludeQuery $catSortColumn
 			$catSortOrder";
-		$postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name,
+  $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name,
 			$wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.id,
 			$wpdb->posts.post_title, $wpdb->posts.post_name,
 			date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms,
@@ -310,9 +310,6 @@ function list_categories($number) {
 			$wpdb->term_relationships.term_taxonomy_id =
 			$wpdb->term_taxonomy.term_taxonomy_id AND $wpdb->term_taxonomy.taxonomy =
 			'category' $isPage $postSortColumn $postSortOrder";
-    /* changing to use only one query 
-     * don't forget to exclude pages if so desired
-     */
   $categories = $wpdb->get_results($catquery);
   $posts= $wpdb->get_results($postquery); 
   $parents=array();
@@ -321,13 +318,17 @@ function list_categories($number) {
       array_push($parents, $cat->parent);
     }
   }
-	/*
-  echo "<pre>";
-  echo "$postquery\n";
-  print_r($posts);
-  echo "$catquery\n";
-  echo "</pre>";
-	*/
+  if ($debug==1) {
+    echo "<pre style='display:none' >";
+    printf ("MySQL server version: %s\n", mysql_get_server_info());
+    echo "CATEGORY QUERY: \n $catquery\n";
+    echo "\nCATEGORY QUERY RESULTS\n";
+    print_r($categories);
+    echo "POST QUERY:\n $postquery\n";
+    echo "\nPOST QUERY RESULTS\n";
+    print_r($posts);
+    echo "</pre>";
+  }
 
   
   foreach( $categories as $cat ) {

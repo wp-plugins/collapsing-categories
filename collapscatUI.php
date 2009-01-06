@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.8
+Collapsing Categories version: 0.8.1
 Copyright 2007 Robert Felty
 
 This work is largely based on the Fancy Categories plugin by Andrew Rader
@@ -27,26 +27,26 @@ This file is part of Collapsing Categories
 
 check_admin_referer();
 
-if( isset($_POST['infoUpdate']) ) {
+if( isset($_POST['resetOptions']) ) {
   if (isset($_POST['reset'])) {
     delete_option('collapsCatOptions');   
-  } else {
-    include('updateOptions.php');
   }
+} else {
+  $style=$_POST['collapsCatStyle'];
+  update_option('collapsCatStyle', $style);
 }
 $theOptions=get_option('collapsCatOptions');
+/*
+echo "<pre>\n";
+print_r($theOptions);
+echo "</pre>\n";
+*/
 if (empty($theOptions)) {
   $number = -1;
-} else {
-   echo "
-  <h2>Collapsing Categories Options</h2>
-<p>If you wish to use the collapsing categories plugin as a widget, you should set the options in the widget page. If you would like to use it manually (that is, you modify your theme), then click below to delete the current widget options</p>
-<form method='post'>
-   <input type='hidden' name='reset' value='true' />
-   <input type='submit' name='infoUpdate' value='reset options' />
-</form>
-";
-  return;
+} elseif (!isset($theOptions['%i%']['title']) || 
+    count($theOptions) > 1) {
+  $widgetOn=1; 
+  //return;
   $numbers=array_keys($theOptions);
   $number= $numbers[0];
 }
@@ -59,8 +59,45 @@ include('processOptions.php');
    <legend><?php _e('Display Options:'); ?></legend>
    <ul style="list-style-type: none;">
    <?php
-    echo '<p style="text-align:left;"><label for="collapsCat-title-'.$number.'">' . __('Title:') . '<input class="widefat" style="width: 200px;" id="collapsCat-title-'.$number.'" name="collapsCat['.$number.'][title]" type="text" value="'.$title.'" /></label></p>';
-   include('options.txt'); ?>
+   if ($widgetOn==1) {
+     echo "
+    <div style='width:60em; background:#FFF; color:#444;border: 1px solid
+    #444;padding:0 1em'>
+    <p>If you wish to use the collapsing categories plugin as a widget, you
+    should set the options in the widget page (except for custom styling,
+    which is set here). If you would like to use it manually (that is, you
+    modify your theme), then click below to delete the current widget options.
+    </p>
+    <form method='post'>
+    <p>
+       <input type='hidden' name='reset' value='true' />
+       <input type='submit' name='resetOptions' value='reset options' />
+       </p>
+    </form>
+    </div>
+    ";
+    } else {
+     echo '<p style="text-align:left;"><label for="collapsCat-title-'.$number.'">' . __('Title:') . '<input class="widefat" style="width: 200px;" id="collapsCat-title-'.$number.'" name="collapsCat['.$number.'][title]" type="text" value="'.$title.'" /></label></p>';
+     include('options.txt'); 
+   }
+   ?>
+    <p>
+  <input type='hidden' id='collapsCatOrigStyle' value="<?php echo
+stripslashes(get_option('collapsCatOrigStyle')) ?>" />
+<label for="collapsCatStyle">Style info:</label>
+   <input type='button' value='restore original style'
+onclick='restoreStyle();' /><br />
+   <textarea cols='78' rows='10' id="collapsCatStyle" name="collapsCatStyle">
+    <?php echo stripslashes(get_option('collapsCatStyle')) ?>
+   </textarea>
+    </p>
+<script type='text/javascript'>
+function restoreStyle() {
+  var defaultStyle = document.getElementById('collapsCatOrigStyle').value;
+  var catStyle = document.getElementById('collapsCatStyle');
+  catStyle.value=defaultStyle;
+}
+</script>
    </ul>
   </fieldset>
   <div class="submit">
