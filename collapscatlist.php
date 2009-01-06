@@ -450,10 +450,10 @@ function list_categories($number) {
             }
             // close <ul> and <li> before starting a new category
           } 
-        if ($subCatPostCount>0 || $showPosts=='yes') {
-          echo "        </ul>\n";
-        }
-        echo "      </li> <!-- ending category -->\n";
+          if ($subCatPostCount>0 || $showPosts=='yes') {
+            echo "        </ul>\n";
+          }
+          echo "      </li> <!-- ending category -->\n";
         }
       } // end if theCount>0
     }
