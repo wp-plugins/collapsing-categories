@@ -31,7 +31,7 @@ if( isset($_POST['resetOptions']) ) {
   if (isset($_POST['reset'])) {
     delete_option('collapsCatOptions');   
   }
-} else {
+} elseif (isset($_POST['infoUpdate'])) {
   $style=$_POST['collapsCatStyle'];
   update_option('collapsCatStyle', $style);
 }
