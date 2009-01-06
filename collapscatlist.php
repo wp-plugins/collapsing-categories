@@ -327,6 +327,8 @@ function list_categories($number) {
     echo "POST QUERY:\n $postquery\n";
     echo "\nPOST QUERY RESULTS\n";
     print_r($posts);
+    echo "\ncollapsCat options:\n";
+    print_r($options[$number]);
     echo "</pre>";
   }
 
