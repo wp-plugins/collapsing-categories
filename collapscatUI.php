@@ -62,7 +62,6 @@ echo "</pre>\n";
   }
 }
 include('processOptions.php');
-echo "number = $number";
 ?>
 <div class=wrap>
  <form method="post">
