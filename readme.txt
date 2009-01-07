@@ -39,11 +39,12 @@ in sidebar.php)
 `
 <?php 
 if (function_exists('collapsCat')) {
-  collapsCat('%i%') 
+  collapsCat('%i%');
 } else {
   echo "<ul>\n";
   wp_get_categories(your_options_here);
   echo "</ul>\n";
+}
 ?>
 `
 
