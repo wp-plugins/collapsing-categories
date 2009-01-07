@@ -49,15 +49,9 @@ if( isset($_POST['resetOptions']) ) {
     delete_option('collapsCatOptions');   
   }
 } elseif (isset($_POST['infoUpdate'])) {
-/*
-echo "<pre>\n";
-print_r($_POST['collapsCat']);
-echo "</pre>\n";
-*/
-  if ($widgetOn==1) {
-    $style=$_POST['collapsCatStyle'];
-    update_option('collapsCatStyle', $style);
-  } else {
+  $style=$_POST['collapsCatStyle'];
+  update_option('collapsCatStyle', $style);
+  if ($widgetOn==0) {
     include('updateOptions.php');
   }
 }
