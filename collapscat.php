@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 0.8.1
+Version: 0.8.2
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories
 
@@ -34,10 +34,14 @@ This file is part of Collapsing Categories
 */ 
 
 $url = get_settings('siteurl');
-add_action('wp_head', wp_enqueue_script('scriptaculous-effects'));
-add_action('wp_head', wp_enqueue_script('collapsFunctions', "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js"));
-add_action( 'wp_head', array('collapscat','get_head'));
-add_action( 'wp_footer', array('collapsCat','get_foot'));
+if (!is_admin()) {
+  add_action('wp_head', wp_enqueue_script('scriptaculous-effects'));
+  add_action('wp_head', wp_enqueue_script('collapsFunctions',
+  "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",'',
+  '1.0'));
+  add_action( 'wp_head', array('collapscat','get_head'));
+  add_action( 'wp_footer', array('collapsCat','get_foot'));
+}
 add_action('admin_menu', array('collapscat','setup'));
 add_action('activate_collapsing-categories/collapscat.php', array('collapscat','init'));
 
@@ -100,7 +104,7 @@ li.widget.collapsCat ul {margin-left:.5em;}
     $url = get_settings('siteurl');
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.8.1\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+		echo "// These variables are part of the Collapsing Categories Plugin version: 0.8.2\n// Copyright 2007 Robert Felty (robfelty.com)\n";
     $expandSym="<img src='". $url .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/expand.gif' alt='expand' />";

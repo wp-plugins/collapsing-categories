@@ -103,7 +103,8 @@ if (function_exists('collapsCat')) {
     echo '<p style="text-align:right;"><label for="collapsCat-title-'.$number.'">' . __('Title:') . '<input class="widefat" style="width: 200px;" id="collapsCat-title-'.$number.'" name="collapsCat['.$number.'][title]" type="text" value="'.$title.'" /></label></p>';
     include('options.txt');
   ?>
-  <p>Style can be set from the options page</p>
+  <p>Style can be set from the <a
+  href='options-general.php?page=collapscat.php'>options page</a></p>
    
    <?php
     echo '<input type="hidden" id="collapsCat-submit-'.$number.'" name="collapsCat['.$number.'][submit]" value="1" />';

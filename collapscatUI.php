@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.8.1
+Collapsing Categories version: 0.8.2
 Copyright 2007 Robert Felty
 
 This work is largely based on the Fancy Categories plugin by Andrew Rader
@@ -27,30 +27,42 @@ This file is part of Collapsing Categories
 
 check_admin_referer();
 
-if( isset($_POST['resetOptions']) ) {
-  if (isset($_POST['reset'])) {
-    delete_option('collapsCatOptions');   
-  }
-} elseif (isset($_POST['infoUpdate'])) {
-  $style=$_POST['collapsCatStyle'];
-  update_option('collapsCatStyle', $style);
-}
 $theOptions=get_option('collapsCatOptions');
 /*
 echo "<pre>\n";
 print_r($theOptions);
 echo "</pre>\n";
 */
+$widgetOn=0;
+$number='%i%';
 if (empty($theOptions)) {
   $number = -1;
 } elseif (!isset($theOptions['%i%']['title']) || 
     count($theOptions) > 1) {
   $widgetOn=1; 
   //return;
-  $numbers=array_keys($theOptions);
-  $number= $numbers[0];
+  //$numbers=array_keys($theOptions);
+  //$number= $numbers[0];
+}
+if( isset($_POST['resetOptions']) ) {
+  if (isset($_POST['reset'])) {
+    delete_option('collapsCatOptions');   
+  }
+} elseif (isset($_POST['infoUpdate'])) {
+/*
+echo "<pre>\n";
+print_r($_POST['collapsCat']);
+echo "</pre>\n";
+*/
+  if ($widgetOn==1) {
+    $style=$_POST['collapsCatStyle'];
+    update_option('collapsCatStyle', $style);
+  } else {
+    include('updateOptions.php');
+  }
 }
 include('processOptions.php');
+echo "number = $number";
 ?>
 <div class=wrap>
  <form method="post">
