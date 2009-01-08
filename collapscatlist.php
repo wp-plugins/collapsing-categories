@@ -295,10 +295,12 @@ function list_categories($number) {
 			$wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug,
 			$wpdb->term_taxonomy.parent, $wpdb->term_taxonomy.description 
 			FROM $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships
-			WHERE $wpdb->terms.term_id =
-			$wpdb->term_taxonomy.term_id  = $wpdb->term_relationships.object_id 
+			WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id 
+      AND $wpdb->terms.term_id  = $wpdb->term_relationships.object_id 
+      AND $wpdb->term_taxonomy.term_id  = $wpdb->term_relationships.object_id 
 			AND $wpdb->terms.name != 'Blogroll' AND
-			$wpdb->term_taxonomy.taxonomy = 'category' $inExcludeQuery $catSortColumn
+			$wpdb->term_taxonomy.taxonomy = 'category' $inExcludeQuery 
+      GROUP BY $wpdb->terms.term_id $catSortColumn
 			$catSortOrder";
   $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name,
 			$wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.id,
