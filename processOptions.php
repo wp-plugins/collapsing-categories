@@ -18,6 +18,7 @@
     $animate='1';
     $debug='0';
     $catfeed='none';
+    $catTag='cat';
   } else {
     $title = attribute_escape($options[$number]['title']);
     $showPostCount = $options[$number]['showPostCount'];
@@ -35,5 +36,6 @@
     $animate = $options[$number]['animate'];
     $debug = $options[$number]['debug'];
     $catfeed = $options[$number]['catfeed'];
+    $catTag = $options[$number]['catTag'];
   }
 ?>

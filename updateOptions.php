@@ -55,6 +55,7 @@ foreach ( (array) $_POST['collapsCat'] as $widget_number => $widget_collapsCat )
   }
   $expand= $widget_collapsCat['expand'];
   $catfeed= $widget_collapsCat['catfeed'];
+  $catTag= $widget_collapsCat['catTag'];
   $inExclude= 'include' ;
   if($widget_collapsCat['inExclude'] == 'exclude') {
     $inExclude= 'exclude' ;
@@ -72,7 +73,7 @@ foreach ( (array) $_POST['collapsCat'] as $widget_number => $widget_collapsCat )
   $options[$widget_number] = compact( 'title','showPostCount','catSort',
       'catSortOrder','defaultExpand','expand','inExclude', 'showPosts',
       'inExcludeCats','postSort','postSortOrder','showPages', 'linkToCat',
-      'catfeed','animate', 'debug' );
+      'catfeed','animate', 'debug','catTag' );
 }
 
 update_option('collapsCatOptions', $options);

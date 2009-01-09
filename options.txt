@@ -30,6 +30,11 @@
      <input type="radio" name="collapsCat[<?php echo $number ?>][postSortOrder]" <?php if($postSortOrder=='ASC') echo 'checked'; ?> id="postSortASC" value='ASC'></input> <label for="postPostASC">Ascending</label>
      <input type="radio" name="collapsCat[<?php echo $number ?>][postSortOrder]" <?php if($postSortOrder=='DESC') echo 'checked'; ?> id="postPostDESC" value='DESC'></input> <label for="postPostDESC">Descending</label>
     </p>
+    <p>List:
+     <input type="radio" name="collapsCat[<?php echo $number ?>][catTag]" <?php if($catTag=='cat') echo 'checked'; ?> id="collapsCat-catTagCat-<?php echo $number ?>" value='cat'></input> <label for="collapsCat-catTagCat">Categories</label>
+     <input type="radio" name="collapsCat[<?php echo $number ?>][catTag]" <?php if($catTag=='tag') echo 'checked'; ?> id="collapsCat-catTagTag-<?php echo $number ?>" value='tag'></input> <label for="collapsCat-catTagTag">Tags</label>
+     <input type="radio" name="collapsCat[<?php echo $number ?>][catTag]" <?php if($catTag=='both') echo 'checked'; ?> id="collapsCat-catTagBoth-<?php echo $number ?>" value='both'></input> <label for="collapsCat-catTagBoth">Categories and Tags</label>
+    </p>
     <p>Expanding shows:<br />
      <input type="radio" name="collapsCat[<?php echo $number ?>][showPosts]" <?php if($showPosts=='yes') echo 'checked'; ?> id="showPostsYes" value='yes'></input> <label for="showPostsYes">Sub-categories and Posts</label>
      <input type="radio" name="collapsCat[<?php echo $number ?>][showPosts]"

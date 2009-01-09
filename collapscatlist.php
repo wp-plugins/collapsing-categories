@@ -289,6 +289,15 @@ function list_categories($number) {
 	  $autoExpand = array();
   }
 
+	if ($catTag == 'tag') {
+	  $catTagQuery= "AND $wpdb->term_taxonomy.taxonomy = 'post_tag'";
+	} elseif ($catTag == 'both') {
+	  $catTagQuery= "AND $wpdb->term_taxonomy.taxonomy IN
+				('category','post_tag')";
+	} else {
+	  $catTagQuery= "AND $wpdb->term_taxonomy.taxonomy = 'category'";
+	}
+
   echo "\n    <ul id='collapsCatList'>\n";
 
   $catquery = "SELECT $wpdb->term_taxonomy.count as 'count',
@@ -298,8 +307,7 @@ function list_categories($number) {
 			WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id 
       AND $wpdb->terms.term_id  = $wpdb->term_relationships.object_id 
       AND $wpdb->term_taxonomy.term_id  = $wpdb->term_relationships.object_id 
-			AND $wpdb->terms.name != 'Blogroll' AND
-			$wpdb->term_taxonomy.taxonomy = 'category' $inExcludeQuery 
+			$catTagQuery $inExcludeQuery 
       GROUP BY $wpdb->terms.term_id $catSortColumn
 			$catSortOrder";
   $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name,
@@ -310,8 +318,7 @@ function list_categories($number) {
 			$wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish'
 			AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND
 			$wpdb->term_relationships.term_taxonomy_id =
-			$wpdb->term_taxonomy.term_taxonomy_id AND $wpdb->term_taxonomy.taxonomy =
-			'category' $isPage $postSortColumn $postSortOrder";
+			$wpdb->term_taxonomy.term_taxonomy_id $catTagQuery $isPage $postSortColumn $postSortOrder";
   $categories = $wpdb->get_results($catquery);
   $posts= $wpdb->get_results($postquery); 
   $parents=array();

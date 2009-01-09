@@ -104,6 +104,12 @@ If your theme has some css that says something like
 that is the problem. 
 You probably want to add a float:left to the .sym class
 
+= No categories are showing up! What's wrong?" =
+
+Are you using categories or tags? By default, collapsing categories only lists
+categories. Please check the options in the settings page (or in the widget if
+you are using the widget)
+
 == Screenshots ==
 
 1. a few expanded categories with default theme, showing nested categories
