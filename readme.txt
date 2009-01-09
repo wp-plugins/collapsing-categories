@@ -64,8 +64,6 @@ categories options (settings) page. You may have to rename
 
   #myawesomesidebar li.collapsCat {list-style-type:none}
 
-= The stylesheet doesn't seem to be having any effect? =
- 
   
 
 = How do I use different symbols for collapsing and expanding? =

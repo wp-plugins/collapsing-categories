@@ -250,7 +250,7 @@ function list_categories($number) {
 		}
 	}
 	if ( empty($inExclusions) ) {
-		$inExcludeQuery = "''";
+		$inExcludeQuery = "";
   } else {
     $inExcludeQuery ="AND $wpdb->terms.slug $in ($inExclusions)";
   }

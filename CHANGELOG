@@ -1,4 +1,7 @@
 Collapsing Categories Changelog
+* 0.8.4 (2009.01.10)
+    * Got rid of empty quotes in query when no in/exclude is used
+
 * 0.8.3 (2009.01.08)
     * Refixed settings page for manual usage
     * Changed category query in the hopes that it works for more people
