@@ -315,10 +315,10 @@ function list_categories($number) {
 			$wpdb->posts.post_title, $wpdb->posts.post_name,
 			date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms,
 			$wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.id =
-			$wpdb->term_relationships.term_taxonomy_id AND $wpdb->posts.post_status='publish'
+			$wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish'
 			AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND
 			$wpdb->term_relationships.term_taxonomy_id =
-			$wpdb->term_taxonomy.term_taxonomy_id $catTagQuery $isPage $postSortColumn $postSortOrder";
+			$wpdb->term_taxonomy.term_id $catTagQuery $isPage $postSortColumn $postSortOrder";
   $categories = $wpdb->get_results($catquery);
   $posts= $wpdb->get_results($postquery); 
   $parents=array();
