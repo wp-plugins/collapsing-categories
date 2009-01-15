@@ -305,20 +305,20 @@ function list_categories($number) {
 			$wpdb->term_taxonomy.parent, $wpdb->term_taxonomy.description 
 			FROM $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships
 			WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id 
-      AND $wpdb->terms.term_id  = $wpdb->term_relationships.term_taxonomy_id 
-      AND $wpdb->term_taxonomy.term_id = $wpdb->term_relationships.term_taxonomy_id 
+      AND $wpdb->term_taxonomy.term_taxonomy_id = $wpdb->term_relationships.term_taxonomy_id 
 			$catTagQuery $inExcludeQuery 
       GROUP BY $wpdb->terms.term_id $catSortColumn
 			$catSortOrder";
-  $postquery = "SELECT $wpdb->terms.term_id, $wpdb->terms.name,
-			$wpdb->terms.slug, $wpdb->term_taxonomy.count, $wpdb->posts.id,
-			$wpdb->posts.post_title, $wpdb->posts.post_name,
-			date($wpdb->posts.post_date) as 'date' FROM $wpdb->posts, $wpdb->terms,
-			$wpdb->term_taxonomy, $wpdb->term_relationships  WHERE $wpdb->posts.id =
-			$wpdb->term_relationships.object_id AND $wpdb->posts.post_status='publish'
-			AND $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id AND
-			$wpdb->term_relationships.term_taxonomy_id =
-			$wpdb->term_taxonomy.term_id $catTagQuery $isPage $postSortColumn $postSortOrder";
+  $postquery= "select distinct ID, date(post_date) as date, post_status,
+       post_title, post_name, name, object_id,
+       $wpdb->terms.term_id from $wpdb->term_relationships, $wpdb->posts,
+       $wpdb->terms, $wpdb->term_taxonomy 
+       WHERE $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id 
+       AND object_id=ID 
+       AND post_status='publish'
+       AND $wpdb->term_relationships.term_taxonomy_id =
+           $wpdb->term_taxonomy.term_taxonomy_id 
+       $catTagQuery $isPage $postSortColumn $postSortOrder";
   $categories = $wpdb->get_results($catquery);
   $posts= $wpdb->get_results($postquery); 
   $parents=array();
@@ -449,11 +449,11 @@ function list_categories($number) {
           if ($showPosts=='yes') {
             foreach ($posts as $post) {
               if (($post->term_id == $cat->term_id)  
-                  && (!in_array($post->id, $subCatPosts))) {
+                  && (!in_array($post->ID, $subCatPosts))) {
                 $date=preg_replace("/-/", '/', $post->date);
                 $name=$post->post_name;
                 echo "          <li class='collapsCatPost'><a href='".
-                    get_permalink($post->id)."'>" .  
+                    get_permalink($post->ID)."'>" .  
                     strip_tags($post->post_title) . "</a></li>\n";
               }
             }
