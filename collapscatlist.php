@@ -191,10 +191,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           if ($showPosts=='yes') {
             foreach ($posts as $post2) {
               if ($post2->term_id == $cat2->term_id) {
-                array_push($subCatPosts, $post2->id);
+                array_push($subCatPosts, $post2->ID);
                 $date=preg_replace("/-/", '/', $post2->date);
                 $name=$post2->post_name;
-                $subCatLinks.= "<li class='collapsCatPost'><a href='".get_permalink($post2->id)."'>" .  strip_tags($post2->post_title) . "</a></li>\n";
+                $subCatLinks.= "<li class='collapsCatPost'><a
+								href='".get_permalink($post2->ID)."'>" .  strip_tags($post2->post_title) . "</a></li>\n";
 
               }
             }
