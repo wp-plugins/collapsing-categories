@@ -160,7 +160,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   $cat2).'</span>';
               $subCatLinks.="<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
-                  "onclick=\"expandCollapse(event, $expand, $animate, \"collapsCat\"); return false\">".
+                  "onclick='expandCollapse(event, $expand, $animate,
+									\"collapsCat\"); return false'>".
                   "<span class='sym'>$expandSym</span>";
             } else {
               $subCatLinks.="<li class='collapsCat'>".
