@@ -1,5 +1,6 @@
 Collapsing Categories Changelog
-* 0.8.4 (2009.01.10)
+* 0.8.4 (2009.01.15)
+    * fixed sql queries, which seems to be working for most people now
     * Got rid of empty quotes in query when no in/exclude is used
     * Added option to list categories, tags, or both
 
