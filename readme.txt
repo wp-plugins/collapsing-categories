@@ -110,6 +110,17 @@ Are you using categories or tags? By default, collapsing categories only lists
 categories. Please check the options in the settings page (or in the widget if
 you are using the widget)
 
+= Is there a way for the settings chosen in the widget to apply to a manual instance? =
+
+Currently the plugin is designed to be used either as a widget or manually,
+but not both. Here is a workaround. Find out the id number of your collapsing
+category widget by looking at the html source. You should see something like:
+`<li id="collapscat-299723351" class="widget collapsCat"><h2
+class="widgettitle">Categories</h2>`
+
+Then, insert the following code where you would like to have it:
+`<?php collapsCat(299723351) ?>`
+
 == Screenshots ==
 
 1. a few expanded categories with default theme, showing nested categories
