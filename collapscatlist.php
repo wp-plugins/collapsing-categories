@@ -45,7 +45,7 @@ function addFeedLink($feed,$cat) {
 
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$number,$expanded) {
-  global $options,$expandSym, $collapseSym, $autoExpand;
+  global $options,$expandSym, $collapseSym, $autoExpand, $postsToExclude;
   print_r($options[number]);
   extract($options[$number]);
   $subCatPosts=array();
@@ -190,7 +190,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         }
           if ($showPosts=='yes') {
             foreach ($posts as $post2) {
-              if ($post2->term_id == $cat2->term_id) {
+              if ($post2->term_id == $cat2->term_id 
+							    && !in_array($post2->ID, $postsToExclude)) {
                 array_push($subCatPosts, $post2->ID);
                 $date=preg_replace("/-/", '/', $post2->date);
                 $name=$post2->post_name;
@@ -214,7 +215,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 }
 
 function list_categories($number) {
-  global $expandSym,$collapseSym,$wpdb,$options, $autoExpand;
+  global $expandSym,$collapseSym,$wpdb,$options, $autoExpand, $postsToExclude;
   $options=get_option('collapsCatOptions');
   extract($options[$number]);
   if ($expand==1) {
@@ -234,7 +235,7 @@ function list_categories($number) {
     $expandSym='►';
     $collapseSym='▼';
   }
-	$inExclusions = array();
+	$inExclusionArray = array();
 	if ( !empty($inExclude) && !empty($inExcludeCats) ) {
 		$exterms = preg_split('/[,]+/',$inExcludeCats);
     if ($inExclude=='include') {
@@ -244,10 +245,12 @@ function list_categories($number) {
     }
 		if ( count($exterms) ) {
 			foreach ( $exterms as $exterm ) {
+					$sanitizedTitle = sanitize_title($exterm);
+			  array_push($inExclusionArray, $sanitizedTitle);
 				if (empty($inExclusions))
-					$inExclusions = "'" . sanitize_title($exterm) . "'";
+					$inExclusions = "'$sanitizedTitle'";
 				else
-					$inExclusions .= ", '" . sanitize_title($exterm) . "' ";
+					$inExclusions .= ", '$sanitizedTitle'";
 			}
 		}
 	}
@@ -311,7 +314,7 @@ function list_categories($number) {
 			$catTagQuery $inExcludeQuery 
       GROUP BY $wpdb->terms.term_id $catSortColumn
 			$catSortOrder";
-  $postquery= "select distinct ID, date(post_date) as date, post_status,
+  $postquery= "select distinct ID, slug, date(post_date) as date, post_status,
        post_title, post_name, name, object_id,
        $wpdb->terms.term_id from $wpdb->term_relationships, $wpdb->posts,
        $wpdb->terms, $wpdb->term_taxonomy 
@@ -327,6 +330,12 @@ function list_categories($number) {
   foreach ($categories as $cat) {
     if ($cat->parent!=0) {
       array_push($parents, $cat->parent);
+    }
+  }
+	$postsToExclude=array();
+  foreach ($posts as $post) {
+    if (in_array($post->slug, $inExclusionArray)) {
+      array_push($postsToExclude, $post->ID);
     }
   }
   if ($debug==1) {
@@ -450,7 +459,8 @@ function list_categories($number) {
         if( ! empty($posts) ) {
           if ($showPosts=='yes') {
             foreach ($posts as $post) {
-              if (($post->term_id == $cat->term_id)  
+              if ($post->term_id == $cat->term_id 
+							    && !in_array($post->ID, $postsToExclude)  
                   && (!in_array($post->ID, $subCatPosts))) {
                 $date=preg_replace("/-/", '/', $post->date);
                 $name=$post->post_name;
