@@ -1,4 +1,7 @@
 Collapsing Categories Changelog
+* 0.8.5 (2009.01.23)
+    * fixed settings panel problems
+
 * 0.8.4 (2009.01.15)
     * fixed sql queries, which seems to be working for most people now
     * Got rid of empty quotes in query when no in/exclude is used

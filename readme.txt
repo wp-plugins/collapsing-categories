@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.6
 Tested up to: 2.7
-Stable tag: 0.8.4
+Stable tag: 0.8.5
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -139,6 +139,9 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.8.5 (2009.01.23)
+    * fixed settings panel problems
 
 * 0.8.4 (2009.01.15)
     * fixed sql queries, which seems to be working for most people now
