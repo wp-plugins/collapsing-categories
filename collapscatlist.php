@@ -457,6 +457,7 @@ function list_categories($number) {
         echo $subCatLinks;
         // Now print out the post info
         if( ! empty($posts) ) {
+					$posttext='';
           if ($showPosts=='yes') {
             foreach ($posts as $post) {
               if ($post->term_id == $cat->term_id 
@@ -464,13 +465,14 @@ function list_categories($number) {
                   && (!in_array($post->ID, $subCatPosts))) {
                 $date=preg_replace("/-/", '/', $post->date);
                 $name=$post->post_name;
-                echo "          <li class='collapsCatPost'><a href='".
+                $posttext.= "          <li class='collapsCatPost'><a href='".
                     get_permalink($post->ID)."'>" .  
                     strip_tags($post->post_title) . "</a></li>\n";
               }
             }
             // close <ul> and <li> before starting a new category
           } 
+						print($posttext);
           if ($subCatPostCount>0 || $showPosts=='yes') {
             echo "        </ul>\n";
           }
