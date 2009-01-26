@@ -20,6 +20,7 @@
     $catfeed='none';
     $catTag='cat';
     $olderThan=0;
+    $excludeAll='0';
   } else {
     $title = attribute_escape($options[$number]['title']);
     $showPostCount = $options[$number]['showPostCount'];
@@ -39,5 +40,6 @@
     $catfeed = $options[$number]['catfeed'];
     $catTag = $options[$number]['catTag'];
     $olderThan = $options[$number]['olderThan'];
+    $excludeAll = $options[$number]['excludeAll'];
   }
 ?>

@@ -74,7 +74,12 @@
      <option  <?php if($inExclude=='exclude') echo 'selected'; ?> id="inExcludeExclude-<?php echo $number ?>" value='exclude'>Exclude</option>
      </select>
      these categories (input slugs separated by commas):<br />
-    <input type="text" name="collapsCat[<?php echo $number ?>][inExcludeCats]" value="<?php echo $inExcludeCats ?>" id="collapsCat-inExcludeCats-<?php echo $number ?>"></input> 
+    <input type="text" name="collapsCat[<?php echo $number ?>][inExcludeCats]" value="<?php echo $inExcludeCats ?>" id="collapsCat-inExcludeCats-<?php echo $number ?>"></input> <br />
+   <input type="checkbox" name="collapsCat[<?php echo $number
+   ?>][excludeAll]" <?php if ($excludeAll=='1') echo
+   'checked'; ?> id="collapsCat-excludeAll-<?php echo $number ?>"></input> <label
+   for="collapsCat-excludeAll-<?php echo $number ?>">Exclude post X from
+categories A and B when A or B is excluded</label>
    <p>
    Exclude posts older than <input type='text' name="collapsCat[<?php echo
 $number ?>][olderThan] id="collapsCat-olderThan-<?php echo $number ?>" size='3' value='<?php echo $olderThan ?>'></input> days
