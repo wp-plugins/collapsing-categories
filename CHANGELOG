@@ -1,4 +1,12 @@
 Collapsing Categories Changelog
+* 0.8.6 (2009.01.27)
+    * Added option to exclude posts older than certain number of days
+    * Widened widget options interface
+    * Updated tex of widget options some
+		* Categories no longer get nested if for some reasons there are no posts
+		  showing up for a category 
+    * TODO: Add truncate post title option
+
 * 0.8.5 (2009.01.23)
     * fixed settings panel problems
 

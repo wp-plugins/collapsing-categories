@@ -299,6 +299,11 @@ function list_categories($number) {
 	} else {
 	  $catTagQuery= "AND $wpdb->term_taxonomy.taxonomy = 'category'";
 	}
+	if ($olderThan > 0) {
+		$now = date('U');
+		$olderThanQuery= "AND  date(post_date) > '" . 
+			date('Y-m-d', $now-date('U',$olderThan*60*60*24)) . "'";
+	}
 
   echo "\n    <ul id='collapsCatList'>\n";
 
@@ -317,6 +322,7 @@ function list_categories($number) {
        $wpdb->terms, $wpdb->term_taxonomy 
        WHERE $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id 
        AND object_id=ID 
+			 $olderThanQuery
        AND post_status='publish'
        AND $wpdb->term_relationships.term_taxonomy_id =
            $wpdb->term_taxonomy.term_taxonomy_id 
@@ -441,7 +447,7 @@ function list_categories($number) {
         }
         $link.=$rssLink;
           print( $link );
-        if (($subCatPostCount>0) || ($showPosts=='yes')) {
+        if (($subCatPostCount>0) || ( !empty($posts) && $showPosts=='yes')) {
           print( "\n     <ul id='collapsCat-" . $cat->term_id .
               "' style=\"display:$expanded\">\n" );
         }
@@ -461,11 +467,11 @@ function list_categories($number) {
             }
             // close <ul> and <li> before starting a new category
           } 
-          if ($subCatPostCount>0 || $showPosts=='yes') {
-            echo "        </ul>\n";
-          }
-          echo "      </li> <!-- ending category -->\n";
         }
+				if ($subCatPostCount>0 || (!empty($posts) && $showPosts=='yes')) {
+					echo "        </ul>\n";
+				}
+				echo "      </li> <!-- ending category -->\n";
       } // end if theCount>0
     }
   }

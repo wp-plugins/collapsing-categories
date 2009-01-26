@@ -73,7 +73,7 @@ li.widget.collapsCat ul {margin-left:.5em;}
                    'showPostCount' => 'yes',
                    'inExclude' => 'exclude', 'inExcludeCats' => '',
                    'showPosts' => 'yes', 'showPages' => 'no',
-                   'linkToCat' => 'no',
+                   'linkToCat' => 'no', 'olderThan' => 0,
                    'catSortOrder' => 'ASC', 'catSort' => 'catName',
                    'postSortOrder' => 'ASC', 'postSort' => 'postTitle',
                    'expand' => '0', 'defaultExpand' => '', 'debug'=>'0',

@@ -29,7 +29,7 @@ function collapsCatWidget($args, $widget_args=1) {
 function collapsCatWidgetInit() {
 if ( !$options = get_option('collapsCatOptions') )
     $options = array();
-  $control_ops = array('width' => 400, 'height' => 350, 'id_base' => 'collapscat');
+  $control_ops = array('width' => 500, 'height' => 350, 'id_base' => 'collapscat');
 	$widget_ops = array('classname' => 'collapsCat', 'description' =>
   __('Categories expand and collapse to show subcategories and/or posts'));
   $name = __('Collapsing Categories');

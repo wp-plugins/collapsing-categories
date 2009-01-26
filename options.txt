@@ -5,7 +5,7 @@
      id="collapsCat-showPages-<?php echo $number ?>"></input> <label
      for="collapsCatShowPages">Show Pages as well as posts </label>
     </p>
-    <p>Sort Categories by:<br />
+    <p>Sort Categories by:
      <select name="collapsCat[<?php echo $number ?>][catSort]">
      <option <?php if($catSort=='catName') echo 'selected'; ?> id="sortName" value='catName'> category name</option>
      <option <?php if($catSort=='catId') echo 'selected'; ?> id="sortId" value='catId'> category id</option>
@@ -16,7 +16,7 @@
      <input type="radio" name="collapsCat[<?php echo $number ?>][catSortOrder]" <?php if($catSortOrder=='ASC') echo 'checked'; ?> id="collapsCat-catSortASC-<?php echo $number ?>" value='ASC'></input> <label for="collapsCatCatSortASC">Ascending</label>
      <input type="radio" name="collapsCat[<?php echo $number ?>][catSortOrder]" <?php if($catSortOrder=='DESC') echo 'checked'; ?> id="collapsCat-catSortDESC-<?php echo $number ?>" value='DESC'></input> <label for="collapsCatCatSortDESC">Descending</label>
     </p>
-    <p>Sort Posts by:<br />
+    <p>Sort Posts by:
      <select name="collapsCat[<?php echo $number ?>][postSort]">
      <option <?php if($postSort=='postTitle') echo 'selected'; ?>
      id="sortPostTitle-<?php echo $number ?>" value='postTitle'>Post Title</option>
@@ -35,7 +35,7 @@
      <input type="radio" name="collapsCat[<?php echo $number ?>][catTag]" <?php if($catTag=='tag') echo 'checked'; ?> id="collapsCat-catTagTag-<?php echo $number ?>" value='tag'></input> <label for="collapsCat-catTagTag">Tags</label>
      <input type="radio" name="collapsCat[<?php echo $number ?>][catTag]" <?php if($catTag=='both') echo 'checked'; ?> id="collapsCat-catTagBoth-<?php echo $number ?>" value='both'></input> <label for="collapsCat-catTagBoth">Categories and Tags</label>
     </p>
-    <p>Expanding shows:<br />
+    <p>Expanding shows:
      <input type="radio" name="collapsCat[<?php echo $number ?>][showPosts]" <?php if($showPosts=='yes') echo 'checked'; ?> id="showPostsYes" value='yes'></input> <label for="showPostsYes">Sub-categories and Posts</label>
      <input type="radio" name="collapsCat[<?php echo $number ?>][showPosts]"
      <?php if($showPosts=='no') echo 'checked'; ?> id="showPostsNo" value='no'></input> <label for="showPostsNO">Just Sub-categories</label>
@@ -52,12 +52,12 @@
      sub-categories and/or Posts</label>
     </p>
     <p>Expanding and collapse characters:<br />
-     html: <input type="radio" name="collapsCat[<?php echo $number ?>][expand]" <?php if($expand==0) echo 'checked'; ?> id="expand0" value='0'></input> <label for="expand0">&#9658;&nbsp;&#9660;</label>
+     <strong>html</strong>: <input type="radio" name="collapsCat[<?php echo $number ?>][expand]" <?php if($expand==0) echo 'checked'; ?> id="expand0" value='0'></input> <label for="expand0">&#9658;&nbsp;&#9660;</label>
      <input type="radio" name="collapsCat[<?php echo $number ?>][expand]" <?php if($expand==1) echo 'checked'; ?> id="expand1" value='1'></input> <label for="expand1">+&nbsp;&mdash;</label>
      <input type="radio" name="collapsCat[<?php echo $number ?>][expand]"
      <?php if($expand==2) echo 'checked'; ?> id="expand2" value='2'></input>
-     <label for="expand2">[+]&nbsp;[&mdash;]</label><br />
-     images:
+     <label for="expand2">[+]&nbsp;[&mdash;]</label>
+     <strong>images</strong>:
      <input type="radio" name="collapsCat[<?php echo $number ?>][expand]"
      <?php if($expand==3) echo 'checked'; ?> id="expand0" value='3'></input>
      <label for="expand3"><img src='<?php echo get_settings('siteurl') .
@@ -65,7 +65,7 @@
      src='<?php echo get_settings('siteurl') .
      "/wp-content/plugins/collapsing-categories/" ?>img/expand.gif' /></label>
     </p>
-    <p>Auto-expand these categories (separated by commas):<br />
+    <p>Auto-expand these categories (input slugs separated by commas):<br />
      <input type="text" name="collapsCat[<?php echo $number ?>][defaultExpand]" value="<?php echo $defaultExpand ?>" id="collapsCat-defaultExpand-<?php echo $number ?>"></input> 
     </p>
     <p> 
@@ -73,8 +73,12 @@
      <option  <?php if($inExclude=='include') echo 'selected'; ?> id="inExcludeInclude-<?php echo $number ?>" value='include'>Include</option>
      <option  <?php if($inExclude=='exclude') echo 'selected'; ?> id="inExcludeExclude-<?php echo $number ?>" value='exclude'>Exclude</option>
      </select>
-     these categories (separated by commas):<br />
+     these categories (input slugs separated by commas):<br />
     <input type="text" name="collapsCat[<?php echo $number ?>][inExcludeCats]" value="<?php echo $inExcludeCats ?>" id="collapsCat-inExcludeCats-<?php echo $number ?>"></input> 
+   <p>
+   Exclude posts older than <input type='text' name="collapsCat[<?php echo
+$number ?>][olderThan] id="collapsCat-olderThan-<?php echo $number ?>" size='3' value='<?php echo $olderThan ?>'></input> days
+   </p>
    <p>
    <input type="checkbox" name="collapsCat[<?php echo $number
    ?>][animate]" <?php if ($animate=='1') echo
