@@ -10,6 +10,7 @@ Collapsing Categories Changelog
     * Post count is now more accurate
     * Better internationalization for post and category titles
     * Added truncate post title option
+    * Settings panel only available for admin
 
 * 0.8.5 (2009.01.23)
     * fixed settings panel problems

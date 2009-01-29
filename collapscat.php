@@ -87,8 +87,12 @@ li.widget.collapsCat ul {margin-left:.5em;}
 
 	function setup() {
 		if( function_exists('add_options_page') ) {
-			add_options_page(__('Collapsing Categories'),__('Collapsing
-      Categories'),1,basename(__FILE__),array('collapscat','ui'));
+			global $userdata;
+			get_currentuserinfo();
+			if ($userdata->user_level>9) {
+				add_options_page(__('Collapsing Categories'),__('Collapsing
+						Categories'),1,basename(__FILE__),array('collapscat','ui'));
+			}
 		}
 	}
 	function ui() {
