@@ -40,6 +40,12 @@
      <input type="radio" name="collapsCat[<?php echo $number ?>][showPosts]"
      <?php if($showPosts=='no') echo 'checked'; ?> id="showPostsNo" value='no'></input> <label for="showPostsNO">Just Sub-categories</label>
     </p>
+   <p> Truncate Post Title to
+   <input type="text" size='3' name="collapsCat[<?php echo $number
+   ?>][postTitleLength]"
+   id="postTitleLength-<?php echo $number ?>" value="<?php echo
+   $postTitleLength; ?>"></input> <label
+   for="postTitleLength"> characters</label>
     <p>Clicking on category name:<br />
      <input type="radio" name="collapsCat[<?php echo $number ?>][linkToCat]"
      <?php if($linkToCat=='yes') echo 'checked'; ?>

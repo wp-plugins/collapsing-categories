@@ -77,6 +77,7 @@ li.widget.collapsCat ul {margin-left:.5em;}
                    'catSortOrder' => 'ASC', 'catSort' => 'catName',
                    'postSortOrder' => 'ASC', 'postSort' => 'postTitle',
                    'expand' => '0', 'defaultExpand' => '', 'debug'=>'0',
+									 'postTitleLength' => 0,
                    'animate' => '1', 'catfeed' => 'none'));
       update_option('collapsCatOptions', $options);
       add_option( 'collapsCatStyle', $style);

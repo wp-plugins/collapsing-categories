@@ -180,9 +180,17 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 							array_push($subCatPosts, $post2->ID);
 							$date=preg_replace("/-/", '/', $post2->date);
 							$name=$post2->post_name;
+							$title_text = htmlspecialchars(strip_tags(__($post2->post_title)), 
+									ENT_QUOTES);
+							$tmp_text = '';
+							if ($postTitleLength> 0 && strlen($title_text) > $postTitleLength ) {
+								$tmp_text = substr($title_text, 0, $postTitleLength );
+									$tmp_text .= ' &hellip;';
+							}
+							$linktext = $tmp_text == '' ? $title_text : $tmp_text;
 							$posttext2.= "<li class='collapsCatPost'><a
-							href='".get_permalink($post2->ID)."'>" .
-									strip_tags($post2->post_title) . "</a></li>\n";
+							href='".get_permalink($post2->ID).
+							"' title='$title_text'>$linktext</a></li>\n";
 							$subCatPostCount++;
 							$subCatPostCount2++;
 						} else {
@@ -395,7 +403,7 @@ function list_categories($number) {
             $link .= 'title="' . wp_specialchars(apply_filters('description',$cat->description,$cat)) . '"';
           }
           $link .= '>';
-          $link .= apply_filters('list_cats', $cat->name, $cat).'</a>';
+          $link .= __($cat->name).'</a>';
           if ($showPosts=='yes' || $subCatPostCount>0) {
             if ($expanded=='block') {
               $span= "      <li class='collapsCat'>".
@@ -466,9 +474,18 @@ function list_categories($number) {
 								if (!in_array($post->ID, $postsToExclude)) {  
 									$date=preg_replace("/-/", '/', $post->date);
 									$name=$post->post_name;
-									$posttext.= "          <li class='collapsCatPost'><a href='".
-											get_permalink($post->ID)."'>" .  
-											strip_tags($post->post_title) . "</a></li>\n";
+									$title_text = htmlspecialchars(strip_tags(
+									    __($post->post_title)), ENT_QUOTES);
+									$tmp_text = '';
+									if ($postTitleLength> 0 && 
+									    strlen($title_text) > $postTitleLength ) {
+										$tmp_text = substr($title_text, 0, $postTitleLength );
+											$tmp_text .= ' &hellip;';
+									}
+									$linktext = $tmp_text == '' ? $title_text : $tmp_text;
+									$posttext.= "<li class='collapsCatPost'><a
+										href='".get_permalink($post->ID).
+										"' title='$title_text'>$linktext</a></li>\n";
 								  $subCatPostCount++;
 								} else {
 								  //$subCatPostCount--;
