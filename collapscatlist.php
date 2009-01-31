@@ -327,8 +327,7 @@ function list_categories($number) {
 			$wpdb->term_taxonomy.parent, $wpdb->term_taxonomy.description 
 			FROM $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships
 			WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id 
-      AND $wpdb->term_taxonomy.term_taxonomy_id = $wpdb->term_relationships.term_taxonomy_id 
-			$catTagQuery $inExcludeQuery 
+    		$catTagQuery $inExcludeQuery 
       GROUP BY $wpdb->terms.term_id $catSortColumn
 			$catSortOrder";
   $postquery= "select distinct ID, slug, date(post_date) as date, post_status,
