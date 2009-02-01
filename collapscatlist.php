@@ -29,6 +29,34 @@ This file is part of Collapsing Categories
 * add depth option
 * add option to display number of comments
 */
+function getSubPosts($posts, $cat2, $subCatPosts) {
+  global $postsToExclude;
+  $posttext2='';
+  $subCatPostCount2=0;
+  foreach ($posts as $post2) {
+    if ($post2->term_id == $cat2->term_id) {
+      if (!in_array($post2->ID, $postsToExclude)) {
+        array_push($subCatPosts, $post2->ID);
+        $date=preg_replace("/-/", '/', $post2->date);
+        $name=$post2->post_name;
+        $title_text = htmlspecialchars(strip_tags(__($post2->post_title)), 
+            ENT_QUOTES);
+        $tmp_text = '';
+        if ($postTitleLength> 0 && strlen($title_text) > $postTitleLength ) {
+          $tmp_text = substr($title_text, 0, $postTitleLength );
+            $tmp_text .= ' &hellip;';
+        }
+        $linktext = $tmp_text == '' ? $title_text : $tmp_text;
+        $posttext2.= "<li class='collapsCatPost'><a
+        href='".get_permalink($post2->ID).
+        "' title='$title_text'>$linktext</a></li>\n";
+        $subCatPostCount2++;
+      }
+    }
+  }
+  return array($subCatPostCount2, $posttext2);
+}
+
 function addFeedLink($feed,$cat) {
   if ($feed=='text') {
     $rssLink= '<a href="' . get_category_feed_link($cat->term_id) .
@@ -53,10 +81,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
     foreach ($categories as $cat2) {
       $subCatLink2=''; // clear info from subCatLink2
       if ($cat->term_id==$cat2->parent) {
-        //$subCatPostCount=$subCatPostCount+$cat2->count;
         $expanded='none';
         $theID='collapsCat' . $cat2->term_id;
-        //echo "theID=$theID";
         if (in_array($cat2->name, $autoExpand) ||
             in_array($cat2->slug, $autoExpand) ||
             in_array($theID, array_keys($_COOKIE))) {
@@ -64,8 +90,13 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         }
         if (!in_array($cat2->term_id, $parents)) {
 					// check to see if there are more subcategories under this one
-					$subCatPostCount2=0;
           $subCatCount=0;
+          list($subCatPostCount2, $posttext2) = 
+              getSubPosts($posts,$cat2, $subCatPosts);
+					$subCatPostCount+=$subCatPostCount2;
+          if ($subCatPostCount2<1) {
+            continue;
+          }
           if ($linkToCat=='yes') {
             $link2 = "<a href='".get_category_link($cat2->term_id)."' ";
             if ( empty($cat2->description) ) {
@@ -125,7 +156,6 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           list ($subCatLink2, $subCatCount,$subCatPostCount,$subCatPosts)= 
               get_sub_cat($cat2, $categories, $parents, $posts, $subCatCount,
               $subCatPostCount, $number,$expanded);
-					$subCatPostCount2=$subCatPostCount;
           $subCatCount=1;
           if ($linkToCat=='yes') {
             if ($expanded=='block') {
@@ -171,33 +201,9 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   $cat2).'</span>';
             }
           }
+          list($subCatPostCount2, $posttext2) = 
+              getSubPosts($posts,$cat2, $subCatPosts);
         }
-
-				$posttext2='';
-				foreach ($posts as $post2) {
-					if ($post2->term_id == $cat2->term_id) {
-						if (!in_array($post2->ID, $postsToExclude)) {
-							array_push($subCatPosts, $post2->ID);
-							$date=preg_replace("/-/", '/', $post2->date);
-							$name=$post2->post_name;
-							$title_text = htmlspecialchars(strip_tags(__($post2->post_title)), 
-									ENT_QUOTES);
-							$tmp_text = '';
-							if ($postTitleLength> 0 && strlen($title_text) > $postTitleLength ) {
-								$tmp_text = substr($title_text, 0, $postTitleLength );
-									$tmp_text .= ' &hellip;';
-							}
-							$linktext = $tmp_text == '' ? $title_text : $tmp_text;
-							$posttext2.= "<li class='collapsCatPost'><a
-							href='".get_permalink($post2->ID).
-							"' title='$title_text'>$linktext</a></li>\n";
-							$subCatPostCount++;
-							$subCatPostCount2++;
-						} else {
-							//$cat2->count--;
-						}
-					}
-				}
         if( $showPostCount=='yes') {
           $theCount=1;
           $link2 .= ' ('.$subCatPostCount2.')';
@@ -218,9 +224,6 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         }
         $subCatLinks.= "         </li> <!-- ending subcategory -->\n";
       }
-			if ($subCatPostCount2<1) {
-				$subCatLinks='';
-			}
     }
   }
   return array($subCatLinks,$subCatCount,$subCatPostCount,$subCatPosts);
@@ -327,10 +330,10 @@ function list_categories($number) {
 			$wpdb->term_taxonomy.parent, $wpdb->term_taxonomy.description 
 			FROM $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships
 			WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id 
-    		$catTagQuery $inExcludeQuery 
+    		$catTagQuery $inExcludeQuery AND $wpdb->terms.slug!='blogroll'
       GROUP BY $wpdb->terms.term_id $catSortColumn
 			$catSortOrder";
-  $postquery= "select distinct ID, slug, date(post_date) as date, post_status,
+  $postquery= "select ID, slug, date(post_date) as date, post_status,
        post_title, post_name, name, object_id,
        $wpdb->terms.term_id from $wpdb->term_relationships, $wpdb->posts,
        $wpdb->terms, $wpdb->term_taxonomy 
@@ -376,8 +379,6 @@ function list_categories($number) {
   
   foreach( $categories as $cat ) {
     if ($cat->parent==0) {
-      //$lastCat= $cat->term_id;
-
       $rssLink=addFeedLink($catfeed,$cat);
       $subCatPostCount=0;
       $subCatCount=0;
