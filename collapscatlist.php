@@ -360,14 +360,16 @@ function list_categories($number) {
   if ($debug==1) {
     echo "<pre style='display:none' >";
     printf ("MySQL server version: %s\n", mysql_get_server_info());
+    echo "\ncollapsCat options:\n";
+    print_r($options[$number]);
+    echo "\npostsToExclude:\n";
+    print_r($postsToExclude);
     echo "CATEGORY QUERY: \n $catquery\n";
     echo "\nCATEGORY QUERY RESULTS\n";
     print_r($categories);
     echo "POST QUERY:\n $postquery\n";
     echo "\nPOST QUERY RESULTS\n";
     print_r($posts);
-    echo "\ncollapsCat options:\n";
-    print_r($options[$number]);
     echo "</pre>";
   }
 

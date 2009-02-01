@@ -28,11 +28,6 @@ This file is part of Collapsing Categories
 check_admin_referer();
 
 $theOptions=get_option('collapsCatOptions');
-/*
-echo "<pre>\n";
-print_r($theOptions);
-echo "</pre>\n";
-*/
 $widgetOn=0;
 $number='%i%';
 if (empty($theOptions)) {
@@ -40,9 +35,6 @@ if (empty($theOptions)) {
 } elseif (!isset($theOptions['%i%']['title']) || 
     count($theOptions) > 1) {
   $widgetOn=1; 
-  //return;
-  //$numbers=array_keys($theOptions);
-  //$number= $numbers[0];
 }
 if( isset($_POST['resetOptions']) ) {
   if (isset($_POST['reset'])) {

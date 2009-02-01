@@ -109,7 +109,11 @@ li.widget.collapsCat ul {margin-left:.5em;}
     $url = get_settings('siteurl');
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
-		echo "// These variables are part of the Collapsing Categories Plugin version: 0.8.5\n// Copyright 2007 Robert Felty (robfelty.com)\n";
+		echo '/* These variables are part of the Collapsing Categories Plugin 
+		      *  Version: 0.8.5
+		      *  $Id$
+					* Copyright 2007 Robert Felty (robfelty.com)
+					*/' . "\n";
     $expandSym="<img src='". $url .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/expand.gif' alt='expand' />";
