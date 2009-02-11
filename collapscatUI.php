@@ -75,6 +75,7 @@ include('processOptions.php');
     </div>
     ";
     } else {
+     extract($theOptions['%i%']);
      echo '<p style="text-align:left;"><label for="collapsCat-title-'.$number.'">' . __('Title:') . '<input class="widefat" style="width: 200px;" id="collapsCat-title-'.$number.'" name="collapsCat['.$number.'][title]" type="text" value="'.$title.'" /></label></p>';
      include('options.txt'); 
    }
