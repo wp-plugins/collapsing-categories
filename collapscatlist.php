@@ -29,28 +29,36 @@ This file is part of Collapsing Categories
 * add depth option
 * add option to display number of comments
 */
-function getSubPosts($posts, $cat2, $subCatPosts) {
+function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
   global $postsToExclude;
+  //print_r($options[$number]);
   $posttext2='';
-  $subCatPostCount2=0;
-  foreach ($posts as $post2) {
-    if ($post2->term_id == $cat2->term_id) {
-      if (!in_array($post2->ID, $postsToExclude)) {
-        array_push($subCatPosts, $post2->ID);
-        $date=preg_replace("/-/", '/', $post2->date);
-        $name=$post2->post_name;
-        $title_text = htmlspecialchars(strip_tags(__($post2->post_title)), 
-            ENT_QUOTES);
-        $tmp_text = '';
-        if ($postTitleLength> 0 && strlen($title_text) > $postTitleLength ) {
-          $tmp_text = substr($title_text, 0, $postTitleLength );
-            $tmp_text .= ' &hellip;';
+  if ($excludeAll==0 && $showPosts=='no') {
+    $subCatPostCount2=$cat2->count;
+  } else { 
+    $subCatPostCount2=0;
+    foreach ($posts as $post2) {
+      if ($post2->term_id == $cat2->term_id) {
+        if (!in_array($post2->ID, $postsToExclude)) {
+          array_push($subCatPosts, $post2->ID);
+          $subCatPostCount2++;
+          if ($showPosts=='no') {
+            continue;
+          }
+          $date=preg_replace("/-/", '/', $post2->date);
+          $name=$post2->post_name;
+          $title_text = htmlspecialchars(strip_tags(__($post2->post_title)), 
+              ENT_QUOTES);
+          $tmp_text = '';
+          if ($postTitleLength> 0 && strlen($title_text) > $postTitleLength ) {
+            $tmp_text = substr($title_text, 0, $postTitleLength );
+              $tmp_text .= ' &hellip;';
+          }
+          $linktext = $tmp_text == '' ? $title_text : $tmp_text;
+          $posttext2.= "<li class='collapsCatPost'><a
+              href='".get_permalink($post2).
+              "' title='$title_text'>$linktext</a></li>\n";
         }
-        $linktext = $tmp_text == '' ? $title_text : $tmp_text;
-        $posttext2.= "<li class='collapsCatPost'><a
-        href='".get_permalink($post2->ID).
-        "' title='$title_text'>$linktext</a></li>\n";
-        $subCatPostCount2++;
       }
     }
   }
@@ -92,13 +100,13 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 					// check to see if there are more subcategories under this one
           $subCatCount=0;
           list($subCatPostCount2, $posttext2) = 
-              getSubPosts($posts,$cat2, $subCatPosts);
+              getSubPosts($posts,$cat2, $subCatPosts, $showPosts);
 					$subCatPostCount+=$subCatPostCount2;
           if ($subCatPostCount2<1) {
             continue;
           }
           if ($linkToCat=='yes') {
-            $link2 = "<a href='".get_category_link($cat2->term_id)."' ";
+            $link2 = "<a href='".get_category_link($cat2)."' ";
             if ( empty($cat2->description) ) {
               $link2 .= 'title="'. 
                   sprintf(__("View all posts filed under %s"), 
@@ -127,7 +135,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $subCatLinks.=( "<li class='collapsCatPost'>" );
             }
           } else {
-            $link2 = "<a href='".get_category_link($cat2->term_id)."' ";
+            $link2 = "<a href='".get_category_link($cat2)."' ";
             if ( empty($cat2->description) ) {
               $link2 .= 'title="'. 
                   sprintf(__("View all posts filed under %s"), 
@@ -170,7 +178,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   "<span class='sym'>$expandSym</span></span>" );
             }
 
-                $link2 = "<a href='".get_category_link($cat2->term_id)."' ";
+                $link2 = "<a href='".get_category_link($cat2)."' ";
                 if ( empty($cat2->description) ) {
                   $link2 .= 'title="'. 
                       sprintf(__("View all posts filed under %s"), 
@@ -202,7 +210,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             }
           }
           list($subCatPostCount2, $posttext2) = 
-              getSubPosts($posts,$cat2, $subCatPosts);
+              getSubPosts($posts,$cat2, $subCatPosts, $showPosts);
         }
         if( $showPostCount=='yes') {
           $theCount=1;
@@ -272,7 +280,7 @@ function list_categories($number) {
 	if ( empty($inExclusions) ) {
 		$inExcludeQuery = "";
   } else {
-    $inExcludeQuery ="AND $wpdb->terms.slug $in ($inExclusions)";
+    $inExcludeQuery ="AND t.slug $in ($inExclusions)";
   }
 
   $isPage='';
@@ -281,15 +289,15 @@ function list_categories($number) {
   }
   if ($catSort!='') {
     if ($catSort=='catName') {
-      $catSortColumn="ORDER BY $wpdb->terms.name";
+      $catSortColumn="ORDER BY t.name";
     } elseif ($catSort=='catId') {
-      $catSortColumn="ORDER BY $wpdb->terms.term_id";
+      $catSortColumn="ORDER BY t.term_id";
     } elseif ($catSort=='catSlug') {
-      $catSortColumn="ORDER BY $wpdb->terms.slug";
+      $catSortColumn="ORDER BY t.slug";
     } elseif ($catSort=='catOrder') {
-      $catSortColumn="ORDER BY $wpdb->term_relationships.term_order";
+      $catSortColumn="ORDER BY trelationships.term_order";
     } elseif ($catSort=='catCount') {
-      $catSortColumn="ORDER BY $wpdb->term_taxonomy.count";
+      $catSortColumn="ORDER BY tt.count";
     }
   } 
   if ($postSort!='') {
@@ -325,6 +333,7 @@ function list_categories($number) {
 
   echo "\n    <ul id='collapsCatList'>\n";
 
+/*
   $catquery = "SELECT $wpdb->term_taxonomy.count as 'count',
 			$wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug,
 			$wpdb->term_taxonomy.parent, $wpdb->term_taxonomy.description 
@@ -333,19 +342,29 @@ function list_categories($number) {
     		$catTagQuery $inExcludeQuery AND $wpdb->terms.slug!='blogroll'
       GROUP BY $wpdb->terms.term_id $catSortColumn
 			$catSortOrder";
-  $postquery= "select ID, slug, date(post_date) as date, post_status,
-       post_title, post_name, name, object_id,
-       $wpdb->terms.term_id from $wpdb->term_relationships, $wpdb->posts,
-       $wpdb->terms, $wpdb->term_taxonomy 
-       WHERE $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id 
-       AND object_id=ID 
-			 $olderThanQuery
-       AND post_status='publish'
-       AND $wpdb->term_relationships.term_taxonomy_id =
-           $wpdb->term_taxonomy.term_taxonomy_id 
-       $catTagQuery $isPage $postSortColumn $postSortOrder";
+*/
+$catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN ('category') $inExcludeQuery AND t.slug!='blogroll' $catSortColumn $catSortOrder ";
+//$catquery = "SELECT t.*, tt.* FROM wp_terms AS t INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN ('category')  ORDER BY t.name ASC  ";
+  if ($showPosts=='yes') {
+    $postquery= "select ID, slug, date(post_date) as date, post_status,
+         post_title, post_name, name, object_id,
+         $wpdb->terms.term_id from $wpdb->term_relationships, $wpdb->posts,
+         $wpdb->terms, $wpdb->term_taxonomy 
+         WHERE $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id 
+         AND object_id=ID 
+         $olderThanQuery
+         AND post_status='publish'
+         AND $wpdb->term_relationships.term_taxonomy_id =
+             $wpdb->term_taxonomy.term_taxonomy_id 
+         $catTagQuery $isPage $postSortColumn $postSortOrder";
+    $posts= $wpdb->get_results($postquery); 
+  }
   $categories = $wpdb->get_results($catquery);
-  $posts= $wpdb->get_results($postquery); 
+  $totalPostCount=count($posts);
+  if ($totalPostCount>1000) {
+    $options[$number]['showPosts']='no';
+    $showPosts='no';
+  }
   $parents=array();
   foreach ($categories as $cat) {
     if ($cat->parent!=0) {
@@ -376,7 +395,6 @@ function list_categories($number) {
     echo "</pre>";
   }
 
-  
   foreach( $categories as $cat ) {
     if ($cat->parent==0) {
       $rssLink=addFeedLink($catfeed,$cat);
@@ -396,7 +414,7 @@ function list_categories($number) {
           $expanded='block';
         }
         if ($linkToCat=='yes') {
-          $link = "<a href='".get_category_link($cat->term_id)."' ";
+          $link = "<a href='".get_category_link($cat)."' ";
           if ( empty($cat->description) ) {
             $link .= 'title="'. 
                 sprintf(__("View all posts filed under %s"),
@@ -452,7 +470,7 @@ function list_categories($number) {
                     "<span class='sym'>$expandSym</span>";
               }
             } else {
-              $link = "<a href='".get_category_link($cat->term_id)."' ";
+              $link = "<a href='".get_category_link($cat)."' ";
               if ( empty($cat->description) ) {
                 $link .= 'title="'. 
                     sprintf(__("View all posts filed under %s"),
@@ -474,6 +492,10 @@ function list_categories($number) {
               if ($post->term_id == $cat->term_id 
                   && (!in_array($post->ID, $subCatPosts))) {
 								if (!in_array($post->ID, $postsToExclude)) {  
+								  $subCatPostCount++;
+                  if ($showPosts=='no') {
+                    continue;
+                  }
 									$date=preg_replace("/-/", '/', $post->date);
 									$name=$post->post_name;
 									$title_text = htmlspecialchars(strip_tags(
@@ -486,9 +508,8 @@ function list_categories($number) {
 									}
 									$linktext = $tmp_text == '' ? $title_text : $tmp_text;
 									$posttext.= "<li class='collapsCatPost'><a
-										href='".get_permalink($post->ID).
+										href='".get_permalink($post).
 										"' title='$title_text'>$linktext</a></li>\n";
-								  $subCatPostCount++;
 								} else {
 								  //$subCatPostCount--;
 								  //$theCount--;

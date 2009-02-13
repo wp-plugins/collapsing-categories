@@ -12,6 +12,7 @@ Collapsing Categories Changelog
     * Added truncate post title option
     * Settings panel only available for admin
     * fixed settings panel problems
+    * significantly increased speed for blogs with lots of posts and categories
 
 * 0.8.5 (2009.01.23)
     * fixed settings panel problems

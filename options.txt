@@ -10,7 +10,7 @@
      <option <?php if($catSort=='catName') echo 'selected'; ?> id="sortName" value='catName'> category name</option>
      <option <?php if($catSort=='catId') echo 'selected'; ?> id="sortId" value='catId'> category id</option>
      <option <?php if($catSort=='catSlug') echo 'selected'; ?> id="sortSlug" value='catSlug'> category Slug</option>
-     <option <?php if($catSort=='catOrder') echo 'selected'; ?> id="sortOrder" value='catOrder'> category (term) Order</option>
+     <!--<option <?php if($catSort=='catOrder') echo 'selected'; ?> id="sortOrder" value='catOrder'> category (term) Order</option>-->
      <option <?php if($catSort=='catCount') echo 'selected'; ?> id="sortCount" value='catCount'> category Count</option>
     </select>
      <input type="radio" name="collapsCat[<?php echo $number ?>][catSortOrder]" <?php if($catSortOrder=='ASC') echo 'checked'; ?> id="collapsCat-catSortASC-<?php echo $number ?>" value='ASC'></input> <label for="collapsCatCatSortASC">Ascending</label>

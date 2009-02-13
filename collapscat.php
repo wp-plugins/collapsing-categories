@@ -133,9 +133,11 @@ li.widget.collapsCat ul {margin-left:.5em;}
 }
 
 
-		include( 'collapscatlist.php' );
 function collapscat($number) {
-	list_categories($number);
+  if (!is_admin()) {
+    include( 'collapscatlist.php' );
+    list_categories($number);
+  }
 }
 include('collapscatwidget.php');
 ?>
