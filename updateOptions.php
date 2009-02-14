@@ -1,6 +1,6 @@
 <?php
 foreach ( (array) $_POST['collapsCat'] as $widget_number => $widget_collapsCat ) {
-  if ( !isset($widget_collapsCat['title']) && isset($options[$widget_number]) ) // user clicked cancel
+  if ($widget_number!='%i%' && !isset($widget_collapsCat['title']) && isset($options[$widget_number]) ) // user clicked cancel
     continue;
   $title = strip_tags(stripslashes($widget_collapsCat['title']));
   $catSortOrder= 'ASC' ;

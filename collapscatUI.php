@@ -27,15 +27,6 @@ This file is part of Collapsing Categories
 
 check_admin_referer();
 
-$theOptions=get_option('collapsCatOptions');
-$widgetOn=0;
-$number='%i%';
-if (empty($theOptions)) {
-  $number = '%i%';
-} elseif (!isset($theOptions['%i%']['title']) || 
-    count($theOptions) > 1) {
-  $widgetOn=1; 
-}
 if( isset($_POST['resetOptions']) ) {
   if (isset($_POST['reset'])) {
     delete_option('collapsCatOptions');   
@@ -47,6 +38,15 @@ if( isset($_POST['resetOptions']) ) {
   if ($widgetOn==0) {
     include('updateOptions.php');
   }
+}
+$options=get_option('collapsCatOptions');
+$widgetOn=0;
+$number='%i%';
+if (empty($options)) {
+  $number = '-1';
+} elseif (!isset($options['%i%']['title']) || 
+    count($options) > 1) {
+  $widgetOn=1; 
 }
 include('processOptions.php');
 ?>
@@ -75,7 +75,7 @@ include('processOptions.php');
     </div>
     ";
     } else {
-     extract($theOptions['%i%']);
+     extract($options['%i%']);
      echo '<p style="text-align:left;"><label for="collapsCat-title-'.$number.'">' . __('Title:') . '<input class="widefat" style="width: 200px;" id="collapsCat-title-'.$number.'" name="collapsCat['.$number.'][title]" type="text" value="'.$title.'" /></label></p>';
      include('options.txt'); 
    }
