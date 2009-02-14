@@ -34,7 +34,13 @@ if( isset($_POST['resetOptions']) ) {
   }
 } elseif (isset($_POST['infoUpdate'])) {
   $style=$_POST['collapsCatStyle'];
+	$defaultStyles=get_option('collapsCatDefaultStyles');
+	$selectedStyle=$_POST['collapsCatSelectedStyle'];
+	$defaultStyles['selected']=$selectedStyle;
+	$defaultStyles['custom']=$_POST['collapsCatStyle'];
   update_option('collapsCatStyle', $style);
+  update_option('collapsCatSidebarId', $_POST['collapsCatSidebarId']);
+  update_option('collapsCatDefaultStyles', $defaultStyles);
   if ($widgetOn==0) {
     include('updateOptions.php');
   }
@@ -80,24 +86,81 @@ include('processOptions.php');
      include('options.txt'); 
    }
    ?>
-    <p>
-  <input type='hidden' id='collapsCatOrigStyle' value="<?php echo
-stripslashes(get_option('collapsCatOrigStyle')) ?>" />
-<label for="collapsCatStyle">Style info:</label>
-   <input type='button' value='restore original style'
+	 Id of the sidebar where collapsing pages appears: 
+	 <input id='collapsCatSidebarId' name='collapsCatSidebarId' type='text' size='20' value="<?php echo
+	 get_option('collapsCatSidebarId')?>" onchange='changeStyle();' />
+	 <table>
+	   <tr>
+		   <td>
+  <input type='hidden' id='collapsCatCurrentStyle' value="<?php echo
+stripslashes(get_option('collapsCatStyle')) ?>" />
+  <input type='hidden' id='collapsCatSelectedStyle'
+	name='collapsCatSelectedStyle' />
+<label for="collapsCatStyle">Select style: </label>
+			 </td>
+			 <td>
+			 <select name='collapsCatDefaultStyles' id='collapsCatDefaultStyles' 
+			   onchange='changeStyle();' >
+			 <?php
+		$url = get_settings('siteurl') . '/wp-content/plugins/collapsing-pages';
+			 $styleOptions=get_option('collapsCatDefaultStyles');
+			 //print_r($styleOptions);
+			 $selected=$styleOptions['selected'];
+			 foreach ($styleOptions as $key=>$value) {
+			   if ($key!='selected') {
+           if ($key==$selected) {
+					   $select=' selected=selected ';
+					 } else {
+						 $select=' ';
+					 }
+					 echo '<option' .  $select . 'value="'.
+					     stripslashes($value) . '" >'.$key . '</option>';
+         }
+       }
+			 ?>
+			 </select>
+	     </td>
+			 <td>Preview<br />
+			 <img style='border:1px solid' id='collapsCatStylePreview' alt='preview' />
+			 </td>
+		</tr>
+		</table>
+		You may also customize your style below if you wish<br />
+   <input type='button' value='restore current style'
 onclick='restoreStyle();' /><br />
-   <textarea cols='78' rows='10' id="collapsCatStyle" name="collapsCatStyle">
-    <?php echo stripslashes(get_option('collapsCatStyle')) ?>
-   </textarea>
+   <textarea onfocus='customStyle();' cols='78' rows='10' id="collapsCatStyle" name="collapsCatStyle"><?php echo stripslashes(get_option('collapsCatStyle')) ?></textarea>
     </p>
 <script type='text/javascript'>
-function restoreStyle() {
-  var defaultStyle = document.getElementById('collapsCatOrigStyle').value;
-  var catStyle = document.getElementById('collapsCatStyle');
-  catStyle.value=defaultStyle;
+function changeStyle() {
+	var preview = document.getElementById('collapsCatStylePreview');
+	var pageStyles = document.getElementById('collapsCatDefaultStyles');
+	var selectedStyle;
+	var hiddenStyle=document.getElementById('collapsCatSelectedStyle');
+	for(i=0; i<pageStyles.options.length; i++) {
+		if (pageStyles.options[i].selected == true) {
+			selectedStyle=pageStyles.options[i];
+		}
+	}
+	hiddenStyle.value=selectedStyle.innerHTML
+	preview.src='<?php echo $url ?>/img/'+selectedStyle.innerHTML+'.png';
+  var pageStyle = document.getElementById('collapsCatStyle');
+	// add in the name of the sidebar
+  var sidebarId=document.getElementById('collapsCatSidebarId').value;
+	var theStyle='#' + sidebarId +
+			' ul.collapsCatList li:before {content: \'\'}\n' + selectedStyle.value;
+  pageStyle.value=theStyle;
 }
+function restoreStyle() {
+  var defaultStyle = document.getElementById('collapsCatCurrentStyle').value;
+  var pageStyle = document.getElementById('collapsCatStyle');
+  pageStyle.value=defaultStyle;
+}
+function customStyle() {
+	var hiddenStyle=document.getElementById('collapsCatSelectedStyle');
+	hiddenStyle.value='custom';
+}
+	changeStyle();
 </script>
-   </ul>
   </fieldset>
   <div class="submit">
    <input type="submit" name="infoUpdate" value="<?php _e('Update options', 'Collapsing Categories'); ?> &raquo;" />

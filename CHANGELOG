@@ -13,6 +13,7 @@ Collapsing Categories Changelog
     * Settings panel only available for admin
     * fixed settings panel problems
     * significantly increased speed for blogs with lots of posts and categories
+    * added new style selection method
 
 * 0.8.5 (2009.01.23)
     * fixed settings panel problems

@@ -331,7 +331,7 @@ function list_categories($number) {
 			date('Y-m-d', $now-date('U',$olderThan*60*60*24)) . "'";
 	}
 
-  echo "\n    <ul id='collapsCatList'>\n";
+  echo "\n    <ul class='collapsCatList'>\n";
 
 /*
   $catquery = "SELECT $wpdb->term_taxonomy.count as 'count',

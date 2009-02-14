@@ -48,25 +48,11 @@ add_action('activate_collapsing-categories/collapscat.php', array('collapscat','
 class collapscat {
 
 	function init() {
-    $style="span.collapsCat {border:0;
- padding:0; 
- margin:0; 
- cursor:pointer;
-}
-
-#sidebar li.collapsCat:before {content:'';} 
-#sidebar li.collapsCat {list-style-type:none}
-#sidebar li.collapsCatPost {
-             text-indent:-1em;
-             margin:0 0 0 1em;}
-li.widget.collapsCat ul {margin-left:.5em;}
-#sidebar li.collapsCatPost:before {content: '\\\\00BB \\\\00A0' !important;} 
-#sidebar li.collapsCat .sym {
-               font-size:1.2em;
-               font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
-      padding-right:5px;}";
+	  include('collapsCatStyles.php');
+		$defaultStyles=compact('custom','selected','default','block','noArrows');
     if( function_exists('add_option') ) {
       update_option( 'collapsCatOrigStyle', $style);
+      update_option( 'collapsCatDefaultStyles', $defaultStyles);
     }
     if (!get_option('collapsCatOptions')) {
       $options=array('%i%' => array('title' => 'Categories',
@@ -80,8 +66,13 @@ li.widget.collapsCat ul {margin-left:.5em;}
 									 'postTitleLength' => 0,
                    'animate' => '1', 'catfeed' => 'none'));
       update_option('collapsCatOptions', $options);
-      add_option( 'collapsCatStyle', $style);
     }
+    if (!get_option('collapsCatStyle')) {
+      add_option( 'collapsCatStyle', $style);
+		}
+    if (!get_option('collapsCatSidebarId')) {
+      add_option( 'collapsCatSidebarId', 'sidebar');
+		}
 
 	}
 
