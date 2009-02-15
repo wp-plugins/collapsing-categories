@@ -56,7 +56,7 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
           }
           $linktext = $tmp_text == '' ? $title_text : $tmp_text;
           $posttext2.= "<li class='collapsCatPost'><a
-              href='".get_permalink($post2).
+              href='".get_permalink($post2->ID).
               "' title='$title_text'>$linktext</a></li>\n";
         }
       }
@@ -164,7 +164,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           list ($subCatLink2, $subCatCount,$subCatPostCount,$subCatPosts)= 
               get_sub_cat($cat2, $categories, $parents, $posts, $subCatCount,
               $subCatPostCount, $number,$expanded);
-          $subCatCount=1;
+          list($subCatPostCount2, $posttext2) = 
+              getSubPosts($posts,$cat2, $subCatPosts, $showPosts);
+					$subCatPostCount+=$subCatPostCount2;
+        //  $subCatCount=1;
           if ($linkToCat=='yes') {
             if ($expanded=='block') {
               $subCatLinks.=( "<li class='collapsCat'>".
@@ -209,11 +212,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   $cat2).'</span>';
             }
           }
-          list($subCatPostCount2, $posttext2) = 
-              getSubPosts($posts,$cat2, $subCatPosts, $showPosts);
         }
         if( $showPostCount=='yes') {
-          $theCount=1;
           $link2 .= ' ('.$subCatPostCount2.')';
         }
         $subCatLinks.= $link2 ;
@@ -508,7 +508,7 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
 									}
 									$linktext = $tmp_text == '' ? $title_text : $tmp_text;
 									$posttext.= "<li class='collapsCatPost'><a
-										href='".get_permalink($post).
+										href='".get_permalink($post->ID).
 										"' title='$title_text'>$linktext</a></li>\n";
 								} else {
 								  //$subCatPostCount--;
