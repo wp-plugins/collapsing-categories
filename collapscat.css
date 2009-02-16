@@ -30,6 +30,7 @@ span.collapsCat {border:0;
 /* font-family: Monaco, 'Andale Mono', Courier, monospace;*/
 }
 
+li.collapsCat a.self {font-weight:bold}
 #sidebar li.collapsCat:before {content:'';} 
 #sidebar li.collapsCat {list-style-type:none}
 #sidebar li.collapsCatPost {

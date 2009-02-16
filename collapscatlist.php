@@ -25,6 +25,24 @@ This file is part of Collapsing Categories
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+// Helper functions
+function checkCurrentCat($cat, $categories) {
+ /* this function checks whether the post being displayed belongs to a given category, 
+ * or if that category's page itself is displayed. 
+ * If so, it adds all parent categories to the autoExpand array, so
+ * that it is automatically expanded 
+ */
+  global $autoExpand;
+	array_push($autoExpand, $cat->slug);
+	if ($cat->parent!=0) {
+		foreach ($categories as $cat2) {
+		  if ($cat2->term_id == $cat->parent) {
+			  checkCurrentCat($cat2,$categories);
+		  }
+		}
+	}
+}
+
 /* TODO 
 * add depth option
 * add option to display number of comments
@@ -106,7 +124,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             continue;
           }
           if ($linkToCat=='yes') {
-            $link2 = "<a href='".get_category_link($cat2)."' ";
+            $link2 = "<a $self href='".get_category_link($cat2)."' ";
             if ( empty($cat2->description) ) {
               $link2 .= 'title="'. 
                   sprintf(__("View all posts filed under %s"), 
@@ -135,7 +153,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $subCatLinks.=( "<li class='collapsCatPost'>" );
             }
           } else {
-            $link2 = "<a href='".get_category_link($cat2)."' ";
+            $link2 = "<a $self href='".get_category_link($cat2)."' ";
             if ( empty($cat2->description) ) {
               $link2 .= 'title="'. 
                   sprintf(__("View all posts filed under %s"), 
@@ -181,7 +199,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   "<span class='sym'>$expandSym</span></span>" );
             }
 
-                $link2 = "<a href='".get_category_link($cat2)."' ";
+                $link2 = "<a $self href='".get_category_link($cat2)."' ";
                 if ( empty($cat2->description) ) {
                   $link2 .= 'title="'. 
                       sprintf(__("View all posts filed under %s"), 
@@ -238,7 +256,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 }
 
 function list_categories($number) {
-  global $expandSym,$collapseSym,$wpdb,$options, $autoExpand, $postsToExclude;
+  global $expandSym,$collapseSym,$wpdb,$options,$post, $autoExpand, $postsToExclude, $thisCat, $thisPost;
+  if (is_single() || is_category() || is_tag()) {
+    $cur_category = get_the_category();
+    $thisCat = $cur_category[0]->term_id;
+    $thisPost = $post->ID;
+  }
   $options=get_option('collapsCatOptions');
   extract($options[$number]);
   if ($expand==1) {
@@ -370,6 +393,9 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
     if ($cat->parent!=0) {
       array_push($parents, $cat->parent);
     }
+    if (!empty($thisCat) && $cat->term_id == $thisCat) {
+      checkCurrentCat($cat,$categories);
+    }
   }
 	$postsToExclude=array();
 	if ($excludeAll==1) {
@@ -397,6 +423,10 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
 
   foreach( $categories as $cat ) {
     if ($cat->parent==0) {
+      if ((is_category() || is_tag()) && $cat->term_id == $thisCat)
+        $self="class='self'";
+      else
+        $self="";
       $rssLink=addFeedLink($catfeed,$cat);
       $subCatPostCount=0;
       $subCatCount=0;
@@ -414,7 +444,7 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
           $expanded='block';
         }
         if ($linkToCat=='yes') {
-          $link = "<a href='".get_category_link($cat)."' ";
+          $link = "<a $self href='".get_category_link($cat)."' ";
           if ( empty($cat->description) ) {
             $link .= 'title="'. 
                 sprintf(__("View all posts filed under %s"),
@@ -470,7 +500,7 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
                     "<span class='sym'>$expandSym</span>";
               }
             } else {
-              $link = "<a href='".get_category_link($cat)."' ";
+              $link = "<a $self href='".get_category_link($cat)."' ";
               if ( empty($cat->description) ) {
                 $link .= 'title="'. 
                     sprintf(__("View all posts filed under %s"),
@@ -496,6 +526,10 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
                   if ($showPosts=='no') {
                     continue;
                   }
+            if (is_single() && $post->ID == $thisPost)
+              $self="class='self'";
+            else
+              $self="";
 									$date=preg_replace("/-/", '/', $post->date);
 									$name=$post->post_name;
 									$title_text = htmlspecialchars(strip_tags(
