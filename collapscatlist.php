@@ -49,7 +49,6 @@ function checkCurrentCat($cat, $categories) {
 */
 function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
   global $postsToExclude;
-  //print_r($options[$number]);
   $posttext2='';
   if ($excludeAll==0 && $showPosts=='no') {
     $subCatPostCount2=$cat2->count;
@@ -96,17 +95,24 @@ function addFeedLink($feed,$cat) {
   }
   return $rssLink;
 }
-
 function get_sub_cat($cat, $categories, $parents, $posts,
-  $subCatCount,$subCatPostCount,$number,$expanded) {
-  global $options,$expandSym, $collapseSym, $autoExpand, $postsToExclude;
+  $subCatCount,$subCatPostCount,$number,$expanded, $depth) {
+  global $options,$expandSym, $collapseSym, $autoExpand, $postsToExclude, $subCatPostCounts;
   extract($options[$number]);
   $subCatPosts=array();
   $link2='';
+  if ($depth==0) {
+    $subCatPostCounts=array();
+  }
+  $depth++;
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
       $subCatLink2=''; // clear info from subCatLink2
       if ($cat->term_id==$cat2->parent) {
+        list($subCatPostCount2, $posttext2) = 
+            getSubPosts($posts,$cat2, $subCatPosts, $showPosts);
+        $subCatPostCount+=$subCatPostCount2;
+        $subCatPostCounts[$depth]=$subCatPostCount2;
         $expanded='none';
         $theID='collapsCat' . $cat2->term_id;
         if (in_array($cat2->name, $autoExpand) ||
@@ -117,9 +123,6 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         if (!in_array($cat2->term_id, $parents)) {
 					// check to see if there are more subcategories under this one
           $subCatCount=0;
-          list($subCatPostCount2, $posttext2) = 
-              getSubPosts($posts,$cat2, $subCatPosts, $showPosts);
-					$subCatPostCount+=$subCatPostCount2;
           if ($subCatPostCount2<1) {
             continue;
           }
@@ -181,11 +184,9 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         } else {
           list ($subCatLink2, $subCatCount,$subCatPostCount,$subCatPosts)= 
               get_sub_cat($cat2, $categories, $parents, $posts, $subCatCount,
-              $subCatPostCount, $number,$expanded);
+              $subCatPostCount, $number,$expanded, $depth);
           list($subCatPostCount2, $posttext2) = 
               getSubPosts($posts,$cat2, $subCatPosts, $showPosts);
-					$subCatPostCount+=$subCatPostCount2;
-        //  $subCatCount=1;
           if ($linkToCat=='yes') {
             if ($expanded=='block') {
               $subCatLinks.=( "<li class='collapsCat'>".
@@ -232,7 +233,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
         }
         if( $showPostCount=='yes') {
-          $link2 .= ' ('.$subCatPostCount2.')';
+          $theCount=$subCatPostCount2 + array_sum(array_slice($subCatPostCounts, $depth));
+          $link2 .= ' ('.$theCount.')';
         }
         $subCatLinks.= $link2 ;
         $rssLink=addFeedLink($catfeed,$cat2);
@@ -430,9 +432,10 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
       $rssLink=addFeedLink($catfeed,$cat);
       $subCatPostCount=0;
       $subCatCount=0;
+      $subCatPostCounts=array();
       list ($subCatLinks, $subCatCount,$subCatPostCount, $subCatPosts)=
           get_sub_cat($cat, $categories, $parents, $posts, 
-          $subCatCount,$subCatPostCount,$number,$expanded);
+          $subCatCount,$subCatPostCount,$number,$expanded,0);
         
       $theCount=$cat->count+$subCatPostCount;
       if ($theCount>0) {
