@@ -185,6 +185,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           list ($subCatLink2, $subCatCount,$subCatPostCount,$subCatPosts)= 
               get_sub_cat($cat2, $categories, $parents, $posts, $subCatCount,
               $subCatPostCount, $number,$expanded, $depth);
+          $subCatCount=1;
           list($subCatPostCount2, $posttext2) = 
               getSubPosts($posts,$cat2, $subCatPosts, $showPosts);
           if ($linkToCat=='yes') {
