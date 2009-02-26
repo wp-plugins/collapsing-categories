@@ -73,7 +73,7 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
           }
           $linktext = $tmp_text == '' ? $title_text : $tmp_text;
           $posttext2.= "<li class='collapsCatPost'><a
-              href='".get_permalink($post2->ID).
+              href='".get_permalink($post2).
               "' title='$title_text'>$linktext</a></li>\n";
         }
       }
@@ -373,7 +373,7 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
 //$catquery = "SELECT t.*, tt.* FROM wp_terms AS t INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN ('category')  ORDER BY t.name ASC  ";
   if ($showPosts=='yes') {
     $postquery= "select ID, slug, date(post_date) as date, post_status,
-         post_title, post_name, name, object_id,
+         post_date, post_title, post_name, name, object_id,
          $wpdb->terms.term_id from $wpdb->term_relationships, $wpdb->posts,
          $wpdb->terms, $wpdb->term_taxonomy 
          WHERE $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id 
@@ -546,7 +546,7 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
 									}
 									$linktext = $tmp_text == '' ? $title_text : $tmp_text;
 									$posttext.= "<li class='collapsCatPost'><a
-										href='".get_permalink($post->ID).
+										href='".get_permalink($post).
 										"' title='$title_text'>$linktext</a></li>\n";
 								} else {
 								  //$subCatPostCount--;
