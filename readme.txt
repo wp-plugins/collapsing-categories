@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.6
 Tested up to: 2.7
-Stable tag: 0.8.5
+Stable tag: 0.9
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -139,6 +139,24 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.9 (2009.03.01)
+    * Added option to exclude posts older than certain number of days
+    * Widened widget options interface
+    * Updated text of widget options some
+		* Categories no longer get nested if for some reasons there are no posts
+		  showing up for a category 
+		* Added option to exclude post X in categories A and B when either A or B
+		  is excluded
+    * Post count is now more accurate
+    * Better internationalization for post and category titles
+    * Added truncate post title option
+    * Settings panel only available for admin
+    * fixed settings panel problems
+    * greatly increased speed for blogs with lots of posts and categories
+    * added new style selection method
+    * If current page is in category X, then category X will be expanded
+      (thanks to Bernhard Reiter)
 
 * 0.8.5 (2009.01.23)
     * fixed settings panel problems

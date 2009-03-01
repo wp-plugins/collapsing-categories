@@ -1,5 +1,5 @@
 /*
-Collapsing Categories version: 0.8.5
+Collapsing Categories version: 0.9
 Copyright 2007 Robert Felty
 
 This work is largely based on the Fancy Categories plugin by Andrew Rader
