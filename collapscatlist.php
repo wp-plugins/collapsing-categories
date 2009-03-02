@@ -525,15 +525,15 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
             foreach ($posts as $post) {
               if ($post->term_id == $cat->term_id 
                   && (!in_array($post->ID, $subCatPosts))) {
-								if (!in_array($post->ID, $postsToExclude)) {  
+								if (!in_array($post->ID, $postsToExclude)) {
 								  $subCatPostCount++;
                   if ($showPosts=='no') {
                     continue;
                   }
-            if (is_single() && $post->ID == $thisPost)
-              $self="class='self'";
-            else
-              $self="";
+                  if (is_single() && $post->ID == $thisPost)
+                    $self="class='self'";
+                  else
+                    $self="";
 									$date=preg_replace("/-/", '/', $post->date);
 									$name=$post->post_name;
 									$title_text = htmlspecialchars(strip_tags(
@@ -557,10 +557,10 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
           } 
         }
         if( $showPostCount=='yes') {
-          $link .= ' (' . $subCatPostCount.')';
+          $link .= ' (' . $theCount.')';
         }
         $link.=$rssLink;
-				if ($subCatPostCount<1) {
+				if ($theCount<1) {
 					$link='';
 					$span='';
 				}
