@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.6
 Tested up to: 2.7
-Stable tag: 0.9
+Stable tag: 0.9.1
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -16,7 +16,29 @@ This is a very simple plugin that uses Javascript to form a collapsable set of
 links in the sidebar for the categories. Every post corresponding to a given
 category will be expanded.
 
-It is largely based off of the Fancy Categories Plugin by Andrew Rader
+= Recent Changes =
+
+* 0.9.1 (2009.03.02)
+    * Fixed bug where top level categories would not be displayed if they
+      have no subcategories, and show only sub-categories is selected
+
+* 0.9 (2009.02.20)
+    * Added option to exclude posts older than certain number of days
+    * Widened widget options interface
+    * Updated text of widget options some
+		* Categories no longer get nested if for some reasons there are no posts
+		  showing up for a category 
+		* Added option to exclude post X in categories A and B when either A or B
+		  is excluded
+    * Post count is now more accurate
+    * Better internationalization for post and category titles
+    * Added truncate post title option
+    * Settings panel only available for admin
+    * fixed settings panel problems
+    * greatly increased speed for blogs with lots of posts and categories
+    * added new style selection method
+    * If current page is in category X, then category X will be expanded
+      (thanks to Bernhard Reiter)
 
 == Installation ==
 
@@ -52,19 +74,22 @@ if (function_exists('collapsCat')) {
 
 =  How do I change the style of the collapsing categories lists? =
 
-  The collapsing categories plugin uses several ids and classes which can be
-  styled with CSS. You can change the default style from the collapsing
-categories options (settings) page. You may have to rename
-  some of the id statements. For example, if your sidebar is called
-  "myawesomesidebar", you would rewrite the line 
+As of version 0.9, there are several default styles that come with
+collapsing-categories. You can choose from these in the settings panel, or you
+can create your own custom style. A good strategy is to choose a default, then
+modify it slightly to your needs. 
 
-  #sidebar li.collapsCat {list-style-type:none}
+=  What is the option about the ID of the sidebar? =
 
-  to
-
-  #myawesomesidebar li.collapsCat {list-style-type:none}
-
-  
+Here is the deal. If you have a rule in your theme like:
+`#sidebar ul li ul li {color:blue}`
+it will override a rule like
+`li.collapsArch {color:red}`
+because it uses an ID, instead of a class. That is the way CSS works. So if
+change our rule to:
+`#sidebar li.collapsArch {color:red}`
+then this alleviates that problem. 
+The option for the ID of the sidebar does this automatically for you.
 
 = How do I use different symbols for collapsing and expanding? =
 
@@ -139,6 +164,11 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.9.1 (2009.03.02)
+    * Fixed bug where top level categories would not be displayed if they
+      have no subcategories, and show only sub-categories is selected
+    * Can leave sidebar ID option blank if desired
 
 * 0.9 (2009.03.01)
     * Added option to exclude posts older than certain number of days

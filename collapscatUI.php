@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.9
+Collapsing Categories version: 0.9.1
 Copyright 2007 Robert Felty
 
 This work is largely based on the Fancy Categories plugin by Andrew Rader
@@ -146,8 +146,11 @@ function changeStyle() {
   var pageStyle = document.getElementById('collapsCatStyle');
 	// add in the name of the sidebar
   var sidebarId=document.getElementById('collapsCatSidebarId').value;
-	var theStyle='#' + sidebarId +
-			' ul.collapsCatList li:before {content: \'\'}\n' + selectedStyle.value;
+  var theStyle='';
+  if (sidebarId!='') {
+    theStyle='#' + sidebarId;
+  }
+  theStyle+=' ul.collapsCatList li:before {content: \'\'}\n' + selectedStyle.value;
   pageStyle.value=theStyle;
 }
 function restoreStyle() {
