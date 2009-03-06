@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.9.1
+Collapsing Categories version: 0.9.2
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -97,7 +97,8 @@ function addFeedLink($feed,$cat) {
 }
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$number,$expanded, $depth) {
-  global $options,$expandSym, $collapseSym, $autoExpand, $postsToExclude, $subCatPostCounts;
+  global $options,$expandSym, $collapseSym, $autoExpand, $postsToExclude,
+  $subCatPostCounts, $catlink;
   extract($options[$number]);
   $subCatPosts=array();
   $link2='';
@@ -127,7 +128,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             continue;
           }
           if ($linkToCat=='yes') {
-            $link2 = "<a $self href='".get_category_link($cat2)."' ";
+            if (empty($catlink)) {
+              $link2 = "<a $self href='".get_category_link($cat2->ID)."' ";
+            } else {
+              $link2 = "<a $self href='".get_category_link($cat2)."' ";
+            }
             if ( empty($cat2->description) ) {
               $link2 .= 'title="'. 
                   sprintf(__("View all posts filed under %s"), 
@@ -156,7 +161,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $subCatLinks.=( "<li class='collapsCatPost'>" );
             }
           } else {
-            $link2 = "<a $self href='".get_category_link($cat2)."' ";
+            if (empty($catlink)) {
+              $link2 = "<a $self href='".get_category_link($cat2->ID)."' ";
+            } else {
+              $link2 = "<a $self href='".get_category_link($cat2)."' ";
+            }
             if ( empty($cat2->description) ) {
               $link2 .= 'title="'. 
                   sprintf(__("View all posts filed under %s"), 
@@ -201,7 +210,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   "<span class='sym'>$expandSym</span></span>" );
             }
 
-                $link2 = "<a $self href='".get_category_link($cat2)."' ";
+                if (empty($catlink)) {
+                  $link2 = "<a $self href='".get_category_link($cat2->ID)."' ";
+                } else {
+                  $link2 = "<a $self href='".get_category_link($cat2)."' ";
+                }
                 if ( empty($cat2->description) ) {
                   $link2 .= 'title="'. 
                       sprintf(__("View all posts filed under %s"), 
@@ -259,7 +272,9 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 }
 
 function list_categories($number) {
-  global $expandSym,$collapseSym,$wpdb,$options,$post, $autoExpand, $postsToExclude, $thisCat, $thisPost;
+  global $expandSym,$collapseSym,$wpdb,$options,$post, $autoExpand,
+  $postsToExclude, $thisCat, $thisPost, $wp_rewrite, $catlink;
+  $catlink = $wp_rewrite->get_category_permastruct();
   if (is_single() || is_category() || is_tag()) {
     $cur_category = get_the_category();
     $thisCat = $cur_category[0]->term_id;
@@ -448,7 +463,11 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
           $expanded='block';
         }
         if ($linkToCat=='yes') {
-          $link = "<a $self href='".get_category_link($cat)."' ";
+          if (empty($catlink)) {
+            $link = "<a $self href='".get_category_link($cat->term_id)."' ";
+          } else {
+            $link = "<a $self href='".get_category_link($cat)."' ";
+          }
           if ( empty($cat->description) ) {
             $link .= 'title="'. 
                 sprintf(__("View all posts filed under %s"),
@@ -504,7 +523,11 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
                     "<span class='sym'>$expandSym</span>";
               }
             } else {
-              $link = "<a $self href='".get_category_link($cat)."' ";
+              if (empty($catlink)) {
+                $link = "<a $self href='".get_category_link($cat->term_id)."' ";
+              } else {
+                $link = "<a $self href='".get_category_link($cat)."' ";
+              }
               if ( empty($cat->description) ) {
                 $link .= 'title="'. 
                     sprintf(__("View all posts filed under %s"),
