@@ -9,9 +9,9 @@ li.collapsCat a.self {font-weight:bold}
 ul.collapsCatList ul.collapsCatList:before {content:'';} 
 ul.collapsCatList li.collapsCat:before {content:'';} 
 ul.collapsCatList li.collapsCat {list-style-type:none}
-ul.collapsCatList li.collapsItem {
+ul.collapsCatList li.collapsCatPost {
        margin:0 0 0 2em;}
-ul.collapsCatList li.collapsItem:before {content: '\\\\00BB \\\\00A0' !important;} 
+ul.collapsCatList li.collapsCatPost:before {content: '\\\\00BB \\\\00A0' !important;} 
 ul.collapsCatList li.collapsCat .sym {
    font-size:1.2em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
@@ -42,7 +42,7 @@ li.collapsCat a.self {font-weight:bold}
 ul.collapsCatList ul.collapsCatList:before {content:'';} 
 ul.collapsCatList li.collapsCat:before {content:'';} 
 ul.collapsCatList li.collapsCat {list-style-type:none}
-ul.collapsCatList li.collapsItem {
+ul.collapsCatList li.collapsCatPost {
       }
 ul.collapsCatList li.collapsCat .sym {
    font-size:1.2em;
