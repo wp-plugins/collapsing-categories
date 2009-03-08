@@ -129,7 +129,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
           if ($linkToCat=='yes') {
             if (empty($catlink)) {
-              $link2 = "<a $self href='".get_category_link($cat2->ID)."' ";
+              $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
             } else {
               $link2 = "<a $self href='".get_category_link($cat2)."' ";
             }
@@ -162,7 +162,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             }
           } else {
             if (empty($catlink)) {
-              $link2 = "<a $self href='".get_category_link($cat2->ID)."' ";
+              $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
             } else {
               $link2 = "<a $self href='".get_category_link($cat2)."' ";
             }
@@ -211,7 +211,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             }
 
                 if (empty($catlink)) {
-                  $link2 = "<a $self href='".get_category_link($cat2->ID)."' ";
+                  $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
                 } else {
                   $link2 = "<a $self href='".get_category_link($cat2)."' ";
                 }

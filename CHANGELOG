@@ -1,4 +1,7 @@
 Collapsing Categories Changelog
+* 0.9.3 (2009.03.08)
+    * Fixed links to sub-categories
+
 * 0.9.2 (2009.03.07)
     * Tweaked default style
     * Fixed bug when not using permalinks
