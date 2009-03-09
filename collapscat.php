@@ -124,11 +124,11 @@ class collapscat {
 }
 
 
-  if (!is_admin()) {
-    include( 'collapscatlist.php' );
-  }
 function collapsCat($number) {
-    list_categories($number);
+    include_once( 'collapscatlist.php' );
+  if (!is_admin()) {
+  list_categories($number);
+  }
 }
 include('collapscatwidget.php');
 ?>
