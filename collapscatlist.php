@@ -72,7 +72,7 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
               $tmp_text .= ' &hellip;';
           }
           $linktext = $tmp_text == '' ? $title_text : $tmp_text;
-          $posttext2.= "<li class='collapsCatPost'><a
+          $posttext2.= "<li class='collapsCatPost'><a $self
               href='".get_permalink($post2).
               "' title='$title_text'>$linktext</a></li>\n";
         }
@@ -568,7 +568,7 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
 											$tmp_text .= ' &hellip;';
 									}
 									$linktext = $tmp_text == '' ? $title_text : $tmp_text;
-									$posttext.= "<li class='collapsCatPost'><a
+									$posttext.= "<li class='collapsCatPost'><a $self
 										href='".get_permalink($post).
 										"' title='$title_text'>$linktext</a></li>\n";
 								} else {
