@@ -47,8 +47,9 @@ function checkCurrentCat($cat, $categories) {
 * add depth option
 * add option to display number of comments
 */
-function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
-  global $postsToExclude;
+function getSubPosts($posts, $cat2, $subCatPosts, $showPosts, $number) {
+  global $postsToExclude, $options;
+  extract($options[$number]);
   $posttext2='';
   if ($excludeAll==0 && $showPosts=='no') {
     $subCatPostCount2=$cat2->count;
@@ -111,7 +112,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
       $subCatLink2=''; // clear info from subCatLink2
       if ($cat->term_id==$cat2->parent) {
         list($subCatPostCount2, $posttext2) = 
-            getSubPosts($posts,$cat2, $subCatPosts, $showPosts);
+            getSubPosts($posts,$cat2, $subCatPosts, $showPosts, $number);
         $subCatPostCount+=$subCatPostCount2;
         $subCatPostCounts[$depth]=$subCatPostCount2;
         $expanded='none';
@@ -196,7 +197,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $subCatPostCount, $number,$expanded, $depth);
           $subCatCount=1;
           list($subCatPostCount2, $posttext2) = 
-              getSubPosts($posts,$cat2, $subCatPosts, $showPosts);
+              getSubPosts($posts,$cat2, $subCatPosts, $showPosts, $number);
           if ($linkToCat=='yes') {
             if ($expanded=='block') {
               $subCatLinks.=( "<li class='collapsCat'>".
