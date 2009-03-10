@@ -556,7 +556,7 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
         // Now print out the post info
         if( ! empty($posts) ) {
 					$posttext='';
-            foreach ($posts as $post) {
+            foreach ($postsInCat[$cat->term_id] as $post) {
               if ($post->term_id == $cat->term_id 
                   && (!in_array($post->ID, $subCatPosts))) {
 								if (!in_array($post->ID, $postsToExclude)) {
