@@ -55,6 +55,9 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts, $number) {
     $subCatPostCount2=$cat2->count;
   } else { 
     $subCatPostCount2=0;
+    if (count($posts)==0) {
+      return array(0,'');
+    }
     foreach ($posts as $post2) {
       if ($post2->term_id == $cat2->term_id) {
         if (!in_array($post2->ID, $postsToExclude)) {
@@ -99,7 +102,7 @@ function addFeedLink($feed,$cat) {
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$number,$expanded, $depth) {
   global $options,$expandSym, $collapseSym, $autoExpand, $postsToExclude,
-  $subCatPostCounts, $catlink;
+  $subCatPostCounts, $catlink, $postsInCat;
   extract($options[$number]);
   $subCatPosts=array();
   $link2='';
@@ -112,7 +115,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
       $subCatLink2=''; // clear info from subCatLink2
       if ($cat->term_id==$cat2->parent) {
         list($subCatPostCount2, $posttext2) = 
-            getSubPosts($posts,$cat2, $subCatPosts, $showPosts, $number);
+            getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts, $showPosts, $number);
         $subCatPostCount+=$subCatPostCount2;
         $subCatPostCounts[$depth]=$subCatPostCount2;
         $expanded='none';
@@ -197,7 +200,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $subCatPostCount, $number,$expanded, $depth);
           $subCatCount=1;
           list($subCatPostCount2, $posttext2) = 
-              getSubPosts($posts,$cat2, $subCatPosts, $showPosts, $number);
+              getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts, $showPosts, $number);
           if ($linkToCat=='yes') {
             if ($expanded=='block') {
               $subCatLinks.=( "<li class='collapsCat'>".
@@ -274,7 +277,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 
 function list_categories($number) {
   global $expandSym,$collapseSym,$wpdb,$options,$post, $autoExpand,
-  $postsToExclude, $thisCat, $thisPost, $wp_rewrite, $catlink;
+  $postsToExclude, $thisCat, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   $catlink = $wp_rewrite->get_category_permastruct();
   if (is_single() || is_category() || is_tag()) {
     $cur_category = get_the_category();
@@ -388,6 +391,7 @@ function list_categories($number) {
 $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN ('category') $inExcludeQuery AND t.slug!='blogroll' $catSortColumn $catSortOrder ";
 //$catquery = "SELECT t.*, tt.* FROM wp_terms AS t INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN ('category')  ORDER BY t.name ASC  ";
   if ($showPosts=='yes') {
+    $postsInCat=array();
     $postquery= "select ID, slug, date(post_date) as date, post_status,
          post_date, post_title, post_name, name, object_id,
          $wpdb->terms.term_id from $wpdb->term_relationships, $wpdb->posts,
@@ -400,10 +404,16 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
              $wpdb->term_taxonomy.term_taxonomy_id 
          $catTagQuery $isPage $postSortColumn $postSortOrder";
     $posts= $wpdb->get_results($postquery); 
+    foreach ($posts as $post) {
+      if (!$postsInCat[$post->term_id]) {
+        $postsInCat[$post->term_id]=array();
+      }
+      array_push($postsInCat[$post->term_id], $post);
+    }
   }
   $categories = $wpdb->get_results($catquery);
   $totalPostCount=count($posts);
-  if ($totalPostCount>1000) {
+  if ($totalPostCount>5000) {
     $options[$number]['showPosts']='no';
     $showPosts='no';
   }
