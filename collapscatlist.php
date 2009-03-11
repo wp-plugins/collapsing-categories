@@ -330,7 +330,7 @@ function list_categories($number) {
 
   $isPage='';
   if ($showPages=='no') {
-    $isPage="AND $wpdb->posts.post_type='post'";
+    $isPage="AND p.post_type='post'";
   }
   if ($catSort!='') {
     if ($catSort=='catName') {
@@ -347,13 +347,13 @@ function list_categories($number) {
   } 
   if ($postSort!='') {
     if ($postSort=='postDate') {
-      $postSortColumn="ORDER BY $wpdb->posts.post_date";
+      $postSortColumn="ORDER BY p.post_date";
     } elseif ($postSort=='postId') {
-      $postSortColumn="ORDER BY $wpdb->posts.id";
+      $postSortColumn="ORDER BY p.id";
     } elseif ($postSort=='postTitle') {
-      $postSortColumn="ORDER BY $wpdb->posts.post_title";
+      $postSortColumn="ORDER BY p.post_title";
     } elseif ($postSort=='postComment') {
-      $postSortColumn="ORDER BY $wpdb->posts.comment_count";
+      $postSortColumn="ORDER BY p.comment_count";
     }
   } 
 	if ($defaultExpand!='') {
@@ -363,12 +363,11 @@ function list_categories($number) {
   }
 
 	if ($catTag == 'tag') {
-	  $catTagQuery= "AND $wpdb->term_taxonomy.taxonomy = 'post_tag'";
+	  $catTagQuery= "'post_tag'";
 	} elseif ($catTag == 'both') {
-	  $catTagQuery= "AND $wpdb->term_taxonomy.taxonomy IN
-				('category','post_tag')";
+	  $catTagQuery= "'category','post_tag'";
 	} else {
-	  $catTagQuery= "AND $wpdb->term_taxonomy.taxonomy = 'category'";
+	  $catTagQuery= "'category'";
 	}
 	if ($olderThan > 0) {
 		$now = date('U');
@@ -388,21 +387,22 @@ function list_categories($number) {
       GROUP BY $wpdb->terms.term_id $catSortColumn
 			$catSortOrder";
 */
-$catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN ('category') $inExcludeQuery AND t.slug!='blogroll' $catSortColumn $catSortOrder ";
+$catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN
+$wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
+($catTagQuery) $inExcludeQuery AND t.slug!='blogroll' $catSortColumn $catSortOrder ";
 //$catquery = "SELECT t.*, tt.* FROM wp_terms AS t INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN ('category')  ORDER BY t.name ASC  ";
   if ($showPosts=='yes') {
     $postsInCat=array();
     $postquery= "select ID, slug, date(post_date) as date, post_status,
          post_date, post_title, post_name, name, object_id,
-         $wpdb->terms.term_id from $wpdb->term_relationships, $wpdb->posts,
-         $wpdb->terms, $wpdb->term_taxonomy 
-         WHERE $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id 
+         t.term_id from $wpdb->term_relationships AS tr, $wpdb->posts AS p,
+         $wpdb->terms AS t, $wpdb->term_taxonomy AS tt
+         WHERE tt.term_id = t.term_id 
          AND object_id=ID 
          $olderThanQuery
          AND post_status='publish'
-         AND $wpdb->term_relationships.term_taxonomy_id =
-             $wpdb->term_taxonomy.term_taxonomy_id 
-         $catTagQuery $isPage $postSortColumn $postSortOrder";
+         AND tr.term_taxonomy_id = tt.term_taxonomy_id 
+         AND tt.taxonomy IN ($catTagQuery) $isPage $postSortColumn $postSortOrder";
     $posts= $wpdb->get_results($postquery); 
     foreach ($posts as $post) {
       if (!$postsInCat[$post->term_id]) {
@@ -554,7 +554,7 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxo
           }
         }
         // Now print out the post info
-        if( ! empty($posts) ) {
+        if( ! empty($postsInCat[$cat->term_id]) ) {
 					$posttext='';
             foreach ($postsInCat[$cat->term_id] as $post) {
               if ($post->term_id == $cat->term_id 

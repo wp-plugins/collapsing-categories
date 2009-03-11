@@ -3,6 +3,7 @@ Collapsing Categories Changelog
     * Fixed some more settings panel issues
     * Truncate post title now working for posts in sub-categories
     * Works much faster now for blogs with many posts
+    * Fixed option to show only tags
 
 * 0.9.4 (2009.03.09)
     * Fixed issue with multiple instances
