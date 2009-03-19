@@ -88,7 +88,7 @@ include('processOptions.php');
       include('options.txt'); 
    }
    ?>
-	 Id of the sidebar where collapsing pages appears: 
+	 Id of the sidebar where collapsing categories appears: 
 	 <input id='collapsCatSidebarId' name='collapsCatSidebarId' type='text' size='20' value="<?php echo
 	 get_option('collapsCatSidebarId')?>" onchange='changeStyle();' />
 	 <table>
@@ -104,7 +104,8 @@ stripslashes(get_option('collapsCatStyle')) ?>" />
 			 <select name='collapsCatDefaultStyles' id='collapsCatDefaultStyles' 
 			   onchange='changeStyle();' >
 			 <?php
-		$url = get_settings('siteurl') . '/wp-content/plugins/collapsing-pages';
+		$url = get_settings('siteurl') .
+        '/wp-content/plugins/collapsing-categories';
 			 $styleOptions=get_option('collapsCatDefaultStyles');
 			 //print_r($styleOptions);
 			 $selected=$styleOptions['selected'];

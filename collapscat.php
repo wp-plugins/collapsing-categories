@@ -44,8 +44,13 @@ if (!is_admin()) {
 }
 add_action('admin_menu', array('collapscat','setup'));
 add_action('activate_collapsing-categories/collapscat.php', array('collapscat','init'));
+add_action('init', array('collapscat','init_textdomain'));
 
 class collapscat {
+	function init_textdomain() {
+	  $plugin_dir = basename(dirname(__FILE__));
+	  load_plugin_textdomain( 'collapsing-categories', 'wp-content/plugins/' . $plugin_dir, $plugin_dir );
+	}
 
 	function init() {
 	  include('collapsCatStyles.php');
