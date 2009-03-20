@@ -463,8 +463,10 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
       list ($subCatLinks, $subCatCount,$subCatPostCount, $subCatPosts)=
           get_sub_cat($cat, $categories, $parents, $posts, 
           $subCatCount,$subCatPostCount,$number,$expanded,0);
+        list($subCatPostCount2, $posttext2) = 
+            getSubPosts($postsInCat[$cat->term_id],$cat, $subCatPosts, $showPosts, $number);
         
-      $theCount=$cat->count+$subCatPostCount;
+      $theCount=$subCatPostCount2+$subCatPostCount;
       if ($theCount>0) {
         $expanded='none';
         $theID='collapsCat' . $cat->term_id;

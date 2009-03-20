@@ -5,6 +5,8 @@ Collapsing Categories Changelog
     * Works much faster now for blogs with many posts
     * Fixed option to show only tags
     * Fixed previews for style settings
+    * Categories which do not have any posts due to date exclusion no longer
+      show up
 
 * 0.9.4 (2009.03.09)
     * Fixed issue with multiple instances
