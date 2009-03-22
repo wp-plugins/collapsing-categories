@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.9.4
+Collapsing Categories version: 0.9.5
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -140,14 +140,14 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             if ( empty($cat2->description) ) {
               $link2 .= 'title="'. 
                   sprintf(__("View all posts filed under %s"), 
-                  wp_specialchars(__($cat2->name))) . '"';
+                  wp_specialchars(apply_filters('single_cat_title',$cat2->name))) . '"';
             } else {
               $link2 .= 'title="' . 
                   wp_specialchars(apply_filters('description', 
                   $cat2->description,$cat2)) . '"';
             }
             $link2 .= '>';
-            $link2 .= apply_filters('list_cats', __($cat2->name), $cat2).
+            $link2 .= apply_filters('single_cat_title', $cat2->name).
                 '</a>';
             if ($showPosts=='yes') {
               if ($expanded=='block') {
@@ -173,17 +173,17 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             if ( empty($cat2->description) ) {
               $link2 .= 'title="'. 
                   sprintf(__("View all posts filed under %s"), 
-                  wp_specialchars(__($cat2->name))) . '"';
+                  wp_specialchars(apply_filters('single_cat_title',$cat2->name))) . '"';
             } else {
               $link2 .= 'title="' . 
                   wp_specialchars(apply_filters('description', 
                   $cat2->description,$cat2)) . '"';
             }
             $link2 .= '>';
-            $link2 .= apply_filters('list_cats', __($cat2->name), $cat2).
+            $link2 .= apply_filters('single_cat_title', $cat2->name).
                 '</a>';
             if ($showPosts=='yes') {
-              $link2 = apply_filters('list_cats', __($cat2->name), $cat2).
+              $link2 = apply_filters('single_cat_title', $cat2->name).
                   "</span>";
               $subCatLinks.= "<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
@@ -222,19 +222,18 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                 if ( empty($cat2->description) ) {
                   $link2 .= 'title="'. 
                       sprintf(__("View all posts filed under %s"), 
-                      wp_specialchars(__($cat2->name))) . '"';
+                      wp_specialchars(apply_filters('single_cat_title',$cat2->name))) . '"';
                 } else {
                   $link2 .= 'title="' . 
                       wp_specialchars(apply_filters('description', 
                       $cat2->description,$cat2)) . '"';
                 }
                 $link2 .= '>';
-                $link2 .= apply_filters('list_cats', __($cat2->name), $cat2).'</a>';
+                $link2 .= apply_filters('single_cat_title', $cat2->name).'</a>';
           } else {
             if ($showPosts=='yes') {
             
-              $link2 = apply_filters('list_cats', __($cat2->name),
-                  $cat2).'</span>';
+              $link2 = apply_filters('single_cat_title', $cat2->name).'</span>';
               $subCatLinks.="<li class='collapsCat'>".
                   "<span class='collapsCat show' ".
                   "onclick='expandCollapse(event, $expand, $animate,
@@ -245,8 +244,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                   "<span class='collapsCat show' ".
                   "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
                   "<span class='sym'>$expandSym</span>";
-              $link2 = apply_filters('list_cats', __($cat2->name),
-                  $cat2).'</span>';
+              $link2 = apply_filters('single_cat_title', $cat2->name).'</span>';
             }
           }
         }
@@ -340,7 +338,7 @@ function list_categories($number) {
     } elseif ($catSort=='catSlug') {
       $catSortColumn="ORDER BY t.slug";
     } elseif ($catSort=='catOrder') {
-      $catSortColumn="ORDER BY trelationships.term_order";
+      $catSortColumn="ORDER BY t.term_order";
     } elseif ($catSort=='catCount') {
       $catSortColumn="ORDER BY tt.count";
     }
@@ -484,12 +482,12 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
           if ( empty($cat->description) ) {
             $link .= 'title="'. 
                 sprintf(__("View all posts filed under %s"),
-                wp_specialchars(__($cat->name))) . '"';
+                wp_specialchars(apply_filters('single_cat_title',$cat->name))) . '"';
           } else {
             $link .= 'title="' . wp_specialchars(apply_filters('description',$cat->description,$cat)) . '"';
           }
           $link .= '>';
-          $link .= apply_filters('the_title', $cat->name).'</a>';
+          $link .= apply_filters('single_cat_title', $cat->name).'</a>';
           if ($showPosts=='yes' || $subCatPostCount>0) {
             if ($expanded=='block') {
               $span= "      <li class='collapsCat'>".
@@ -507,7 +505,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
           }
         } else {
           if ($showPosts=='yes') {
-            $link = apply_filters('list_cats', __($cat->name), $cat) . '</span>';
+            $link = apply_filters('single_cat_title',$cat->name) . '</span>';
             if ($expanded=='block') {
               $span ="      <li class='collapsCat'>".
                   "<span class='collapsCat hide' ".
@@ -523,7 +521,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
             // don't include the triangles if posts are not shown and there
             // are no more subcategories
             if ($subCatPostCount>0) {
-              $link = apply_filters('list_cats', __($cat->name), $cat).'</span>';
+              $link = apply_filters('single_cat_title',$cat->name).'</span>';
               if ($expanded=='block') {
                 $span =  "      <li class='collapsCat'>".
                     "<span class='collapsCat hide' ".
@@ -544,13 +542,13 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
               if ( empty($cat->description) ) {
                 $link .= 'title="'. 
                     sprintf(__("View all posts filed under %s"),
-                    wp_specialchars(__($cat->name))) . '"';
+                    wp_specialchars(apply_filters('single_cat_title',$cat->name))) . '"';
               } else {
                 $link .= 'title="' . wp_specialchars(apply_filters(
                     'description',__($cat->description),$cat)) . '"';
               }
               $link .= '>';
-              $link .= apply_filters('list_cats', __($cat->name), $cat).'</a>';
+              $link .= apply_filters('single_cat_title',$cat->name).'</a>';
               $span = "      <li class='collapsCatPost'>";
             } 
           }

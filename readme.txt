@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.6
 Tested up to: 2.7
-Stable tag: 0.9.4
+Stable tag: 0.9.5
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -16,29 +16,18 @@ This is a very simple plugin that uses Javascript to form a collapsable set of
 links in the sidebar for the categories. Every post corresponding to a given
 category will be expanded.
 
-= Recent Changes =
+= What's new in 0.9.5 (2009.03.22) =
 
-* 0.9.1 (2009.03.02)
-    * Fixed bug where top level categories would not be displayed if they
-      have no subcategories, and show only sub-categories is selected
+* Fixed some more settings panel issues
+* Truncate post title now working for posts in sub-categories
+* Works even faster now for blogs with many posts
+* Fixed option to show only tags
+* Fixed previews for style settings
+* Categories which do not have any posts due to date exclusion no longer
+  show up
+* Restored compatibility with my category order plugin (thanks Jtbarret)
+* Better internationalization support
 
-* 0.9 (2009.02.20)
-    * Added option to exclude posts older than certain number of days
-    * Widened widget options interface
-    * Updated text of widget options some
-		* Categories no longer get nested if for some reasons there are no posts
-		  showing up for a category 
-		* Added option to exclude post X in categories A and B when either A or B
-		  is excluded
-    * Post count is now more accurate
-    * Better internationalization for post and category titles
-    * Added truncate post title option
-    * Settings panel only available for admin
-    * fixed settings panel problems
-    * greatly increased speed for blogs with lots of posts and categories
-    * added new style selection method
-    * If current page is in category X, then category X will be expanded
-      (thanks to Bernhard Reiter)
 
 == Installation ==
 
@@ -164,6 +153,27 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.9.5 (2009.03.22)
+    * Fixed some more settings panel issues
+    * Truncate post title now working for posts in sub-categories
+    * Works even faster now for blogs with many posts
+    * Fixed option to show only tags
+    * Fixed previews for style settings
+    * Categories which do not have any posts due to date exclusion no longer
+      show up
+    * Restored compatibility with my category order plugin
+    * Better internationalization support
+
+* 0.9.4 (2009.03.09)
+    * Fixed issue with multiple instances
+
+* 0.9.3 (2009.03.08)
+    * Fixed links to sub-categories
+
+* 0.9.2 (2009.03.07)
+    * Tweaked default style
+    * Fixed bug when not using permalinks
 
 * 0.9.1 (2009.03.02)
     * Fixed bug where top level categories would not be displayed if they
