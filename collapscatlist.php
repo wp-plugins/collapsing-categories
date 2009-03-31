@@ -201,6 +201,9 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           $subCatCount=1;
           list($subCatPostCount2, $posttext2) = 
               getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts, $showPosts, $number);
+          if ($subCatPostCount2<1) {
+            continue;
+          }
           if ($linkToCat=='yes') {
             if ($expanded=='block') {
               $subCatLinks.=( "<li class='collapsCat'>".
