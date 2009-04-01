@@ -605,7 +605,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         }
         echo $subCatLinks;
 				if ($showPosts=='yes') {
-          if ($subCatCount>0 && $posttext!='' && $addMisc) {
+          if ($subCatPostCount>0 && $subCatLinks!='' && $addMisc) {
             print("      <li class='collapsCat'>".
                 "<span class='collapsCat show' ".
                 "onclick='expandCollapse(event, $expand, $animate, " .
