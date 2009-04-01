@@ -1,4 +1,8 @@
 Collapsing Categories Changelog
+
+* 0.9.6 (2009.04.10)
+    * Added option to group posts into misc category
+
 * 0.9.5 (2009.03.22)
     * Fixed some more settings panel issues
     * Truncate post title now working for posts in sub-categories

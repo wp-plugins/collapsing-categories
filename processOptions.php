@@ -22,6 +22,8 @@
     $catTag='cat';
     $olderThan=0;
     $excludeAll='0';
+    $addMisc=false;
+    $addMiscTitle='Miscellaneous';
   } else {
     $title = attribute_escape($options[$number]['title']);
     $showPostCount = $options[$number]['showPostCount'];
@@ -43,5 +45,7 @@
     $catTag = $options[$number]['catTag'];
     $olderThan = $options[$number]['olderThan'];
     $excludeAll = $options[$number]['excludeAll'];
+    $addMisc = $options[$number]['addMisc'];
+    $addMiscTitle = $options[$number]['addMiscTitle'];
   }
 ?>

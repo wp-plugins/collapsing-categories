@@ -23,6 +23,11 @@ foreach ( (array) $_POST['collapsCat'] as $widget_number => $widget_collapsCat )
   if( isset($widget_collapsCat['showPages'])) {
     $showPages= 'yes' ;
   }
+  $addMisc= false ;
+  if( isset($widget_collapsCat['addMisc'])) {
+    $addMisc= true ;
+  }
+  $addMiscTitle= $widget_collapsCat['addMiscTitle'];
   if($widget_collapsCat['catSort'] == 'catName') {
     $catSort= 'catName' ;
   } elseif ($widget_collapsCat['catSort'] == 'catId') {
@@ -80,7 +85,7 @@ foreach ( (array) $_POST['collapsCat'] as $widget_number => $widget_collapsCat )
       'catSortOrder','defaultExpand','expand','inExclude', 'showPosts',
       'inExcludeCats','postSort','postSortOrder','showPages', 'linkToCat',
       'catfeed','animate', 'debug','catTag', 'olderThan', 'excludeAll',
-			'postTitleLength');
+			'postTitleLength', 'addMisc', 'addMiscTitle');
 }
 
 update_option('collapsCatOptions', $options);

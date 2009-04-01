@@ -585,10 +585,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 									$posttext.= "<li class='collapsCatPost'><a $self
 										href='".get_permalink($post).
 										"' title='$title_text'>$linktext</a></li>\n";
-								} else {
-								  //$subCatPostCount--;
-								  //$theCount--;
-								}
+								} 
               }
             // close <ul> and <li> before starting a new category
           } 
@@ -608,7 +605,33 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         }
         echo $subCatLinks;
 				if ($showPosts=='yes') {
-					print($posttext);
+          if ($subCatCount>0 && $posttext!='' && $addMisc) {
+            print("      <li class='collapsCat'>".
+                "<span class='collapsCat show' ".
+                "onclick='expandCollapse(event, $expand, $animate, " .
+                "\"collapsCat\"); return false'>".
+                "<span class='sym'>$expandSym</span>");
+            if ($linkToCat=='yes') {
+              if (empty($catlink)) {
+                $thisLink = "<a $self href='".
+                    get_category_link($cat->term_id)."' ";
+              } else {
+                $thisLink = "<a $self href='".get_category_link($cat)."' ";
+              }
+              print("</span>$thisLink>$addMiscTitle</a>");
+            } else {
+              print("$addMiscTitle</span>");
+            }
+            if( $showPostCount=='yes') {
+              print(' (' . $subCatPostCount2.')');
+            }
+            print( "\n     <ul id='collapsCat-" . $cat->term_id .
+                "-misc' style=\"display:$expanded\">\n" );
+            print($posttext);
+            print("    </ul></li>\n");
+          } else {
+            print($posttext);
+          }
 				}
 				if ($subCatPostCount>0 || $showPosts=='yes') {
 					echo "        </ul>\n";

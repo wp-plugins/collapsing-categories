@@ -110,6 +110,12 @@ $number ?>][olderThan]" id="collapsCat-olderThan-<?php echo $number ?>" size='3'
      id="collapsCat-catfeedImage-<?php echo $number ?>"
      value='image'></input> <label for="catfeedImage">image <img src='../wp-includes/images/rss.png' /></label>
     </p>
+   <p>
+     <input type="checkbox" name="collapsCat[<?php echo $number ?>][addMisc]"
+<?php if ($addMisc)  echo 'checked'; ?> id="collapsCat-addMisc-<?php echo
+$number ?>"></input>    When category X has sub-categories, group posts in a sub-category into a <input type='text' name="collapsCat[<?php echo
+$number ?>][addMiscTitle]" id="collapsCat-addMisc-<?php echo $number ?>" size='15' value='<?php echo $addMiscTitle ?>'></input> category
+   </p>
     <p>
      <input type="checkbox" name="collapsCat[<?php echo $number ?>][debug]"
 <?php if ($debug=='1')  echo 'checked'; ?> id="collapsCat-debug-<?php echo
