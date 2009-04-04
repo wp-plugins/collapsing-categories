@@ -26,6 +26,36 @@ This file is part of Collapsing Categories
 */
 
 // Helper functions
+function miscPosts($cat,$catlink,$subCatPostCount2, $posttext,$number) {
+  /* this function will group posts into a miscellaneous sub-category */
+  global $options, $expandSym,$collapseSym;
+  extract($options[$number]);
+  $miscPosts="      <li class='collapsCat'>".
+      "<span class='collapsCat show' ".
+      "onclick='expandCollapse(event, $expand, $animate, " .
+      "\"collapsCat\"); return false'>".
+      "<span class='sym'>$expandSym</span>";
+  if ($linkToCat=='yes') {
+    if (empty($catlink)) {
+      $thisLink = "<a $self href='".
+          get_category_link($cat->term_id)."' ";
+    } else {
+      $thisLink = "<a $self href='".get_category_link($cat)."' ";
+    }
+    $miscPosts.="</span>$thisLink>$addMiscTitle</a>";
+  } else {
+    $miscPosts.="$addMiscTitle</span>";
+  }
+  if( $showPostCount=='yes') {
+    $miscPosts.=' (' . $subCatPostCount2.')';
+  }
+  $miscPosts.= "\n     <ul id='collapsCat-" . $cat->term_id .
+      "-misc' style=\"display:$expanded\">\n" ;
+  $miscPosts.=$posttext;
+  $miscPosts.="    </ul></li>\n";
+  return($miscPosts);
+}
+
 function checkCurrentCat($cat, $categories) {
  /* this function checks whether the post being displayed belongs to a given category, 
  * or if that category's page itself is displayed. 
@@ -261,7 +291,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         if (($subCatCount>0) || ($showPosts=='yes')) {
           $subCatLinks.="\n<ul id='collapsCat-" . $cat2->term_id . 
               "' style=\"display:$expanded\">\n";
-					$subCatLinks.=$posttext2;
+          if ($subCatCount>0 && $posttext2!='' && $addMisc) {
+            $subCatLinks.=miscPosts($cat2,$catlink,$subCatPostCount2,$posttext2,$number);
+          } else {
+            $subCatLinks.=$posttext2;
+          }
         }
         // add in additional subcategory information
         $subCatLinks.="$subCatLink2";
@@ -606,29 +640,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         echo $subCatLinks;
 				if ($showPosts=='yes') {
           if ($subCatPostCount>0 && $subCatLinks!='' && $addMisc) {
-            print("      <li class='collapsCat'>".
-                "<span class='collapsCat show' ".
-                "onclick='expandCollapse(event, $expand, $animate, " .
-                "\"collapsCat\"); return false'>".
-                "<span class='sym'>$expandSym</span>");
-            if ($linkToCat=='yes') {
-              if (empty($catlink)) {
-                $thisLink = "<a $self href='".
-                    get_category_link($cat->term_id)."' ";
-              } else {
-                $thisLink = "<a $self href='".get_category_link($cat)."' ";
-              }
-              print("</span>$thisLink>$addMiscTitle</a>");
-            } else {
-              print("$addMiscTitle</span>");
-            }
-            if( $showPostCount=='yes') {
-              print(' (' . $subCatPostCount2.')');
-            }
-            print( "\n     <ul id='collapsCat-" . $cat->term_id .
-                "-misc' style=\"display:$expanded\">\n" );
-            print($posttext);
-            print("    </ul></li>\n");
+            print(miscPosts($cat,$catlink,$subCatPostCount2,$posttext,$number));
           } else {
             print($posttext);
           }
