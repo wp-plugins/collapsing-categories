@@ -83,9 +83,7 @@ class collapscat {
 
 	function setup() {
 		if( function_exists('add_options_page') ) {
-			global $userdata;
-			get_currentuserinfo();
-			if ($userdata->user_level>9) {
+      if (current_user_can('manage_options')) {
 				add_options_page(__('Collapsing Categories'),__('Collapsing
 						Categories'),1,basename(__FILE__),array('collapscat','ui'));
 			}
