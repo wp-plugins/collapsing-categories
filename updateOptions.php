@@ -59,6 +59,8 @@ foreach ( (array) $_POST['collapsCat'] as $widget_number => $widget_collapsCat )
     $postSortOrder= '' ;
   }
   $expand= $widget_collapsCat['expand'];
+  $customExpand= $widget_collapsCat['customExpand'];
+  $customCollapse= $widget_collapsCat['customCollapse'];
   $postTitleLength= $widget_collapsCat['postTitleLength'];
   $olderThan= $widget_collapsCat['olderThan'];
   $catfeed= $widget_collapsCat['catfeed'];
@@ -82,7 +84,8 @@ foreach ( (array) $_POST['collapsCat'] as $widget_number => $widget_collapsCat )
   $inExcludeCats=addslashes($widget_collapsCat['inExcludeCats']);
   $defaultExpand=addslashes($widget_collapsCat['defaultExpand']);
   $options[$widget_number] = compact( 'title','showPostCount','catSort',
-      'catSortOrder','defaultExpand','expand','inExclude', 'showPosts',
+      'catSortOrder','defaultExpand','expand', 'customExpand', 
+      'customCollapse', 'inExclude', 'showPosts',
       'inExcludeCats','postSort','postSortOrder','showPages', 'linkToCat',
       'catfeed','animate', 'debug','catTag', 'olderThan', 'excludeAll',
 			'postTitleLength', 'addMisc', 'addMiscTitle');

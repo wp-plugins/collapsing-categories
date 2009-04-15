@@ -10,6 +10,8 @@
     $defaultExpand='';
     $number = '%i%';
     $expand='1';
+    $customExpand='';
+    $customCollapse='';
     $postTitleLength='0';
     $inExclude='include';
     $inExcludeCats='';
@@ -28,6 +30,8 @@
     $title = attribute_escape($options[$number]['title']);
     $showPostCount = $options[$number]['showPostCount'];
     $expand = $options[$number]['expand'];
+    $customExpand = $options[$number]['customExpand'];
+    $customCollapse = $options[$number]['customCollapse'];
     $postTitleLength = $options[$number]['postTitleLength'];
     $inExcludeCats = $options[$number]['inExcludeCats'];
     $inExclude = $options[$number]['inExclude'];

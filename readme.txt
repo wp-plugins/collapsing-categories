@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.6
 Tested up to: 2.7
-Stable tag: 0.9.5
+Stable tag: 0.9.6
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -16,18 +16,14 @@ This is a very simple plugin that uses Javascript to form a collapsable set of
 links in the sidebar for the categories. Every post corresponding to a given
 category will be expanded.
 
-= What's new in 0.9.5 (2009.03.22) =
-
-* Fixed some more settings panel issues
-* Truncate post title now working for posts in sub-categories
-* Works even faster now for blogs with many posts
-* Fixed option to show only tags
-* Fixed previews for style settings
-* Categories which do not have any posts due to date exclusion no longer
-  show up
-* Restored compatibility with my category order plugin (thanks Jtbarret)
-* Better internationalization support
-
+= What's new in 0.9.6? =
+  * Added option to group posts into misc category
+  * Switched role handling to proper API use (to control whether or not the
+    settings page shows up)
+  * Added option for custom symbols
+  * No longer requires footer
+  * Updated javascript file
+  * Cleaned up code a bunch
 
 == Installation ==
 
@@ -153,6 +149,15 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.9.6 (2009.04.15)
+    * Added option to group posts into misc category
+    * Switched role handling to proper API use (to control whether or not the
+      settings page shows up)
+    * Added option for custom symbols
+    * No longer requires footer
+    * Updated javascript file
+    * Cleaned up code a bunch
 
 * 0.9.5 (2009.03.22)
     * Fixed some more settings panel issues

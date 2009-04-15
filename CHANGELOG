@@ -4,6 +4,10 @@ Collapsing Categories Changelog
     * Added option to group posts into misc category
     * Switched role handling to proper API use (to control whether or not the
       settings page shows up)
+    * Added option for custom symbols
+    * No longer requires footer
+    * Updated javascript file
+    * Cleaned up code a bunch
 
 * 0.9.5 (2009.03.22)
     * Fixed some more settings panel issues

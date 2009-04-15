@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.9.5
+Collapsing Categories version: 0.9.6
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -32,7 +32,7 @@ function miscPosts($cat,$catlink,$subCatPostCount2, $posttext,$number) {
   extract($options[$number]);
   $miscPosts="      <li class='collapsCat'>".
       "<span class='collapsCat show' ".
-      "onclick='expandCollapse(event, $expand, $animate, " .
+      "onclick='expandCollapse(event, \"$expandSym\", \"$collapseSym\", $animate, " .
       "\"collapsCat\"); return false'>".
       "<span class='sym'>$expandSym</span>";
   if ($linkToCat=='yes') {
@@ -149,7 +149,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $subCatPostCount+=$subCatPostCount2;
         $subCatPostCounts[$depth]=$subCatPostCount2;
         $expanded='none';
-        $theID='collapsCat' . $cat2->term_id;
+        $theID='collapsCat-' . $cat2->term_id . "-$number";
         if (in_array($cat2->name, $autoExpand) ||
             in_array($cat2->slug, $autoExpand) ||
             in_array($theID, array_keys($_COOKIE))) {
@@ -161,67 +161,45 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           if ($subCatPostCount2<1) {
             continue;
           }
-          if ($linkToCat=='yes') {
-            if (empty($catlink)) {
-              $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
+          if ($showPosts=='yes') {
+            if ($expanded=='block') {
+              $showHide='hide';
             } else {
-              $link2 = "<a $self href='".get_category_link($cat2)."' ";
+              $showHide='show';
             }
-            if ( empty($cat2->description) ) {
-              $link2 .= 'title="'. 
-                  sprintf(__("View all posts filed under %s"), 
-                  wp_specialchars(apply_filters('single_cat_title',$cat2->name))) . '"';
-            } else {
-              $link2 .= 'title="' . 
-                  wp_specialchars(apply_filters('description', 
-                  $cat2->description,$cat2)) . '"';
-            }
-            $link2 .= '>';
-            $link2 .= apply_filters('single_cat_title', $cat2->name).
-                '</a>';
-            if ($showPosts=='yes') {
-              if ($expanded=='block') {
-                $subCatLinks.=( "<li class='collapsCat'>".
-                    "<span class='collapsCat hide' ".
-                    "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>" . 
-                    "<span class='sym'>$collapseSym</span></span>" );
-              } else {
-                $subCatLinks.=( "<li class='collapsCat'>".
-                    "<span class='collapsCat show' ".
-                    "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>" . 
-                    "<span class='sym'>$expandSym</span></span>" );
-              }
-            } else {
-              $subCatLinks.=( "<li class='collapsCatPost'>" );
-            }
+            $subCatLinks.=( "<li class='collapsCat'>".
+                "<span class='collapsCat $showHide' ".
+                "onclick='expandCollapse(event, \"$expandSym\", \"$collapseSym\", $animate, \"collapsCat\"); return false'>" . 
+                "<span class='sym'>$collapseSym</span>" );
           } else {
-            if (empty($catlink)) {
-              $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
-            } else {
-              $link2 = "<a $self href='".get_category_link($cat2)."' ";
+            $subCatLinks.=( "<li class='collapsCatPost'>" );
+          }
+          if (empty($catlink)) {
+            $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
+          } else {
+            $link2 = "<a $self href='".get_category_link($cat2)."' ";
+          }
+          if ( empty($cat2->description) ) {
+            $link2 .= 'title="'. 
+                sprintf(__("View all posts filed under %s"), 
+                wp_specialchars(apply_filters('single_cat_title',$cat2->name))) . '"';
+          } else {
+            $link2 .= 'title="' . 
+                wp_specialchars(apply_filters('description', 
+                $cat2->description,$cat2)) . '"';
+          }
+          $link2 .= '>';
+          if ($linkToCat=='yes') {
+            if ($showPosts=='yes') {
+              $subCatLinks.='</span>';
             }
-            if ( empty($cat2->description) ) {
-              $link2 .= 'title="'. 
-                  sprintf(__("View all posts filed under %s"), 
-                  wp_specialchars(apply_filters('single_cat_title',$cat2->name))) . '"';
-            } else {
-              $link2 .= 'title="' . 
-                  wp_specialchars(apply_filters('description', 
-                  $cat2->description,$cat2)) . '"';
-            }
-            $link2 .= '>';
             $link2 .= apply_filters('single_cat_title', $cat2->name).
                 '</a>';
+          } else {
+            $link2 .= apply_filters('single_cat_title', $cat2->name).  '</a>';
             if ($showPosts=='yes') {
               $link2 = apply_filters('single_cat_title', $cat2->name).
                   "</span>";
-              $subCatLinks.= "<li class='collapsCat'>".
-                  "<span class='collapsCat show' ".
-                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\");".
-                  "return false'>".
-                  "<span class='sym'>$expandSym</span>";
-            } else {
-              $subCatLinks.=( "<li class='collapsCatPost'>" );
             }
           }
         } else {
@@ -234,50 +212,41 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           if ($subCatPostCount2<1) {
             continue;
           }
-          if ($linkToCat=='yes') {
-            if ($expanded=='block') {
-              $subCatLinks.=( "<li class='collapsCat'>".
-                  "<span class='collapsCat hide' ".
-                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>" . 
-                  "<span class='sym'>$collapseSym</span></span>" );
-            } else {
-              $subCatLinks.=( "<li class='collapsCat'>".
-                  "<span class='collapsCat show' ".
-                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>" . 
-                  "<span class='sym'>$expandSym</span></span>" );
-            }
-
-                if (empty($catlink)) {
-                  $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
-                } else {
-                  $link2 = "<a $self href='".get_category_link($cat2)."' ";
-                }
-                if ( empty($cat2->description) ) {
-                  $link2 .= 'title="'. 
-                      sprintf(__("View all posts filed under %s"), 
-                      wp_specialchars(apply_filters('single_cat_title',$cat2->name))) . '"';
-                } else {
-                  $link2 .= 'title="' . 
-                      wp_specialchars(apply_filters('description', 
-                      $cat2->description,$cat2)) . '"';
-                }
-                $link2 .= '>';
-                $link2 .= apply_filters('single_cat_title', $cat2->name).'</a>';
+          if ($expanded=='block') {
+            $showHide='hide';
           } else {
-            if ($showPosts=='yes') {
-            
-              $link2 = apply_filters('single_cat_title', $cat2->name).'</span>';
-              $subCatLinks.="<li class='collapsCat'>".
-                  "<span class='collapsCat show' ".
-                  "onclick='expandCollapse(event, $expand, $animate,
-									\"collapsCat\"); return false'>".
-                  "<span class='sym'>$expandSym</span>";
+            $showHide='show';
+          }
+          $subCatLinks.=( "<li class='collapsCat'>".
+              "<span class='collapsCat $showHide' ".
+              "onclick='expandCollapse(event, \"$expandSym\", \"$collapseSym\", $animate, \"collapsCat\"); return false'>" . 
+              "<span class='sym'>$collapseSym</span>" );
+          if (empty($catlink)) {
+            $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
+          } else {
+            $link2 = "<a $self href='".get_category_link($cat2)."' ";
+          }
+          if ( empty($cat2->description) ) {
+            $link2 .= 'title="'. 
+                sprintf(__("View all posts filed under %s"), 
+                wp_specialchars(apply_filters('single_cat_title',$cat2->name))) . '"';
+          } else {
+            $link2 .= 'title="' . 
+                wp_specialchars(apply_filters('description', 
+                $cat2->description,$cat2)) . '"';
+          }
+          $link2 .= '>';
+          if ($linkToCat=='yes') {
+            $subCatLinks.='</span>';
+            $link2 .= apply_filters('single_cat_title', $cat2->name).'</a>';
+          } else {
+            if ($showPosts=='yes' || $subCatPostCount2>0) {
+              $link2 = apply_filters('single_cat_title',$cat2->name) . '</span>';
             } else {
-              $subCatLinks.="<li class='collapsCat'>".
-                  "<span class='collapsCat show' ".
-                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
-                  "<span class='sym'>$expandSym</span>";
-              $link2 = apply_filters('single_cat_title', $cat2->name).'</span>';
+              // don't include the triangles if posts are not shown and there
+              // are no more subcategories
+                $link2 .= apply_filters('single_cat_title',$cat2->name).'</a>';
+                $subCatLinks = "      <li class='collapsCatPost'>";
             }
           }
         }
@@ -289,8 +258,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $rssLink=addFeedLink($catfeed,$cat2);
         $subCatLinks.=$rssLink;
         if (($subCatCount>0) || ($showPosts=='yes')) {
-          $subCatLinks.="\n<ul id='collapsCat-" . $cat2->term_id . 
-              "' style=\"display:$expanded\">\n";
+          $subCatLinks.="\n<ul id='$theID' style=\"display:$expanded\">\n";
           if ($subCatCount>0 && $posttext2!='' && $addMisc) {
             $subCatLinks.=miscPosts($cat2,$catlink,$subCatPostCount2,$posttext2,$number);
           } else {
@@ -334,9 +302,19 @@ function list_categories($number) {
     $collapseSym="<img src='". get_settings('siteurl') .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/collapse.gif' alt='collapse' />";
+  } elseif ($expand==4) {
+    $expandSym=$customExpand;
+    $collapseSym=$customCollapse;
   } else {
     $expandSym='►';
     $collapseSym='▼';
+  }
+  if ($expand==3) {
+    $expandSymJS='expandImg';
+    $collapseSymJS='collapseImg';
+  } else {
+    $expandSymJS=$expandSym;
+    $collapseSymJS=$collapseSym;
   }
 	$inExclusionArray = array();
 	if ( !empty($inExclude) && !empty($inExcludeCats) ) {
@@ -412,16 +390,6 @@ function list_categories($number) {
 
   echo "\n    <ul class='collapsCatList'>\n";
 
-/*
-  $catquery = "SELECT $wpdb->term_taxonomy.count as 'count',
-			$wpdb->terms.term_id, $wpdb->terms.name, $wpdb->terms.slug,
-			$wpdb->term_taxonomy.parent, $wpdb->term_taxonomy.description 
-			FROM $wpdb->terms, $wpdb->term_taxonomy, $wpdb->term_relationships
-			WHERE $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id 
-    		$catTagQuery $inExcludeQuery AND $wpdb->terms.slug!='blogroll'
-      GROUP BY $wpdb->terms.term_id $catSortColumn
-			$catSortOrder";
-*/
 $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN
 $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 ($catTagQuery) $inExcludeQuery AND t.slug!='blogroll' $catSortColumn $catSortOrder ";
@@ -504,90 +472,51 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
       $theCount=$subCatPostCount2+$subCatPostCount;
       if ($theCount>0) {
         $expanded='none';
-        $theID='collapsCat' . $cat->term_id;
+        $theID='collapsCat-' . $cat->term_id . "-$number";
         if (in_array($cat->name, $autoExpand) ||
             in_array($cat->slug, $autoExpand) ||
             in_array($theID, array_keys($_COOKIE))) {
           $expanded='block';
         }
+        if ($showPosts=='yes' || $subCatPostCount>0) {
+          if ($expanded=='block') {
+            $showHide='hide';
+          } else {
+            $showHide='show';
+          }
+          $span= "      <li class='collapsCat'>".
+              "<span class='collapsCat $showHide' ".
+              "onclick='expandCollapse(event, \"$expandSym\", \"$collapseSym\", $animate, \"collapsCat\"); return false'>".
+              "<span class='sym'>$collapseSym</span>";
+        } else {
+          $span = "      <li class='collapsCatPost'>";
+        }
+        if (empty($catlink)) {
+          $link = "<a $self href='".get_category_link($cat->term_id)."' ";
+        } else {
+          $link = "<a $self href='".get_category_link($cat)."' ";
+        }
+        if ( empty($cat->description) ) {
+          $link .= 'title="'. 
+              sprintf(__("View all posts filed under %s"),
+              wp_specialchars(apply_filters('single_cat_title',$cat->name))) . '"';
+        } else {
+          $link .= 'title="' . wp_specialchars(apply_filters('description',$cat->description,$cat)) . '"';
+        }
+        $link .= '>';
         if ($linkToCat=='yes') {
-          if (empty($catlink)) {
-            $link = "<a $self href='".get_category_link($cat->term_id)."' ";
-          } else {
-            $link = "<a $self href='".get_category_link($cat)."' ";
-          }
-          if ( empty($cat->description) ) {
-            $link .= 'title="'. 
-                sprintf(__("View all posts filed under %s"),
-                wp_specialchars(apply_filters('single_cat_title',$cat->name))) . '"';
-          } else {
-            $link .= 'title="' . wp_specialchars(apply_filters('description',$cat->description,$cat)) . '"';
-          }
-          $link .= '>';
           $link .= apply_filters('single_cat_title', $cat->name).'</a>';
           if ($showPosts=='yes' || $subCatPostCount>0) {
-            if ($expanded=='block') {
-              $span= "      <li class='collapsCat'>".
-                  "<span class='collapsCat hide' ".
-                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
-                  "<span class='sym'>$collapseSym</span></span>";
-            } else {
-              $span = "      <li class='collapsCat'>".
-                  "<span class='collapsCat show' ".
-                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
-                  "<span class='sym'>$expandSym</span></span>";
-            }
-          } else {
-            $span = "      <li class='collapsCatPost'>";
+            $span.='</span>';
           }
         } else {
-          if ($showPosts=='yes') {
+          if ($showPosts=='yes' || $subCatPostCount>0) {
             $link = apply_filters('single_cat_title',$cat->name) . '</span>';
-            if ($expanded=='block') {
-              $span ="      <li class='collapsCat'>".
-                  "<span class='collapsCat hide' ".
-                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
-                  "<span class='sym'>$collapseSym</span>";
-            } else {
-              $span = "      <li class='collapsCat'>".
-                  "<span class='collapsCat show' ".
-                  "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
-                  "<span class='sym'>$expandSym</span>";
-            }
           } else {
             // don't include the triangles if posts are not shown and there
             // are no more subcategories
-            if ($subCatPostCount>0) {
-              $link = apply_filters('single_cat_title',$cat->name).'</span>';
-              if ($expanded=='block') {
-                $span =  "      <li class='collapsCat'>".
-                    "<span class='collapsCat hide' ".
-                    "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
-                    "<span class='sym'>$collapseSym</span>";
-              } else {
-                $span =  "      <li class='collapsCat'>".
-                    "<span class='collapsCat show' ".
-                    "onclick='expandCollapse(event, $expand, $animate, \"collapsCat\"); return false'>".
-                    "<span class='sym'>$expandSym</span>";
-              }
-            } else {
-              if (empty($catlink)) {
-                $link = "<a $self href='".get_category_link($cat->term_id)."' ";
-              } else {
-                $link = "<a $self href='".get_category_link($cat)."' ";
-              }
-              if ( empty($cat->description) ) {
-                $link .= 'title="'. 
-                    sprintf(__("View all posts filed under %s"),
-                    wp_specialchars(apply_filters('single_cat_title',$cat->name))) . '"';
-              } else {
-                $link .= 'title="' . wp_specialchars(apply_filters(
-                    'description',__($cat->description),$cat)) . '"';
-              }
-              $link .= '>';
               $link .= apply_filters('single_cat_title',$cat->name).'</a>';
               $span = "      <li class='collapsCatPost'>";
-            } 
           }
         }
         // Now print out the post info
@@ -634,8 +563,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 				}
           print($span . $link );
         if (($subCatPostCount>0) || ($showPosts=='yes')) {
-          print( "\n     <ul id='collapsCat-" . $cat->term_id .
-              "' style=\"display:$expanded\">\n" );
+          print( "\n     <ul id='$theID' style=\"display:$expanded\">\n" );
         }
         echo $subCatLinks;
 				if ($showPosts=='yes') {
@@ -654,4 +582,26 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
   }
   echo "    </ul> <!-- ending collapsCat -->\n";
 }
+$url = get_settings('siteurl');
+echo "<script type=\"text/javascript\">\n";
+echo "// <![CDATA[\n";
+echo '/* These variables are part of the Collapsing Categories Plugin 
+      *  Version: 0.9.6
+      *  $Id: collapscat.php 107679 2009-04-04 14:51:22Z robfelty $
+      * Copyright 2007 Robert Felty (robfelty.com)
+      */' . "\n";
+$expandSym="<img src='". $url .
+     "/wp-content/plugins/collapsing-categories/" . 
+     "img/expand.gif' alt='expand' />";
+$collapseSym="<img src='". $url .
+     "/wp-content/plugins/collapsing-categories/" . 
+     "img/collapse.gif' alt='collapse' />";
+echo "var expandSym=\"$expandSym\";";
+echo "var collapseSym=\"$collapseSym\";";
+echo"
+addLoadEvent(function() {
+  autoExpandCollapse('collapsCat');
+});
+";
+echo "// ]]>\n</script>\n";
 ?>
