@@ -28,11 +28,11 @@ This file is part of Collapsing Categories
 // Helper functions
 function miscPosts($cat,$catlink,$subCatPostCount2, $posttext,$number) {
   /* this function will group posts into a miscellaneous sub-category */
-  global $options, $expandSym,$collapseSym;
+  global $options, $expandSym,$expandSymJS;
   extract($options[$number]);
   $miscPosts="      <li class='collapsCat'>".
       "<span class='collapsCat show' ".
-      "onclick='expandCollapse(event, \"$expandSym\", \"$collapseSym\", $animate, " .
+      "onclick='expandCollapse(event, \"$expandSymJS\", \"$collapseSymJS\", $animate, " .
       "\"collapsCat\"); return false'>".
       "<span class='sym'>$expandSym</span>";
   if ($linkToCat=='yes') {
@@ -131,7 +131,8 @@ function addFeedLink($feed,$cat) {
 }
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$number,$expanded, $depth) {
-  global $options,$expandSym, $collapseSym, $autoExpand, $postsToExclude,
+  global $options,$expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
+      $autoExpand, $postsToExclude,
   $subCatPostCounts, $catlink, $postsInCat;
   extract($options[$number]);
   $subCatPosts=array();
@@ -164,13 +165,16 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           if ($showPosts=='yes') {
             if ($expanded=='block') {
               $showHide='hide';
+              $symbol=$collapseSym;
             } else {
               $showHide='show';
+              $symbol=$expandSym;
             }
             $subCatLinks.=( "<li class='collapsCat'>".
                 "<span class='collapsCat $showHide' ".
-                "onclick='expandCollapse(event, \"$expandSym\", \"$collapseSym\", $animate, \"collapsCat\"); return false'>" . 
-                "<span class='sym'>$collapseSym</span>" );
+                "onclick='expandCollapse(event, \"$expandSymJS\",".
+                "\"$collapseSymJS\", $animate, \"collapsCat\"); return false'>" . 
+                "<span class='sym'>$symbol</span>" );
           } else {
             $subCatLinks.=( "<li class='collapsCatPost'>" );
           }
@@ -214,13 +218,16 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
           if ($expanded=='block') {
             $showHide='hide';
+            $symbol=$collapseSym;
           } else {
             $showHide='show';
+            $symbol=$expandSym;
           }
           $subCatLinks.=( "<li class='collapsCat'>".
               "<span class='collapsCat $showHide' ".
-              "onclick='expandCollapse(event, \"$expandSym\", \"$collapseSym\", $animate, \"collapsCat\"); return false'>" . 
-              "<span class='sym'>$collapseSym</span>" );
+              "onclick='expandCollapse(event, \"$expandSymJS\",".
+              "\"$collapseSymJS\", $animate, \"collapsCat\"); return false'>" . 
+              "<span class='sym'>$symbol</span>" );
           if (empty($catlink)) {
             $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
           } else {
@@ -279,8 +286,9 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 }
 
 function list_categories($number) {
-  global $expandSym,$collapseSym,$wpdb,$options,$post, $autoExpand,
-  $postsToExclude, $thisCat, $thisPost, $wp_rewrite, $catlink, $postsInCat;
+  global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
+      $wpdb,$options,$post, $autoExpand, $postsToExclude, 
+      $thisCat, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   $catlink = $wp_rewrite->get_category_permastruct();
   if (is_single() || is_category() || is_tag()) {
     $cur_category = get_the_category();
@@ -481,13 +489,16 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         if ($showPosts=='yes' || $subCatPostCount>0) {
           if ($expanded=='block') {
             $showHide='hide';
+            $symbol=$collapseSym;
           } else {
             $showHide='show';
+            $symbol=$expandSym;
           }
           $span= "      <li class='collapsCat'>".
               "<span class='collapsCat $showHide' ".
-              "onclick='expandCollapse(event, \"$expandSym\", \"$collapseSym\", $animate, \"collapsCat\"); return false'>".
-              "<span class='sym'>$collapseSym</span>";
+              "onclick='expandCollapse(event, \"$expandSymJS\"," .
+              "\"$collapseSymJS\", $animate, \"collapsCat\"); return false'>".
+              "<span class='sym'>$symbol</span>";
         } else {
           $span = "      <li class='collapsCatPost'>";
         }
