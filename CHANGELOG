@@ -1,6 +1,9 @@
 Collapsing Categories Changelog
 
-* 0.9.6 (2009.04.10)
+* 0.9.7 (2009.04.16)
+    * fixed a few bugs introduced in 0.9.6
+
+* 0.9.6 (2009.04.15)
     * Added option to group posts into misc category
     * Switched role handling to proper API use (to control whether or not the
       settings page shows up)

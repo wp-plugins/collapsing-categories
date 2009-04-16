@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.6
 Tested up to: 2.7
-Stable tag: 0.9.6
+Stable tag: 0.9.7
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -16,7 +16,11 @@ This is a very simple plugin that uses Javascript to form a collapsable set of
 links in the sidebar for the categories. Every post corresponding to a given
 category will be expanded.
 
-= What's new in 0.9.6? =
+= What's new? =
+* 0.9.7 (2009.04.16)
+    * fixed a few bugs introduced in 0.9.6
+
+* 0.9.6 (2009.04.15)
   * Added option to group posts into misc category
   * Switched role handling to proper API use (to control whether or not the
     settings page shows up)
@@ -149,6 +153,9 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 0.9.7 (2009.04.16)
+    * fixed a few bugs introduced in 0.9.6
 
 * 0.9.6 (2009.04.15)
     * Added option to group posts into misc category
