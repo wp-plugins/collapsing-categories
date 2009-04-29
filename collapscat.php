@@ -60,16 +60,6 @@ class collapscat {
       update_option( 'collapsCatDefaultStyles', $defaultStyles);
     }
     if (!get_option('collapsCatOptions')) {
-      $options=array('%i%' => array('title' => 'Categories',
-                   'showPostCount' => 'yes',
-                   'inExclude' => 'exclude', 'inExcludeCats' => '',
-                   'showPosts' => 'yes', 'showPages' => 'no',
-                   'linkToCat' => 'no', 'olderThan' => 0, 'excludeAll' => '0',
-                   'catSortOrder' => 'ASC', 'catSort' => 'catName',
-                   'postSortOrder' => 'ASC', 'postSort' => 'postTitle',
-                   'expand' => '0', 'defaultExpand' => '', 'debug'=>'0',
-									 'postTitleLength' => 0,
-                   'animate' => '1', 'catfeed' => 'none'));
       update_option('collapsCatOptions', $options);
     }
     if (!get_option('collapsCatStyle')) {
