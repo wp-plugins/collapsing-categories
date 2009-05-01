@@ -1,4 +1,9 @@
 <?php
+      if ($new_instance['linkToCat']=='yes') {
+        $linkToCat=true;
+      } else {
+        $linkToCat=false;
+      }
       if (isset($new_instance['showPostCount']) ) {
         $showPostCount= true ;
       } else {  
@@ -65,6 +70,6 @@
           'title','showPostCount','catSort','catSortOrder','defaultExpand',
           'expand','inExclude','inExcludeCats','postSort','postSortOrder',
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
-          'catTag');
+          'catTag', 'linkToCat');
 
 ?>

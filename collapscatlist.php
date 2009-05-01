@@ -132,8 +132,8 @@ function addFeedLink($feed,$cat) {
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$expanded, $depth) {
   global $options,$expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
-      $autoExpand, $postsToExclude,
-  $subCatPostCounts, $catlink, $postsInCat, $subCatLinks, $subCatPosts;
+      $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat;
+  $subCatLinks='';
   extract($options);
   $subCatPosts=array();
   $link2='';
