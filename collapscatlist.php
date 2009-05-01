@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.9.8
+Collapsing Categories version: 1.0.alpha
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -133,7 +133,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$expanded, $depth) {
   global $options,$expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
       $autoExpand, $postsToExclude,
-  $subCatPostCounts, $catlink, $postsInCat;
+  $subCatPostCounts, $catlink, $postsInCat, $subCatLinks, $subCatPosts;
   extract($options);
   $subCatPosts=array();
   $link2='';
@@ -289,16 +289,7 @@ function list_categories($args='') {
   global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
       $wpdb,$options,$post, $autoExpand, $postsToExclude, 
       $thisCat, $thisPost, $wp_rewrite, $catlink, $postsInCat;
-  $defaults=array('title' => 'Categories',
-               'showPostCount' => true,
-               'inExclude' => 'exclude', 'inExcludeCats' => '',
-               'showPosts' => true, 'showPages' => false,
-               'linkToCat' => true, 'olderThan' => 0, 'excludeAll' => '0',
-               'catSortOrder' => 'ASC', 'catSort' => 'catName',
-               'postSortOrder' => 'ASC', 'postSort' => 'postTitle',
-               'expand' => '0', 'defaultExpand' => '', 'debug'=>'0',
-               'postTitleLength' => 0,
-               'animate' => '1', 'catfeed' => 'none');
+  include('defaults.php');
   $options=wp_parse_args($args, $defaults);
   extract($options);
   $catlink = $wp_rewrite->get_category_permastruct();
@@ -541,8 +532,8 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
           }
         }
         // Now print out the post info
+				$posttext='';
         if( ! empty($postsInCat[$cat->term_id]) ) {
-					$posttext='';
             foreach ($postsInCat[$cat->term_id] as $post) {
               if ($post->term_id == $cat->term_id 
                   && (!in_array($post->ID, $subCatPosts))) {
@@ -607,7 +598,7 @@ $url = get_settings('siteurl');
 echo "<script type=\"text/javascript\">\n";
 echo "// <![CDATA[\n";
 echo '/* These variables are part of the Collapsing Categories Plugin 
-      *  Version: 0.9.8
+      *  Version: 1.0.alpha
       *  $Id: collapscat.php 107679 2009-04-04 14:51:22Z robfelty $
       * Copyright 2007 Robert Felty (robfelty.com)
       */' . "\n";
