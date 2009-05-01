@@ -18,7 +18,7 @@ function collapsCatWidget($args, $widget_args=1) {
         collapsCat($number);
        } else {
         echo "<ul>\n";
-        wp_list_cats('sort_column=name&optioncount=1&hierarchical=0');
+        wp_list_links('sort_column=name&optioncount=1&hierarchical=0');
         echo "</ul>\n";
        }
 
@@ -29,10 +29,9 @@ function collapsCatWidget($args, $widget_args=1) {
 function collapsCatWidgetInit() {
 if ( !$options = get_option('collapsCatOptions') )
     $options = array();
-  $control_ops = array('width' => 500, 'height' => 350, 'id_base' => 'collapscat');
-	$widget_ops = array('classname' => 'collapsCat', 'description' =>
-  __('Categories expand and collapse to show subcategories and/or posts'));
-  $name = __('Collapsing Categories');
+  $control_ops = array('width' => 450, 'height' => 350, 'id_base' => 'collapscat');
+	$widget_ops = array('classname' => 'collapsCat', 'description' => __('Links expand and collapse to show sublinks and/or posts'));
+  $name = __('Collapsing Links');
 
   $id = false;
   foreach ( array_keys($options) as $o ) {
@@ -61,7 +60,7 @@ if (function_exists('collapsCat')) {
 	array_splice($current, array_search($fname, $current), 1 ); // Array-fu!
 	update_option('active_plugins', $current);
 	do_action('deactivate_' . trim($fname));
-	header('Location: ' . get_settings('siteurl') . '/wp-admin/plugins.php?deactivate=true');
+	header('Lolinkion: ' . get_settings('siteurl') . '/wp-admin/plugins.php?deactivate=true');
 	exit;
 }
 
@@ -97,15 +96,13 @@ if (function_exists('collapsCat')) {
     include('updateOptions.php');
   }
   include('processOptions.php');
-		//$title		= wp_specialchars($options['title']);
-    // Here is our little form segment. Notice that we don't need a
-    // complete form. This will be embedded into the existing form.
+
+
     echo '<p style="text-align:right;"><label for="collapsCat-title-'.$number.'">' . __('Title:') . '<input class="widefat" style="width: 200px;" id="collapsCat-title-'.$number.'" name="collapsCat['.$number.'][title]" type="text" value="'.$title.'" /></label></p>';
-    include('options.txt');
+  include('options.txt');
   ?>
   <p>Style can be set from the <a
-  href='options-general.php?page=collapscat.php'>options page</a></p>
-   
+  href='options-general.php?page=collapsCat.php'>options page</a></p>
    <?php
     echo '<input type="hidden" id="collapsCat-submit-'.$number.'" name="collapsCat['.$number.'][submit]" value="1" />';
 

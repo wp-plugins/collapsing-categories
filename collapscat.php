@@ -104,10 +104,10 @@ class collapscat {
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
 		echo '/* These variables are part of the Collapsing Categories Plugin 
-		      *  Version: 0.9.8
-		      *  $Id$
-					* Copyright 2007 Robert Felty (robfelty.com)
-					*/' . "\n";
+Version: 0.9.8
+$Id$
+Copyright 2007 Robert Felty (robfelty.com)
+*/' . "\n";
     $expandSym="<img src='". $url .
          "/wp-content/plugins/collapsing-categories/" . 
          "img/expand.gif' alt='expand' />";

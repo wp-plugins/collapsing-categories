@@ -132,9 +132,8 @@ function addFeedLink($feed,$cat) {
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$number,$expanded, $depth) {
   global $options,$expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
-      $autoExpand, $postsToExclude,
-  $subCatPostCounts, $catlink, $postsInCat, $subCatLinks, $subCatPosts,
-      $posttext2;
+      $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat;
+  $subCatLinks='';
   extract($options[$number]);
   $subCatPosts=array();
   $link2='';
@@ -536,8 +535,8 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         if( ! empty($postsInCat[$cat->term_id]) ) {
             foreach ($postsInCat[$cat->term_id] as $post) {
               if ($post->term_id == $cat->term_id 
-                  && (!in_array($post->term_id, $subCatPosts))) {
-								if (!in_array($post->term_id, $postsToExclude)) {
+                  && (!in_array($post->ID, $subCatPosts))) {
+								if (!in_array($post->ID, $postsToExclude)) {
 								  $subCatPostCount++;
                   if ($showPosts=='no') {
                     continue;
