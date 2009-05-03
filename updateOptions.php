@@ -1,4 +1,5 @@
 <?php
+      $title=$new_instance['title'];
       if ($new_instance['linkToCat']=='yes') {
         $linkToCat=true;
       } else {
