@@ -48,8 +48,8 @@ add_action('activate_collapsing-categories/collapscat.php', array('collapscat','
 
 class collapscat {
 	function init_textdomain() {
-	  $plugin_dir = basename(dirname(__FILE__));
-	  load_plugin_textdomain( 'collapsing-categories', 'wp-content/plugins/' . $plugin_dir, $plugin_dir );
+	  $plugin_dir = basename(dirname(__FILE__)) . '/languages/';
+	  load_plugin_textdomain( 'collapsing-categories', WP_PLUGIN_DIR . $plugin_dir, $plugin_dir );
 	}
 
 	function init() {
@@ -74,8 +74,9 @@ class collapscat {
 	function setup() {
 		if( function_exists('add_options_page') ) {
       if (current_user_can('manage_options')) {
-				add_options_page(__('Collapsing Categories'),__('Collapsing
-						Categories'),1,basename(__FILE__),array('collapscat','ui'));
+				add_options_page(__('Collapsing Categories'),
+            __('Collapsing Categories'),1,
+            basename(__FILE__),array('collapscat','ui'));
 			}
 		}
 	}

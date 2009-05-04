@@ -1,5 +1,11 @@
 Collapsing Categories Changelog
 
+* 1.0.alpha (2009.05.01)
+    * Compatible with wordpress 2.8 widget api (incompatible with 2.7.1 and
+      earlier)
+    * Can now add options manually when using manually instead of widget
+    * When using tags, link now points to correct location
+
 * 0.9.8 (2009.04.17)
     * Fixed triangle problem
 

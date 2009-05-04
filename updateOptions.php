@@ -52,9 +52,10 @@
       if($new_instance['inExclude'] == 'exclude') {
         $inExclude= 'exclude' ;
       }
-      $animate=0;
       if( isset($new_instance['animate'])) {
         $animate= 1 ;
+      } else {
+        $animate=0;
       }
       $debug=false;
       if (isset($new_instance['debug'])) {

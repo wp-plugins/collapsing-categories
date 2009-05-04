@@ -1,27 +1,27 @@
 <?php
 /*
-Collapsing Links version: 1.0.alpha
+Collapsing Categories version: 1.0.alpha
 Copyright 2007 Robert Felty
 
-This work is largely based on the Fancy Links plugin by Andrew Rader
+This work is largely based on the Fancy Categories plugin by Andrew Rader
 (http://nymb.us), which was also distributed under the GPLv2. I have tried
 contacting him, but his website has been down for quite some time now. See the
 CHANGELOG file for more information.
 
-This file is part of Collapsing Links
+This file is part of Collapsing Categories
 
-    Collapsing Links is free software; you can redistribute it and/or modify
+    Collapsing Categories is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
 
-    Collapsing Links is distributed in the hope that it will be useful,
+    Collapsing Categories is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Collapsing Links; if not, write to the Free Software
+    along with Collapsing Categories; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
@@ -38,9 +38,9 @@ if (isset($_POST['infoUpdate'])) {
 ?>
 <div class=wrap>
  <form method="post">
-  <h2>Collapsing Links Options</h2>
-  <fieldset name="Collapsing Links Options">
-   <legend><?php _e('Display Options:'); ?></legend>
+  <h2><?php _e('Collapsing Categories Options', 'collapsing-categories') ?></h2>
+  <fieldset name="Collapsing Categories Options">
+   <legend><?php _e('Display Options:', 'collapsing-categories'); ?></legend>
    <ul style="list-style-type: none;">
     <p>
   <input type='hidden' id='collapsCatOrigStyle' value="<?php echo
@@ -62,7 +62,8 @@ function restoreStyle() {
    </ul>
   </fieldset>
   <div class="submit">
-   <input type="submit" name="infoUpdate" value="<?php _e('Update options', 'Collapsing Links'); ?> &raquo;" />
+   <input type="submit" name="infoUpdate" value="<?php _e('Update options', 
+   'collapsing-categories'); ?> &raquo;" />
   </div>
  </form>
 </div>

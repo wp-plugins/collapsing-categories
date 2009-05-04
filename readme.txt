@@ -16,18 +16,15 @@ This is a very simple plugin that uses Javascript to form a collapsable set of
 links in the sidebar for the categories. Every post corresponding to a given
 category will be expanded.
 
-= What's new? =
-* 0.9.7 (2009.04.16)
-    * fixed a few bugs introduced in 0.9.6
+= IMPORTANT INFORMATION regarding wordpress 2.7 and 2.8 =
 
-* 0.9.6 (2009.04.15)
-  * Added option to group posts into misc category
-  * Switched role handling to proper API use (to control whether or not the
-    settings page shows up)
-  * Added option for custom symbols
-  * No longer requires footer
-  * Updated javascript file
-  * Cleaned up code a bunch
+Version 1.0.alpha is an alpha version. It is compatible with wordpress 2.8,
+but not compatible with prior versions. If you are using wordpress 2.7.1 or
+earlier, please use collapsing categories version 0.9.9. Also beware that
+there is a good chance that there may be some bugs. 
+
+If you prefer to insert code into your theme manually instead of using
+widgets, please note that the manual installation instructions have changed. 
 
 == Installation ==
 
@@ -46,11 +43,12 @@ Presentation > Widgets section and drag over the Collapsing Categories Widget.
 = Manual installation = 
 
  Activate the plugin, then insert the following into your template: (probably
-in sidebar.php)
+in sidebar.php). See the Options section for more information on specifying
+options.
 `
 <?php 
 if (function_exists('collapsCat')) {
-  collapsCat('%i%');
+  collapsCat();
 } else {
   echo "<ul>\n";
   wp_get_categories(your_options_here);
@@ -140,6 +138,113 @@ Then, insert the following code where you would like to have it:
 1. a few expanded categories with default theme, showing nested categories
 2. available options 
 
+== Options ==
+Style options can be set via the settings panel. All other options can be set
+from the widget panel. If you wish to insert the code into your theme manually
+instead of using a widget, you can use the following options. These options
+can be given to the `collapsCat()` function either as an array or in query
+style, in the same manner as the `wp_list_categories` function.
+
+`$defaults=array(
+   'showPostCount' => true,
+   'inExclude' => 'exclude',
+   'inExcludeCats' => '',
+   'showPosts' => true, 
+   'showPages' => false,
+   'linkToCat' => true,
+   'olderThan' => 0,
+   'excludeAll' => '0',
+   'catSortOrder' => 'ASC',
+   'catSort' => 'catName',
+   'postSortOrder' => 'ASC',
+   'postSort' => 'postTitle',
+   'expand' => '0',
+   'defaultExpand' => '',
+   'debug'=>'0',
+   'postTitleLength' => 0,
+   'animate' => 0,
+   'catfeed' => 'none',
+   'catTag' => 'cat'
+);
+`
+
+* inExclude
+    * Whether to include or exclude certain categories 
+        * 'exclude' (default) 
+        * 'include'
+* inExcludeCats
+    * The categories which should be included or excluded
+* showPages
+    * Whether or not to include pages as well as posts. Default if false
+* linkToCat
+    * True, clicking on a category title will link to the category archive (default)
+    * False, clicking on a category title expands and collapses 
+* catSort
+    * How to sort the categorys. Possible values:
+        * 'catName' the title of the category (default)
+        * 'catId' the Id of the category
+        * 'catSlug' the url of the category
+        * 'catCount' the number of posts in the category
+        * 'catOrder' custom order specified in the categorys settings
+* catSortOrder
+    * Whether categories should be sorted in normal or reverse
+      order. Possible values:
+        * 'ASC' normal order (a-z 0-9) (default)
+        * 'DESC' reverse order (z-a 9-0)  
+* postSort
+    * How to sort the posts. Possible values:
+        * 'postDate' the date of the post (default)
+        * 'postId' the Id of the post
+        * 'postTitle' the title of the post
+        * 'postComment' the number of comments on the post
+* postSortOrder
+    * Whether post should be sorted in normal or reverse
+      order. Possible values:
+        * 'ASC' normal order (a-z 0-9) (default)
+        * 'DESC' reverse order (z-a 9-0)  
+* expand
+    * The symbols to be used to mark expanding and collapsing. Possible values:
+        * '0' Triangles (default)
+        * '1' + -
+        * '2' [+] [-]
+        * '3' images (you can upload your own if you wish)
+        * '4' custom symbols
+* customExpand
+    * If you have selected '4' for the expand option, this character will be
+      used to mark expandable link categories
+* customCollapse
+    * If you have selected '4' for the expand option, this character will be
+      used to mark collapsible link categories
+* postTitleLength
+    * Truncate post titles to this number of characters (default: 0 = don't
+      truncate)
+* animate
+    * When set to true, collapsing and expanding will be animated
+* catfeed
+    * Whether to add a link to the rss feed for a category. Possible values:
+        * 'none' (default)
+        * 'text' shows RSS
+        * 'image' shows an RSS icon
+* catTag
+    * Whether to include categories, tags, or both. Possible values:
+        * 'cat' (default)
+        * 'tag'
+        * 'both'
+* debug
+    * When set to true, extra debugging information will be displayed in the
+      underlying code of your page (but not visible from the browser). Use
+      this option if you are having problems
+
+= Examples =
+
+`collapsCat('animate=true&catSort=ASC&expand=3,inExcludeCats=general,uncategorized')`
+This will produce a list with:
+* animation on
+* categories shown in alphabetical order
+* using images to mark collapsing and expanding
+* exclude posts from  the categories general and uncategorized
+
+
 == Demo ==
 
 I use this plugin in my blog at http://blog.robfelty.com
@@ -153,6 +258,15 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 1.0.alpha (2009.05.01)
+    * Compatible with wordpress 2.8 widget api (incompatible with 2.7.1 and
+      earlier)
+    * Can now add options manually when using manually instead of widget
+    * When using tags, link now points to correct location
+
+* 0.9.8 (2009.04.17)
+    * Fixed triangle problem
 
 * 0.9.7 (2009.04.16)
     * fixed a few bugs introduced in 0.9.6

@@ -17,7 +17,7 @@ $defaults=array(
    'defaultExpand' => '',
    'debug'=>'0',
    'postTitleLength' => 0,
-   'animate' => '1',
+   'animate' => 0,
    'catfeed' => 'none',
    'catTag' => 'cat'
 );
