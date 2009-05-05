@@ -38,7 +38,7 @@ if (!is_admin()) {
   add_action('wp_head', wp_enqueue_script('scriptaculous-effects'));
   add_action('wp_head', wp_enqueue_script('collapsFunctions',
   "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",'',
-  '1.2'));
+  '1.4'));
   add_action( 'wp_head', array('collapscat','get_head'));
 //  add_action( 'wp_footer', array('collapsCat','get_foot'));
 }
