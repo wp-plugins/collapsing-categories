@@ -1,4 +1,4 @@
-/*  Collapse Functions, version 1.2
+/*  Collapse Functions, version 1.3
  *
  *--------------------------------------------------------------------------*/
 String.prototype.trim = function() {
@@ -68,10 +68,10 @@ function autoExpandCollapse(collapsClass) {
               if ((theSpan.className == show && cookievalue ==1) ||
                   (theSpan.className == hide && cookievalue ==0)) {
                 var theOnclick=theSpan.onclick+"";
-                //var matches=theOnclick.match(/.*\(event, ?"([^"]*)".*/);
                 var matches=theOnclick.match(/.*\(event, ?"([^"]*)", ?"([^"]*)".*\)/);
                 var expand=matches[1].replace(/\\u25BA/, '\u25BA');
                 var collapse=matches[2].replace(/\\u25BC/, '\u25BC');
+                collapse=collapse.replace(/\\u2014/, '\u2014');
                 expandCollapse(theSpan,expand,collapse,0,collapsClass);
               }
             }

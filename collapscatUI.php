@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Links version: 0.2.7
+Collapsing Links version: 0.9.9
 Copyright 2007 Robert Felty
 
 This work is largely based on the Fancy Links plugin by Andrew Rader
