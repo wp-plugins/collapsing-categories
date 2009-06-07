@@ -3,8 +3,8 @@ Contributors: robfelty
 Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
-Requires at least: 2.6
-Tested up to: 2.7
+Requires at least: 2.8
+Tested up to: 2.8
 Stable tag: 0.9.9
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
@@ -16,26 +16,14 @@ This is a very simple plugin that uses Javascript to form a collapsable set of
 links in the sidebar for the categories. Every post corresponding to a given
 category will be expanded.
 
-= What's new? =
-
-* 0.9.9 (2009.05.13)
-    * Fixed problem with posts from previous category showing up other category
-    * Fixed onload javascript issues
-
-* 0.9.8 (2009.04.17)
-    * Fixed triangle problem
-
-* 0.9.7 (2009.04.16)
-    * fixed a few bugs introduced in 0.9.6
-
-* 0.9.6 (2009.04.15)
-  * Added option to group posts into misc category
-  * Switched role handling to proper API use (to control whether or not the
-    settings page shows up)
-  * Added option for custom symbols
-  * No longer requires footer
-  * Updated javascript file
-  * Cleaned up code a bunch
+= What's new in 1.0.alpha? =
+* Widget is compatible with wordpress 2.8 (not backwards compatible with 2.7
+  and previous). If you are using wordpress 2.7.1 or previous, please use
+  collapsing archives version 1.1.4 or earlier
+* Now includes several default styling templates
+* Changed hide and show classed to collapse and expand to avoid CSS class
+* Can now add parameters to the collapscat function if you choose not to use
+  the widget (see options section below)
 
 == Installation ==
 
@@ -161,13 +149,6 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
-
-* 0.9.9 (2009.05.13)
-    * Fixed problem with posts from previous category showing up other category
-    * Fixed onload javascript issues
-
-* 0.9.8 (2009.04.17)
-    * Fixed triangle problem
 
 * 0.9.7 (2009.04.16)
     * fixed a few bugs introduced in 0.9.6

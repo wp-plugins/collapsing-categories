@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 0.9.9
+Collapsing Categories version: 1.0.alpha
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -26,10 +26,10 @@ This file is part of Collapsing Categories
 */
 
 // Helper functions
-function miscPosts($cat,$catlink,$subCatPostCount2, $posttext,$number) {
+function miscPosts($cat,$catlink,$subCatPostCount2, $posttext) {
   /* this function will group posts into a miscellaneous sub-category */
   global $options, $expandSym,$expandSymJS;
-  extract($options[$number]);
+  extract($options);
   $miscPosts="      <li class='collapsCat'>".
       "<span class='collapsCat show' ".
       "onclick='expandCollapse(event, \"$expandSymJS\", \"$collapseSymJS\", $animate, " .
@@ -77,11 +77,11 @@ function checkCurrentCat($cat, $categories) {
 * add depth option
 * add option to display number of comments
 */
-function getSubPosts($posts, $cat2, $subCatPosts, $showPosts, $number) {
+function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
   global $postsToExclude, $options;
-  extract($options[$number]);
+  extract($options);
   $posttext2='';
-  if ($excludeAll==0 && $showPosts=='no') {
+  if ($excludeAll==0 && !$showPosts) {
     $subCatPostCount2=$cat2->count;
   } else { 
     $subCatPostCount2=0;
@@ -93,7 +93,7 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts, $number) {
         if (!in_array($post2->ID, $postsToExclude)) {
           array_push($subCatPosts, $post2->ID);
           $subCatPostCount2++;
-          if ($showPosts=='no') {
+          if (!$showPosts) {
             continue;
           }
           $date=preg_replace("/-/", '/', $post2->date);
@@ -130,11 +130,11 @@ function addFeedLink($feed,$cat) {
   return $rssLink;
 }
 function get_sub_cat($cat, $categories, $parents, $posts,
-  $subCatCount,$subCatPostCount,$number,$expanded, $depth) {
+  $subCatCount,$subCatPostCount,$expanded, $depth) {
   global $options,$expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
       $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat;
   $subCatLinks='';
-  extract($options[$number]);
+  extract($options);
   $subCatPosts=array();
   $link2='';
   if ($depth==0) {
@@ -146,7 +146,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
       $subCatLink2=''; // clear info from subCatLink2
       if ($cat->term_id==$cat2->parent) {
         list($subCatPostCount2, $posttext2) = 
-            getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts, $showPosts, $number);
+            getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts, $showPosts);
         $subCatPostCount+=$subCatPostCount2;
         $subCatPostCounts[$depth]=$subCatPostCount2;
         $expanded='none';
@@ -162,12 +162,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           if ($subCatPostCount2<1) {
             continue;
           }
-          if ($showPosts=='yes') {
+          if ($showPosts) {
             if ($expanded=='block') {
-              $showHide='hide';
+              $showHide='collapse';
               $symbol=$collapseSym;
             } else {
-              $showHide='show';
+              $showHide='expand';
               $symbol=$expandSym;
             }
             $subCatLinks.=( "<li class='collapsCat'>".
@@ -194,14 +194,14 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
           $link2 .= '>';
           if ($linkToCat=='yes') {
-            if ($showPosts=='yes') {
+            if ($showPosts) {
               $subCatLinks.='</span>';
             }
             $link2 .= apply_filters('single_cat_title', $cat2->name).
                 '</a>';
           } else {
             $link2 .= apply_filters('single_cat_title', $cat2->name).  '</a>';
-            if ($showPosts=='yes') {
+            if ($showPosts) {
               $link2 = apply_filters('single_cat_title', $cat2->name).
                   "</span>";
             }
@@ -209,18 +209,18 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         } else {
           list ($subCatLink2, $subCatCount,$subCatPostCount,$subCatPosts)= 
               get_sub_cat($cat2, $categories, $parents, $posts, $subCatCount,
-              $subCatPostCount, $number,$expanded, $depth);
+              $subCatPostCount,$expanded, $depth);
           $subCatCount=1;
           list($subCatPostCount2, $posttext2) = 
-              getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts, $showPosts, $number);
+              getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts, $showPosts);
           if ($subCatPostCount2<1) {
             continue;
           }
           if ($expanded=='block') {
-            $showHide='hide';
+            $showHide='collapse';
             $symbol=$collapseSym;
           } else {
-            $showHide='show';
+            $showHide='expand';
             $symbol=$expandSym;
           }
           $subCatLinks.=( "<li class='collapsCat'>".
@@ -247,7 +247,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             $subCatLinks.='</span>';
             $link2 .= apply_filters('single_cat_title', $cat2->name).'</a>';
           } else {
-            if ($showPosts=='yes' || $subCatPostCount2>0) {
+            if ($showPosts || $subCatPostCount2>0) {
               $link2 = apply_filters('single_cat_title',$cat2->name) . '</span>';
             } else {
               // don't include the triangles if posts are not shown and there
@@ -264,10 +264,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $subCatLinks.= $link2 ;
         $rssLink=addFeedLink($catfeed,$cat2);
         $subCatLinks.=$rssLink;
-        if (($subCatCount>0) || ($showPosts=='yes')) {
+        if (($subCatCount>0) || ($showPosts)) {
           $subCatLinks.="\n<ul id='$theID' style=\"display:$expanded\">\n";
           if ($subCatCount>0 && $posttext2!='' && $addMisc) {
-            $subCatLinks.=miscPosts($cat2,$catlink,$subCatPostCount2,$posttext2,$number);
+            $subCatLinks.=miscPosts($cat2,$catlink,$subCatPostCount2,$posttext2);
           } else {
             $subCatLinks.=$posttext2;
           }
@@ -275,28 +275,29 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         // add in additional subcategory information
         $subCatLinks.="$subCatLink2";
         // close <ul> and <li> before starting a new category
-        if (($subCatCount>0) || ($showPosts=='yes')) {
+        if (($subCatCount>0) || ($showPosts)) {
           $subCatLinks.= "          </ul>\n";
         }
         $subCatLinks.= "         </li> <!-- ending subcategory -->\n";
       }
     }
-  } 
+  }
   return array($subCatLinks,$subCatCount,$subCatPostCount,$subCatPosts);
 }
 
-function list_categories($number) {
+function list_categories($args='') {
   global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
       $wpdb,$options,$post, $autoExpand, $postsToExclude, 
       $thisCat, $thisPost, $wp_rewrite, $catlink, $postsInCat;
+  include('defaults.php');
+  $options=wp_parse_args($args, $defaults);
+  extract($options);
   $catlink = $wp_rewrite->get_category_permastruct();
   if (is_single() || is_category() || is_tag()) {
     $cur_category = get_the_category();
     $thisCat = $cur_category[0]->term_id;
     $thisPost = $post->ID;
   }
-  $options=get_option('collapsCatOptions');
-  extract($options[$number]);
   if ($expand==1) {
     $expandSym='+';
     $collapseSym='—';
@@ -402,7 +403,7 @@ $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN
 $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 ($catTagQuery) $inExcludeQuery AND t.slug!='blogroll' $catSortColumn $catSortOrder ";
 //$catquery = "SELECT t.*, tt.* FROM wp_terms AS t INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN ('category')  ORDER BY t.name ASC  ";
-  if ($showPosts=='yes') {
+  if ($showPosts) {
     $postsInCat=array();
     $postquery= "select ID, slug, date(post_date) as date, post_status,
          post_date, post_title, post_name, name, object_id,
@@ -425,8 +426,8 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
   $categories = $wpdb->get_results($catquery);
   $totalPostCount=count($posts);
   if ($totalPostCount>5000) {
-    $options[$number]['showPosts']='no';
-    $showPosts='no';
+    $options['showPosts']=false;
+    $showPosts=false;
   }
   $parents=array();
   foreach ($categories as $cat) {
@@ -449,7 +450,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
     echo "<pre style='display:none' >";
     printf ("MySQL server version: %s\n", mysql_get_server_info());
     echo "\ncollapsCat options:\n";
-    print_r($options[$number]);
+    print_r($options);
     echo "\npostsToExclude:\n";
     print_r($postsToExclude);
     echo "CATEGORY QUERY: \n $catquery\n";
@@ -473,9 +474,9 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
       $subCatPostCounts=array();
       list ($subCatLinks, $subCatCount,$subCatPostCount, $subCatPosts)=
           get_sub_cat($cat, $categories, $parents, $posts, 
-          $subCatCount,$subCatPostCount,$number,$expanded,0);
+          $subCatCount,$subCatPostCount,$expanded,0);
         list($subCatPostCount2, $posttext2) = 
-            getSubPosts($postsInCat[$cat->term_id],$cat, $subCatPosts, $showPosts, $number);
+            getSubPosts($postsInCat[$cat->term_id],$cat, $subCatPosts, $showPosts);
         
       $theCount=$subCatPostCount2+$subCatPostCount;
       if ($theCount>0) {
@@ -486,12 +487,12 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
             in_array($theID, array_keys($_COOKIE))) {
           $expanded='block';
         }
-        if ($showPosts=='yes' || $subCatPostCount>0) {
+        if ($showPosts || $subCatPostCount>0) {
           if ($expanded=='block') {
-            $showHide='hide';
+            $showHide='collapse';
             $symbol=$collapseSym;
           } else {
-            $showHide='show';
+            $showHide='expand';
             $symbol=$expandSym;
           }
           $span= "      <li class='collapsCat'>".
@@ -517,11 +518,11 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         $link .= '>';
         if ($linkToCat=='yes') {
           $link .= apply_filters('single_cat_title', $cat->name).'</a>';
-          if ($showPosts=='yes' || $subCatPostCount>0) {
+          if ($showPosts || $subCatPostCount>0) {
             $span.='</span>';
           }
         } else {
-          if ($showPosts=='yes' || $subCatPostCount>0) {
+          if ($showPosts || $subCatPostCount>0) {
             $link = apply_filters('single_cat_title',$cat->name) . '</span>';
           } else {
             // don't include the triangles if posts are not shown and there
@@ -531,14 +532,14 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
           }
         }
         // Now print out the post info
-        $posttext='';
+				$posttext='';
         if( ! empty($postsInCat[$cat->term_id]) ) {
             foreach ($postsInCat[$cat->term_id] as $post) {
               if ($post->term_id == $cat->term_id 
                   && (!in_array($post->ID, $subCatPosts))) {
 								if (!in_array($post->ID, $postsToExclude)) {
 								  $subCatPostCount++;
-                  if ($showPosts=='no') {
+                  if (!$showPosts) {
                     continue;
                   }
                   if (is_single() && $post->ID == $thisPost)
@@ -573,18 +574,18 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 					$span='';
 				}
           print($span . $link );
-        if (($subCatPostCount>0) || ($showPosts=='yes')) {
+        if (($subCatPostCount>0) || ($showPosts)) {
           print( "\n     <ul id='$theID' style=\"display:$expanded\">\n" );
         }
         echo $subCatLinks;
-				if ($showPosts=='yes') {
+				if ($showPosts) {
           if ($subCatPostCount>0 && $subCatLinks!='' && $addMisc) {
-            print(miscPosts($cat,$catlink,$subCatPostCount2,$posttext,$number));
+            print(miscPosts($cat,$catlink,$subCatPostCount2,$posttext));
           } else {
             print($posttext);
           }
 				}
-				if ($subCatPostCount>0 || $showPosts=='yes') {
+				if ($subCatPostCount>0 || $showPosts) {
 					echo "        </ul>\n";
 				}
 				echo "      </li> <!-- ending category -->\n";
@@ -597,7 +598,7 @@ $url = get_settings('siteurl');
 echo "<script type=\"text/javascript\">\n";
 echo "// <![CDATA[\n";
 echo '/* These variables are part of the Collapsing Categories Plugin 
-      *  Version: 0.9.9
+      *  Version: 1.0.alpha
       *  $Id: collapscat.php 107679 2009-04-04 14:51:22Z robfelty $
       * Copyright 2007 Robert Felty (robfelty.com)
       */' . "\n";

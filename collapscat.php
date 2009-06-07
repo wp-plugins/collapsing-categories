@@ -2,13 +2,13 @@
 /*
 Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
-Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
+Description: Allows users to expand and collapse category links.  VERSION 1.0.alpha IS NOT COMPATIBLE WITH WP 2.7 OR LESS  <a href='options-general.php?page=collapscat.php'>Options and Settings</a> | <a href='http://wordpress.org/extend/plugins/collapsing-categories/other_notes'>Manual</a> | <a href='http://wordpress.org/extend/plugins/collapsing-categories/faq'>FAQ</a> | <a href='http://forum.robfelty.com/forum/collapsing-categories'>User forum</a> 
 Author: Robert Felty
-Version: 0.9.9
+Version: 1.0.alpha
 Author URI: http://robfelty.com
-Tags: sidebar, widget, categories, menu, navigation, posts
+Tags: sidebar, widget, categories, menu, navigation, posts, collapsing, collapsible
 
-Copyright 2007 Robert Felty
+Copyright 2007-2009 Robert Felty
 
 This work is largely based on the Fancy Categories plugin by Andrew Rader
 (http://nymb.us), which was also distributed under the GPLv2. I have tried
@@ -38,9 +38,8 @@ if (!is_admin()) {
   add_action('wp_head', wp_enqueue_script('scriptaculous-effects'));
   add_action('wp_head', wp_enqueue_script('collapsFunctions',
   "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",'',
-  '1.3'));
+  '1.4'));
   add_action( 'wp_head', array('collapscat','get_head'));
-//  add_action( 'wp_footer', array('collapsCat','get_foot'));
 }
 add_action('admin_menu', array('collapscat','setup'));
 add_action('init', array('collapscat','init_textdomain'));
@@ -54,22 +53,12 @@ class collapscat {
 
 	function init() {
 	  include('collapsCatStyles.php');
-		$defaultStyles=compact('custom','selected','default','block','noArrows');
+		$defaultStyles=compact('selected','default','block','noArrows','custom');
     if( function_exists('add_option') ) {
       update_option( 'collapsCatOrigStyle', $style);
       update_option( 'collapsCatDefaultStyles', $defaultStyles);
     }
     if (!get_option('collapsCatOptions')) {
-      $options=array('%i%' => array('title' => 'Categories',
-                   'showPostCount' => 'yes',
-                   'inExclude' => 'exclude', 'inExcludeCats' => '',
-                   'showPosts' => 'yes', 'showPages' => 'no',
-                   'linkToCat' => 'no', 'olderThan' => 0, 'excludeAll' => '0',
-                   'catSortOrder' => 'ASC', 'catSort' => 'catName',
-                   'postSortOrder' => 'ASC', 'postSort' => 'postTitle',
-                   'expand' => '0', 'defaultExpand' => '', 'debug'=>'0',
-									 'postTitleLength' => 0,
-                   'animate' => '1', 'catfeed' => 'none'));
       update_option('collapsCatOptions', $options);
     }
     if (!get_option('collapsCatStyle')) {
@@ -99,31 +88,6 @@ class collapscat {
     $style
     </style>\n";
 	}
-  function get_foot() {
-    $url = get_settings('siteurl');
-		echo "<script type=\"text/javascript\">\n";
-		echo "// <![CDATA[\n";
-		echo '/* These variables are part of the Collapsing Categories Plugin 
-Version: 0.9.9
-$Id$
-Copyright 2007 Robert Felty (robfelty.com)
-*/' . "\n";
-    $expandSym="<img src='". $url .
-         "/wp-content/plugins/collapsing-categories/" . 
-         "img/expand.gif' alt='expand' />";
-    $collapseSym="<img src='". $url .
-         "/wp-content/plugins/collapsing-categories/" . 
-         "img/collapse.gif' alt='collapse' />";
-    echo "var expandSym=\"$expandSym\";";
-    echo "var collapseSym=\"$collapseSym\";";
-    echo"
-    addLoadEvent(function() {
-      autoExpandCollapse('collapsCat');
-    });
-    ";
-
-		echo "// ]]>\n</script>\n";
-  }
 }
 
 

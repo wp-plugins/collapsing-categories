@@ -1,96 +1,76 @@
 <?php
-foreach ( (array) $_POST['collapsCat'] as $widget_number => $widget_collapsCat ) {
-  if ($widget_number!='%i%' && !isset($widget_collapsCat['title']) && isset($options[$widget_number]) ) // user clicked cancel
-    continue;
-  $title = strip_tags(stripslashes($widget_collapsCat['title']));
-  $catSortOrder= 'ASC' ;
-  if($widget_collapsCat['catSortOrder'] == 'DESC') {
-    $catSortOrder= 'DESC' ;
-  }
-  $showPosts= 'yes' ;
-  if($widget_collapsCat['showPosts'] == 'no') {
-    $showPosts= 'no' ;
-  }
-  $linkToCat= 'yes' ;
-  if($widget_collapsCat['linkToCat'] == 'no') {
-    $linkToCat= 'no' ;
-  }
-  $showPostCount= 'no' ;
-  if( isset($widget_collapsCat['showPostCount'])) {
-    $showPostCount= 'yes' ;
-  }
-  $showPages= 'no' ;
-  if( isset($widget_collapsCat['showPages'])) {
-    $showPages= 'yes' ;
-  }
-  $addMisc= false ;
-  if( isset($widget_collapsCat['addMisc'])) {
-    $addMisc= true ;
-  }
-  $addMiscTitle= $widget_collapsCat['addMiscTitle'];
-  if($widget_collapsCat['catSort'] == 'catName') {
-    $catSort= 'catName' ;
-  } elseif ($widget_collapsCat['catSort'] == 'catId') {
-    $catSort= 'catId' ;
-  } elseif ($widget_collapsCat['catSort'] == 'catSlug') {
-    $catSort= 'catSlug' ;
-  } elseif ($widget_collapsCat['catSort'] == 'catOrder') {
-    $catSort= 'catOrder' ;
-  } elseif ($widget_collapsCat['catSort'] == 'catCount') {
-    $catSort= 'catCount' ;
-  } elseif ($widget_collapsCat['catSort'] == '') {
-    $catSort= '' ;
-    $catSortOrder= '' ;
-  }
-  $postSortOrder= 'ASC' ;
-  if($widget_collapsCat['postSortOrder'] == 'DESC') {
-    $postSortOrder= 'DESC' ;
-  }
-  if($widget_collapsCat['postSort'] == 'postTitle') {
-    $postSort= 'postTitle' ;
-  } elseif ($widget_collapsCat['postSort'] == 'postId') {
-    $postSort= 'postId' ;
-  } elseif ($widget_collapsCat['postSort'] == 'postComment') {
-    $postSort= 'postComment' ;
-  } elseif ($widget_collapsCat['postSort'] == 'postDate') {
-    $postSort= 'postDate' ;
-  } elseif ($widget_collapsCat['postSort'] == '') {
-    $postSort= '' ;
-    $postSortOrder= '' ;
-  }
-  $expand= $widget_collapsCat['expand'];
-  $customExpand= $widget_collapsCat['customExpand'];
-  $customCollapse= $widget_collapsCat['customCollapse'];
-  $postTitleLength= $widget_collapsCat['postTitleLength'];
-  $olderThan= $widget_collapsCat['olderThan'];
-  $catfeed= $widget_collapsCat['catfeed'];
-  $catTag= $widget_collapsCat['catTag'];
-  $inExclude= 'include' ;
-  if($widget_collapsCat['inExclude'] == 'exclude') {
-    $inExclude= 'exclude' ;
-  }
-  $animate='1';
-  if( !isset($widget_collapsCat['animate'])) {
-    $animate= '0' ;
-  }
-  $debug='0';
-  if(isset($widget_collapsCat['debug'])) {
-    $debug= '1' ;
-  }
-  $excludeAll='0';
-  if(isset($widget_collapsCat['excludeAll'])) {
-    $excludeAll= '1' ;
-  }
-  $inExcludeCats=addslashes($widget_collapsCat['inExcludeCats']);
-  $defaultExpand=addslashes($widget_collapsCat['defaultExpand']);
-  $options[$widget_number] = compact( 'title','showPostCount','catSort',
-      'catSortOrder','defaultExpand','expand', 'customExpand', 
-      'customCollapse', 'inExclude', 'showPosts',
-      'inExcludeCats','postSort','postSortOrder','showPages', 'linkToCat',
-      'catfeed','animate', 'debug','catTag', 'olderThan', 'excludeAll',
-			'postTitleLength', 'addMisc', 'addMiscTitle');
-}
+      $title=$new_instance['title'];
+      if ($new_instance['linkToCat']=='yes') {
+        $linkToCat=true;
+      } else {
+        $linkToCat=false;
+      }
+      if (isset($new_instance['showPostCount']) ) {
+        $showPostCount= true ;
+      } else {  
+        $showPostCount= false ;
+      }
+      $catSortOrder= 'ASC' ;
+      if ($new_instance['catSortOrder'] == 'DESC') {
+        $catSortOrder= 'DESC' ;
+      }
+      if ($new_instance['catSort'] == 'catName') {
+        $catSort= 'catName' ;
+      } elseif ($new_instance['catSort'] == 'catId') {
+        $catSort= 'catId' ;
+      } elseif ($new_instance['catSort'] == 'catSlug') {
+        $catSort= 'catSlug' ;
+      } elseif ($new_instance['catSort'] == 'catOrder') {
+        $catSort= 'catOrder' ;
+      } elseif ($new_instance['catSort'] == 'catCount') {
+        $catSort= 'catCount' ;
+      } elseif ($new_instance['catSort'] == '') {
+        $catSort= '' ;
+        $catSortOrder= '' ;
+      }
+      $postSortOrder= 'ASC' ;
+      if ($new_instance['postSortOrder'] == 'DESC') {
+        $postSortOrder= 'DESC' ;
+      }
+      if ($new_instance['postSort'] == 'postName') {
+        $postSort= 'postName' ;
+      } elseif ($new_instance['postSort'] == 'postId') {
+        $postSort= 'postId' ;
+      } elseif ($new_instance['postSort'] == 'postRating') {
+        $postSort= 'postRating' ;
+      } elseif ($new_instance['postSort'] == 'postUrl') {
+        $postSort= 'postUrl' ;
+      } elseif ($new_instance['postSort'] == '') {
+        $postSort= '' ;
+        $postSortOrder= '' ;
+      }
+      $expand= $new_instance['expand'];
+      $customExpand= $new_instance['customExpand'];
+      $customCollapse= $new_instance['customCollapse'];
+      $catTag= $new_instance['catTag'];
+      $inExclude= 'include' ;
+      if($new_instance['inExclude'] == 'exclude') {
+        $inExclude= 'exclude' ;
+      }
+      $animate=0;
+      if( isset($new_instance['animate'])) {
+        $animate= 1 ;
+      }
+      $debug=false;
+      if (isset($new_instance['debug'])) {
+        $debug= true ;
+      }
+      $inExcludeCats=addslashes($new_instance['inExcludeCats']);
+      $defaultExpand=addslashes($new_instance['defaultExpand']);
+      if ($new_instance['showPosts']=='yes') {
+        $showPosts= true ;
+      } else {
+        $showPosts=false;
+      }
+      $instance = compact(
+          'title','showPostCount','catSort','catSortOrder','defaultExpand',
+          'expand','inExclude','inExcludeCats','postSort','postSortOrder',
+          'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
+          'catTag', 'linkToCat');
 
-update_option('collapsCatOptions', $options);
-$updated = true;
 ?>
