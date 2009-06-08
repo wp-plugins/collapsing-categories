@@ -37,14 +37,14 @@
       if ($new_instance['postSortOrder'] == 'DESC') {
         $postSortOrder= 'DESC' ;
       }
-      if ($new_instance['postSort'] == 'postName') {
-        $postSort= 'postName' ;
+      if ($new_instance['postSort'] == 'postTitle') {
+        $postSort= 'postTitle' ;
       } elseif ($new_instance['postSort'] == 'postId') {
         $postSort= 'postId' ;
-      } elseif ($new_instance['postSort'] == 'postRating') {
-        $postSort= 'postRating' ;
-      } elseif ($new_instance['postSort'] == 'postUrl') {
-        $postSort= 'postUrl' ;
+      } elseif ($new_instance['postSort'] == 'postComments') {
+        $postSort= 'postComments' ;
+      } elseif ($new_instance['postSort'] == 'postDate') {
+        $postSort= 'postDate' ;
       } elseif ($new_instance['postSort'] == '') {
         $postSort= '' ;
         $postSortOrder= '' ;
@@ -73,6 +73,7 @@
       $inExcludeCats=addslashes($new_instance['inExcludeCats']);
       $postDateFormat=addslashes($new_instance['postDateFormat']);
       $defaultExpand=addslashes($new_instance['defaultExpand']);
+      $postTitleLength=addslashes($new_instance['postTitleLength']);
       if ($new_instance['showPosts']=='yes') {
         $showPosts= true ;
       } else {
@@ -83,6 +84,6 @@
           'expand','inExclude','inExcludeCats','postSort','postSortOrder',
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
           'catTag', 'linkToCat', 'showPostDate', 'postDateFormat',
-          'postDateAppend');
+          'postDateAppend','postTitleLength');
 
 ?>

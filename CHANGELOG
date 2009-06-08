@@ -1,6 +1,7 @@
 Collapsing Categories Changelog
 * 1.0.beta (2009.06.08)
     * Added option to show post date
+    * Fixed some options that were broken in 1.0.alpha
 
 * 1.0.alpha (2009.05.17)
     * Widget is compatible with wordpress 2.8 (not backwards compatible with 2.7

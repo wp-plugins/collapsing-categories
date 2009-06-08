@@ -1,9 +1,8 @@
     <p>
      <input type="checkbox" name="<?php echo $this->get_field_name('showPostCount'); ?>" <?php if ($showPostCount)  echo 'checked'; ?> id="<?php echo $this->get_field_id('showPostCount') ?>"></input> <label for="<?php echo $this->get_field_id('showPostCount'); ?>"><?php _e('Show post Count', 'collapsing-categories') ?></label>
-     <input type="checkbox" name="collapsCat[<?php echo $number
-     ?>][showPages]" <?php if ($showPages=='yes')  echo 'checked'; ?>
+     <input type="checkbox" name="<?php echo $this->get_field_name('showPages'); ?>" <?php if ($showPages=='yes')  echo 'checked'; ?>
      id="<?php echo $this->get_field_id('showPages'); ?>"></input> <label
-     for="collapsCatShowPages">Show Pages as well as posts </label>
+     for="<?php echo $this->get_field_id('showPages'); ?>">Show Pages as well as posts </label>
     </p>
    <p>
    <input type="checkbox" name="<?php echo $this->get_field_name('showPostDate'); ?>" <?php if ($showPostDate) echo
@@ -42,9 +41,9 @@
      <input type="radio" name="<?php echo $this->get_field_name('postSortOrder'); ?>" <?php if($postSortOrder=='DESC') echo 'checked'; ?> id="<?php echo $this->get_field_id('postPostDESC') ?>" value='DESC'></input> <label for="<?php echo $this->get_field_id('postPostDESC'); ?>"><?php _e('Descending', 'collapsing-categories') ?></label>
     </p>
     <p>List:
-     <input type="radio" name="<?php echo $this->get_field_name('catTag'); ?>" <?php if($catTag=='cat') echo 'checked'; ?> id="<?php echo $this->get_field_id('catTagCat'); ?>" value='cat'></input> <label for="collapsCat-catTagCat"><?php _e('Categories', 'collapsing-categories') ?></label>
-     <input type="radio" name="<?php echo $this->get_field_name('catTag'); ?>" <?php if($catTag=='tag') echo 'checked'; ?> id="<?php echo $this->get_field_id('catTagTag'); ?>" value='tag'></input> <label for="collapsCat-catTagTag"><?php _e('Tags', 'collapsing-categories') ?></label>
-     <input type="radio" name="<?php echo $this->get_field_name('catTag'); ?>" <?php if($catTag=='both') echo 'checked'; ?> id="<?php echo $this->get_field_id('catTagBoth'); ?>" value='both'></input> <label for="collapsCat-catTagBoth"><?php _e('Categories and Tags', 'collapsing-categories') ?></label>
+     <input type="radio" name="<?php echo $this->get_field_name('catTag'); ?>" <?php if($catTag=='cat') echo 'checked'; ?> id="<?php echo $this->get_field_id('catTagCat'); ?>" value='cat'></input> <label for="<?php echo $this->get_field_id('catTagCat'); ?>"><?php _e('Categories', 'collapsing-categories') ?></label>
+     <input type="radio" name="<?php echo $this->get_field_name('catTag'); ?>" <?php if($catTag=='tag') echo 'checked'; ?> id="<?php echo $this->get_field_id('catTagTag'); ?>" value='tag'></input> <label for="<?php echo $this->get_field_id('catTagTag'); ?>"><?php _e('Tags', 'collapsing-categories') ?></label>
+     <input type="radio" name="<?php echo $this->get_field_name('catTag'); ?>" <?php if($catTag=='both') echo 'checked'; ?> id="<?php echo $this->get_field_id('catTagBoth'); ?>" value='both'></input> <label for="<?php echo $this->get_field_id('catTagBoth'); ?>"><?php _e('Categories and Tags', 'collapsing-categories') ?></label>
     </p>
     <p>Expanding shows:
      <input type="radio" name="<?php echo $this->get_field_name('showPosts'); ?>" <?php if($showPosts==true) echo 'checked'; ?> id="<?php echo $this->get_field_id('showPostsYes') ?>" value='yes'></input> <label for="showPostsYes"><?php _e('Sub-categories and Posts', 'collapsing-categories') ?></label>
@@ -52,16 +51,15 @@
      <?php if($showPosts==false) echo 'checked'; ?> id="showPostsNo" value='no'></input> <label for="showPostsNO"><?php _e('Just Sub-categories', 'collapsing-categories') ?></label>
     </p>
    <p> Truncate Post Title to
-   <input type="text" size='3' name="collapsCat[<?php echo $number
-   ?>][postTitleLength]"
-   id="postTitleLength-<?php echo $number ?>" value="<?php echo
+   <input type="text" size='3' name="<?php echo $this->get_field_name('postTitleLength') ?>"
+   id="<?php echo $this->get_field_id('postTitleLength') ?>" value="<?php echo
    $postTitleLength; ?>"></input> <label
    for="postTitleLength"> characters</label>
     <p>Clicking on category name:<br />
      <input type="radio" name="<?php echo $this->get_field_name('linkToCat'); ?>"
      <?php if($linkToCat) echo 'checked'; ?>
      id="<?php echo $this->get_field_id('linkToCatYes'); ?>"
-     value='yes'></input> <label for="collapsCat-linkToCatYes"><?php _e('Links to category archive', 'collapsing-categories') ?></label>
+     value='yes'></input> <label for="<?php echo $this->get_field_id('linkToCatYes'); ?>"><?php _e('Links to category archive', 'collapsing-categories') ?></label>
      <input type="radio" name="<?php echo $this->get_field_name('linkToCat'); ?>"
      <?php if(!$linkToCat) echo 'checked'; ?>
      id="<?php echo $this->get_field_id('linkToCatNo'); ?>"
@@ -104,7 +102,7 @@ $this->get_field_id('expand0') ?>" value='3'></input>
     <input type="text" name="<?php echo $this->get_field_name('inExcludeCats'); ?>" value="<?php echo $inExcludeCats ?>" id="<?php echo $this->get_field_id('inExcludeCats') ?>"</input> 
    <input type="checkbox" name="<?php echo $this->get_field_name('excludeAll'); ?>" <?php if ($excludeAll=='1') echo
    'checked'; ?> id="<?php echo $this->get_field_id('excludeAll'); ?>"></input> <label
-   for="collapsCat-excludeAll-<?php echo $number ?>">Exclude post X from
+   for="<?php echo $this->get_field_id('excludeAll'); ?>">Exclude post X from
 categories A and B when A or B is excluded</label>
    <p>
    Exclude posts older than <input type='text' name="<?php echo $this->get_field_name('olderThan'); ?>" id="<?php echo $this->get_field_id('olderThan'); ?>" size='3' value='<?php echo $olderThan ?>'></input> days
@@ -119,11 +117,11 @@ categories A and B when A or B is excluded</label>
      <input type="radio" name="<?php echo $this->get_field_name('catfeed'); ?>"
      <?php if($catfeed=='none') echo 'checked'; ?>
      id="<?php echo $this->get_field_id('catfeedNone'); ?>"
-     value='none'></input> <label for="collapsCat-catfeedNone"><?php _e('None', 'collapsing-categories') ?></label>
+     value='none'></input> <label for="<?php echo $this->get_field_id('catfeedNone'); ?>"><?php _e('None', 'collapsing-categories') ?></label>
      <input type="radio" name="<?php echo $this->get_field_name('catfeed'); ?>"
      <?php if($catfeed=='text') echo 'checked'; ?>
      id="<?php echo $this->get_field_id('catfeedText'); ?>"
-     value='text'></input> <label for="collapsCat-catfeedYes"><?php _e('text (RSS)', 'collapsing-categories') ?></label>
+     value='text'></input> <label for="<?php echo $this->get_field_id('catfeedText'); ?>"><?php _e('text (RSS)', 'collapsing-categories') ?></label>
      <input type="radio" name="<?php echo $this->get_field_name('catfeed'); ?>"
      <?php if($catfeed=='image') echo 'checked'; ?>
      id="<?php echo $this->get_field_id('catfeedImage'); ?>"
@@ -131,9 +129,7 @@ categories A and B when A or B is excluded</label>
     </p>
    <p>
      <input type="checkbox" name="<?php echo $this->get_field_name('addMisc'); ?>"
-<?php if ($addMisc)  echo 'checked'; ?> id="collapsCat-addMisc-<?php echo
-$number ?>"></input>    When category X has sub-categories, group posts in a sub-category into a <input type='text' name="collapsCat[<?php echo
-$number ?>][addMiscTitle]" id="<?php echo $this->get_field_id('addMisc'); ?>" size='15' value='<?php echo $addMiscTitle ?>'></input> category
+<?php if ($addMisc)  echo 'checked'; ?> id="<?php echo $this->get_field_id('addMisc'); ?>"></input>    When category X has sub-categories, group posts in a sub-category into a <input type='text' name="<?php echo $this->get_field_name('addMiscTitle'); ?>" id="<?php echo $this->get_field_id('addMiscTitle'); ?>" size='15' value='<?php echo $addMiscTitle ?>'></input> category
    </p>
    <p>
      <input type="checkbox" name="<?php echo $this->get_field_name('debug'); ?>"
