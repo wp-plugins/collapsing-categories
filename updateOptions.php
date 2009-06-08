@@ -10,6 +10,11 @@
       } else {  
         $showPostCount= false ;
       }
+      if (isset($new_instance['showPostDate']) ) {
+        $showPostDate= true ;
+      } else {  
+        $showPostDate= false ;
+      }
       $catSortOrder= 'ASC' ;
       if ($new_instance['catSortOrder'] == 'DESC') {
         $catSortOrder= 'DESC' ;
@@ -52,15 +57,21 @@
       if($new_instance['inExclude'] == 'exclude') {
         $inExclude= 'exclude' ;
       }
-      $animate=0;
+      $postDateAppend= 'after' ;
+      if($new_instance['postDateAppend'] == 'before') {
+        $postDateAppend= 'before' ;
+      }
       if( isset($new_instance['animate'])) {
         $animate= 1 ;
+      } else {
+        $animate=0;
       }
       $debug=false;
       if (isset($new_instance['debug'])) {
         $debug= true ;
       }
       $inExcludeCats=addslashes($new_instance['inExcludeCats']);
+      $postDateFormat=addslashes($new_instance['postDateFormat']);
       $defaultExpand=addslashes($new_instance['defaultExpand']);
       if ($new_instance['showPosts']=='yes') {
         $showPosts= true ;
@@ -71,6 +82,7 @@
           'title','showPostCount','catSort','catSortOrder','defaultExpand',
           'expand','inExclude','inExcludeCats','postSort','postSortOrder',
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
-          'catTag', 'linkToCat');
+          'catTag', 'linkToCat', 'showPostDate', 'postDateFormat',
+          'postDateAppend');
 
 ?>

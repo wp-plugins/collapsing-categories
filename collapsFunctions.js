@@ -34,7 +34,7 @@ function readCookie(name) {
 function eraseCookie(name) {
   createCookie(name,"",-1);
 }
-function collapsAddLoadEvent(func) {
+function addLoadEvent(func) {
   var oldonload = window.onload;
   if (typeof window.onload != 'function') {
     window.onload = func;
@@ -49,10 +49,10 @@ function collapsAddLoadEvent(func) {
 }
 function autoExpandCollapse(collapsClass) {
   var cookies = document.cookie.split(';');
-  var cookiePattern = new RegExp(collapsClass+'(-[0-9]+|List-[0-9]+-[0-9]+|List-[0-9]+)');
+  var cookiePattern = new RegExp(collapsClass+'(-[0-9]+|List-[0-9]+-[0-9]+)');
   var classPattern = new RegExp('^' + collapsClass);
-  var hide = collapsClass + ' ' + 'collapse'
-  var show = collapsClass + ' ' + 'expand'
+  var hide = collapsClass + ' ' + 'hide'
+  var show = collapsClass + ' ' + 'show'
   for (var cookieIndex=0; cookieIndex<cookies.length; cookieIndex++) {
     var cookieparts= cookies[cookieIndex].split('=');
     var cookiename=cookieparts[0].trim();
@@ -68,10 +68,11 @@ function autoExpandCollapse(collapsClass) {
               if ((theSpan.className == show && cookievalue ==1) ||
                   (theSpan.className == hide && cookievalue ==0)) {
                 var theOnclick=theSpan.onclick+"";
+                //var matches=theOnclick.match(/.*\(event, ?"([^"]*)".*/);
                 var matches=theOnclick.match(/.*\(event, ?"([^"]*)", ?"([^"]*)".*\)/);
                 var expand=matches[1].replace(/\\u25BA/, '\u25BA');
                 var collapse=matches[2].replace(/\\u25BC/, '\u25BC');
-                collapse=collapse.replace(/\\u2014/, '\u2014');
+                var collapse=matches[2].replace(/\\u2014/, '\u2014');
                 expandCollapse(theSpan,expand,collapse,0,collapsClass);
               }
             }
@@ -104,6 +105,7 @@ function expandCollapse( e, expand,collapse, animate, collapsClass ) {
   srcList = src.parentNode;
   if (src.nodeName.toLowerCase() == 'img' ||
       src.parentNode.nodeName.toLowerCase() == 'h2') {
+    //src=src.parentNode;
     srcList = src.parentNode.parentNode;
   } else if (src.parentNode.parentNode.nodeName.toLowerCase() == 'h2') {
     src=src.parentNode;
@@ -120,8 +122,8 @@ function expandCollapse( e, expand,collapse, animate, collapsClass ) {
       childList = srcList.childNodes[i];
     }
   }
-  var hide = collapsClass + ' ' + 'collapse'
-  var show = collapsClass + ' ' + 'expand'
+  var hide = collapsClass + ' ' + 'hide'
+  var show = collapsClass + ' ' + 'show'
   var theSpan = src.childNodes[0];
   var theId= childList.getAttribute('id');
   if (theSpan.className!='sym') {

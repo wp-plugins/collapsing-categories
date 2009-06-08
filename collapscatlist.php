@@ -26,6 +26,22 @@ This file is part of Collapsing Categories
 */
 
 // Helper functions
+function getCollapsCatLink($cat,$catlink,$self) {
+  if (empty($catlink)) {
+    if ($cat->taxonomy=='post_tag') {
+      $link = "<a $self href='".get_tag_link($cat->term_id)."' ";
+    } else {
+      $link = "<a $self href='".get_category_link($cat->term_id)."' ";
+    }
+  } else {
+    if ($cat->taxonomy=='post_tag') {
+      $link = "<a $self href='".get_tag_link($cat)."' ";
+    } else {
+      $link = "<a $self href='".get_category_link($cat)."' ";
+    }
+  }
+  return($link);
+}
 function miscPosts($cat,$catlink,$subCatPostCount2, $posttext) {
   /* this function will group posts into a miscellaneous sub-category */
   global $options, $expandSym,$expandSymJS;
@@ -36,12 +52,7 @@ function miscPosts($cat,$catlink,$subCatPostCount2, $posttext) {
       "\"collapsCat\"); return false'>".
       "<span class='sym'>$expandSym</span>";
   if ($linkToCat=='yes') {
-    if (empty($catlink)) {
-      $thisLink = "<a $self href='".
-          get_category_link($cat->term_id)."' ";
-    } else {
-      $thisLink = "<a $self href='".get_category_link($cat)."' ";
-    }
+    $thisLink=getCollapsCatLink($cat,$catlink,$self);
     $miscPosts.="</span>$thisLink>$addMiscTitle</a>";
   } else {
     $miscPosts.="$addMiscTitle</span>";
@@ -98,7 +109,8 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
           }
           $date=preg_replace("/-/", '/', $post2->date);
           $name=$post2->post_name;
-          $title_text = htmlspecialchars(strip_tags(__($post2->post_title)), 
+          $title_text = htmlspecialchars(strip_tags(__($post2->post_title),
+          'collapsing-categories'), 
               ENT_QUOTES);
           $tmp_text = '';
           if ($postTitleLength> 0 && strlen($title_text) > $postTitleLength ) {
@@ -106,6 +118,14 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
               $tmp_text .= ' &hellip;';
           }
           $linktext = $tmp_text == '' ? $title_text : $tmp_text;
+          if ($showPostDate) {
+            $theDate = mysql2date($postDateFormat, $post2->post_date );
+            if ($postDateAppend=='before') {
+              $linktext = "$theDate $linktext";
+            } else {
+              $linktext = "$linktext $theDate";
+            }
+          }
           $posttext2.= "<li class='collapsCatPost'><a $self
               href='".get_permalink($post2).
               "' title='$title_text'>$linktext</a></li>\n";
@@ -164,10 +184,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
           if ($showPosts) {
             if ($expanded=='block') {
-              $showHide='collapse';
+              $showHide='hide';
               $symbol=$collapseSym;
             } else {
-              $showHide='expand';
+              $showHide='show';
               $symbol=$expandSym;
             }
             $subCatLinks.=( "<li class='collapsCat'>".
@@ -178,14 +198,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           } else {
             $subCatLinks.=( "<li class='collapsCatPost'>" );
           }
-          if (empty($catlink)) {
-            $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
-          } else {
-            $link2 = "<a $self href='".get_category_link($cat2)."' ";
-          }
+          $link2= getCollapsCatLink($cat2,$catlink,$self);
           if ( empty($cat2->description) ) {
             $link2 .= 'title="'. 
-                sprintf(__("View all posts filed under %s"), 
+                sprintf(__("View all posts filed under %s",
+                'collapsing-categories'), 
                 wp_specialchars(apply_filters('single_cat_title',$cat2->name))) . '"';
           } else {
             $link2 .= 'title="' . 
@@ -217,10 +234,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             continue;
           }
           if ($expanded=='block') {
-            $showHide='collapse';
+            $showHide='hide';
             $symbol=$collapseSym;
           } else {
-            $showHide='expand';
+            $showHide='show';
             $symbol=$expandSym;
           }
           $subCatLinks.=( "<li class='collapsCat'>".
@@ -228,11 +245,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               "onclick='expandCollapse(event, \"$expandSymJS\",".
               "\"$collapseSymJS\", $animate, \"collapsCat\"); return false'>" . 
               "<span class='sym'>$symbol</span>" );
-          if (empty($catlink)) {
-            $link2 = "<a $self href='".get_category_link($cat2->term_id)."' ";
-          } else {
-            $link2 = "<a $self href='".get_category_link($cat2)."' ";
-          }
+          $link2=getCollapsCatLink($cat,$catlink,$self);
           if ( empty($cat2->description) ) {
             $link2 .= 'title="'. 
                 sprintf(__("View all posts filed under %s"), 
@@ -351,7 +364,7 @@ function list_categories($args='') {
   }
 
   $isPage='';
-  if ($showPages=='no') {
+  if (!$showPages) {
     $isPage="AND p.post_type='post'";
   }
   if ($catSort!='') {
@@ -489,10 +502,10 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         }
         if ($showPosts || $subCatPostCount>0) {
           if ($expanded=='block') {
-            $showHide='collapse';
+            $showHide='hide';
             $symbol=$collapseSym;
           } else {
-            $showHide='expand';
+            $showHide='show';
             $symbol=$expandSym;
           }
           $span= "      <li class='collapsCat'>".
@@ -503,14 +516,11 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         } else {
           $span = "      <li class='collapsCatPost'>";
         }
-        if (empty($catlink)) {
-          $link = "<a $self href='".get_category_link($cat->term_id)."' ";
-        } else {
-          $link = "<a $self href='".get_category_link($cat)."' ";
-        }
+        $link=getCollapsCatLink($cat,$catlink,$self);
         if ( empty($cat->description) ) {
           $link .= 'title="'. 
-              sprintf(__("View all posts filed under %s"),
+              sprintf(__("View all posts filed under %s",
+              'collapsing-categories'),
               wp_specialchars(apply_filters('single_cat_title',$cat->name))) . '"';
         } else {
           $link .= 'title="' . wp_specialchars(apply_filters('description',$cat->description,$cat)) . '"';
@@ -549,7 +559,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 									$date=preg_replace("/-/", '/', $post->date);
 									$name=$post->post_name;
 									$title_text = htmlspecialchars(strip_tags(
-									    __($post->post_title)), ENT_QUOTES);
+									    __($post->post_title), 'collapsing-categories'), ENT_QUOTES);
 									$tmp_text = '';
 									if ($postTitleLength> 0 && 
 									    strlen($title_text) > $postTitleLength ) {
@@ -557,6 +567,14 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 											$tmp_text .= ' &hellip;';
 									}
 									$linktext = $tmp_text == '' ? $title_text : $tmp_text;
+                  if ($showPostDate) {
+                    $theDate = mysql2date($postDateFormat, $post->post_date );
+                    if ($postDateAppend=='before') {
+                      $linktext = "$theDate $linktext";
+                    } else {
+                      $linktext = "$linktext $theDate";
+                    }
+                  }
 									$posttext.= "<li class='collapsCatPost'><a $self
 										href='".get_permalink($post).
 										"' title='$title_text'>$linktext</a></li>\n";
