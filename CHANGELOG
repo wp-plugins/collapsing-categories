@@ -1,4 +1,15 @@
 Collapsing Categories Changelog
+* 1.0.beta (2009.06.08)
+    * Added option to show post date
+
+* 1.0.alpha (2009.05.17)
+    * Widget is compatible with wordpress 2.8 (not backwards compatible with 2.7
+      and previous). If you are using wordpress 2.7.1 or previous, please use
+      collapsing archives version 1.1.4 or earlier
+    * Now includes several default styling templates
+    * Changed hide and show classed to collapse and expand to avoid CSS class
+    * Can now add parameters to the collapscat function if you choose not to use
+      the widget (see options section below)
 
 * 1.0.alpha (2009.05.01)
     * Compatible with wordpress 2.8 widget api (incompatible with 2.7.1 and

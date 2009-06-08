@@ -160,11 +160,14 @@ style, in the same manner as the `wp_list_categories` function.
    'postSort' => 'postTitle',
    'expand' => '0',
    'defaultExpand' => '',
-   'debug'=>'0',
    'postTitleLength' => 0,
    'animate' => 0,
    'catfeed' => 'none',
-   'catTag' => 'cat'
+   'catTag' => 'cat',
+   'showPostDate' => false,
+   'postDateAppend' => 'after',
+   'postDateFormat' => 'm/d',
+   'debug'=>'0'
 );
 `
 
@@ -230,6 +233,15 @@ style, in the same manner as the `wp_list_categories` function.
         * 'cat' (default)
         * 'tag'
         * 'both'
+*   showPostDate 
+    * When true, show the date of each post
+*   postDateAppend => 'after',
+    * Show the date before or after the post title. Possible values:
+        * 'before'
+        * 'after'
+*   postDateFormat
+    * What format the post date is in. This uses the standard php date
+      formatting codes
 * debug
     * When set to true, extra debugging information will be displayed in the
       underlying code of your page (but not visible from the browser). Use
