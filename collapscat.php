@@ -95,7 +95,7 @@ class collapscat {
 		echo "<script type=\"text/javascript\">\n";
 		echo "// <![CDATA[\n";
 		echo '/* These variables are part of the Collapsing Categories Plugin 
-		      *  Version: 1.0.alpha
+		      *  Version: 1.0.beta
 		      *  $Id$
 					* Copyright 2007 Robert Felty (robfelty.com)
 					*/' . "\n";

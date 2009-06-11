@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 1.0.betabetaalpha
+Collapsing Categories version: 1.0.beta
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -616,7 +616,7 @@ $url = get_settings('siteurl');
 echo "<script type=\"text/javascript\">\n";
 echo "// <![CDATA[\n";
 echo '/* These variables are part of the Collapsing Categories Plugin 
-      *  Version: 1.0.betabetaalpha
+      *  Version: 1.0.beta
       *  $Id: collapscat.php 107679 2009-04-04 14:51:22Z robfelty $
       * Copyright 2007 Robert Felty (robfelty.com)
       */' . "\n";
