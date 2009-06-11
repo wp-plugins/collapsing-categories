@@ -629,7 +629,7 @@ $collapseSym="<img src='". $url .
 echo "var expandSym=\"$expandSym\";";
 echo "var collapseSym=\"$collapseSym\";";
 echo"
-addLoadEvent(function() {
+collapsAddLoadEvent(function() {
   autoExpandCollapse('collapsCat');
 });
 ";
