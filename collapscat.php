@@ -124,5 +124,7 @@ function collapsCat($number) {
   list_categories($number);
   }
 }
-include('collapscatwidget.php');
+$version = get_bloginfo('version');
+if (preg_match('/^2.8/', $version)) 
+  include('collapscatwidget.php');
 ?>
