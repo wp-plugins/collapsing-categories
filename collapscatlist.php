@@ -184,10 +184,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
           if ($showPosts) {
             if ($expanded=='block') {
-              $showHide='hide';
+              $showHide='collapse';
               $symbol=$collapseSym;
             } else {
-              $showHide='show';
+              $showHide='expand';
               $symbol=$expandSym;
             }
             $subCatLinks.=( "<li class='collapsCat'>".
@@ -234,10 +234,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             continue;
           }
           if ($expanded=='block') {
-            $showHide='hide';
+            $showHide='collapse';
             $symbol=$collapseSym;
           } else {
-            $showHide='show';
+            $showHide='expand';
             $symbol=$expandSym;
           }
           $subCatLinks.=( "<li class='collapsCat'>".
@@ -502,10 +502,10 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         }
         if ($showPosts || $subCatPostCount>0) {
           if ($expanded=='block') {
-            $showHide='hide';
+            $showHide='collapse';
             $symbol=$collapseSym;
           } else {
-            $showHide='show';
+            $showHide='expand';
             $symbol=$expandSym;
           }
           $span= "      <li class='collapsCat'>".
