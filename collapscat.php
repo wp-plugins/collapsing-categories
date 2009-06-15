@@ -125,6 +125,6 @@ function collapsCat($number) {
   }
 }
 $version = get_bloginfo('version');
-if (preg_match('/^2.8/', $version)) 
+if (preg_match('/^2\.[8-9]/', $version)) 
   include('collapscatwidget.php');
 ?>
