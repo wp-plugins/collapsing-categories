@@ -51,8 +51,8 @@ function autoExpandCollapse(collapsClass) {
   var cookies = document.cookie.split(';');
   var cookiePattern = new RegExp(collapsClass+'(-[0-9]+|List-[0-9]+-[0-9]+)');
   var classPattern = new RegExp('^' + collapsClass);
-  var hide = collapsClass + ' ' + 'hide'
-  var show = collapsClass + ' ' + 'show'
+  var hide = collapsClass + ' ' + 'collapse'
+  var show = collapsClass + ' ' + 'expand'
   for (var cookieIndex=0; cookieIndex<cookies.length; cookieIndex++) {
     var cookieparts= cookies[cookieIndex].split('=');
     var cookiename=cookieparts[0].trim();
