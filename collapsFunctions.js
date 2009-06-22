@@ -1,4 +1,4 @@
-/*  Collapse Functions, version 1.4
+/*  Collapse Functions, version 1.5
  *
  *--------------------------------------------------------------------------*/
 String.prototype.trim = function() {
@@ -49,7 +49,7 @@ function collapsAddLoadEvent(func) {
 }
 function autoExpandCollapse(collapsClass) {
   var cookies = document.cookie.split(';');
-  var cookiePattern = new RegExp(collapsClass+'(-[0-9]+|List-[0-9]+-[0-9]+)');
+  var cookiePattern = new RegExp(collapsClass+'(-[0-9]+|List-[0-9]+-[0-9]+|List-[0-9]+)');
   var classPattern = new RegExp('^' + collapsClass);
   var hide = collapsClass + ' ' + 'collapse'
   var show = collapsClass + ' ' + 'expand'
@@ -68,11 +68,10 @@ function autoExpandCollapse(collapsClass) {
               if ((theSpan.className == show && cookievalue ==1) ||
                   (theSpan.className == hide && cookievalue ==0)) {
                 var theOnclick=theSpan.onclick+"";
-                //var matches=theOnclick.match(/.*\(event, ?"([^"]*)".*/);
                 var matches=theOnclick.match(/.*\(event, ?"([^"]*)", ?"([^"]*)".*\)/);
                 var expand=matches[1].replace(/\\u25BA/, '\u25BA');
                 var collapse=matches[2].replace(/\\u25BC/, '\u25BC');
-                var collapse=matches[2].replace(/\\u2014/, '\u2014');
+                collapse=collapse.replace(/\\u2014/, '\u2014');
                 expandCollapse(theSpan,expand,collapse,0,collapsClass);
               }
             }
@@ -105,8 +104,8 @@ function expandCollapse( e, expand,collapse, animate, collapsClass ) {
   srcList = src.parentNode;
   if (src.nodeName.toLowerCase() == 'img' ||
       src.parentNode.nodeName.toLowerCase() == 'h2') {
-    //src=src.parentNode;
     srcList = src.parentNode.parentNode;
+    src=src.parentNode;
   } else if (src.parentNode.parentNode.nodeName.toLowerCase() == 'h2') {
     src=src.parentNode;
     srcList = src.parentNode.parentNode;
@@ -115,6 +114,9 @@ function expandCollapse( e, expand,collapse, animate, collapsClass ) {
     srcList= srcList.parentNode;
     src= src.parentNode;
   }
+  if (srcList.nodeName.toLowerCase() == 'h2') {
+    srcList=srcList.parentNode;
+  }
   childList = null;
 
   for( i = 0; i < srcList.childNodes.length; i++ ) {
@@ -122,12 +124,13 @@ function expandCollapse( e, expand,collapse, animate, collapsClass ) {
       childList = srcList.childNodes[i];
     }
   }
-  var hide = collapsClass + ' ' + 'hide'
-  var show = collapsClass + ' ' + 'show'
+  var hide = collapsClass + ' ' + 'collapse'
+  var show = collapsClass + ' ' + 'expand'
   var theSpan = src.childNodes[0];
   var theId= childList.getAttribute('id');
   if (theSpan.className!='sym') {
     theSpan = theSpan.childNodes[0];
+    //alert(childList.getAttribute('id'));
     theId = childList.childNodes[0].getAttribute('id');
   }
   if( src.getAttribute( 'class' ) == hide ) {

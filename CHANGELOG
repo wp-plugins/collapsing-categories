@@ -1,4 +1,7 @@
 Collapsing Categories Changelog
+* 1.0.1 (2009.06.22)
+    * Fixed some problems with cookies on page load
+
 * 1.0.beta (2009.06.08)
     * Added option to show post date
     * Fixed some options that were broken in 1.0.alpha

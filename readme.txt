@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.8
 Tested up to: 2.8
-Stable tag: 1.0.beta
+Stable tag: 1.0.1
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -25,6 +25,15 @@ there is a good chance that there may be some bugs.
 
 If you prefer to insert code into your theme manually instead of using
 widgets, please note that the manual installation instructions have changed. 
+
+= What's New?=
+
+* 1.0.1 (2009.06.22)
+    * Fixed some problems with cookies on page load
+
+* 1.0.beta (2009.06.08)
+    * Added option to show post date
+    * Fixed some options that were broken in 1.0.alpha
 
 == Installation ==
 
@@ -270,6 +279,13 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == HISTORY ==
+
+* 1.0.1 (2009.06.22)
+    * Fixed some problems with cookies on page load
+
+* 1.0.beta (2009.06.08)
+    * Added option to show post date
+    * Fixed some options that were broken in 1.0.alpha
 
 * 1.0.alpha (2009.05.01)
     * Compatible with wordpress 2.8 widget api (incompatible with 2.7.1 and
