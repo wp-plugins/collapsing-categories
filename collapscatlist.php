@@ -26,6 +26,14 @@ This file is part of Collapsing Categories
 */
 
 // Helper functions
+global $advanced;
+if (file_exists(dirname(__FILE__) . "/advanced-config.php")) {
+  include('advanced-config.php');
+} else {
+  include('advanced-config-sample.php');
+}
+extract($advanced);
+
 function getCollapsCatLink($cat,$catlink,$self) {
   if (empty($catlink)) {
     if ($cat->taxonomy=='post_tag') {
@@ -152,9 +160,11 @@ function addFeedLink($feed,$cat) {
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$expanded, $depth) {
   global $options,$expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
-      $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat;
+      $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat,
+      $advanced;
   $subCatLinks='';
   extract($options);
+  extract($advanced);
   $subCatPosts=array();
   $link2='';
   if ($depth==0) {
@@ -173,7 +183,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $theID='collapsCat-' . $cat2->term_id . "-$number";
         if (in_array($cat2->name, $autoExpand) ||
             in_array($cat2->slug, $autoExpand) ||
-            in_array($theID, array_keys($_COOKIE))) {
+            ($useCookies && $_COOKIE[$theID]==1)) {
           $expanded='block';
         }
         if (!in_array($cat2->term_id, $parents)) {
@@ -301,10 +311,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 function list_categories($args='') {
   global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
       $wpdb,$options,$post, $autoExpand, $postsToExclude, 
-      $thisCat, $thisPost, $wp_rewrite, $catlink, $postsInCat;
+      $thisCat, $thisPost, $wp_rewrite, $catlink, $postsInCat, $advanced;
   include('defaults.php');
   $options=wp_parse_args($args, $defaults);
   extract($options);
+  extract($advanced);
   $catlink = $wp_rewrite->get_category_permastruct();
   if (is_single() || is_category() || is_tag()) {
     $cur_category = get_the_category();
@@ -497,7 +508,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         $theID='collapsCat-' . $cat->term_id . "-$number";
         if (in_array($cat->name, $autoExpand) ||
             in_array($cat->slug, $autoExpand) ||
-            in_array($theID, array_keys($_COOKIE))) {
+            ($useCookies && $_COOKIE[$theID]==1)) {
           $expanded='block';
         }
         if ($showPosts || $subCatPostCount>0) {
@@ -626,12 +637,14 @@ $expandSym="<img src='". $url .
 $collapseSym="<img src='". $url .
      "/wp-content/plugins/collapsing-categories/" . 
      "img/collapse.gif' alt='collapse' />";
-echo "var expandSym=\"$expandSym\";";
-echo "var collapseSym=\"$collapseSym\";";
-echo"
-collapsAddLoadEvent(function() {
-  autoExpandCollapse('collapsCat');
-});
-";
+echo "var expandSym=\"$expandSym\";\n";
+echo "var collapseSym=\"$collapseSym\";\n";
+if ($useCookies) {
+  echo"
+  collapsAddLoadEvent(function() {
+    autoExpandCollapse('collapsCat');
+  });
+  ";
+}
 echo "// ]]>\n</script>\n";
 ?>

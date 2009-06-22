@@ -27,6 +27,9 @@ If you prefer to insert code into your theme manually instead of using
 widgets, please note that the manual installation instructions have changed. 
 
 = What's New?=
+* 1.0.2 (2009.06.24)
+    * Added advanced options interface
+    * Added option to ignore cookies (categories always start off collapsed)
 
 * 1.0.1 (2009.06.22)
     * Fixed some problems with cookies on page load
@@ -131,16 +134,10 @@ Are you using categories or tags? By default, collapsing categories only lists
 categories. Please check the options in the settings page (or in the widget if
 you are using the widget)
 
-= Is there a way for the settings chosen in the widget to apply to a manual instance? =
+= I don't want categories to be expanded based on cookies =
 
-Currently the plugin is designed to be used either as a widget or manually,
-but not both. Here is a workaround. Find out the id number of your collapsing
-category widget by looking at the html source. You should see something like:
-`<li id="collapscat-299723351" class="widget collapsCat"><h2
-class="widgettitle">Categories</h2>`
+See the Advanced options section for how to achieve this.
 
-Then, insert the following code where you would like to have it:
-`<?php collapsCat(299723351) ?>`
 
 == Screenshots ==
 
@@ -265,6 +262,13 @@ This will produce a list with:
 * using images to mark collapsing and expanding
 * exclude posts from  the categories general and uncategorized
 
+= Advanced Options =
+
+There is a file included called advanced-config-sample.php. If you wish to set
+some advanced options, copy this file to advanced-config.php, and modify any
+settings you wish. Currently there is only one option - useCookies, which is
+true by default. Setting this to false will have the effect that categories
+are always closed on page load, even if you had expanded one previously.
 
 == Demo ==
 
