@@ -53,6 +53,7 @@
       $customExpand= $new_instance['customExpand'];
       $customCollapse= $new_instance['customCollapse'];
       $catTag= $new_instance['catTag'];
+      $olderThan= $new_instance['olderThan'];
       $inExclude= 'include' ;
       if($new_instance['inExclude'] == 'exclude') {
         $inExclude= 'exclude' ;
@@ -84,6 +85,6 @@
           'expand','inExclude','inExcludeCats','postSort','postSortOrder',
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
           'catTag', 'linkToCat', 'showPostDate', 'postDateFormat',
-          'postDateAppend','postTitleLength');
+          'olderThan', 'postDateAppend','postTitleLength');
 
 ?>

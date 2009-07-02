@@ -1,4 +1,7 @@
 Collapsing Categories Changelog
+* 1.0.2 (2009.07.xx)
+    * Fixed older than option
+
 * 1.0.1 (2009.06.22)
     * Fixed some problems with cookies on page load
 
