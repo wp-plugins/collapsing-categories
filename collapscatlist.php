@@ -420,7 +420,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
   if ($showPosts) {
     $postsInCat=array();
     $postquery= "select ID, slug, date(post_date) as date, post_status,
-         post_date, post_title, post_name, name, object_id,
+         post_date, post_author, post_title, post_name, name, object_id,
          t.term_id from $wpdb->term_relationships AS tr, $wpdb->posts AS p,
          $wpdb->terms AS t, $wpdb->term_taxonomy AS tt
          WHERE tt.term_id = t.term_id 

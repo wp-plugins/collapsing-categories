@@ -2,10 +2,13 @@ Collapsing Categories Changelog
 * 1.0.2 (2009.07.07)
     * Fixed older than option
     * Added advanced options section in configuration
-    * Added option to remember expanding and collapsing for each visitor
-      (using cookies)
+    * Added advanced option to remember expanding and collapsing for each
+      visitor (using cookies)
     * Now issuing a correct id for each ul when using widgets 
     * Small change in manual installation
+    * TODO: Added advanced option to expand category when viewing the category
+      archive page
+    * Permalinks which use author now work correctly
 
 * 1.0.1 (2009.06.22)
     * Fixed some problems with cookies on page load
