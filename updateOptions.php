@@ -71,6 +71,10 @@
       if (isset($new_instance['debug'])) {
         $debug= true ;
       }
+      $useCookies=true;
+      if (!isset($new_instance['useCookies'])) {
+        $useCookies= false ;
+      }
       $inExcludeCats=addslashes($new_instance['inExcludeCats']);
       $postDateFormat=addslashes($new_instance['postDateFormat']);
       $defaultExpand=addslashes($new_instance['defaultExpand']);
@@ -85,6 +89,6 @@
           'expand','inExclude','inExcludeCats','postSort','postSortOrder',
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
           'catTag', 'linkToCat', 'showPostDate', 'postDateFormat',
-          'olderThan', 'postDateAppend','postTitleLength');
+          'olderThan', 'postDateAppend','postTitleLength', 'useCookies');
 
 ?>

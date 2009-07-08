@@ -22,6 +22,7 @@ $defaults=array(
    'catTag' => 'cat',
    'postDateAppend' => 'after',
    'postDateFormat' => 'm/d',
-   'showPostDate' => false
+   'showPostDate' => false,
+   'useCookies' => true
 );
 ?>

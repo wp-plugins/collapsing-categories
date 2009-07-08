@@ -26,13 +26,6 @@ This file is part of Collapsing Categories
 */
 
 // Helper functions
-global $advanced;
-if (file_exists(dirname(__FILE__) . "/advanced-config.php")) {
-  include('advanced-config.php');
-} else {
-  include('advanced-config-sample.php');
-}
-extract($advanced);
 
 function getCollapsCatLink($cat,$catlink,$self) {
   if (empty($catlink)) {
@@ -160,11 +153,9 @@ function addFeedLink($feed,$cat) {
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$expanded, $depth) {
   global $options,$expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
-      $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat,
-      $advanced;
+      $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat;
   $subCatLinks='';
   extract($options);
-  extract($advanced);
   $subCatPosts=array();
   $link2='';
   if ($depth==0) {
@@ -311,11 +302,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 function list_categories($args='') {
   global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
       $wpdb,$options,$post, $autoExpand, $postsToExclude, 
-      $thisCat, $thisPost, $wp_rewrite, $catlink, $postsInCat, $advanced;
+      $thisCat, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   include('defaults.php');
   $options=wp_parse_args($args, $defaults);
   extract($options);
-  extract($advanced);
   $catlink = $wp_rewrite->get_category_permastruct();
   if (is_single() || is_category() || is_tag()) {
     $cur_category = get_the_category();
@@ -339,7 +329,7 @@ function list_categories($args='') {
     $expandSym=$customExpand;
     $collapseSym=$customCollapse;
   } else {
-    $expandSym='►';
+    $expandSym='▶';
     $collapseSym='▼';
   }
   if ($expand==3) {
@@ -421,7 +411,7 @@ function list_categories($args='') {
 			date('Y-m-d', $now-date('U',$olderThan*60*60*24)) . "'";
 	}
 
-  echo "\n    <ul class='collapsCatList'>\n";
+  //echo "\n    <ul class='collapsCatList'>\n";
 
 $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN
 $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
@@ -621,7 +611,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
       } // end if theCount>0
     }
   }
-  echo "    </ul> <!-- ending collapsCat -->\n";
+//  echo "    </ul> <!-- ending collapsCat -->\n";
 }
 $url = get_settings('siteurl');
 echo "<script type=\"text/javascript\">\n";

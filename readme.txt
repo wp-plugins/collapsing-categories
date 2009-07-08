@@ -27,16 +27,21 @@ If you prefer to insert code into your theme manually instead of using
 widgets, please note that the manual installation instructions have changed. 
 
 = What's New?=
+
+* 1.0.3 (2009.07.07)
+    * Fixed older than option
+    * Simplified advanced options section in configuration
+    * Simplified option to remember expanding and collapsing for each visitor
+      (using cookies)
+    * Now issuing a correct id for each ul when using widgets 
+    * Small change in manual installation
+
 * 1.0.2 (2009.06.24)
     * Added advanced options interface
     * Added option to ignore cookies (categories always start off collapsed)
 
 * 1.0.1 (2009.06.22)
     * Fixed some problems with cookies on page load
-
-* 1.0.beta (2009.06.08)
-    * Added option to show post date
-    * Fixed some options that were broken in 1.0.alpha
 
 == Installation ==
 
@@ -59,13 +64,13 @@ in sidebar.php). See the Options section for more information on specifying
 options.
 `
 <?php 
+echo "<ul>\n";
 if (function_exists('collapsCat')) {
   collapsCat();
 } else {
-  echo "<ul>\n";
   wp_get_categories(your_options_here);
-  echo "</ul>\n";
 }
+echo "</ul>\n";
 ?>
 `
 
@@ -134,11 +139,6 @@ Are you using categories or tags? By default, collapsing categories only lists
 categories. Please check the options in the settings page (or in the widget if
 you are using the widget)
 
-= I don't want categories to be expanded based on cookies =
-
-See the Advanced options section for how to achieve this.
-
-
 == Screenshots ==
 
 1. a few expanded categories with default theme, showing nested categories
@@ -173,6 +173,7 @@ style, in the same manner as the `wp_list_categories` function.
    'showPostDate' => false,
    'postDateAppend' => 'after',
    'postDateFormat' => 'm/d',
+   'useCookies' => true,
    'debug'=>'0'
 );
 `
@@ -241,13 +242,19 @@ style, in the same manner as the `wp_list_categories` function.
         * 'both'
 *   showPostDate 
     * When true, show the date of each post
-*   postDateAppend => 'after',
+*   postDateAppend
     * Show the date before or after the post title. Possible values:
+        * 'after' (default)
         * 'before'
-        * 'after'
 *   postDateFormat
     * What format the post date is in. This uses the standard php date
       formatting codes
+*   useCookies
+    * When true, expanding and collapsing of categories is remembered for each
+      visitor. When false, categories are always display collapsed (unless
+      explicitly set to auto-expand). Possible values:
+         * true (default)
+         * false
 * debug
     * When set to true, extra debugging information will be displayed in the
       underlying code of your page (but not visible from the browser). Use
@@ -262,13 +269,6 @@ This will produce a list with:
 * using images to mark collapsing and expanding
 * exclude posts from  the categories general and uncategorized
 
-= Advanced Options =
-
-There is a file included called advanced-config-sample.php. If you wish to set
-some advanced options, copy this file to advanced-config.php, and modify any
-settings you wish. Currently there is only one option - useCookies, which is
-true by default. Setting this to false will have the effect that categories
-are always closed on page load, even if you had expanded one previously.
 
 == Demo ==
 
