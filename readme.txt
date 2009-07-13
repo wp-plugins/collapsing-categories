@@ -262,7 +262,7 @@ style, in the same manner as the `wp_list_categories` function.
 
 = Examples =
 
-`collapsCat('animate=true&catSort=ASC&expand=3,inExcludeCats=general,uncategorized')`
+`collapsCat('animate=1&catSort=ASC&expand=3&inExcludeCats=general,uncategorized')`
 This will produce a list with:
 * animation on
 * categories shown in alphabetical order
