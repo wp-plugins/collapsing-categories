@@ -187,8 +187,8 @@ style, in the same manner as the `wp_list_categories` function.
 * showPages
     * Whether or not to include pages as well as posts. Default if false
 * linkToCat
-    * True, clicking on a category title will link to the category archive (default)
-    * False, clicking on a category title expands and collapses 
+    * 1 (true), clicking on a category title will link to the category archive (default)
+    * 0 (false), clicking on a category title expands and collapses 
 * catSort
     * How to sort the categorys. Possible values:
         * 'catName' the title of the category (default)
@@ -253,8 +253,8 @@ style, in the same manner as the `wp_list_categories` function.
     * When true, expanding and collapsing of categories is remembered for each
       visitor. When false, categories are always display collapsed (unless
       explicitly set to auto-expand). Possible values:
-         * true (default)
-         * false
+         * 1 (true) (default)
+         * 0 (false)
 * debug
     * When set to true, extra debugging information will be displayed in the
       underlying code of your page (but not visible from the browser). Use
