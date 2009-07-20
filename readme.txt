@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.8
 Tested up to: 2.8
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -28,17 +28,16 @@ widgets, please note that the manual installation instructions have changed.
 
 = What's New?=
 
-* 1.0.3 (2009.07.07)
+* 1.0.2 (2009.07.19)
     * Fixed older than option
-    * Simplified advanced options section in configuration
-    * Simplified option to remember expanding and collapsing for each visitor
-      (using cookies)
+    * Added advanced options section in configuration
+    * Added advanced option to remember expanding and collapsing for each
+      visitor (using cookies)
     * Now issuing a correct id for each ul when using widgets 
     * Small change in manual installation
-
-* 1.0.2 (2009.06.24)
-    * Added advanced options interface
-    * Added option to ignore cookies (categories always start off collapsed)
+    * TODO: Added advanced option to expand category when viewing the category
+      archive page
+    * Permalinks which use author now work correctly
 
 * 1.0.1 (2009.06.22)
     * Fixed some problems with cookies on page load

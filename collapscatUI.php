@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 1.0.1
+Collapsing Categories version: 1.0.2
 Copyright 2007 Robert Felty
 
     Collapsing Categories is free software; you can redistribute it and/or modify
