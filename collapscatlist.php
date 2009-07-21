@@ -129,7 +129,7 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
           }
           $posttext2.= "<li class='collapsCatPost'><a $self
               href='".get_permalink($post2).
-              "' title='$title_text'>$linktext</a></li>\n";
+              "?nav=collapsing-categories' title='$title_text'>$linktext</a></li>\n";
         }
       }
     }
@@ -578,7 +578,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
                   }
 									$posttext.= "<li class='collapsCatPost'><a $self
 										href='".get_permalink($post).
-										"' title='$title_text'>$linktext</a></li>\n";
+										"?nav=collapsing-categories' title='$title_text'>$linktext</a></li>\n";
 								} 
               }
             // close <ul> and <li> before starting a new category

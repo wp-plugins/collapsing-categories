@@ -16,7 +16,7 @@ class collapsCatWidget extends WP_Widget {
  
     $title = empty($instance['title']) ? '&nbsp;' : apply_filters('widget_title', $instance['title']);
     echo $before_widget . $before_title . $title . $after_title;
-    echo "<ul id=" .  $this->get_field_id('collapsCatList') . ">\n";
+    echo "<ul id='" .  $this->get_field_id('collapsCatList') . "'>\n";
        if( function_exists('collapsCat') ) {
         collapsCat($instance);
        } else {
