@@ -119,9 +119,9 @@ class collapscat {
 
 
 function collapsCat($number) {
-    include_once( 'collapscatlist.php' );
+  include_once( 'collapscatlist.php' );
   if (!is_admin()) {
-  list_categories($number);
+    list_categories($number);
   }
 }
 $version = get_bloginfo('version');

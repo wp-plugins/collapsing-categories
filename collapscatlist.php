@@ -461,7 +461,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 		}
 	}
   if ($debug==1) {
-    echo "<pre style='display:none' >";
+    echo "<li style='display:none' >";
     printf ("MySQL server version: %s\n", mysql_get_server_info());
     echo "\ncollapsCat options:\n";
     print_r($options);
@@ -473,7 +473,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
     echo "POST QUERY:\n $postquery\n";
     echo "\nPOST QUERY RESULTS\n";
     print_r($posts);
-    echo "</pre>";
+    echo "</li>";
   }
 
   foreach( $categories as $cat ) {
@@ -614,7 +614,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 //  echo "    </ul> <!-- ending collapsCat -->\n";
 }
 $url = get_settings('siteurl');
-echo "<script type=\"text/javascript\">\n";
+echo "<li style='display:none'><script type=\"text/javascript\">\n";
 echo "// <![CDATA[\n";
 echo '/* These variables are part of the Collapsing Categories Plugin 
       *  Version: 1.0.2
@@ -636,5 +636,5 @@ if ($useCookies) {
   });
   ";
 }
-echo "// ]]>\n</script>\n";
+echo "// ]]>\n</script></li>\n";
 ?>
