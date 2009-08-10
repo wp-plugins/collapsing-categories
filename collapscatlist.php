@@ -246,7 +246,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               "onclick='expandCollapse(event, \"$expandSymJS\",".
               "\"$collapseSymJS\", $animate, \"collapsCat\"); return false'>" . 
               "<span class='sym'>$symbol</span>" );
-          $link2=getCollapsCatLink($cat,$catlink,$self);
+          $link2=getCollapsCatLink($cat2,$catlink,$self);
           if ( empty($cat2->description) ) {
             $link2 .= 'title="'. 
                 sprintf(__("View all posts filed under %s"), 
@@ -617,10 +617,10 @@ $url = get_settings('siteurl');
 echo "<li style='display:none'><script type=\"text/javascript\">\n";
 echo "// <![CDATA[\n";
 echo '/* These variables are part of the Collapsing Categories Plugin 
-      *  Version: 1.0.2
-      *  $Id: collapscat.php 107679 2009-04-04 14:51:22Z robfelty $
-      * Copyright 2007 Robert Felty (robfelty.com)
-      */' . "\n";
+*  Version: 1.0.2
+*  $Id:$
+* Copyright 2007 Robert Felty (robfelty.com)
+*/' . "\n";
 $expandSym="<img src='". $url .
      "/wp-content/plugins/collapsing-categories/" . 
      "img/expand.gif' alt='expand' />";
