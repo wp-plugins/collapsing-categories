@@ -63,7 +63,7 @@ in sidebar.php). See the Options section for more information on specifying
 options.
 `
 <?php 
-echo "<ul>\n";
+echo "<ul class='collapsCatList'>\n";
 if (function_exists('collapsCat')) {
   collapsCat();
 } else {
