@@ -118,10 +118,10 @@ class collapscat {
 }
 
 
-function collapsCat($number) {
+function collapsCat($args='') {
   include_once( 'collapscatlist.php' );
   if (!is_admin()) {
-    list_categories($number);
+    list_categories($args);
   }
 }
 $version = get_bloginfo('version');

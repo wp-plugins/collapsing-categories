@@ -286,7 +286,9 @@ behavior in wordpress anyways)
 = 1.0.3 (2009.08.xx) =
     * Fixed xhtml validation error (thanks Mathie)
     * Fixed incorrect link bug (thanks andydv)
+    * Fixed some css issues 
     * TODO Added Russian localization (thanks lklkj)
+    * Manual version works even if no options are given
 
 = 1.0.2 (2009.07.19) =
     * Fixed older than option
