@@ -340,13 +340,8 @@ function list_categories($args='') {
     $collapseSymJS=$collapseSym;
   }
 	$inExclusionArray = array();
-	if ( !empty($inExclude) && !empty($inExcludeCats) ) {
+	if ( !empty($inExcludeCats )) {
 		$exterms = preg_split('/[,]+/',$inExcludeCats);
-    if ($inExclude=='include') {
-      $in='IN';
-    } else {
-      $in='NOT IN';
-    }
 		if ( count($exterms) ) {
 			foreach ( $exterms as $exterm ) {
 					$sanitizedTitle = sanitize_title($exterm);
@@ -358,10 +353,10 @@ function list_categories($args='') {
 			}
 		}
 	}
-	if ( empty($inExclusions) ) {
+	if ( empty($inExclusions) || $inExclude=='include' ) {
 		$inExcludeQuery = "";
   } else {
-    $inExcludeQuery ="AND t.slug $in ($inExclusions)";
+    $inExcludeQuery ="AND t.slug NOT IN ($inExclusions)";
   }
 
   $isPage='';
@@ -444,7 +439,20 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
     $showPosts=false;
   }
   $parents=array();
+  global $includeCatArray;
+  $includeCatArray=array();
   foreach ($categories as $cat) {
+    // if only including certain pages, we build an array of those page ids 
+    if ($inExclude=='include' && $inExclusionArray!='') {
+      if (in_array($cat->slug, $inExclusionArray) ||
+          in_array($cat->term_id, $inExclusionArray)) {
+        array_push($includeCatArray, $cat->term_id);
+        $children = get_categories('child_of=' . $cat->term_id);
+        foreach ($children as $child) {
+          array_push($includeCatArray, $child->term_id);
+        }
+      }
+    }
     if ($cat->parent!=0) {
       array_push($parents, $cat->parent);
     }
@@ -477,6 +485,12 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
   }
 
   foreach( $categories as $cat ) {
+    if ($inExclude=='include' && $inExcludeCats!='') {
+      if (!in_array($cat->term_id, $includeCatArray) &&
+          !in_array($cat->post_parent, $includeCatArray)) {
+        continue;
+      }
+    }
     if ($cat->parent==0) {
       if ((is_category() || is_tag()) && $cat->term_id == $thisCat)
         $self="class='self'";
@@ -489,8 +503,8 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
       list ($subCatLinks, $subCatCount,$subCatPostCount, $subCatPosts)=
           get_sub_cat($cat, $categories, $parents, $posts, 
           $subCatCount,$subCatPostCount,$expanded,0);
-        list($subCatPostCount2, $posttext2) = 
-            getSubPosts($postsInCat[$cat->term_id],$cat, $subCatPosts, $showPosts);
+      list($subCatPostCount2, $posttext2) = 
+          getSubPosts($postsInCat[$cat->term_id],$cat, $subCatPosts, $showPosts);
         
       $theCount=$subCatPostCount2+$subCatPostCount;
       if ($theCount>0) {
@@ -577,7 +591,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
                     }
                   }
 									$posttext.= "<li class='collapsCatPost'><a $self
-										href='".get_permalink($post).
+										href='".get_permalink($post).'?nav=collapsing-category' .
 										"' title='$title_text'>$linktext</a></li>\n";
 								} 
               }
@@ -592,6 +606,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 					$link='';
 					$span='';
 				}
+        if ($showTopLevel)
           print($span . $link );
         if (($subCatPostCount>0) || ($showPosts)) {
           print( "\n     <ul id='$theID' style=\"display:$expanded\">\n" );
@@ -607,7 +622,8 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
 				if ($subCatPostCount>0 || $showPosts) {
 					echo "        </ul>\n";
 				}
-				echo "      </li> <!-- ending category -->\n";
+        if ($showTopLevel) 
+          echo "      </li> <!-- ending category -->\n";
       } // end if theCount>0
     }
   }
@@ -618,7 +634,7 @@ echo "<li style='display:none'><script type=\"text/javascript\">\n";
 echo "// <![CDATA[\n";
 echo '/* These variables are part of the Collapsing Categories Plugin 
 *  Version: 1.0.2
-*  $Id:$
+*  $Id$
 * Copyright 2007 Robert Felty (robfelty.com)
 */' . "\n";
 $expandSym="<img src='". $url .

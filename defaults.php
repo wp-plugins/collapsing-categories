@@ -23,6 +23,7 @@ $defaults=array(
    'postDateAppend' => 'after',
    'postDateFormat' => 'm/d',
    'showPostDate' => false,
-   'useCookies' => true
+   'useCookies' => true,
+   'showTopLevel' => true
 );
 ?>
