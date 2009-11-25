@@ -26,7 +26,29 @@ This file is part of Collapsing Categories
 */
 
 // Helper functions
-
+function add_to_includes($cat, $inExclusionArray) {
+  //$includes = array();
+  //print_r($inExclusionArray);
+  /* add all parents to include list */
+  if (in_array($cat->slug, $inExclusionArray) ||
+      in_array($cat->term_id, $inExclusionArray)) {
+    $includes[]= $cat->term_id;
+    if ($cat->parent!=0) 
+      $inExclusionArray[]= $cat->parent;
+      $cat2 = get_category($cat->parent);
+      $moreIncludes = add_to_includes($cat2,$inExclusionArray);
+      if (!empty($moreIncludes)) {
+        foreach ($moreIncludes as $include) {
+          $includes[] =  $include;
+        }
+      }
+    $children = get_categories('child_of=' . $cat->term_id);
+    foreach ($children as $child) {
+      $includes[]= $child->term_id;
+    }
+  }
+  return($includes);
+}
 function getCollapsCatLink($cat,$catlink,$self) {
   if (empty($catlink)) {
     if ($cat->taxonomy=='post_tag') {
@@ -444,12 +466,10 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
   foreach ($categories as $cat) {
     // if only including certain pages, we build an array of those page ids 
     if ($inExclude=='include' && $inExclusionArray!='') {
-      if (in_array($cat->slug, $inExclusionArray) ||
-          in_array($cat->term_id, $inExclusionArray)) {
-        array_push($includeCatArray, $cat->term_id);
-        $children = get_categories('child_of=' . $cat->term_id);
-        foreach ($children as $child) {
-          array_push($includeCatArray, $child->term_id);
+      $includes = add_to_includes($cat, $inExclusionArray);
+      if (!empty($includes)) {
+        foreach ($includes as $include) {
+          $includeCatArray[] =  $include;
         }
       }
     }
@@ -491,141 +511,153 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         continue;
       }
     }
-    if ($cat->parent==0) {
-      if ((is_category() || is_tag()) && $cat->term_id == $thisCat)
-        $self="class='self'";
-      else
-        $self="";
-      $rssLink=addFeedLink($catfeed,$cat);
-      $subCatPostCount=0;
-      $subCatCount=0;
-      $subCatPostCounts=array();
-      list ($subCatLinks, $subCatCount,$subCatPostCount, $subCatPosts)=
-          get_sub_cat($cat, $categories, $parents, $posts, 
-          $subCatCount,$subCatPostCount,$expanded,0);
-      list($subCatPostCount2, $posttext2) = 
-          getSubPosts($postsInCat[$cat->term_id],$cat, $subCatPosts, $showPosts);
-        
-      $theCount=$subCatPostCount2+$subCatPostCount;
-      if ($theCount>0) {
-        $expanded='none';
-        $theID='collapsCat-' . $cat->term_id . "-$number";
-        if (in_array($cat->name, $autoExpand) ||
-            in_array($cat->slug, $autoExpand) ||
-            ($useCookies && $_COOKIE[$theID]==1)) {
-          $expanded='block';
+    if ($cat->parent!=0 )
+      continue;
+    /*
+    if (!empty($includeCatArray) && $cat->parent==0 && !in_array($cat->term_id,
+        $includeCatArray)) {
+      echo "first continue" . $cat->term_id . "\n";
+      continue;
+    } elseif (empty($includeCatArray) && $cat->parent!=0) {
+      echo "second continue" . $cat->term_id . "\n";
+      continue;
+    } 
+    */
+    if ((is_category() || is_tag()) && $cat->term_id == $thisCat)
+      $self="class='self'";
+    else
+      $self="";
+    $rssLink=addFeedLink($catfeed,$cat);
+    $subCatPostCount=0;
+    $subCatCount=0;
+    $subCatPostCounts=array();
+    list ($subCatLinks, $subCatCount,$subCatPostCount, $subCatPosts)=
+        get_sub_cat($cat, $categories, $parents, $posts, 
+        $subCatCount,$subCatPostCount,$expanded,0);
+    list($subCatPostCount2, $posttext2) = 
+        getSubPosts($postsInCat[$cat->term_id],$cat, $subCatPosts, $showPosts);
+      
+    $theCount=$subCatPostCount2+$subCatPostCount;
+    if ($theCount>0) {
+      $expanded='none';
+      $theID='collapsCat-' . $cat->term_id . "-$number";
+      if (in_array($cat->name, $autoExpand) ||
+          in_array($cat->slug, $autoExpand) ||
+          ($useCookies && $_COOKIE[$theID]==1)) {
+        $expanded='block';
+      }
+      if ($showPosts || $subCatPostCount>0) {
+        if ($expanded=='block') {
+          $showHide='collapse';
+          $symbol=$collapseSym;
+        } else {
+          $showHide='expand';
+          $symbol=$expandSym;
         }
+        $span= "      <li class='collapsCat'>".
+            "<span class='collapsCat $showHide' ".
+            "onclick='expandCollapse(event, \"$expandSymJS\"," .
+            "\"$collapseSymJS\", $animate, \"collapsCat\"); return false'>".
+            "<span class='sym'>$symbol</span>";
+      } else {
+        $span = "      <li class='collapsCatPost'>";
+      }
+      $link=getCollapsCatLink($cat,$catlink,$self);
+      if ( empty($cat->description) ) {
+        $link .= 'title="'. 
+            sprintf(__("View all posts filed under %s",
+            'collapsing-categories'),
+            wp_specialchars(apply_filters('single_cat_title',$cat->name))) . '"';
+      } else {
+        $link .= 'title="' . wp_specialchars(apply_filters('description',$cat->description,$cat)) . '"';
+      }
+      $link .= '>';
+      if ($linkToCat=='yes') {
+        $link .= apply_filters('single_cat_title', $cat->name).'</a>';
         if ($showPosts || $subCatPostCount>0) {
-          if ($expanded=='block') {
-            $showHide='collapse';
-            $symbol=$collapseSym;
-          } else {
-            $showHide='expand';
-            $symbol=$expandSym;
-          }
-          $span= "      <li class='collapsCat'>".
-              "<span class='collapsCat $showHide' ".
-              "onclick='expandCollapse(event, \"$expandSymJS\"," .
-              "\"$collapseSymJS\", $animate, \"collapsCat\"); return false'>".
-              "<span class='sym'>$symbol</span>";
-        } else {
-          $span = "      <li class='collapsCatPost'>";
+          $span.='</span>';
         }
-        $link=getCollapsCatLink($cat,$catlink,$self);
-        if ( empty($cat->description) ) {
-          $link .= 'title="'. 
-              sprintf(__("View all posts filed under %s",
-              'collapsing-categories'),
-              wp_specialchars(apply_filters('single_cat_title',$cat->name))) . '"';
+      } else {
+        if ($showPosts || $subCatPostCount>0) {
+          $link = apply_filters('single_cat_title',$cat->name) . '</span>';
         } else {
-          $link .= 'title="' . wp_specialchars(apply_filters('description',$cat->description,$cat)) . '"';
+          // don't include the triangles if posts are not shown and there
+          // are no more subcategories
+            $link .= apply_filters('single_cat_title',$cat->name).'</a>';
+            $span = "      <li class='collapsCatPost'>";
         }
-        $link .= '>';
-        if ($linkToCat=='yes') {
-          $link .= apply_filters('single_cat_title', $cat->name).'</a>';
-          if ($showPosts || $subCatPostCount>0) {
-            $span.='</span>';
-          }
-        } else {
-          if ($showPosts || $subCatPostCount>0) {
-            $link = apply_filters('single_cat_title',$cat->name) . '</span>';
-          } else {
-            // don't include the triangles if posts are not shown and there
-            // are no more subcategories
-              $link .= apply_filters('single_cat_title',$cat->name).'</a>';
-              $span = "      <li class='collapsCatPost'>";
-          }
-        }
-        // Now print out the post info
-				$posttext='';
-        if( ! empty($postsInCat[$cat->term_id]) ) {
-            foreach ($postsInCat[$cat->term_id] as $post) {
-              if ($post->term_id == $cat->term_id 
-                  && (!in_array($post->ID, $subCatPosts))) {
-								if (!in_array($post->ID, $postsToExclude)) {
-								  $subCatPostCount++;
-                  if (!$showPosts) {
-                    continue;
+      }
+      // Now print out the post info
+      $posttext='';
+      if( ! empty($postsInCat[$cat->term_id]) ) {
+          foreach ($postsInCat[$cat->term_id] as $post) {
+            if ($post->term_id == $cat->term_id 
+                && (!in_array($post->ID, $subCatPosts))) {
+              if (!in_array($post->ID, $postsToExclude)) {
+                $subCatPostCount++;
+                if (!$showPosts) {
+                  continue;
+                }
+                if (is_single() && $post->ID == $thisPost)
+                  $self="class='self'";
+                else
+                  $self="";
+                $date=preg_replace("/-/", '/', $post->date);
+                $name=$post->post_name;
+                $title_text = htmlspecialchars(strip_tags(
+                    __($post->post_title), 'collapsing-categories'), ENT_QUOTES);
+                $tmp_text = '';
+                if ($postTitleLength> 0 && 
+                    strlen($title_text) > $postTitleLength ) {
+                  $tmp_text = substr($title_text, 0, $postTitleLength );
+                    $tmp_text .= ' &hellip;';
+                }
+                $linktext = $tmp_text == '' ? $title_text : $tmp_text;
+                if ($showPostDate) {
+                  $theDate = mysql2date($postDateFormat, $post->post_date );
+                  if ($postDateAppend=='before') {
+                    $linktext = "$theDate $linktext";
+                  } else {
+                    $linktext = "$linktext $theDate";
                   }
-                  if (is_single() && $post->ID == $thisPost)
-                    $self="class='self'";
-                  else
-                    $self="";
-									$date=preg_replace("/-/", '/', $post->date);
-									$name=$post->post_name;
-									$title_text = htmlspecialchars(strip_tags(
-									    __($post->post_title), 'collapsing-categories'), ENT_QUOTES);
-									$tmp_text = '';
-									if ($postTitleLength> 0 && 
-									    strlen($title_text) > $postTitleLength ) {
-										$tmp_text = substr($title_text, 0, $postTitleLength );
-											$tmp_text .= ' &hellip;';
-									}
-									$linktext = $tmp_text == '' ? $title_text : $tmp_text;
-                  if ($showPostDate) {
-                    $theDate = mysql2date($postDateFormat, $post->post_date );
-                    if ($postDateAppend=='before') {
-                      $linktext = "$theDate $linktext";
-                    } else {
-                      $linktext = "$linktext $theDate";
-                    }
-                  }
-									$posttext.= "<li class='collapsCatPost'><a $self
-										href='".get_permalink($post).'?nav=collapsing-category' .
-										"' title='$title_text'>$linktext</a></li>\n";
-								} 
-              }
-            // close <ul> and <li> before starting a new category
-          } 
-        }
-        if( $showPostCount=='yes') {
-          $link .= ' (' . $theCount.')';
-        }
-        $link.=$rssLink;
-				if ($theCount<1) {
-					$link='';
-					$span='';
-				}
-        if ($showTopLevel)
-          print($span . $link );
+                }
+                $posttext.= "<li class='collapsCatPost'><a $self
+                  href='".get_permalink($post).'?nav=collapsing-category' .
+                  "' title='$title_text'>$linktext</a></li>\n";
+              } 
+            }
+          // close <ul> and <li> before starting a new category
+        } 
+      }
+      if( $showPostCount=='yes') {
+        $link .= ' (' . $theCount.')';
+      }
+      $link.=$rssLink;
+      if ($theCount<1) {
+        $link='';
+        $span='';
+      }
+      if ($showTopLevel) {
+        print($span . $link );
         if (($subCatPostCount>0) || ($showPosts)) {
           print( "\n     <ul id='$theID' style=\"display:$expanded\">\n" );
         }
-        echo $subCatLinks;
-				if ($showPosts) {
-          if ($subCatPostCount>0 && $subCatLinks!='' && $addMisc) {
-            print(miscPosts($cat,$catlink,$subCatPostCount2,$posttext));
-          } else {
-            print($posttext);
-          }
-				}
-				if ($subCatPostCount>0 || $showPosts) {
-					echo "        </ul>\n";
-				}
-        if ($showTopLevel) 
-          echo "      </li> <!-- ending category -->\n";
-      } // end if theCount>0
-    }
+      }
+      echo $subCatLinks;
+      if ($showPosts) {
+        if ($subCatPostCount>0 && $subCatLinks!='' && $addMisc) {
+          print(miscPosts($cat,$catlink,$subCatPostCount2,$posttext));
+        } else {
+          print($posttext);
+        }
+      }
+      if ($showTopLevel) {
+        if ($subCatPostCount>0 || $showPosts) {
+          echo "        </ul>\n";
+        }
+        echo "      </li> <!-- ending category -->\n";
+      }
+    } // end if theCount>0
   }
 //  echo "    </ul> <!-- ending collapsCat -->\n";
 }
