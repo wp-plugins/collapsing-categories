@@ -175,7 +175,8 @@ function addFeedLink($feed,$cat) {
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$expanded, $depth) {
   global $options,$expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
-      $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat;
+      $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat,
+      $cur_categories;
   $subCatLinks='';
   extract($options);
   $subCatPosts=array();
@@ -187,6 +188,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
       $subCatLink2=''; // clear info from subCatLink2
+      if ((is_category() || is_tag()) && 
+          (in_array($cat2->term_id, $cur_categories)))
+        $self="class='self'";
+      else
+        $self="";
       if ($cat->term_id==$cat2->parent) {
         list($subCatPostCount2, $posttext2) = 
             getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts, $showPosts);
@@ -323,16 +329,18 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 
 function list_categories($args='') {
   global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
-      $wpdb,$options,$post, $autoExpand, $postsToExclude, 
-      $thisCat, $thisPost, $wp_rewrite, $catlink, $postsInCat;
+      $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, 
+      $cur_categories, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   include('defaults.php');
   $options=wp_parse_args($args, $defaults);
   extract($options);
   $catlink = $wp_rewrite->get_category_permastruct();
   if (is_single() || is_category() || is_tag()) {
-    $cur_category = get_the_category();
-    $thisCat = $cur_category[0]->term_id;
-    $thisPost = $post->ID;
+    $tmp_categories = get_the_category();
+    foreach ($tmp_categories as $tmp_cat) {
+      $cur_categories[] = $tmp_cat->term_id;
+    }
+    $thisPost = $wp_query->post->ID;
   }
   if ($expand==1) {
     $expandSym='+';
@@ -476,7 +484,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
     if ($cat->parent!=0) {
       array_push($parents, $cat->parent);
     }
-    if (!empty($thisCat) && $cat->term_id == $thisCat) {
+    if (!empty($cur_categories) && (in_array($cat->term_id, $cur_categories))) {
       checkCurrentCat($cat,$categories);
     }
   }
@@ -523,7 +531,8 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
       continue;
     } 
     */
-    if ((is_category() || is_tag()) && $cat->term_id == $thisCat)
+    if ((is_category() || is_tag()) && 
+        (in_array($cat->term_id, $cur_categories)))
       $self="class='self'";
     else
       $self="";

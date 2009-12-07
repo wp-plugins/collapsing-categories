@@ -291,6 +291,7 @@ behavior in wordpress anyways)
     * Manual version works even if no options are given
     * Fixed include option
     * Added option to hide top level category names
+    * Fixed self class problems
 
 = 1.0.2 (2009.07.19) =
     * Fixed older than option
