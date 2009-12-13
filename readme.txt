@@ -292,6 +292,8 @@ behavior in wordpress anyways)
     * Fixed include option
     * Added option to hide top level category names
     * Fixed self class problems
+    * Fixed link to settings page from widget options (thanks wp.Man)
+    * Fixed rss options (thanks wp.Man)
 
 = 1.0.2 (2009.07.19) =
     * Fixed older than option

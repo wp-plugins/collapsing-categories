@@ -45,7 +45,7 @@ class collapsCatWidget extends WP_Widget {
     include('options.txt');
 ?>
   <p>Style can be set from the <a
-  href='options-general.php?page=collapsCat.php'>options page</a></p>
+  href='options-general.php?page=collapscat.php'>options page</a></p>
 <?php
   }
 }
