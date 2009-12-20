@@ -337,6 +337,7 @@ function list_categories($args='') {
   $catlink = $wp_rewrite->get_category_permastruct();
   if (is_single() || is_category() || is_tag()) {
     $tmp_categories = get_the_category();
+    $cur_categories = array();
     foreach ($tmp_categories as $tmp_cat) {
       $cur_categories[] = $tmp_cat->term_id;
     }
