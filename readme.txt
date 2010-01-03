@@ -4,7 +4,7 @@ Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.8
-Tested up to: 2.8
+Tested up to: 2.9
 Stable tag: 1.0.2
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
@@ -18,29 +18,32 @@ category will be expanded.
 
 = IMPORTANT INFORMATION regarding wordpress 2.7 and 2.8 =
 
-Version 1.0.alpha is an alpha version. It is compatible with wordpress 2.8,
+Version 1.+ is compatible with wordpress 2.8+,
 but not compatible with prior versions. If you are using wordpress 2.7.1 or
-earlier, please use collapsing categories version 0.9.9. Also beware that
-there is a good chance that there may be some bugs. 
+earlier, please use collapsing categories version 0.9.9.
 
 If you prefer to insert code into your theme manually instead of using
 widgets, please note that the manual installation instructions have changed. 
 
 = What's New?=
 
-* 1.0.2 (2009.07.19)
-    * Fixed older than option
-    * Added advanced options section in configuration
-    * Added advanced option to remember expanding and collapsing for each
-      visitor (using cookies)
-    * Now issuing a correct id for each ul when using widgets 
-    * Small change in manual installation
-    * TODO: Added advanced option to expand category when viewing the category
-      archive page
-    * Permalinks which use author now work correctly
-
-* 1.0.1 (2009.06.22)
-    * Fixed some problems with cookies on page load
+* 1.1 (2010.01.03)
+    * Bug fixes
+        * Fixed xhtml validation error (thanks Mathie)
+        * Fixed incorrect link bug (thanks andydv)
+        * Fixed some css issues 
+        * Manual version works even if no options are given
+        * Fixed include option
+        * Fixed self class problems
+        * Fixed link to settings page from widget options (thanks wp.Man)
+        * Fixed rss options (thanks wp.Man)
+    * New options and features
+        * Added option to hide top level category names
+        * Changed css classes to make them more consistent with other collapsing
+          plugins (thanks Bernhard Reiter)
+    * Internationalization and localization
+        * Added Russian localization (thanks fatcow.com)
+        * Added German localization (thanks Bernhard Reiter)
 
 == Installation ==
 
@@ -67,7 +70,7 @@ echo "<ul class='collapsCatList'>\n";
 if (function_exists('collapsCat')) {
   collapsCat();
 } else {
-  wp_get_categories(your_options_here);
+  wp_get_categories('your_options_here');
 }
 echo "</ul>\n";
 ?>
@@ -173,6 +176,7 @@ style, in the same manner as the `wp_list_categories` function.
    'postDateAppend' => 'after',
    'postDateFormat' => 'm/d',
    'useCookies' => true,
+   'showTopLevel' => true,
    'debug'=>'0'
 );
 `
@@ -258,6 +262,13 @@ style, in the same manner as the `wp_list_categories` function.
     * When set to true, extra debugging information will be displayed in the
       underlying code of your page (but not visible from the browser). Use
       this option if you are having problems
+* showTopLevel
+    * When set to false, the top level category will not be shown. This could
+      be useful if you only want to show subcategories from one particular
+      top-level category
+         * 1 (true) (default)
+         * 0 (false)
+
 
 = Examples =
 
@@ -283,17 +294,23 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
-= 1.0.3 (2009.11.xx) =
-    * Fixed xhtml validation error (thanks Mathie)
-    * Fixed incorrect link bug (thanks andydv)
-    * Fixed some css issues 
-    * TODO Added Russian localization (thanks lklkj)
-    * Manual version works even if no options are given
-    * Fixed include option
-    * Added option to hide top level category names
-    * Fixed self class problems
-    * Fixed link to settings page from widget options (thanks wp.Man)
-    * Fixed rss options (thanks wp.Man)
+= 1.1 (2010.01.xx) =
+    * Bug fixes
+        * Fixed xhtml validation error (thanks Mathie)
+        * Fixed incorrect link bug (thanks andydv)
+        * Fixed some css issues 
+        * Manual version works even if no options are given
+        * Fixed include option
+        * Fixed self class problems
+        * Fixed link to settings page from widget options (thanks wp.Man)
+        * Fixed rss options (thanks wp.Man)
+    * New options and features
+        * Added option to hide top level category names
+        * Changed css classes to make them more consistent with other collapsing
+          plugins (thanks Bernhard Reiter)
+    * Internationalization and localization
+        * Added Russian localization (thanks fatcow.com)
+        * Added German localization (thanks Bernhard Reiter)
 
 = 1.0.2 (2009.07.19) =
     * Fixed older than option

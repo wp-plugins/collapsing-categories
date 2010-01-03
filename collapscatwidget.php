@@ -19,7 +19,7 @@ class collapsCatWidget extends WP_Widget {
     $instance['number'] = $this->get_field_id('top');
     $instance['number'] = preg_replace('/[a-zA-Z-]/', '', $instance['number']);
     echo "<ul id='" .  $this->get_field_id('top') . "
-        ' class='collapsCatList'>\n";
+        ' class='collapsing categories list'>\n";
     if( function_exists('collapsCat') ) {
      collapsCat($instance);
     } else {

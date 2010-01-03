@@ -69,10 +69,10 @@ function miscPosts($cat,$catlink,$subCatPostCount2, $posttext) {
   /* this function will group posts into a miscellaneous sub-category */
   global $options, $expandSym,$expandSymJS;
   extract($options);
-  $miscPosts="      <li class='collapsCat'>".
-      "<span class='collapsCat show' ".
+  $miscPosts="      <li class='collapsing categories'>".
+      "<span class='collapsing categories show' ".
       "onclick='expandCollapse(event, \"$expandSymJS\", \"$collapseSymJS\", $animate, " .
-      "\"collapsCat\"); return false'>".
+      "\"collapsing categories\"); return false'>".
       "<span class='sym'>$expandSym</span>";
   if ($linkToCat=='yes') {
     $thisLink=getCollapsCatLink($cat,$catlink,$self);
@@ -149,7 +149,7 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
               $linktext = "$linktext $theDate";
             }
           }
-          $posttext2.= "<li class='collapsCatPost'><a $self
+          $posttext2.= "<li class='collapsing categories post'><a $self
               href='".get_permalink($post2).
               "' title='$title_text'>$linktext</a></li>\n";
         }
@@ -219,13 +219,13 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $showHide='expand';
               $symbol=$expandSym;
             }
-            $subCatLinks.=( "<li class='collapsCat'>".
-                "<span class='collapsCat $showHide' ".
+            $subCatLinks.=( "<li class='collapsing categories'>".
+                "<span class='collapsing categories $showHide' ".
                 "onclick='expandCollapse(event, \"$expandSymJS\",".
-                "\"$collapseSymJS\", $animate, \"collapsCat\"); return false'>" . 
+                "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>" . 
                 "<span class='sym'>$symbol</span>" );
           } else {
-            $subCatLinks.=( "<li class='collapsCatPost'>" );
+            $subCatLinks.=( "<li class='collapsing categories post'>" );
           }
           $link2= getCollapsCatLink($cat2,$catlink,$self);
           if ( empty($cat2->description) ) {
@@ -269,10 +269,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             $showHide='expand';
             $symbol=$expandSym;
           }
-          $subCatLinks.=( "<li class='collapsCat'>".
-              "<span class='collapsCat $showHide' ".
+          $subCatLinks.=( "<li class='collapsing categories'>".
+              "<span class='collapsing categories $showHide' ".
               "onclick='expandCollapse(event, \"$expandSymJS\",".
-              "\"$collapseSymJS\", $animate, \"collapsCat\"); return false'>" . 
+              "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>" . 
               "<span class='sym'>$symbol</span>" );
           $link2=getCollapsCatLink($cat2,$catlink,$self);
           if ( empty($cat2->description) ) {
@@ -295,7 +295,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               // don't include the triangles if posts are not shown and there
               // are no more subcategories
                 $link2 .= apply_filters('single_cat_title',$cat2->name).'</a>';
-                $subCatLinks = "      <li class='collapsCatPost'>";
+                $subCatLinks = "      <li class='collapsing categories post'>";
             }
           }
         }
@@ -437,7 +437,7 @@ function list_categories($args='') {
 			date('Y-m-d', $now-date('U',$olderThan*60*60*24)) . "'";
 	}
 
-  //echo "\n    <ul class='collapsCatList'>\n";
+  //echo "\n    <ul class='collapsing categories list'>\n";
 
 $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN
 $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
@@ -564,13 +564,13 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
           $showHide='expand';
           $symbol=$expandSym;
         }
-        $span= "      <li class='collapsCat'>".
-            "<span class='collapsCat $showHide' ".
+        $span= "      <li class='collapsing categories'>".
+            "<span class='collapsing categories $showHide' ".
             "onclick='expandCollapse(event, \"$expandSymJS\"," .
-            "\"$collapseSymJS\", $animate, \"collapsCat\"); return false'>".
+            "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>".
             "<span class='sym'>$symbol</span>";
       } else {
-        $span = "      <li class='collapsCatPost'>";
+        $span = "      <li class='collapsing categories post'>";
       }
       $link=getCollapsCatLink($cat,$catlink,$self);
       if ( empty($cat->description) ) {
@@ -594,7 +594,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
           // don't include the triangles if posts are not shown and there
           // are no more subcategories
             $link .= apply_filters('single_cat_title',$cat->name).'</a>';
-            $span = "      <li class='collapsCatPost'>";
+            $span = "      <li class='collapsing categories post'>";
         }
       }
       // Now print out the post info
@@ -631,7 +631,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
                     $linktext = "$linktext $theDate";
                   }
                 }
-                $posttext.= "<li class='collapsCatPost'><a $self
+                $posttext.= "<li class='collapsing categories post'><a $self
                   href='".get_permalink($post).'?nav=collapsing-category' .
                   "' title='$title_text'>$linktext</a></li>\n";
               } 
@@ -669,7 +669,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
       }
     } // end if theCount>0
   }
-//  echo "    </ul> <!-- ending collapsCat -->\n";
+//  echo "    </ul> <!-- ending collapsing categories -->\n";
 }
 $url = get_settings('siteurl');
 echo "<li style='display:none'><script type=\"text/javascript\">\n";
@@ -690,7 +690,7 @@ echo "var collapseSym=\"$collapseSym\";\n";
 if ($useCookies) {
   echo"
   collapsAddLoadEvent(function() {
-    autoExpandCollapse('collapsCat');
+    autoExpandCollapse('collapsing categories');
   });
   ";
 }

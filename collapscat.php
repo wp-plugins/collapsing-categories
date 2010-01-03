@@ -34,6 +34,9 @@ This file is part of Collapsing Categories
 */ 
 
 $url = get_settings('siteurl');
+global $collapsCatVersion;
+$collapsCatVersion = '1.1';
+
 if (!is_admin()) {
   add_action('wp_head', wp_enqueue_script('scriptaculous-effects'));
   add_action('wp_head', wp_enqueue_script('collapsFunctions',
@@ -41,10 +44,15 @@ if (!is_admin()) {
   '1.5'));
   add_action( 'wp_head', array('collapscat','get_head'));
 //  add_action( 'wp_footer', array('collapsCat','get_foot'));
+} else {
+  // call upgrade function if current version is lower than actual version
+  $dbversion = get_option('collapsCatVersion');
+  if ($dbversion && $collapsCatVersion != $dbversion)
+    collapscat::init();
 }
 add_action('admin_menu', array('collapscat','setup'));
 add_action('init', array('collapscat','init_textdomain'));
-add_action('activate_collapsing-categories/collapscat.php', array('collapscat','init'));
+register_activation_hook(__FILE__, array('collapscat','init'));
 
 class collapscat {
 	function init_textdomain() {
@@ -53,20 +61,30 @@ class collapscat {
 	}
 
 	function init() {
+    global $collapsCatVersion;
 	  include('collapsCatStyles.php');
-		$defaultStyles=compact('custom','selected','default','block','noArrows');
+		$defaultStyles=compact('selected','default','block','noArrows','custom');
+    $dbversion = get_option('collapsCatVersion');
+    if ($collapsCatVersion != $dbversion && $selected!='custom') {
+      $style = $defaultStyles[$selected];
+      update_option( 'collapsCatStyle', $style);
+    }
     if( function_exists('add_option') ) {
       update_option( 'collapsCatOrigStyle', $style);
       update_option( 'collapsCatDefaultStyles', $defaultStyles);
     }
     if (!get_option('collapsCatOptions')) {
-      update_option('collapsCatOptions', $options);
+      include('defaults.php');
+      update_option('collapsCatOptions', $defaults);
     }
     if (!get_option('collapsCatStyle')) {
       add_option( 'collapsCatStyle', $style);
 		}
     if (!get_option('collapsCatSidebarId')) {
       add_option( 'collapsCatSidebarId', 'sidebar');
+		}
+    if (!get_option('collapsCatVersion')) {
+      add_option( 'collapsCatVersion', $collapsCatVersion);
 		}
 
 	}
@@ -109,7 +127,7 @@ class collapscat {
     echo "var collapseSym=\"$collapseSym\";";
     echo"
     addLoadEvent(function() {
-      autoExpandCollapse('collapsCat');
+      autoExpandCollapse('collapsing categories');
     });
     ";
 

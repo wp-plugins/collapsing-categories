@@ -55,10 +55,10 @@ include('processOptions.php');
 ?>
 <div class=wrap>
  <form method="post">
-  <h2><? _e('Collapsing Categories Options', 'collapsCat'); ?></h2>
+  <h2><? _e('Collapsing Categories Options', 'collapsing-categories'); ?></h2>
   <fieldset name="Collapsing Categories Options">
     <p>
- <?php _e('Id of the sidebar where collapsing pages appears:', 'collapsing-pages'); ?>
+ <?php _e('Id of the sidebar where collapsing categories appears:', 'collapsing-categories'); ?>
    <input id='collapsCatSidebarId' name='collapsCatSidebarId' type='text' size='20' value="<?php echo
    get_option('collapsCatSidebarId')?>" onchange='changeStyle("collapsCatStylePreview","collapsCatStyle", "collapsCatDefaultStyles", "collapsCatSelectedStyle", false);' />
    <table>
@@ -68,7 +68,7 @@ include('processOptions.php');
 stripslashes(get_option('collapsCatStyle')) ?>" />
   <input type='hidden' id='collapsCatSelectedStyle'
   name='collapsCatSelectedStyle' />
-<label for="collapsCatStyle"><?php _e('Select style:', 'collapsing-pages'); ?></label>
+<label for="collapsCatStyle"><?php _e('Select style:', 'collapsing-categories'); ?></label>
        </td>
        <td>
        <select name='collapsCatDefaultStyles' id='collapsCatDefaultStyles'
@@ -92,13 +92,13 @@ stripslashes(get_option('collapsCatStyle')) ?>" />
        ?>
        </select>
        </td>
-       <td><?php _e('Preview', 'collapsing-pages'); ?><br />
+       <td><?php _e('Preview', 'collapsing-categories'); ?><br />
        <img style='border:1px solid' id='collapsCatStylePreview' alt='preview'/>
        </td>
     </tr>
     </table>
-    <?php _e('You may also customize your style below if you wish', 'collapsing-pages'); ?><br />
-   <input type='button' value='<?php _e("restore current style", "collapsing-pages"); ?>'
+    <?php _e('You may also customize your style below if you wish', 'collapsing-categories'); ?><br />
+   <input type='button' value='<?php _e("restore current style", "collapsing-categories"); ?>'
 onclick='restoreStyle();' /><br />
    <textarea onchange='changeStyle("collapsCatStylePreview","collapsCatStyle", "collapsCatDefaultStyles", "collapsCatSelectedStyle", true);' cols='78' rows='10' id="collapsCatStyle"name="collapsCatStyle"><?php echo stripslashes(get_option('collapsCatStyle'))?></textarea>
     </p>
@@ -139,7 +139,7 @@ function restoreStyle() {
 </script>
   </fieldset>
   <div class="submit">
-   <input type="submit" name="infoUpdate" value="<?php _e('Update options', 'collapsCat'); ?> &raquo;" />
+   <input type="submit" name="infoUpdate" value="<?php _e('Update options', 'collapsing-categories'); ?> &raquo;" />
   </div>
  </form>
 </div>
