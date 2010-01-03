@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 1.0.2
+Collapsing Categories version: 1.1
 Copyright 2007 Robert Felty
 
 This work is largely based on the Collapsing Categories plugin by Andrew Rader
@@ -632,7 +632,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
                   }
                 }
                 $posttext.= "<li class='collapsing categories post'><a $self
-                  href='".get_permalink($post).'?nav=collapsing-category' .
+                  href='".get_permalink($post).
                   "' title='$title_text'>$linktext</a></li>\n";
               } 
             }
@@ -675,7 +675,7 @@ $url = get_settings('siteurl');
 echo "<li style='display:none'><script type=\"text/javascript\">\n";
 echo "// <![CDATA[\n";
 echo '/* These variables are part of the Collapsing Categories Plugin 
-*  Version: 1.0.2
+*  Version: 1.1
 *  $Id$
 * Copyright 2007 Robert Felty (robfelty.com)
 */' . "\n";

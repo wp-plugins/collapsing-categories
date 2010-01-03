@@ -10,11 +10,14 @@ $style="#sidebar span.collapsing.categories.post {
 #sidebar ul.collapsing.categories.list li.collapsing.categories.post:before {content:'';} 
 #sidebar ul.collapsing.categories.list li.collapsing.categories.post {list-style-type:none}
 #sidebar ul.collapsing.categories.list li.collapsing.categories.post {
-       margin:0 0 0 2em;}
+       text-indent:-1em;
+       padding-left:1em;
+       margin:0 0 0 1em;}
 #sidebar ul.collapsing.categories.list li.collapsing.categories.post:before {content: '\\\\00BB \\\\00A0' !important;} 
-#sidebar ul.collapsing.categories.list li.collapsing.categories.post .sym {
+#sidebar ul.collapsing.categories.list .sym {
    font-size:1.2em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
+    cursor:pointer;
     padding-right:5px;}";
 
 $default=$style;
@@ -44,10 +47,11 @@ $block="#sidebar li.collapsing.categories.post a {
 #sidebar ul.collapsing.categories.list li.collapsing.categories.post {list-style-type:none}
 #sidebar ul.collapsing.categories.list li.collapsing.categories.post {
       }
-#sidebar ul.collapsing.categories.list li.collapsing.categories.post .sym {
+#sidebar ul.collapsing.categories.list .sym {
    font-size:1.2em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
     float:left;
+    cursor:pointer;
     padding-right:5px;
 }
 ";
@@ -62,9 +66,10 @@ $noArrows="#sidebar span.collapsing.categories.post {
 #sidebar ul.collapsing.categories.list ul.collapsing.categories.list:before {content:'';} 
 #sidebar ul.collapsing.categories.list li.collapsing.categories.post:before {content:'';} 
 #sidebar ul.collapsing.categories.list li.collapsing.categories.post {list-style-type:none}
-#sidebar ul.collapsing.categories.list li.collapsing.categories.post .sym {
+#sidebar ul.collapsing.categories.list .sym {
    font-size:1.2em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
+    cursor:pointer;
     padding-right:5px;}";
 $selected='default';
 $custom=get_option('collapsCatStyle');
