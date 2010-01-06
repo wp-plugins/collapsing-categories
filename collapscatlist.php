@@ -653,14 +653,17 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
           print( "\n     <ul id='$theID' style=\"display:$expanded\">\n" );
         }
       }
-      echo $subCatLinks;
       if ($showPosts) {
         if ($subCatPostCount>0 && $subCatLinks!='' && $addMisc) {
-          print(miscPosts($cat,$catlink,$subCatPostCount2,$posttext));
-        } else {
-          print($posttext);
+          $posttext = (miscPosts($cat,$catlink,$subCatPostCount2,$posttext));
         }
       }
+      if ($postsBeforeCats) {
+        $text =$posttext . $subCatLinks;
+      } else {
+        $text = $subCatLinks . $posttext;
+      }
+      print($text);
       if ($showTopLevel) {
         if ($subCatPostCount>0 || $showPosts) {
           echo "        </ul>\n";

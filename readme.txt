@@ -16,6 +16,13 @@ This is a very simple plugin that uses Javascript to form a collapsable set of
 links in the sidebar for the categories. Every post corresponding to a given
 category will be expanded.
 
+
+= CSS Class changes = 
+Version 1.1 introduces different css classes to the collapsing categories and
+posts, which should make it easier to style in the future, and more consistent
+across my other collapsing plugins
+Please see below for an explanation of the css classes
+
 = IMPORTANT INFORMATION regarding wordpress 2.7 and 2.8 =
 
 Version 1.+ is compatible with wordpress 2.8+,
@@ -78,12 +85,6 @@ echo "</ul>\n";
 
 == Frequently Asked Questions ==
 
-=  How do I change the style of the collapsing categories lists? =
-
-As of version 0.9, there are several default styles that come with
-collapsing-categories. You can choose from these in the settings panel, or you
-can create your own custom style. A good strategy is to choose a default, then
-modify it slightly to your needs. 
 
 =  What is the option about the ID of the sidebar? =
 
@@ -92,7 +93,7 @@ Here is the deal. If you have a rule in your theme like:
 it will override a rule like
 `li.collapsArch {color:red}`
 because it uses an ID, instead of a class. That is the way CSS works. So if
-change our rule to:
+you change our rule to:
 `#sidebar li.collapsArch {color:red}`
 then this alleviates that problem. 
 The option for the ID of the sidebar does this automatically for you.
@@ -116,15 +117,6 @@ sub-category into the expand by default list.
 
 Make sure you specify category names, not ids.
 
-= How can I eliminate the line spacing between categories? =
-Add a line to the collapscat.css file in the .sym class, like so:
-
-.sym {font-family:monospace;
-      font-size:1.5em;
-      line-height:1.5em;
-      padding-right:5px;}
-
-
 = There seems to be a newline between the collapsing/expanding symbol and the
 category name. How do I fix this? =
 
@@ -140,6 +132,50 @@ You probably want to add a float:left to the .sym class
 Are you using categories or tags? By default, collapsing categories only lists
 categories. Please check the options in the settings page (or in the widget if
 you are using the widget)
+
+=  How do I change the style of the collapsing categories lists? =
+
+As of version 0.9, there are several default styles that come with
+collapsing-categories. You can choose from these in the settings panel, or you
+can create your own custom style. A good strategy is to choose a default, then
+modify it slightly to your needs. 
+
+The following classes are used:
+* collapsing - applied to all ul and li elements
+* categories - applied to all ul and li elements
+* list - applied to the top-level ul
+* post - applied to each post
+* expand - applied to a category which can be expanded (is currently
+  collapsed)
+* collapse - applied to a category which can be collapsed (is currently
+  expanded)
+* sym - class for the expanding / collapsing symbol
+
+An example:
+
+<ul id='widget-collapscat-15-top ' class='collapsing categories list'>
+  <li class='collapsing categories post'><a
+    href='http://mysite.com/your-website/about-your-own-site/'
+    title='About your own site'>About your own site</a>
+  </li>
+  <li class='collapsing categories'><span class='collapsing categories expand'
+    onclick='expandCollapse(event, "▶","▼", 1, "collapsing categories"); return
+    false'><span class='sym'>▶</span>Web hosting</span>
+    <ul id='collapsCat-176-15' style="display:none">
+      <li class='collapsing categories post'><a 
+        href='http://mysite.com/your-website/web-hosting/about-webhosting/'
+        title='About webhosting'>About webhosting</a>
+      </li>
+      <li class='collapsing categories post'><a 
+        href='http://mysite.com/products/webhosting-1/'
+        title='Webhosting #1'>Webhosting #1</a>
+      </li>
+      <li class='collapsing categories post'><a 
+        href='http://mysite.com/products/webhosting-2/'
+        title='Webhosting #2'>Webhosting #2</a>
+      </li>
+    </ul>
+  </li> <!-- ending subcategory -->
 
 == Screenshots ==
 

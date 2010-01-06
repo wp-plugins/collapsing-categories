@@ -24,6 +24,7 @@ $defaults=array(
    'postDateFormat' => 'm/d',
    'showPostDate' => false,
    'useCookies' => true,
+   'postsBeforeCats' => false,
    'showTopLevel' => true
 );
 ?>

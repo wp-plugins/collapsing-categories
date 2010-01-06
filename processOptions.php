@@ -26,6 +26,7 @@
     $excludeAll='0';
     $addMisc=false;
     $showTopLevel=true;
+    $postsBeforeCats=false;
     $addMiscTitle='Miscellaneous';
   } else {
     $title = attribute_escape($options[$number]['title']);
@@ -47,6 +48,7 @@
     $animate = $options[$number]['animate'];
     $debug = $options[$number]['debug'];
     $showTopLevel = $options[$number]['showTopLevel'];
+    $postsBeforeCats = $options[$number]['postsBeforeCats'];
     $catfeed = $options[$number]['catfeed'];
     $catTag = $options[$number]['catTag'];
     $olderThan = $options[$number]['olderThan'];

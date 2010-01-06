@@ -79,6 +79,10 @@
       if (!isset($new_instance['showTopLevel'])) {
         $showTopLevel= false ;
       }
+      $showTopLevel=false;
+      if (isset($new_instance['postsBeforeCats'])) {
+        $postsBeforeCats= true ;
+      }
       $catfeed=addslashes($new_instance['catfeed']);
       $inExcludeCats=addslashes($new_instance['inExcludeCats']);
       $postDateFormat=addslashes($new_instance['postDateFormat']);
@@ -95,6 +99,6 @@
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
           'catTag', 'linkToCat', 'showPostDate', 'postDateFormat',
           'olderThan', 'postDateAppend','postTitleLength', 'useCookies',
-          'showTopLevel', 'catfeed');
+          'showTopLevel', 'postsBeforeCats', 'catfeed');
 
 ?>
