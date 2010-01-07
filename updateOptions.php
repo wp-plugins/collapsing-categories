@@ -79,7 +79,7 @@
       if (!isset($new_instance['showTopLevel'])) {
         $showTopLevel= false ;
       }
-      $showTopLevel=false;
+      $postBeforeCats=false;
       if (isset($new_instance['postsBeforeCats'])) {
         $postsBeforeCats= true ;
       }
