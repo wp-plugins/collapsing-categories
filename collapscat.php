@@ -136,10 +136,39 @@ class collapscat {
 }
 
 
-function collapsCat($args='') {
+function collapsCat($args='', $print=true) {
   include_once( 'collapscatlist.php' );
   if (!is_admin()) {
-    list_categories($args);
+    list($collapsCatText, $postsInCat) = list_categories($args);
+    $url = get_settings('siteurl');
+    if ($print) {
+      print($collapsCatText);
+      echo "<li style='display:none'><script type=\"text/javascript\">\n";
+      echo "// <![CDATA[\n";
+      echo '/* These variables are part of the Collapsing Categories Plugin 
+      *  Version: 1.1
+      *  $Id$
+      * Copyright 2007 Robert Felty (robfelty.com)
+      */' . "\n";
+      $expandSym="<img src='". $url .
+           "/wp-content/plugins/collapsing-categories/" . 
+           "img/expand.gif' alt='expand' />";
+      $collapseSym="<img src='". $url .
+           "/wp-content/plugins/collapsing-categories/" . 
+           "img/collapse.gif' alt='collapse' />";
+      echo "var expandSym=\"$expandSym\";\n";
+      echo "var collapseSym=\"$collapseSym\";\n";
+      if ($useCookies) {
+        echo"
+        collapsAddLoadEvent(function() {
+          autoExpandCollapse('collapsing categories');
+        });
+        ";
+      }
+      echo "// ]]>\n</script></li>\n";
+    } else {
+      return(array($collapsCatText, $postsInCat));
+    }
   }
 }
 $version = get_bloginfo('version');

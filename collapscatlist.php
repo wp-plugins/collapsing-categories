@@ -27,8 +27,6 @@ This file is part of Collapsing Categories
 
 // Helper functions
 function add_to_includes($cat, $inExclusionArray) {
-  //$includes = array();
-  //print_r($inExclusionArray);
   /* add all parents to include list */
   if (in_array($cat->slug, $inExclusionArray) ||
       in_array($cat->term_id, $inExclusionArray)) {
@@ -324,6 +322,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
       }
     }
   }
+    //echo $subCatLinks;
   return array($subCatLinks,$subCatCount,$subCatPostCount,$subCatPosts);
 }
 
@@ -437,7 +436,6 @@ function list_categories($args='') {
 			date('Y-m-d', $now-date('U',$olderThan*60*60*24)) . "'";
 	}
 
-  //echo "\n    <ul class='collapsing categories list'>\n";
 
 $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN
 $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
@@ -522,16 +520,6 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
     }
     if ($cat->parent!=0 )
       continue;
-    /*
-    if (!empty($includeCatArray) && $cat->parent==0 && !in_array($cat->term_id,
-        $includeCatArray)) {
-      echo "first continue" . $cat->term_id . "\n";
-      continue;
-    } elseif (empty($includeCatArray) && $cat->parent!=0) {
-      echo "second continue" . $cat->term_id . "\n";
-      continue;
-    } 
-    */
     if ((is_category() || is_tag()) && 
         (in_array($cat->term_id, $cur_categories)))
       $self="class='self'";
@@ -648,9 +636,10 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
         $span='';
       }
       if ($showTopLevel) {
-        print($span . $link );
+        $collapsCatText.=$span . $link;
         if (($subCatPostCount>0) || ($showPosts)) {
-          print( "\n     <ul id='$theID' style=\"display:$expanded\">\n" );
+          $collapsCatText .= "\n     <ul id='$theID'" . 
+              " style=\"display:$expanded\">\n";
         }
       }
       if ($showPosts) {
@@ -663,39 +652,16 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
       } else {
         $text = $subCatLinks . $posttext;
       }
-      print($text);
+      $collapsCatText .= $text;
       if ($showTopLevel) {
         if ($subCatPostCount>0 || $showPosts) {
-          echo "        </ul>\n";
+          $collapsCatText .= "        </ul>\n";
         }
-        echo "      </li> <!-- ending category -->\n";
+        $collapsCatText .= "      </li> <!-- ending category -->\n";
       }
     } // end if theCount>0
   }
+  return(array($collapsCatText, $postsInCat));
 //  echo "    </ul> <!-- ending collapsing categories -->\n";
 }
-$url = get_settings('siteurl');
-echo "<li style='display:none'><script type=\"text/javascript\">\n";
-echo "// <![CDATA[\n";
-echo '/* These variables are part of the Collapsing Categories Plugin 
-*  Version: 1.1
-*  $Id$
-* Copyright 2007 Robert Felty (robfelty.com)
-*/' . "\n";
-$expandSym="<img src='". $url .
-     "/wp-content/plugins/collapsing-categories/" . 
-     "img/expand.gif' alt='expand' />";
-$collapseSym="<img src='". $url .
-     "/wp-content/plugins/collapsing-categories/" . 
-     "img/collapse.gif' alt='collapse' />";
-echo "var expandSym=\"$expandSym\";\n";
-echo "var collapseSym=\"$collapseSym\";\n";
-if ($useCookies) {
-  echo"
-  collapsAddLoadEvent(function() {
-    autoExpandCollapse('collapsing categories');
-  });
-  ";
-}
-echo "// ]]>\n</script></li>\n";
 ?>
