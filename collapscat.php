@@ -136,8 +136,8 @@ class collapscat {
 }
 
 
+include_once( 'collapscatlist.php' );
 function collapsCat($args='', $print=true) {
-  include_once( 'collapscatlist.php' );
   if (!is_admin()) {
     list($collapsCatText, $postsInCat) = list_categories($args);
     $url = get_settings('siteurl');

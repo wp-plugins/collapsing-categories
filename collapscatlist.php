@@ -1,42 +1,41 @@
 <?php
 /*
-Collapsing Categories version: 1.1
-Copyright 2007 Robert Felty
+collapsing categories version: 1.1
+copyright 2007 robert felty
 
-This work is largely based on the Collapsing Categories plugin by Andrew Rader
-(http://voidsplat.org), which was also distributed under the GPLv2. I have tried
-contacting him, but his website has been down for quite some time now. See the
-CHANGELOG file for more information.
+this work is largely based on the collapsing categories plugin by andrew rader
+(http://voidsplat.org), which was also distributed under the gplv2. i have tried
+contacting him, but his website has been down for quite some time now. see the
+changelog file for more information.
 
-This file is part of Collapsing Categories
+this file is part of collapsing categories
 
-		Collapsing Categories is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License as published by 
-    the Free Software Foundation; either version 2 of the License, or (at your
+		collapsing categories is free software; you can redistribute it and/or
+    modify it under the terms of the gnu general public license as published by 
+    the free software foundation; either version 2 of the license, or (at your
     option) any later version.
 
-    Collapsing Categories is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    collapsing categories is distributed in the hope that it will be useful,
+    but without any warranty; without even the implied warranty of
+    merchantability or fitness for a particular purpose.  see the
+    gnu general public license for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with Collapsing Categories; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+    you should have received a copy of the gnu general public license
+    along with collapsing categories; if not, write to the free software
+    foundation, inc., 51 franklin st, fifth floor, boston, ma  02110-1301  usa
 */
 
-// Helper functions
-function add_to_includes($cat, $inExclusionArray) {
+function add_to_includes($cat, $inexclusionarray) {
   /* add all parents to include list */
-  if (in_array($cat->slug, $inExclusionArray) ||
-      in_array($cat->term_id, $inExclusionArray)) {
+  if (in_array($cat->slug, $inexclusionarray) ||
+      in_array($cat->term_id, $inexclusionarray)) {
     $includes[]= $cat->term_id;
     if ($cat->parent!=0) 
-      $inExclusionArray[]= $cat->parent;
+      $inexclusionarray[]= $cat->parent;
       $cat2 = get_category($cat->parent);
-      $moreIncludes = add_to_includes($cat2,$inExclusionArray);
-      if (!empty($moreIncludes)) {
-        foreach ($moreIncludes as $include) {
+      $moreincludes = add_to_includes($cat2,$inexclusionarray);
+      if (!empty($moreincludes)) {
+        foreach ($moreincludes as $include) {
           $includes[] =  $include;
         }
       }
@@ -47,7 +46,10 @@ function add_to_includes($cat, $inExclusionArray) {
   }
   return($includes);
 }
-function getCollapsCatLink($cat,$catlink,$self) {
+
+function getcollapscatlink($cat,$catlink,$self) {
+  /* returns link to category. we use the id of the category if possible,
+  because it is faster. otherwise we pass the whole category object */
   if (empty($catlink)) {
     if ($cat->taxonomy=='post_tag') {
       $link = "<a $self href='".get_tag_link($cat->term_id)."' ";
@@ -63,36 +65,37 @@ function getCollapsCatLink($cat,$catlink,$self) {
   }
   return($link);
 }
-function miscPosts($cat,$catlink,$subCatPostCount2, $posttext) {
+
+function miscposts($cat,$catlink,$subcatpostcount2, $posttext) {
   /* this function will group posts into a miscellaneous sub-category */
-  global $options, $expandSym,$expandSymJS;
+  global $options, $expandsym,$expandsymjs;
   extract($options);
-  $miscPosts="      <li class='collapsing categories'>".
+  $miscposts="      <li class='collapsing categories'>".
       "<span class='collapsing categories show' ".
-      "onclick='expandCollapse(event, \"$expandSymJS\", \"$collapseSymJS\", $animate, " .
+      "onclick='expandcollapse(event, \"$expandsymjs\", \"$collapsesymjs\", $animate, " .
       "\"collapsing categories\"); return false'>".
-      "<span class='sym'>$expandSym</span>";
-  if ($linkToCat=='yes') {
-    $thisLink=getCollapsCatLink($cat,$catlink,$self);
-    $miscPosts.="</span>$thisLink>$addMiscTitle</a>";
+      "<span class='sym'>$expandsym</span>";
+  if ($linktocat=='yes') {
+    $thislink=getcollapscatlink($cat,$catlink,$self);
+    $miscposts.="</span>$thislink>$addmisctitle</a>";
   } else {
-    $miscPosts.="$addMiscTitle</span>";
+    $miscposts.="$addmisctitle</span>";
   }
-  if( $showPostCount=='yes') {
-    $miscPosts.=' (' . $subCatPostCount2.')';
+  if( $showpostcount=='yes') {
+    $miscposts.=' (' . $subcatpostcount2.')';
   }
-  $miscPosts.= "\n     <ul id='collapsCat-" . $cat->term_id .
+  $miscposts.= "\n     <ul id='collapscat-" . $cat->term_id .
       "-misc' style=\"display:$expanded\">\n" ;
-  $miscPosts.=$posttext;
-  $miscPosts.="    </ul></li>\n";
-  return($miscPosts);
+  $miscposts.=$posttext;
+  $miscposts.="    </ul></li>\n";
+  return($miscposts);
 }
 
-function checkCurrentCat($cat, $categories) {
- /* this function checks whether the post being displayed belongs to a given category, 
- * or if that category's page itself is displayed. 
- * If so, it adds all parent categories to the autoExpand array, so
- * that it is automatically expanded 
+function checkcurrentcat($cat, $categories) {
+ /* this function checks whether the post being displayed belongs to a given
+ category, * or if that category's page itself is displayed.  * If so, it adds
+ all parent categories to the autoExpand array, so * that it is automatically
+ expanded 
  */
   global $autoExpand;
 	array_push($autoExpand, $cat->slug);
@@ -110,6 +113,7 @@ function checkCurrentCat($cat, $categories) {
 * add option to display number of comments
 */
 function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
+  /* returns all the posts for a given category */
   global $postsToExclude, $options;
   extract($options);
   $posttext2='';
@@ -121,36 +125,36 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
       return array(0,'');
     }
     foreach ($posts as $post2) {
-      if ($post2->term_id == $cat2->term_id) {
-        if (!in_array($post2->ID, $postsToExclude)) {
-          array_push($subCatPosts, $post2->ID);
-          $subCatPostCount2++;
-          if (!$showPosts) {
-            continue;
-          }
-          $date=preg_replace("/-/", '/', $post2->date);
-          $name=$post2->post_name;
-          $title_text = htmlspecialchars(strip_tags(__($post2->post_title),
-          'collapsing-categories'), 
-              ENT_QUOTES);
-          $tmp_text = '';
-          if ($postTitleLength> 0 && strlen($title_text) > $postTitleLength ) {
-            $tmp_text = substr($title_text, 0, $postTitleLength );
-              $tmp_text .= ' &hellip;';
-          }
-          $linktext = $tmp_text == '' ? $title_text : $tmp_text;
-          if ($showPostDate) {
-            $theDate = mysql2date($postDateFormat, $post2->post_date );
-            if ($postDateAppend=='before') {
-              $linktext = "$theDate $linktext";
-            } else {
-              $linktext = "$linktext $theDate";
-            }
-          }
-          $posttext2.= "<li class='collapsing categories post'><a $self
-              href='".get_permalink($post2).
-              "' title='$title_text'>$linktext</a></li>\n";
+      if ($post2->term_id != $cat2->term_id)
+        continue;
+      if (!in_array($post2->ID, $postsToExclude)) {
+        array_push($subCatPosts, $post2->ID);
+        $subCatPostCount2++;
+        if (!$showPosts) {
+          continue;
         }
+        $date=preg_replace("/-/", '/', $post2->date);
+        $name=$post2->post_name;
+        $title_text = htmlspecialchars(strip_tags(__($post2->post_title),
+        'collapsing-categories'), 
+            ENT_QUOTES);
+        $tmp_text = '';
+        if ($postTitleLength> 0 && strlen($title_text) > $postTitleLength ) {
+          $tmp_text = substr($title_text, 0, $postTitleLength );
+            $tmp_text .= ' &hellip;';
+        }
+        $linktext = $tmp_text == '' ? $title_text : $tmp_text;
+        if ($showPostDate) {
+          $theDate = mysql2date($postDateFormat, $post2->post_date );
+          if ($postDateAppend=='before') {
+            $linktext = "$theDate $linktext";
+          } else {
+            $linktext = "$linktext $theDate";
+          }
+        }
+        $posttext2.= "<li class='collapsing categories post'><a $self
+            href='".get_permalink($post2).
+            "' title='$title_text'>$linktext</a></li>\n";
       }
     }
   }
@@ -158,6 +162,7 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
 }
 
 function addFeedLink($feed,$cat) {
+  /* returns a link to the rss feed for a given category */
   if ($feed=='text') {
     $rssLink= '<a href="' . get_category_feed_link($cat->term_id) .
         '">&nbsp;(RSS)</a>';
@@ -170,8 +175,10 @@ function addFeedLink($feed,$cat) {
   }
   return $rssLink;
 }
+
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$expanded, $depth) {
+  /* returns all the subcategories for a given category */
   global $options,$expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
       $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat,
       $cur_categories;
@@ -322,26 +329,14 @@ function get_sub_cat($cat, $categories, $parents, $posts,
       }
     }
   }
-    //echo $subCatLinks;
   return array($subCatLinks,$subCatCount,$subCatPostCount,$subCatPosts);
 }
 
-function list_categories($args='') {
+function get_collapscat_fromdb($options) {
   global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
       $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, 
-      $cur_categories, $thisPost, $wp_rewrite, $catlink, $postsInCat;
-  include('defaults.php');
-  $options=wp_parse_args($args, $defaults);
+      $postsInCat;
   extract($options);
-  $catlink = $wp_rewrite->get_category_permastruct();
-  if (is_single() || is_category() || is_tag()) {
-    $tmp_categories = get_the_category();
-    $cur_categories = array();
-    foreach ($tmp_categories as $tmp_cat) {
-      $cur_categories[] = $tmp_cat->term_id;
-    }
-    $thisPost = $wp_query->post->ID;
-  }
   if ($expand==1) {
     $expandSym='+';
     $collapseSym='—';
@@ -375,7 +370,7 @@ function list_categories($args='') {
 		if ( count($exterms) ) {
 			foreach ( $exterms as $exterm ) {
 					$sanitizedTitle = sanitize_title($exterm);
-			  array_push($inExclusionArray, $sanitizedTitle);
+			  $inExclusionArray[] = $sanitizedTitle;
 				if (empty($inExclusions))
 					$inExclusions = "'$sanitizedTitle'";
 				else
@@ -437,10 +432,11 @@ function list_categories($args='') {
 	}
 
 
-$catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN
-$wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
-($catTagQuery) $inExcludeQuery AND t.slug!='blogroll' $catSortColumn $catSortOrder ";
-//$catquery = "SELECT t.*, tt.* FROM wp_terms AS t INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN ('category')  ORDER BY t.name ASC  ";
+  $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN
+      $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
+      ($catTagQuery) $inExcludeQuery AND t.slug!='blogroll' 
+      $catSortColumn $catSortOrder ";
+  $posts = NULL;
   if ($showPosts) {
     $postsInCat=array();
     $postquery= "select ID, slug, date(post_date) as date, post_status,
@@ -467,17 +463,15 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
     $options['showPosts']=false;
     $showPosts=false;
   }
-  $parents=array();
-  global $includeCatArray;
   $includeCatArray=array();
+  $parents=array();
   foreach ($categories as $cat) {
-    // if only including certain pages, we build an array of those page ids 
+    // if only including certain categories, we build an array of those
+    // category ids 
     if ($inExclude=='include' && $inExclusionArray!='') {
       $includes = add_to_includes($cat, $inExclusionArray);
       if (!empty($includes)) {
-        foreach ($includes as $include) {
-          $includeCatArray[] =  $include;
-        }
+        $includeCatArray = array_merge($includeCatArray, $includes);
       }
     }
     if ($cat->parent!=0) {
@@ -487,6 +481,7 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
       checkCurrentCat($cat,$categories);
     }
   }
+  $includeCatArray = array_unique($includeCatArray);
 	$postsToExclude=array();
 	if ($excludeAll==1) {
 		foreach ($posts as $post) {
@@ -510,21 +505,47 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
     print_r($posts);
     echo "</li>";
   }
+  return(array($posts, $categories, $parents, $inExclude, $includeCatArray));
+}
+
+function list_categories($args='') {
+  /* returns a list of categories, and optionally subcategories and posts,
+  which can be collapsed or expanded with javascript */
+  global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
+      $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, 
+      $cur_categories, $thisPost, $wp_rewrite, $catlink, $postsInCat;
+  include('defaults.php');
+  $options=wp_parse_args($args, $defaults);
+  extract($options);
+  list($posts, $categories, $parents, $inExclude, $includeCatArray) = 
+      get_collapscat_fromdb($options);
+  if (is_single() || is_category() || is_tag()) {
+    $tmp_categories = get_the_category();
+    $cur_categories = array();
+    foreach ($tmp_categories as $tmp_cat) {
+      $cur_categories[] = $tmp_cat->term_id;
+    }
+    $thisPost = $wp_query->post->ID;
+  }
+  $catlink = $wp_rewrite->get_category_permastruct();
+
 
   foreach( $categories as $cat ) {
-    if ($inExclude=='include' && $inExcludeCats!='') {
+    if ($inExclude=='include' && !empty($includeCatArray)) {
       if (!in_array($cat->term_id, $includeCatArray) &&
           !in_array($cat->post_parent, $includeCatArray)) {
         continue;
+      } else {
       }
     }
     if ($cat->parent!=0 )
       continue;
     if ((is_category() || is_tag()) && 
-        (in_array($cat->term_id, $cur_categories)))
+        (in_array($cat->term_id, $cur_categories))) {
       $self="class='self'";
-    else
+    } else {
       $self="";
+    }
     $rssLink=addFeedLink($catfeed,$cat);
     $subCatPostCount=0;
     $subCatCount=0;
@@ -567,7 +588,8 @@ $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
             'collapsing-categories'),
             wp_specialchars(apply_filters('single_cat_title',$cat->name))) . '"';
       } else {
-        $link .= 'title="' . wp_specialchars(apply_filters('description',$cat->description,$cat)) . '"';
+        $link .= 'title="' . wp_specialchars(apply_filters(
+            'description',$cat->description,$cat)) . '"';
       }
       $link .= '>';
       if ($linkToCat=='yes') {
