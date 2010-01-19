@@ -213,6 +213,7 @@ style, in the same manner as the `wp_list_categories` function.
    'postDateFormat' => 'm/d',
    'useCookies' => true,
    'showTopLevel' => true,
+   'postsBeforeCats' => false,
    'debug'=>'0'
 );
 `
@@ -304,6 +305,11 @@ style, in the same manner as the `wp_list_categories` function.
       top-level category
          * 1 (true) (default)
          * 0 (false)
+* postsBeforeCats
+    * When set to true, posts in category X will be ordered before
+      subcategories of category X
+         * 1 (true)
+         * 0 (false) (default)
 
 
 = Examples =
@@ -330,7 +336,13 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
-= 1.1 (2010.01.xx) =
+= 1.1.1 (2010.01.xx) =
+  * Added option to display posts before categories
+  * Fixed bug with assigning self class to posts in sub-categories 
+  * Refactored code to reduce number of database reads when using multiple
+    instances of the widget
+
+= 1.1 (2010.01.03) =
     * Bug fixes
         * Fixed xhtml validation error (thanks Mathie)
         * Fixed incorrect link bug (thanks andydv)

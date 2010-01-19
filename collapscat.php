@@ -139,7 +139,10 @@ class collapscat {
 include_once( 'collapscatlist.php' );
 function collapsCat($args='', $print=true) {
   if (!is_admin()) {
-    list($collapsCatText, $postsInCat) = list_categories($args);
+    list($posts, $categories, $parents, $options) = 
+        get_collapscat_fromdb($args);
+    list($collapsCatText, $postsInCat) = list_categories($posts, $categories,
+        $parents, $options);
     $url = get_settings('siteurl');
     if ($print) {
       print($collapsCatText);

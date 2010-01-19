@@ -114,7 +114,7 @@ function checkcurrentcat($cat, $categories) {
 */
 function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
   /* returns all the posts for a given category */
-  global $postsToExclude, $options;
+  global $postsToExclude, $options, $thisPost;
   extract($options);
   $posttext2='';
   if ($excludeAll==0 && !$showPosts) {
@@ -133,6 +133,10 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
         if (!$showPosts) {
           continue;
         }
+        if (is_single() && $post2->ID == $thisPost)
+          $self="class='self'";
+        else
+          $self="";
         $date=preg_replace("/-/", '/', $post2->date);
         $name=$post2->post_name;
         $title_text = htmlspecialchars(strip_tags(__($post2->post_title),
@@ -183,6 +187,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
       $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat,
       $cur_categories;
   $subCatLinks='';
+  $postself='';
   extract($options);
   $subCatPosts=array();
   $link2='';
@@ -193,14 +198,17 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
       $subCatLink2=''; // clear info from subCatLink2
-      if ((is_category() || is_tag()) && 
-          (in_array($cat2->term_id, $cur_categories)))
+      if ((is_category() || is_tag()) &&
+          (in_array($cat2->term_id, $cur_categories))) {
         $self="class='self'";
-      else
+      } else {
         $self="";
+      }
       if ($cat->term_id==$cat2->parent) {
+        $foo.='hallo';
         list($subCatPostCount2, $posttext2) = 
-            getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts, $showPosts);
+            getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts,
+            $showPosts);
         $subCatPostCount+=$subCatPostCount2;
         $subCatPostCounts[$depth]=$subCatPostCount2;
         $expanded='none';
@@ -263,7 +271,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $subCatPostCount,$expanded, $depth);
           $subCatCount=1;
           list($subCatPostCount2, $posttext2) = 
-              getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts, $showPosts);
+              getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts,
+              $showPosts);
           if ($subCatPostCount2<1) {
             continue;
           }
@@ -329,13 +338,18 @@ function get_sub_cat($cat, $categories, $parents, $posts,
       }
     }
   }
-  return array($subCatLinks,$subCatCount,$subCatPostCount,$subCatPosts);
+        //echo $subCatLinks;
+  //      $subCatLinks.='<br />';
+  return(array($subCatLinks,$subCatCount,$subCatPostCount,$subCatPosts));
+  //return(array($foo,$subCatLinks));
 }
 
-function get_collapscat_fromdb($options) {
+function get_collapscat_fromdb($args='') {
   global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
       $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, 
       $postsInCat;
+  include('defaults.php');
+  $options=wp_parse_args($args, $defaults);
   extract($options);
   if ($expand==1) {
     $expandSym='+';
@@ -482,6 +496,7 @@ function get_collapscat_fromdb($options) {
     }
   }
   $includeCatArray = array_unique($includeCatArray);
+  $options['includeCatArray']=$includeCatArray;
 	$postsToExclude=array();
 	if ($excludeAll==1) {
 		foreach ($posts as $post) {
@@ -505,20 +520,16 @@ function get_collapscat_fromdb($options) {
     print_r($posts);
     echo "</li>";
   }
-  return(array($posts, $categories, $parents, $inExclude, $includeCatArray));
+  return(array($posts, $categories, $parents, $options));
 }
 
-function list_categories($args='') {
+function list_categories($posts, $categories, $parents, $options) {
   /* returns a list of categories, and optionally subcategories and posts,
   which can be collapsed or expanded with javascript */
   global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
       $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, 
       $cur_categories, $thisPost, $wp_rewrite, $catlink, $postsInCat;
-  include('defaults.php');
-  $options=wp_parse_args($args, $defaults);
   extract($options);
-  list($posts, $categories, $parents, $inExclude, $includeCatArray) = 
-      get_collapscat_fromdb($options);
   if (is_single() || is_category() || is_tag()) {
     $tmp_categories = get_the_category();
     $cur_categories = array();
