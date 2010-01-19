@@ -91,7 +91,7 @@ function miscposts($cat,$catlink,$subcatpostcount2, $posttext) {
   return($miscposts);
 }
 
-function checkcurrentcat($cat, $categories) {
+function checkCurrentCat($cat, $categories) {
  /* this function checks whether the post being displayed belongs to a given
  category, * or if that category's page itself is displayed.  * If so, it adds
  all parent categories to the autoExpand array, so * that it is automatically
@@ -491,9 +491,6 @@ function get_collapscat_fromdb($args='') {
     if ($cat->parent!=0) {
       array_push($parents, $cat->parent);
     }
-    if (!empty($cur_categories) && (in_array($cat->term_id, $cur_categories))) {
-      checkCurrentCat($cat,$categories);
-    }
   }
   $includeCatArray = array_unique($includeCatArray);
   $options['includeCatArray']=$includeCatArray;
@@ -537,6 +534,11 @@ function list_categories($posts, $categories, $parents, $options) {
       $cur_categories[] = $tmp_cat->term_id;
     }
     $thisPost = $wp_query->post->ID;
+    foreach ($categories as $cat) {
+      if (!empty($cur_categories) && (in_array($cat->term_id, $cur_categories))) {
+        checkCurrentCat($cat,$categories);
+      }
+    }
   }
   $catlink = $wp_rewrite->get_category_permastruct();
 
@@ -576,6 +578,7 @@ function list_categories($posts, $categories, $parents, $options) {
           ($useCookies && $_COOKIE[$theID]==1)) {
         $expanded='block';
       }
+
       if ($showPosts || $subCatPostCount>0) {
         if ($expanded=='block') {
           $showHide='collapse';
