@@ -541,9 +541,9 @@ function list_categories($posts, $categories, $parents, $options) {
       $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, 
       $cur_categories, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   extract($options);
+  $cur_categories = array();
   if (is_single() || is_category() || is_tag()) {
     $tmp_categories = get_the_category();
-    $cur_categories = array();
     foreach ($tmp_categories as $tmp_cat) {
       $cur_categories[] = $tmp_cat->term_id;
     }
@@ -694,7 +694,7 @@ function list_categories($posts, $categories, $parents, $options) {
       }
       if ($showPosts) {
         if ($subCatPostCount>0 && $subCatLinks!='' && $addMisc) {
-          $posttext = (miscPosts($cat,$catlink,$subCatPostCount2,$posttext));
+          $posttext = (miscPosts($cat,$catlink,$subCatPostCount,$posttext));
         }
       }
       if ($postsBeforeCats) {
