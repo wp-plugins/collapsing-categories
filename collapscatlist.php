@@ -47,7 +47,7 @@ function add_to_includes($cat, $inexclusionarray) {
   return($includes);
 }
 
-function getcollapscatlink($cat,$catlink,$self) {
+function getCollapsCatLink($cat,$catlink,$self) {
   /* returns link to category. we use the id of the category if possible,
   because it is faster. otherwise we pass the whole category object */
   if (empty($catlink)) {
@@ -66,26 +66,39 @@ function getcollapscatlink($cat,$catlink,$self) {
   return($link);
 }
 
-function miscposts($cat,$catlink,$subcatpostcount2, $posttext) {
+function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   /* this function will group posts into a miscellaneous sub-category */
-  global $options, $expandsym,$expandsymjs;
+  global $options, $expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
+      $cur_categories;
   extract($options);
+  $showHide='expand';
+  $symbol=$expandSym;
+  $expanded='none';
+  $theID='collapsCat-' . $cat->term_id . "-$number-misc";
+
+  if (in_array($cat->term_id, $cur_categories) ||
+      ($useCookies && $_COOKIE[$theID]==1)) {
+    $expanded='block';
+  }
+  if ($expanded=='block') {
+    $showHide='collapse';
+    $symbol=$collapseSym;
+  }
   $miscposts="      <li class='collapsing categories'>".
-      "<span class='collapsing categories show' ".
-      "onclick='expandcollapse(event, \"$expandsymjs\", \"$collapsesymjs\", $animate, " .
+      "<span class='collapsing categories $showHide' ".
+      "onclick='expandCollapse(event, \"$expandSymJS\", \"$collapseSymJS\", $animate, " .
       "\"collapsing categories\"); return false'>".
-      "<span class='sym'>$expandsym</span>";
+      "<span class='sym'>$symbol</span>";
   if ($linktocat=='yes') {
-    $thislink=getcollapscatlink($cat,$catlink,$self);
-    $miscposts.="</span>$thislink>$addmisctitle</a>";
+    $thislink=getCollapsCatLink($cat,$catlink,$self);
+    $miscposts.="</span>$thislink>$addMiscTitle</a>";
   } else {
-    $miscposts.="$addmisctitle</span>";
+    $miscposts.="$addMiscTitle</span>";
   }
   if( $showpostcount=='yes') {
     $miscposts.=' (' . $subcatpostcount2.')';
   }
-  $miscposts.= "\n     <ul id='collapscat-" . $cat->term_id .
-      "-misc' style=\"display:$expanded\">\n" ;
+  $miscposts.= "\n     <ul id='$theID' style=\"display:$expanded\">\n" ;
   $miscposts.=$posttext;
   $miscposts.="    </ul></li>\n";
   return($miscposts);
@@ -323,7 +336,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         if (($subCatCount>0) || ($showPosts)) {
           $subCatLinks.="\n<ul id='$theID' style=\"display:$expanded\">\n";
           if ($subCatCount>0 && $posttext2!='' && $addMisc) {
-            $subCatLinks.=miscPosts($cat2,$catlink,$subCatPostCount2,$posttext2);
+            $subCatLinks.=miscPosts($cat2,$catlink,$subCatPostCount2,
+                $posttext2);
           } else {
             $subCatLinks.=$posttext2;
           }

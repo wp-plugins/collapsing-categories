@@ -79,15 +79,20 @@
       if (!isset($new_instance['showTopLevel'])) {
         $showTopLevel= false ;
       }
-      $postBeforeCats=false;
+      $postsBeforeCats=false;
       if (isset($new_instance['postsBeforeCats'])) {
         $postsBeforeCats= true ;
+      }
+      $addMisc=false;
+      if (isset($new_instance['addMisc'])) {
+        $addMisc= true ;
       }
       $catfeed=addslashes($new_instance['catfeed']);
       $inExcludeCats=addslashes($new_instance['inExcludeCats']);
       $postDateFormat=addslashes($new_instance['postDateFormat']);
       $defaultExpand=addslashes($new_instance['defaultExpand']);
       $postTitleLength=addslashes($new_instance['postTitleLength']);
+      $addMiscTitle=addslashes($new_instance['addMiscTitle']);
       if ($new_instance['showPosts']=='yes') {
         $showPosts= true ;
       } else {
@@ -99,6 +104,7 @@
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
           'catTag', 'linkToCat', 'showPostDate', 'postDateFormat',
           'olderThan', 'postDateAppend','postTitleLength', 'useCookies',
-          'showTopLevel', 'postsBeforeCats', 'catfeed');
+          'showTopLevel', 'postsBeforeCats', 'catfeed', 'addMisc',
+          'addMiscTitle');
 
 ?>
