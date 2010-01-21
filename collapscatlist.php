@@ -95,7 +95,7 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   } else {
     $miscposts.="$addMiscTitle</span>";
   }
-  if( $showpostcount=='yes') {
+  if( $showPostCount=='yes') {
     $miscposts.=' (' . $subcatpostcount2.')';
   }
   $miscposts.= "\n     <ul id='$theID' style=\"display:$expanded\">\n" ;
@@ -694,7 +694,7 @@ function list_categories($posts, $categories, $parents, $options) {
       }
       if ($showPosts) {
         if ($subCatPostCount>0 && $subCatLinks!='' && $addMisc) {
-          $posttext = (miscPosts($cat,$catlink,$subCatPostCount,$posttext));
+          $posttext = (miscPosts($cat,$catlink,$subCatPostCount2,$posttext));
         }
       }
       if ($postsBeforeCats) {
