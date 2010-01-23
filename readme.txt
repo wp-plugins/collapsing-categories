@@ -341,6 +341,8 @@ behavior in wordpress anyways)
   * Fixed bug with assigning self class to posts in sub-categories 
   * Refactored code to reduce number of database reads when using multiple
     instances of the widget
+  * Switched from scriptaculous to jquery. No longer conflicts with plugins
+    which use mootools (e.g. featured content gallery)
 
 = 1.1 (2010.01.03) =
     * Bug fixes

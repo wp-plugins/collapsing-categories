@@ -38,10 +38,10 @@ global $collapsCatVersion;
 $collapsCatVersion = '1.1';
 
 if (!is_admin()) {
-  add_action('wp_head', wp_enqueue_script('ui-core'));
+  add_action('wp_head', wp_enqueue_script('jquery'));
   add_action('wp_head', wp_enqueue_script('collapsFunctions',
   "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",'',
-  '1.5'));
+  '1.6'));
   add_action( 'wp_head', array('collapscat','get_head'));
 //  add_action( 'wp_footer', array('collapsCat','get_foot'));
 } else {

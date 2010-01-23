@@ -1,4 +1,4 @@
-/*  Collapse Functions, version 1.5
+/*  Collapse Functions, version 1.6
  *
  *--------------------------------------------------------------------------*/
 String.prototype.trim = function() {
