@@ -38,7 +38,7 @@ global $collapsCatVersion;
 $collapsCatVersion = '1.1';
 
 if (!is_admin()) {
-  add_action('wp_head', wp_enqueue_script('scriptaculous-effects'));
+  add_action('wp_head', wp_enqueue_script('ui-core'));
   add_action('wp_head', wp_enqueue_script('collapsFunctions',
   "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",'',
   '1.5'));
