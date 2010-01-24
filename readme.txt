@@ -343,6 +343,8 @@ behavior in wordpress anyways)
     instances of the widget
   * Switched from scriptaculous to jquery. No longer conflicts with plugins
     which use mootools (e.g. featured content gallery)
+  * Changed css class called "post" to "item" to avoid conflicts with other
+    commonly used css classes
 
 = 1.1 (2010.01.03) =
     * Bug fixes

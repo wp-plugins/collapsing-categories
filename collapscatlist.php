@@ -169,7 +169,7 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
             $linktext = "$linktext $theDate";
           }
         }
-        $posttext2.= "<li class='collapsing categories post'><a $self
+        $posttext2.= "<li class='collapsing categories item'><a $self
             href='".get_permalink($post2).
             "' title='$title_text'>$linktext</a></li>\n";
       }
@@ -251,7 +251,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                 "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>" . 
                 "<span class='sym'>$symbol</span>" );
           } else {
-            $subCatLinks.=( "<li class='collapsing categories post'>" );
+            $subCatLinks.=( "<li class='collapsing categories item'>" );
           }
           $link2= getCollapsCatLink($cat2,$catlink,$self);
           if ( empty($cat2->description) ) {
@@ -322,7 +322,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               // don't include the triangles if posts are not shown and there
               // are no more subcategories
                 $link2 .= apply_filters('single_cat_title',$cat2->name).'</a>';
-                $subCatLinks = "      <li class='collapsing categories post'>";
+                $subCatLinks = "      <li class='collapsing categories item'>";
             }
           }
         }
@@ -607,7 +607,7 @@ function list_categories($posts, $categories, $parents, $options) {
             "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>".
             "<span class='sym'>$symbol</span>";
       } else {
-        $span = "      <li class='collapsing categories post'>";
+        $span = "      <li class='collapsing categories item'>";
       }
       $link=getCollapsCatLink($cat,$catlink,$self);
       if ( empty($cat->description) ) {
@@ -632,7 +632,7 @@ function list_categories($posts, $categories, $parents, $options) {
           // don't include the triangles if posts are not shown and there
           // are no more subcategories
             $link .= apply_filters('single_cat_title',$cat->name).'</a>';
-            $span = "      <li class='collapsing categories post'>";
+            $span = "      <li class='collapsing categories item'>";
         }
       }
       // Now print out the post info
@@ -669,7 +669,7 @@ function list_categories($posts, $categories, $parents, $options) {
                     $linktext = "$linktext $theDate";
                   }
                 }
-                $posttext.= "<li class='collapsing categories post'><a $self
+                $posttext.= "<li class='collapsing categories item'><a $self
                   href='".get_permalink($post).
                   "' title='$title_text'>$linktext</a></li>\n";
               } 
