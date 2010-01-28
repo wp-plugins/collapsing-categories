@@ -1,6 +1,6 @@
 <?php
 /*
-Collapsing Categories version: 1.1
+Collapsing Categories version: 1.1.1
 Copyright 2007 Robert Felty
 
     Collapsing Categories is free software; you can redistribute it and/or modify
@@ -125,7 +125,11 @@ function changeStyle(preview,template,select,selected,custom) {
   preview.src='<?php echo $url ?>/img/'+selectedStyle.innerHTML+'.png';
   var sidebarId=document.getElementById('collapsCatSidebarId').value;
 
+  if (sidebarId!='') {
   var theStyle = selectedStyle.value.replace(/#[a-zA-Z]+\s/g, '#'+sidebarId + ' ');
+  } else {
+  var theStyle = selectedStyle.value.replace(/#[a-zA-Z]+\s/g, '');
+  }
   pageStyle.value=theStyle
 }
 

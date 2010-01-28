@@ -4,8 +4,8 @@ Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.8
-Tested up to: 2.9
-Stable tag: 1.1
+Tested up to: 2.9.1
+Stable tag: 1.1.1
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -33,6 +33,16 @@ If you prefer to insert code into your theme manually instead of using
 widgets, please note that the manual installation instructions have changed. 
 
 = What's New?=
+
+* 1.1.1 (2010.01.28)
+  * Added option to display posts before categories
+  * Fixed bug with assigning self class to posts in sub-categories 
+  * Refactored code to reduce number of database reads when using multiple
+    instances of the widget
+  * Switched from scriptaculous to jquery. No longer conflicts with plugins
+    which use mootools (e.g. featured content gallery)
+  * Changed css class called "post" to "item" to avoid conflicts with other
+    commonly used css classes
 
 * 1.1 (2010.01.03)
     * Bug fixes
@@ -144,7 +154,7 @@ The following classes are used:
 * collapsing - applied to all ul and li elements
 * categories - applied to all ul and li elements
 * list - applied to the top-level ul
-* post - applied to each post
+* item - applied to each li which has no sub-elements
 * expand - applied to a category which can be expanded (is currently
   collapsed)
 * collapse - applied to a category which can be collapsed (is currently
@@ -336,7 +346,7 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
-= 1.1.1 (2010.01.xx) =
+= 1.1.1 (2010.01.28) =
   * Added option to display posts before categories
   * Fixed bug with assigning self class to posts in sub-categories 
   * Refactored code to reduce number of database reads when using multiple
