@@ -507,7 +507,6 @@ function get_collapscat_fromdb($args='') {
     }
   }
   $includeCatArray = array_unique($includeCatArray);
-  $options['includeCatArray']=$includeCatArray;
 	$postsToExclude=array();
 	if ($excludeAll==1) {
 		foreach ($posts as $post) {
@@ -516,6 +515,10 @@ function get_collapscat_fromdb($args='') {
 			}
 		}
 	}
+  // add in computed options to options array
+  $computedOptions = compact('includeCatArray', 'expandSym', 'expandSymJS', 
+      'collapseSym', 'collapseSymJS');
+  $options = array_merge($options, $computedOptions);
   if ($debug==1) {
     echo "<li style='display:none' >";
     printf ("MySQL server version: %s\n", mysql_get_server_info());
