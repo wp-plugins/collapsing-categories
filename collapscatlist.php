@@ -641,44 +641,8 @@ function list_categories($posts, $categories, $parents, $options) {
       // Now print out the post info
       $posttext='';
       if( ! empty($postsInCat[$cat->term_id]) ) {
-          foreach ($postsInCat[$cat->term_id] as $post) {
-            if ($post->term_id == $cat->term_id 
-                && (!in_array($post->ID, $subCatPosts))) {
-              if (!in_array($post->ID, $postsToExclude)) {
-                $subCatPostCount++;
-                if (!$showPosts) {
-                  continue;
-                }
-                if (is_single() && $post->ID == $thisPost)
-                  $self="class='self'";
-                else
-                  $self="";
-                $date=preg_replace("/-/", '/', $post->date);
-                $name=$post->post_name;
-                $title_text = htmlspecialchars(strip_tags(
-                    __($post->post_title), 'collapsing-categories'), ENT_QUOTES);
-                $tmp_text = '';
-                if ($postTitleLength> 0 && 
-                    strlen($title_text) > $postTitleLength ) {
-                  $tmp_text = substr($title_text, 0, $postTitleLength );
-                    $tmp_text .= ' &hellip;';
-                }
-                $linktext = $tmp_text == '' ? $title_text : $tmp_text;
-                if ($showPostDate) {
-                  $theDate = mysql2date($postDateFormat, $post->post_date );
-                  if ($postDateAppend=='before') {
-                    $linktext = "$theDate $linktext";
-                  } else {
-                    $linktext = "$linktext $theDate";
-                  }
-                }
-                $posttext.= "<li class='collapsing categories item'><a $self
-                  href='".get_permalink($post).
-                  "' title='$title_text'>$linktext</a></li>\n";
-              } 
-            }
-          // close <ul> and <li> before starting a new category
-        } 
+        list ($subCatPostCount, $posttext) = getSubPosts($posts, $cat,
+            $subCatPosts, $showPosts);
       }
       if( $showPostCount=='yes') {
         $link .= ' (' . $theCount.')';

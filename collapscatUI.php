@@ -126,9 +126,9 @@ function changeStyle(preview,template,select,selected,custom) {
   var sidebarId=document.getElementById('collapsCatSidebarId').value;
 
   if (sidebarId!='') {
-  var theStyle = selectedStyle.value.replace(/#[a-zA-Z]+\s/g, '#'+sidebarId + ' ');
+    var theStyle = selectedStyle.value.replace(/#[a-zA-Z]+\s/g, '#'+sidebarId + ' ');
   } else {
-  var theStyle = selectedStyle.value.replace(/#[a-zA-Z]+\s/g, '');
+    var theStyle = selectedStyle.value.replace(/#[a-zA-Z]+\s/g, '');
   }
   pageStyle.value=theStyle
 }

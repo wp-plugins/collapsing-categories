@@ -8,13 +8,7 @@ Version: 1.1.1
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories, menu, navigation, posts
 
-Copyright 2007 Robert Felty
-
-This work is largely based on the Fancy Categories plugin by Andrew Rader
-(http://nymb.us), which was also distributed under the GPLv2. I have tried
-contacting him, but his website has been down for quite some time now. See the
-CHANGELOG file for more information.
-
+Copyright 2007-2010 Robert Felty
 
 This file is part of Collapsing Categories
 
