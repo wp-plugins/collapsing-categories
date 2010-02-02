@@ -4,7 +4,7 @@ Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
 Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
 Author: Robert Felty
-Version: 1.1.1
+Version: 1.2
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories, menu, navigation, posts
 
@@ -32,10 +32,12 @@ global $collapsCatVersion;
 $collapsCatVersion = '1.1.1';
 
 if (!is_admin()) {
-  add_action('wp_head', wp_enqueue_script('jquery'));
-  add_action('wp_head', wp_enqueue_script('collapsFunctions',
-  "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",'',
-  '1.6'));
+  $inFooter=true;
+  if ($options = get_option('collapsCatOptions') && $options['inFooter'])
+    $inFooter = $options['inFooter'];
+  wp_enqueue_script('collapsFunctions',
+      "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",
+      array('jquery'), '1.7', true);
   add_action( 'wp_head', array('collapscat','get_head'));
 //  add_action( 'wp_footer', array('collapsCat','get_foot'));
 } else {
@@ -133,6 +135,7 @@ class collapscat {
 
 include_once( 'collapscatlist.php' );
 function collapsCat($args='', $print=true) {
+  global $subCatPosts; 
   if (!is_admin()) {
     list($posts, $categories, $parents, $options) = 
         get_collapscat_fromdb($args);
@@ -163,6 +166,10 @@ function collapsCat($args='', $print=true) {
         });
         ";
       }
+      //print_r($subCatPosts);
+      echo phpArrayToJS($subCatPosts);
+      // now we create an array indexed by the id of the ul for posts
+
       echo "// ]]>\n</script></li>\n";
     } else {
       return(array($collapsCatText, $postsInCat));

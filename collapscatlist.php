@@ -1,12 +1,7 @@
 <?php
 /*
 collapsing categories version: 1.1.1
-copyright 2007 robert felty
-
-this work is largely based on the collapsing categories plugin by andrew rader
-(http://voidsplat.org), which was also distributed under the gplv2. i have tried
-contacting him, but his website has been down for quite some time now. see the
-changelog file for more information.
+copyright 2007-2010 robert felty
 
 this file is part of collapsing categories
 
@@ -24,6 +19,20 @@ this file is part of collapsing categories
     along with collapsing categories; if not, write to the free software
     foundation, inc., 51 franklin st, fifth floor, boston, ma  02110-1301  usa
 */
+global $subCatPosts;
+$subCatPosts = array();
+
+
+function phpArrayToJS($array) {
+  /* generates javscript code to create an array from a php array */
+  $script = "var subCatPosts = new Object();\n";
+  foreach ($array as $key => $value){
+    $script .= "subCatPosts['$key'] = '" . 
+        addslashes(str_replace("\n", '', $value)) . "';\n";
+  }
+  return($script);
+}
+
 
 function add_to_includes($cat, $inexclusionarray) {
   /* add all parents to include list */
@@ -68,8 +77,7 @@ function getCollapsCatLink($cat,$catlink,$self) {
 
 function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   /* this function will group posts into a miscellaneous sub-category */
-  global $options, $expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
-      $cur_categories;
+  global $options, $cur_categories, $subCatPosts;
   extract($options);
   $showHide='expand';
   $symbol=$expandSym;
@@ -101,6 +109,9 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   $miscposts.= "\n     <ul id='$theID' style=\"display:$expanded\">\n" ;
   $miscposts.=$posttext;
   $miscposts.="    </ul></li>\n";
+  if ($theID!='' && !$subCatPosts[$theID]) {
+    $subCatPosts[$theID] = $posttext;
+  }
   return($miscposts);
 }
 
@@ -125,9 +136,9 @@ function checkCurrentCat($cat, $categories) {
 * add depth option
 * add option to display number of comments
 */
-function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
+function getSubPosts($posts, $cat2,$showPosts, $theID) {
   /* returns all the posts for a given category */
-  global $postsToExclude, $options, $thisPost;
+  global $postsToExclude, $options, $thisPost, $subCatPosts;
   extract($options);
   $posttext2='';
   if ($excludeAll==0 && !$showPosts) {
@@ -141,7 +152,6 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
       if ($post2->term_id != $cat2->term_id)
         continue;
       if (!in_array($post2->ID, $postsToExclude)) {
-        array_push($subCatPosts, $post2->ID);
         $subCatPostCount2++;
         if (!$showPosts) {
           continue;
@@ -169,11 +179,14 @@ function getSubPosts($posts, $cat2, $subCatPosts, $showPosts) {
             $linktext = "$linktext $theDate";
           }
         }
-        $posttext2.= "<li class='collapsing categories item'><a $self
-            href='".get_permalink($post2).
+        $posttext2.= "<li class='collapsing categories item'><a $self " . 
+            "href='".get_permalink($post2).
             "' title='$title_text'>$linktext</a></li>\n";
       }
     }
+  }
+  if ($theID!='' && !$subCatPosts[$theID]) {
+    $subCatPosts[$theID] = $posttext2;
   }
   return array($subCatPostCount2, $posttext2);
 }
@@ -202,7 +215,6 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatLinks='';
   $postself='';
   extract($options);
-  $subCatPosts=array();
   $link2='';
   if ($depth==0) {
     $subCatPostCounts=array();
@@ -217,15 +229,13 @@ function get_sub_cat($cat, $categories, $parents, $posts,
       } else {
         $self="";
       }
+      list($subCatPostCount2, $posttext2) = 
+          getSubPosts($postsInCat[$cat2->term_id],$cat2, $showPosts, $theID);
       if ($cat->term_id==$cat2->parent) {
-        $foo.='hallo';
-        list($subCatPostCount2, $posttext2) = 
-            getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts,
-            $showPosts);
+        $theID='collapsCat-' . $cat2->term_id . "-$number";
         $subCatPostCount+=$subCatPostCount2;
         $subCatPostCounts[$depth]=$subCatPostCount2;
         $expanded='none';
-        $theID='collapsCat-' . $cat2->term_id . "-$number";
         if (in_array($cat2->name, $autoExpand) ||
             in_array($cat2->slug, $autoExpand) ||
             ($useCookies && $_COOKIE[$theID]==1)) {
@@ -279,13 +289,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             }
           }
         } else {
-          list ($subCatLink2, $subCatCount,$subCatPostCount,$subCatPosts)= 
+          list ($subCatLink2, $subCatCount,$subCatPostCount)= 
               get_sub_cat($cat2, $categories, $parents, $posts, $subCatCount,
               $subCatPostCount,$expanded, $depth);
           $subCatCount=1;
-          list($subCatPostCount2, $posttext2) = 
-              getSubPosts($postsInCat[$cat2->term_id],$cat2, $subCatPosts,
-              $showPosts);
           if ($subCatPostCount2<1) {
             continue;
           }
@@ -335,6 +342,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $subCatLinks.=$rssLink;
         if (($subCatCount>0) || ($showPosts)) {
           $subCatLinks.="\n<ul id='$theID' style=\"display:$expanded\">\n";
+          if ($expanded!='block') 
+            $posttext2='';
           if ($subCatCount>0 && $posttext2!='' && $addMisc) {
             $subCatLinks.=miscPosts($cat2,$catlink,$subCatPostCount2,
                 $posttext2);
@@ -354,7 +363,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   }
         //echo $subCatLinks;
   //      $subCatLinks.='<br />';
-  return(array($subCatLinks,$subCatCount,$subCatPostCount,$subCatPosts));
+  return(array($subCatLinks,$subCatCount,$subCatPostCount));
   //return(array($foo,$subCatLinks));
 }
 
@@ -540,8 +549,7 @@ function get_collapscat_fromdb($args='') {
 function list_categories($posts, $categories, $parents, $options) {
   /* returns a list of categories, and optionally subcategories and posts,
   which can be collapsed or expanded with javascript */
-  global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
-      $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, 
+  global $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, $subCatPosts,
       $cur_categories, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   extract($options);
   $cur_categories = array();
@@ -561,6 +569,7 @@ function list_categories($posts, $categories, $parents, $options) {
 
 
   foreach( $categories as $cat ) {
+    $theID='collapsCat-' . $cat->term_id . "-$number";
     if ($inExclude=='include' && !empty($includeCatArray)) {
       if (!in_array($cat->term_id, $includeCatArray) &&
           !in_array($cat->post_parent, $includeCatArray)) {
@@ -580,16 +589,23 @@ function list_categories($posts, $categories, $parents, $options) {
     $subCatPostCount=0;
     $subCatCount=0;
     $subCatPostCounts=array();
-    list ($subCatLinks, $subCatCount,$subCatPostCount, $subCatPosts)=
+    list ($subCatLinks, $subCatCount,$subCatPostCount)=
         get_sub_cat($cat, $categories, $parents, $posts, 
         $subCatCount,$subCatPostCount,$expanded,0);
-    list($subCatPostCount2, $posttext2) = 
-        getSubPosts($postsInCat[$cat->term_id],$cat, $subCatPosts, $showPosts);
+    //list($subCatPostCount2, $posttext2) = 
+        //getSubPosts($postsInCat[$cat->term_id],$cat, $showPosts, $theID);
+    // Get post info
+    $posttext='';
+    if( ! empty($postsInCat[$cat->term_id]) ) {
+      list ($subCatPostCount, $posttext) = getSubPosts($posts, $cat,
+          $showPosts, $theID);
+    }
       
-    $theCount=$subCatPostCount2+$subCatPostCount;
+    //$theCount=$subCatPostCount2+$subCatPostCount;
+    $theCount= $subCatPostCount;
+
     if ($theCount>0) {
       $expanded='none';
-      $theID='collapsCat-' . $cat->term_id . "-$number";
       if (in_array($cat->name, $autoExpand) ||
           in_array($cat->slug, $autoExpand) ||
           ($useCookies && $_COOKIE[$theID]==1)) {
@@ -607,8 +623,8 @@ function list_categories($posts, $categories, $parents, $options) {
         $span= "      <li class='collapsing categories'>".
             "<span class='collapsing categories $showHide' ".
             "onclick='expandCollapse(event, \"$expandSymJS\"," .
-            "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>".
-            "<span class='sym'>$symbol</span>";
+            "\"$collapseSymJS\", $animate, \"collapsing categories\");" . 
+            " return false'><span class='sym'>$symbol</span>";
       } else {
         $span = "      <li class='collapsing categories item'>";
       }
@@ -638,12 +654,6 @@ function list_categories($posts, $categories, $parents, $options) {
             $span = "      <li class='collapsing categories item'>";
         }
       }
-      // Now print out the post info
-      $posttext='';
-      if( ! empty($postsInCat[$cat->term_id]) ) {
-        list ($subCatPostCount, $posttext) = getSubPosts($posts, $cat,
-            $subCatPosts, $showPosts);
-      }
       if( $showPostCount=='yes') {
         $link .= ' (' . $theCount.')';
       }
@@ -661,9 +671,23 @@ function list_categories($posts, $categories, $parents, $options) {
       }
       if ($showPosts) {
         if ($subCatPostCount>0 && $subCatLinks!='' && $addMisc) {
-          $posttext = (miscPosts($cat,$catlink,$subCatPostCount2,$posttext));
+          $posttext = (miscPosts($cat,$catlink,$subCatPostCount,$posttext));
         }
       }
+      if ($postsBeforeCats) {
+        $text =$posttext . $subCatLinks;
+      } else {
+        $text = $subCatLinks . $posttext;
+      }
+      if ($theID!='') {
+        $subCatPosts[$theID] = $text;
+      }
+      /* we only actually add the posts if it is expanded. Otherwise we add
+         the posts dynamically to the dom from a javascript array 
+         However, we can't have an empty ul, so we create one emtpy li here */
+      if ($expanded!='block') {
+        $posttext='<li></li>';
+      } 
       if ($postsBeforeCats) {
         $text =$posttext . $subCatLinks;
       } else {
