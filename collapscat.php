@@ -135,7 +135,7 @@ class collapscat {
 
 include_once( 'collapscatlist.php' );
 function collapsCat($args='', $print=true) {
-  global $subCatPosts; 
+  global $collapsItems; 
   if (!is_admin()) {
     list($posts, $categories, $parents, $options) = 
         get_collapscat_fromdb($args);
@@ -166,8 +166,7 @@ function collapsCat($args='', $print=true) {
         });
         ";
       }
-      //print_r($subCatPosts);
-      echo phpArrayToJS($subCatPosts, 'subCatPosts');
+      echo phpArrayToJS($collapsItems, 'collapsItems');
       // now we create an array indexed by the id of the ul for posts
 
       echo "// ]]>\n</script></li>\n";

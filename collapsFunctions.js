@@ -150,7 +150,7 @@ function expandCollapse( e, expand,collapse, animate, collapsClass ) {
     src.setAttribute('class',hide);
     src.setAttribute('title','click to collapse');
     theSpan.innerHTML=collapse;
-    childList.innerHTML=subCatPosts[theId];
+    childList.innerHTML=collapsItems[theId];
     if (animate==1) {
       jQuery(childList).show('blind', '', 500);
     } else {
