@@ -1,7 +1,12 @@
 <?php
 /*
 collapsing categories version: 1.1.1
-copyright 2007-2010 robert felty
+copyright 2007 robert felty
+
+this work is largely based on the collapsing categories plugin by andrew rader
+(http://voidsplat.org), which was also distributed under the gplv2. i have tried
+contacting him, but his website has been down for quite some time now. see the
+changelog file for more information.
 
 this file is part of collapsing categories
 
@@ -23,16 +28,15 @@ global $subCatPosts;
 $subCatPosts = array();
 
 
-function phpArrayToJS($array) {
+function phpArrayToJS($array,$name) {
   /* generates javscript code to create an array from a php array */
-  $script = "var subCatPosts = new Object();\n";
+  $script = "var $name = new Object();\n";
   foreach ($array as $key => $value){
-    $script .= "subCatPosts['$key'] = '" . 
+    $script .= $name . "['$key'] = '" . 
         addslashes(str_replace("\n", '', $value)) . "';\n";
   }
   return($script);
 }
-
 
 function add_to_includes($cat, $inexclusionarray) {
   /* add all parents to include list */
@@ -77,7 +81,7 @@ function getCollapsCatLink($cat,$catlink,$self) {
 
 function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   /* this function will group posts into a miscellaneous sub-category */
-  global $options, $cur_categories, $subCatPosts;
+  global $options, $subCatPosts, $cur_categories;
   extract($options);
   $showHide='expand';
   $symbol=$expandSym;
@@ -136,7 +140,7 @@ function checkCurrentCat($cat, $categories) {
 * add depth option
 * add option to display number of comments
 */
-function getSubPosts($posts, $cat2,$showPosts, $theID) {
+function getSubPosts($posts, $cat2, $showPosts, $theID) {
   /* returns all the posts for a given category */
   global $postsToExclude, $options, $thisPost, $subCatPosts;
   extract($options);
@@ -185,9 +189,6 @@ function getSubPosts($posts, $cat2,$showPosts, $theID) {
       }
     }
   }
-  if ($theID!='' && !$subCatPosts[$theID]) {
-    $subCatPosts[$theID] = $posttext2;
-  }
   return array($subCatPostCount2, $posttext2);
 }
 
@@ -209,9 +210,8 @@ function addFeedLink($feed,$cat) {
 function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$expanded, $depth) {
   /* returns all the subcategories for a given category */
-  global $options,$expandSym, $collapseSym, $expandSymJS, $collapseSymJS,
-      $autoExpand, $postsToExclude, $subCatPostCounts, $catlink, $postsInCat,
-      $cur_categories;
+  global $options, $subCatPosts, $autoExpand, $postsToExclude, 
+      $subCatPostCounts, $catlink, $postsInCat, $cur_categories;
   $subCatLinks='';
   $postself='';
   extract($options);
@@ -242,6 +242,9 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           $expanded='block';
         }
         if (!in_array($cat2->term_id, $parents)) {
+          if ($theID!='' && !$subCatPosts[$theID]) {
+            $subCatPosts[$theID] = $posttext2;
+          }
 					// check to see if there are more subcategories under this one
           $subCatCount=0;
           if ($subCatPostCount2<1) {
@@ -342,17 +345,17 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $subCatLinks.=$rssLink;
         if (($subCatCount>0) || ($showPosts)) {
           $subCatLinks.="\n<ul id='$theID' style=\"display:$expanded\">\n";
-          if ($expanded!='block') 
-            $posttext2='';
           if ($subCatCount>0 && $posttext2!='' && $addMisc) {
-            $subCatLinks.=miscPosts($cat2,$catlink,$subCatPostCount2,
+            $posttext2=miscPosts($cat2,$catlink,$subCatPostCount2,
                 $posttext2);
-          } else {
-            $subCatLinks.=$posttext2;
           }
+            $subCatLinks.=$posttext2;
         }
         // add in additional subcategory information
         $subCatLinks.="$subCatLink2";
+          if ($theID!='' && !$subCatPosts[$theID]) {
+            $subCatPosts[$theID] =  $posttext2 . $subCatLink2;
+          }
         // close <ul> and <li> before starting a new category
         if (($subCatCount>0) || ($showPosts)) {
           $subCatLinks.= "          </ul>\n";
@@ -549,7 +552,7 @@ function get_collapscat_fromdb($args='') {
 function list_categories($posts, $categories, $parents, $options) {
   /* returns a list of categories, and optionally subcategories and posts,
   which can be collapsed or expanded with javascript */
-  global $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, $subCatPosts,
+  global $subCatPosts, $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, 
       $cur_categories, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   extract($options);
   $cur_categories = array();
@@ -569,7 +572,6 @@ function list_categories($posts, $categories, $parents, $options) {
 
 
   foreach( $categories as $cat ) {
-    $theID='collapsCat-' . $cat->term_id . "-$number";
     if ($inExclude=='include' && !empty($includeCatArray)) {
       if (!in_array($cat->term_id, $includeCatArray) &&
           !in_array($cat->post_parent, $includeCatArray)) {
@@ -592,20 +594,13 @@ function list_categories($posts, $categories, $parents, $options) {
     list ($subCatLinks, $subCatCount,$subCatPostCount)=
         get_sub_cat($cat, $categories, $parents, $posts, 
         $subCatCount,$subCatPostCount,$expanded,0);
-    //list($subCatPostCount2, $posttext2) = 
-        //getSubPosts($postsInCat[$cat->term_id],$cat, $showPosts, $theID);
-    // Get post info
-    $posttext='';
-    if( ! empty($postsInCat[$cat->term_id]) ) {
-      list ($subCatPostCount, $posttext) = getSubPosts($posts, $cat,
-          $showPosts, $theID);
-    }
+    list($subCatPostCount2, $posttext2) = 
+        getSubPosts($postsInCat[$cat->term_id],$cat, $showPosts, $theID);
       
-    //$theCount=$subCatPostCount2+$subCatPostCount;
-    $theCount= $subCatPostCount;
-
+    $theCount=$subCatPostCount2+$subCatPostCount;
     if ($theCount>0) {
       $expanded='none';
+      $theID='collapsCat-' . $cat->term_id . "-$number";
       if (in_array($cat->name, $autoExpand) ||
           in_array($cat->slug, $autoExpand) ||
           ($useCookies && $_COOKIE[$theID]==1)) {
@@ -623,8 +618,8 @@ function list_categories($posts, $categories, $parents, $options) {
         $span= "      <li class='collapsing categories'>".
             "<span class='collapsing categories $showHide' ".
             "onclick='expandCollapse(event, \"$expandSymJS\"," .
-            "\"$collapseSymJS\", $animate, \"collapsing categories\");" . 
-            " return false'><span class='sym'>$symbol</span>";
+            "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>".
+            "<span class='sym'>$symbol</span>";
       } else {
         $span = "      <li class='collapsing categories item'>";
       }
@@ -654,6 +649,12 @@ function list_categories($posts, $categories, $parents, $options) {
             $span = "      <li class='collapsing categories item'>";
         }
       }
+      // Now print out the post info
+      $posttext='';
+      if( ! empty($postsInCat[$cat->term_id]) ) {
+        list ($subCatPostCount, $posttext) = getSubPosts($posts, $cat,
+            $subCatPosts, $showPosts);
+      }
       if( $showPostCount=='yes') {
         $link .= ' (' . $theCount.')';
       }
@@ -671,20 +672,20 @@ function list_categories($posts, $categories, $parents, $options) {
       }
       if ($showPosts) {
         if ($subCatPostCount>0 && $subCatLinks!='' && $addMisc) {
-          $posttext = (miscPosts($cat,$catlink,$subCatPostCount,$posttext));
+          $posttext = (miscPosts($cat,$catlink,$subCatPostCount2,$posttext));
         }
       }
+      /* we only actually add the posts if it is expanded. Otherwise we add
+         the posts dynamically to the dom from a javascript array 
+         However, we can't have an empty ul, so we create one emtpy li here */
       if ($postsBeforeCats) {
         $text =$posttext . $subCatLinks;
       } else {
         $text = $subCatLinks . $posttext;
       }
-      if ($theID!='') {
+      if ($theID!='' && !$subCatPosts[$theID]) {
         $subCatPosts[$theID] = $text;
       }
-      /* we only actually add the posts if it is expanded. Otherwise we add
-         the posts dynamically to the dom from a javascript array 
-         However, we can't have an empty ul, so we create one emtpy li here */
       if ($expanded!='block') {
         $posttext='<li></li>';
       } 

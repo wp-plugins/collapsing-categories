@@ -167,7 +167,7 @@ function collapsCat($args='', $print=true) {
         ";
       }
       //print_r($subCatPosts);
-      echo phpArrayToJS($subCatPosts);
+      echo phpArrayToJS($subCatPosts, 'subCatPosts');
       // now we create an array indexed by the id of the ul for posts
 
       echo "// ]]>\n</script></li>\n";
