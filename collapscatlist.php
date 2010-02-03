@@ -348,7 +348,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             $posttext2=miscPosts($cat2,$catlink,$subCatPostCount2,
                 $posttext2);
           }
-          $subCatLinks.=$posttext2;
+          if ($expanded=='block') {
+            $subCatLinks.=$posttext2;
+          } else {
+            $subCatLinks.='<li></li>';
+          }
         }
         // add in additional subcategory information
         $subCatLinks.="$subCatLink2";
