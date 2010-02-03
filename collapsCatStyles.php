@@ -1,5 +1,5 @@
     <?php
-$style="#sidebar span.collapsing.categories.item {
+$style="#sidebar span.collapsing.categories {
         border:0;
         padding:0; 
         margin:0; 
@@ -35,7 +35,7 @@ $block="#sidebar li.collapsing.categories.item a {
             background:#CCC;
             text-decoration:none;
           }
-#sidebar span.collapsing.categories.item {
+#sidebar span.collapsing.categories {
         border:0;
         padding:0; 
         margin:0; 
@@ -56,7 +56,7 @@ $block="#sidebar li.collapsing.categories.item a {
 }
 ";
 
-$noArrows="#sidebar span.collapsing.categories.item {
+$noArrows="#sidebar span.collapsing.categories {
         border:0;
         padding:0; 
         margin:0; 

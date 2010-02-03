@@ -38,19 +38,18 @@ if (!is_admin()) {
   wp_enqueue_script('collapsFunctions',
       "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",
       array('jquery'), '1.7', true);
-  add_action( 'wp_head', array('collapscat','get_head'));
-//  add_action( 'wp_footer', array('collapsCat','get_foot'));
+  add_action( 'wp_head', array('collapsCat','get_head'));
 } else {
   // call upgrade function if current version is lower than actual version
   $dbversion = get_option('collapsCatVersion');
   if (!$dbversion || $collapsCatVersion != $dbversion)
     collapscat::init();
 }
-add_action('admin_menu', array('collapscat','setup'));
-add_action('init', array('collapscat','init_textdomain'));
-register_activation_hook(__FILE__, array('collapscat','init'));
+add_action('admin_menu', array('collapsCat','setup'));
+add_action('init', array('collapsCat','init_textdomain'));
+register_activation_hook(__FILE__, array('collapsCat','init'));
 
-class collapscat {
+class collapsCat {
 	function init_textdomain() {
 	  $plugin_dir = basename(dirname(__FILE__)) . '/languages/';
 	  load_plugin_textdomain( 'collapsing-categories', WP_PLUGIN_DIR . $plugin_dir, $plugin_dir );
@@ -105,37 +104,22 @@ class collapscat {
     $style
     </style>\n";
 	}
-  function get_foot() {
-    $url = get_settings('siteurl');
-		echo "<script type=\"text/javascript\">\n";
-		echo "// <![CDATA[\n";
-		echo '/* These variables are part of the Collapsing Categories Plugin 
-		      *  Version: 1.1.1
-		      *  $Id$
-					* Copyright 2007 Robert Felty (robfelty.com)
-					*/' . "\n";
-    $expandSym="<img src='". $url .
-         "/wp-content/plugins/collapsing-categories/" . 
-         "img/expand.gif' alt='expand' />";
-    $collapseSym="<img src='". $url .
-         "/wp-content/plugins/collapsing-categories/" . 
-         "img/collapse.gif' alt='collapse' />";
-    echo "var expandSym=\"$expandSym\";";
-    echo "var collapseSym=\"$collapseSym\";";
-    echo"
-    addLoadEvent(function() {
-      autoExpandCollapse('collapsing categories');
-    });
-    ";
-
-		echo "// ]]>\n</script>\n";
+  function phpArrayToJS($array,$name) {
+    /* generates javscript code to create an array from a php array */
+    $script = "try { $name" . 
+        "['catTest'] = 'test'; } catch (err) { $name = new Object(); }\n";
+    foreach ($array as $key => $value){
+      $script .= $name . "['$key'] = '" . 
+          addslashes(str_replace("\n", '', $value)) . "';\n";
+    }
+    return($script);
   }
 }
 
 
 include_once( 'collapscatlist.php' );
 function collapsCat($args='', $print=true) {
-  global $collapsItems; 
+  global $collapsCatItems; 
   if (!is_admin()) {
     list($posts, $categories, $parents, $options) = 
         get_collapscat_fromdb($args);
@@ -162,12 +146,12 @@ function collapsCat($args='', $print=true) {
       if ($useCookies) {
         echo"
         collapsAddLoadEvent(function() {
-          autoExpandCollapse('collapsing categories');
+          autoExpandCollapse('collapCat');
         });
         ";
       }
-      echo phpArrayToJS($collapsItems, 'collapsItems');
       // now we create an array indexed by the id of the ul for posts
+      echo collapsCat::phpArrayToJS($collapsCatItems, 'collapsItems');
 
       echo "// ]]>\n</script></li>\n";
     } else {
