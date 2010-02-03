@@ -27,7 +27,6 @@ this file is part of collapsing categories
 global $collapsItems;
 $collapsItems = array();
 
-
 function phpArrayToJS($array,$name) {
   /* generates javscript code to create an array from a php array */
   $script = "var $name = new Object();\n";
@@ -229,10 +228,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
       } else {
         $self="";
       }
-      list($subCatPostCount2, $posttext2) = 
-          getSubPosts($postsInCat[$cat2->term_id],$cat2, $showPosts, $theID);
       if ($cat->term_id==$cat2->parent) {
         $theID='collapsCat-' . $cat2->term_id . "-$number";
+        list($subCatPostCount2, $posttext2) = 
+            getSubPosts($postsInCat[$cat2->term_id],$cat2, $showPosts, $theID);
         $subCatPostCount+=$subCatPostCount2;
         $subCatPostCounts[$depth]=$subCatPostCount2;
         $expanded='none';
@@ -349,13 +348,13 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             $posttext2=miscPosts($cat2,$catlink,$subCatPostCount2,
                 $posttext2);
           }
-            $subCatLinks.=$posttext2;
+          $subCatLinks.=$posttext2;
         }
         // add in additional subcategory information
         $subCatLinks.="$subCatLink2";
-          if ($theID!='' && !$collapsItems[$theID]) {
-            $collapsItems[$theID] =  $posttext2 . $subCatLink2;
-          }
+        if ($theID!='' && !$collapsItems[$theID]) {
+          $collapsItems[$theID] =  $posttext2 . $subCatLink2;
+        }
         // close <ul> and <li> before starting a new category
         if (($subCatCount>0) || ($showPosts)) {
           $subCatLinks.= "          </ul>\n";
