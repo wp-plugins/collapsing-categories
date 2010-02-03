@@ -32,12 +32,10 @@ global $collapsCatVersion;
 $collapsCatVersion = '1.1.1';
 
 if (!is_admin()) {
-  $inFooter=true;
-  if ($options = get_option('collapsCatOptions') && $options['inFooter'])
-    $inFooter = $options['inFooter'];
+  $inFooter = get_option('collapsCatInFooter');
   wp_enqueue_script('collapsFunctions',
       "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",
-      array('jquery'), '1.7', true);
+      array('jquery'), '1.7', $inFooter);
   add_action( 'wp_head', array('collapsCat','get_head'));
 } else {
   // call upgrade function if current version is lower than actual version
