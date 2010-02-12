@@ -232,10 +232,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           $expanded='block';
         }
         if (!in_array($cat2->term_id, $parents)) {
+					// check to see if there are more subcategories under this one
           if ($theID!='' && !$collapsCatItems[$theID]) {
             $collapsCatItems[$theID] = $posttext2;
           }
-					// check to see if there are more subcategories under this one
           $subCatCount=0;
           if ($subCatPostCount2<1) {
             continue;
@@ -277,8 +277,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           } else {
             $link2 .= apply_filters('single_cat_title', $cat2->name).  '</a>';
             if ($showPosts) {
-              $link2 = apply_filters('single_cat_title', $cat2->name).
-                  "</span>";
+              $link2 .= "</a></span>";
             }
           }
         } else {
@@ -317,7 +316,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             $link2 .= apply_filters('single_cat_title', $cat2->name).'</a>';
           } else {
             if ($showPosts || $subCatPostCount2>0) {
-              $link2 = apply_filters('single_cat_title',$cat2->name) . '</span>';
+              $link2 .= apply_filters('single_cat_title',$cat2->name) . '</a></span>';
             } else {
               // don't include the triangles if posts are not shown and there
               // are no more subcategories
@@ -632,7 +631,7 @@ function list_categories($posts, $categories, $parents, $options) {
         }
       } else {
         if ($showPosts || $subCatPostCount>0) {
-          $link = apply_filters('single_cat_title',$cat->name) . '</span>';
+          $link .= apply_filters('single_cat_title',$cat->name) . '</a></span>';
         } else {
           // don't include the triangles if posts are not shown and there
           // are no more subcategories

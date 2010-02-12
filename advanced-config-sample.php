@@ -1,3 +1,0 @@
-<?php
-$advanced['useCookies']=true;
-?>

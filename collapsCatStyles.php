@@ -9,10 +9,11 @@ $style="#sidebar span.collapsing.categories {
 #sidebar ul.collapsing.categories.list ul.collapsing.categories.list:before {content:'';} 
 #sidebar ul.collapsing.categories.list li.collapsing.categories.item:before {content:'';} 
 #sidebar ul.collapsing.categories.list li.collapsing.categories.item {list-style-type:none}
-#sidebar ul.collapsing.categories.list li.collapsing.categories.item {
+#sidebar ul.collapsing.categories.list li.collapsing.categories {
        text-indent:-1em;
        padding-left:1em;
-       margin:0 0 0 1em;}
+       margin:0;
+}
 #sidebar ul.collapsing.categories.list li.collapsing.categories.item:before {content: '\\\\00BB \\\\00A0' !important;} 
 #sidebar ul.collapsing.categories.list .sym {
    font-size:1.2em;
