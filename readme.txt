@@ -162,7 +162,7 @@ The following classes are used:
 * sym - class for the expanding / collapsing symbol
 
 An example:
-
+`
 <ul id='widget-collapscat-15-top ' class='collapsing categories list'>
   <li class='collapsing categories post'><a
     href='http://mysite.com/your-website/about-your-own-site/'
@@ -186,6 +186,7 @@ An example:
       </li>
     </ul>
   </li> <!-- ending subcategory -->
+`
 
 == Screenshots ==
 
