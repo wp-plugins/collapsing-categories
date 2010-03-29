@@ -1,12 +1,7 @@
 <?php
 /*
-collapsing categories version: 1.1.1
-copyright 2007 robert felty
-
-this work is largely based on the collapsing categories plugin by andrew rader
-(http://voidsplat.org), which was also distributed under the gplv2. i have tried
-contacting him, but his website has been down for quite some time now. see the
-changelog file for more information.
+collapsing categories version: 1.2
+copyright 2007-2010 robert felty
 
 this file is part of collapsing categories
 
