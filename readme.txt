@@ -225,6 +225,7 @@ style, in the same manner as the `wp_list_categories` function.
    'useCookies' => true,
    'showTopLevel' => true,
    'postsBeforeCats' => false,
+   'expandCatPost' => true,
    'debug'=>'0'
 );
 `
@@ -306,10 +307,6 @@ style, in the same manner as the `wp_list_categories` function.
       explicitly set to auto-expand). Possible values:
          * 1 (true) (default)
          * 0 (false)
-* debug
-    * When set to true, extra debugging information will be displayed in the
-      underlying code of your page (but not visible from the browser). Use
-      this option if you are having problems
 * showTopLevel
     * When set to false, the top level category will not be shown. This could
       be useful if you only want to show subcategories from one particular
@@ -321,6 +318,15 @@ style, in the same manner as the `wp_list_categories` function.
       subcategories of category X
          * 1 (true)
          * 0 (false) (default)
+* expandCatPost
+    * When set to true, any category to which a post is assigned will
+      automatically be expanded on a single post page.
+         * 1 (true) (default)
+         * 0 (false)
+* debug
+    * When set to true, extra debugging information will be displayed in the
+      underlying code of your page (but not visible from the browser). Use
+      this option if you are having problems
 
 
 = Examples =

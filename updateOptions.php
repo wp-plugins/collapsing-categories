@@ -75,6 +75,10 @@
       if (!isset($new_instance['useCookies'])) {
         $useCookies= false ;
       }
+      $expandCatPost=true;
+      if (!isset($new_instance['expandCatPost'])) {
+        $expandCatPost= false ;
+      }
       $showTopLevel=true;
       if (!isset($new_instance['showTopLevel'])) {
         $showTopLevel= false ;
@@ -105,6 +109,6 @@
           'catTag', 'linkToCat', 'showPostDate', 'postDateFormat',
           'olderThan', 'postDateAppend','postTitleLength', 'useCookies',
           'showTopLevel', 'postsBeforeCats', 'catfeed', 'addMisc',
-          'addMiscTitle');
+          'addMiscTitle', 'expandCatPost');
 
 ?>
