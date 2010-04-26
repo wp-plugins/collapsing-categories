@@ -358,6 +358,8 @@ behavior in wordpress anyways)
   assigned on single post pages
 * Storing posts in a javascript array and only adding to the DOM when
   requested (speeds page load)
+* TODO: fix bug where empty subcategory with non-empty subsubcategory doesn't
+  show up
 
 = 1.1.1 (2010.01.28) =
 * Added option to display posts before categories
