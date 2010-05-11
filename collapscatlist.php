@@ -671,7 +671,7 @@ function list_categories($posts, $categories, $parents, $options) {
       if ($theID!='' && !$collapsCatItems[$theID]) {
         $collapsCatItems[$theID] = $text;
       }
-      if ($expanded!='block') {
+      if ($expanded!='block' && $showTopLevel) {
         $posttext='<li></li>';
       } 
       if ($postsBeforeCats) {
