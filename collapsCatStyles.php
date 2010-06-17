@@ -1,4 +1,4 @@
-    <?php
+<?php
 $style="#sidebar span.collapsing.categories {
         border:0;
         padding:0; 
