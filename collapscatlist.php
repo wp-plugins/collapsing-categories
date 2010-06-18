@@ -276,7 +276,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             }
           }
         } else {
-          list ($subCatLink2, $subCatCount,$subCatPostCount)= 
+          list ($subCatLink2, $subCatCount,$subCatPostCount2)= 
               get_sub_cat($cat2, $categories, $parents, $posts, $subCatCount,
               $subCatPostCount,$expanded, $depth);
           $subCatCount=1;

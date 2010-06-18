@@ -4,8 +4,8 @@ Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.8
-Tested up to: 2.9.1
-Stable tag: 1.1.1
+Tested up to: 3.0
+Stable tag: 1.2
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -16,51 +16,21 @@ This is a very simple plugin that uses Javascript to form a collapsable set of
 links in the sidebar for the categories. Every post corresponding to a given
 category will be expanded.
 
+= What's New?=
+
+* 1.2 (2010.06.18)
+    * Added option to automatically expand categories to which a post is
+      assigned on single post pages
+    * Storing posts in a javascript array and only adding to the DOM when
+      requested (speeds page load)
+    * fixed bug where empty subcategory with non-empty subsubcategory doesn't
+      show up
 
 = CSS Class changes = 
 Version 1.1 introduces different css classes to the collapsing categories and
 posts, which should make it easier to style in the future, and more consistent
 across my other collapsing plugins
 Please see below for an explanation of the css classes
-
-= IMPORTANT INFORMATION regarding wordpress 2.7 and 2.8 =
-
-Version 1.+ is compatible with wordpress 2.8+,
-but not compatible with prior versions. If you are using wordpress 2.7.1 or
-earlier, please use collapsing categories version 0.9.9.
-
-If you prefer to insert code into your theme manually instead of using
-widgets, please note that the manual installation instructions have changed. 
-
-= What's New?=
-
-* 1.1.1 (2010.01.28)
-    * Added option to display posts before categories
-    * Fixed bug with assigning self class to posts in sub-categories 
-    * Refactored code to reduce number of database reads when using multiple
-      instances of the widget
-    * Switched from scriptaculous to jquery. No longer conflicts with plugins
-      which use mootools (e.g. featured content gallery)
-    * Changed css class called "post" to "item" to avoid conflicts with other
-      commonly used css classes
-
-* 1.1 (2010.01.03)
-    * Bug fixes
-        * Fixed xhtml validation error (thanks Mathie)
-        * Fixed incorrect link bug (thanks andydv)
-        * Fixed some css issues 
-        * Manual version works even if no options are given
-        * Fixed include option
-        * Fixed self class problems
-        * Fixed link to settings page from widget options (thanks wp.Man)
-        * Fixed rss options (thanks wp.Man)
-    * New options and features
-        * Added option to hide top level category names
-        * Changed css classes to make them more consistent with other collapsing
-          plugins (thanks Bernhard Reiter)
-    * Internationalization and localization
-        * Added Russian localization (thanks fatcow.com)
-        * Added German localization (thanks Bernhard Reiter)
 
 == Installation ==
 
@@ -353,12 +323,12 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
-= 1.2 (2010.xx.xx) =
+= 1.2 (2010.06.18) =
 * Added option to automatically expand categories to which a post is
   assigned on single post pages
 * Storing posts in a javascript array and only adding to the DOM when
   requested (speeds page load)
-* TODO: fix bug where empty subcategory with non-empty subsubcategory doesn't
+* fixed bug where empty subcategory with non-empty subsubcategory doesn't
   show up
 
 = 1.1.1 (2010.01.28) =

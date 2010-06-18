@@ -129,7 +129,7 @@ function collapsCat($args='', $print=true) {
       echo "<li style='display:none'><script type=\"text/javascript\">\n";
       echo "// <![CDATA[\n";
       echo '/* These variables are part of the Collapsing Categories Plugin 
-      *  Version: 1.1.1
+      *  Version: 1.2
       *  $Id$
       * Copyright 2007 Robert Felty (robfelty.com)
       */' . "\n";
