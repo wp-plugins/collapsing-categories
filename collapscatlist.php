@@ -321,7 +321,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
         }
         if( $showPostCount=='yes') {
-          $theCount=$subCatPostCount2 + array_sum(array_slice($subCatPostCounts, $depth));
+          $theCount=array_sum(array_slice($subCatPostCounts, $depth-1));
           $link2 .= ' ('.$theCount.')';
         }
         $subCatLinks.= $link2 ;
@@ -537,7 +537,8 @@ function get_collapscat_fromdb($args='') {
 function list_categories($posts, $categories, $parents, $options) {
   /* returns a list of categories, and optionally subcategories and posts,
   which can be collapsed or expanded with javascript */
-  global $collapsCatItems, $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, 
+  global $collapsCatItems, $wpdb,$options,$wp_query, $autoExpand, 
+      $postsToExclude, $subCatPostCounts,
       $cur_categories, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   extract($options);
   $cur_categories = array();
@@ -582,7 +583,7 @@ function list_categories($posts, $categories, $parents, $options) {
     list($subCatPostCount2, $posttext2) = 
         getSubPosts($postsInCat[$cat->term_id],$cat, $showPosts, $theID);
       
-    $theCount=$subCatPostCount2+$subCatPostCount;
+    $theCount=$subCatPostCount2 + array_sum(array_slice($subCatPostCounts, $depth));
     if ($theCount>0) {
       $expanded='none';
       $theID='collapsCat-' . $cat->term_id . ":$number";
