@@ -196,14 +196,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$expanded, $depth) {
   /* returns all the subcategories for a given category */
   global $options, $collapsCatItems, $autoExpand, $postsToExclude, 
-      $subCatPostCounts, $catlink, $postsInCat, $cur_categories;
+      $totalCatPostCount, $catlink, $postsInCat, $cur_categories;
   $subCatLinks='';
   $postself='';
   extract($options);
   $link2='';
-  if ($depth==0) {
-    $subCatPostCounts=array();
-  }
   $depth++;
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
@@ -218,8 +215,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $theID='collapsCat-' . $cat2->term_id . ":$number";
         list($subCatPostCount2, $posttext2) = 
             getSubPosts($postsInCat[$cat2->term_id],$cat2, $showPosts, $theID);
+        $totalCatPostCount+=$subCatPostCount2;
         $subCatPostCount+=$subCatPostCount2;
-        $subCatPostCounts[$depth]=$subCatPostCount2;
         $expanded='none';
         if (((in_array($cat2->name, $autoExpand) ||
             in_array($cat2->slug, $autoExpand)) && $expandCatPost) ||
@@ -278,8 +275,9 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         } else {
           list ($subCatLink2, $subCatCount,$subCatPostCount2)= 
               get_sub_cat($cat2, $categories, $parents, $posts, $subCatCount,
-              $subCatPostCount,$expanded, $depth);
+              $subCatPostCount2,$expanded, $depth);
           $subCatCount=1;
+          $subCatPostCount+=$subCatPostCount2;
           if ($subCatPostCount2<1) {
             continue;
           }
@@ -321,7 +319,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
         }
         if( $showPostCount=='yes') {
-          $theCount=array_sum(array_slice($subCatPostCounts, $depth-1));
+          $theCount=$subCatPostCount2;
           $link2 .= ' ('.$theCount.')';
         }
         $subCatLinks.= $link2 ;
@@ -538,7 +536,7 @@ function list_categories($posts, $categories, $parents, $options) {
   /* returns a list of categories, and optionally subcategories and posts,
   which can be collapsed or expanded with javascript */
   global $collapsCatItems, $wpdb,$options,$wp_query, $autoExpand, 
-      $postsToExclude, $subCatPostCounts,
+      $postsToExclude, $totalCatPostCount,
       $cur_categories, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   extract($options);
   $cur_categories = array();
@@ -558,6 +556,7 @@ function list_categories($posts, $categories, $parents, $options) {
 
 
   foreach( $categories as $cat ) {
+    $totalCatPostCount=0;
     if ($inExclude=='include' && !empty($includeCatArray)) {
       if (!in_array($cat->term_id, $includeCatArray) &&
           !in_array($cat->post_parent, $includeCatArray)) {
@@ -576,14 +575,13 @@ function list_categories($posts, $categories, $parents, $options) {
     $rssLink=addFeedLink($catfeed,$cat);
     $subCatPostCount=0;
     $subCatCount=0;
-    $subCatPostCounts=array();
     list ($subCatLinks, $subCatCount,$subCatPostCount)=
         get_sub_cat($cat, $categories, $parents, $posts, 
         $subCatCount,$subCatPostCount,$expanded,0);
     list($subCatPostCount2, $posttext2) = 
         getSubPosts($postsInCat[$cat->term_id],$cat, $showPosts, $theID);
       
-    $theCount=$subCatPostCount2 + array_sum(array_slice($subCatPostCounts, $depth));
+    $theCount=$subCatPostCount2 + $totalCatPostCount;
     if ($theCount>0) {
       $expanded='none';
       $theID='collapsCat-' . $cat->term_id . ":$number";
