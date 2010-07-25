@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.8
 Tested up to: 3.0
-Stable tag: 1.2
+Stable tag: 1.2.1
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
 posts for each category.
@@ -17,6 +17,11 @@ links in the sidebar for the categories. Every post corresponding to a given
 category will be expanded.
 
 = What's New?=
+
+* 1.2.1 (2010.07.25)
+    * Fixed bug where top-level categories did not show up if only had posts in
+      sub-sub categories.
+    * Fixed post counting errors
 
 * 1.2 (2010.06.18)
     * Added option to automatically expand categories to which a post is
@@ -322,6 +327,11 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == CHANGELOG ==
+
+= 1.2.1 (2010.07.25) =
+* Fixed bug where top-level categories did not show up if only had posts in
+  sub-sub categories.
+* Fixed post counting errors
 
 = 1.2 (2010.06.18) =
 * Added option to automatically expand categories to which a post is
