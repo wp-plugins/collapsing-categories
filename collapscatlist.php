@@ -196,7 +196,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   $subCatCount,$subCatPostCount,$expanded, $depth) {
   /* returns all the subcategories for a given category */
   global $options, $collapsCatItems, $autoExpand, $postsToExclude, 
-      $totalCatPostCount, $catlink, $postsInCat, $cur_categories;
+      $totalCatPostCount, $catlink, $postsInCat, $cur_categories, $thisCatID;
   $subCatLinks='';
   $postself='';
   extract($options);
@@ -205,8 +205,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   if (in_array($cat->term_id, $parents)) {
     foreach ($categories as $cat2) {
       $subCatLink2=''; // clear info from subCatLink2
-      if ((is_category() || is_tag()) &&
-          (in_array($cat2->term_id, $cur_categories))) {
+      if ((is_category() || is_tag()) && ($cat2->term_id==$thisCatID)) {
         $self="class='self'";
       } else {
         $self="";
@@ -536,11 +535,11 @@ function list_categories($posts, $categories, $parents, $options) {
   /* returns a list of categories, and optionally subcategories and posts,
   which can be collapsed or expanded with javascript */
   global $collapsCatItems, $wpdb,$options,$wp_query, $autoExpand, 
-      $postsToExclude, $totalCatPostCount,
+      $postsToExclude, $totalCatPostCount, $thisCatID,
       $cur_categories, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   extract($options);
   $cur_categories = array();
-  if (is_single() || is_category() || is_tag()) {
+  if (is_single()) {
     $tmp_categories = get_the_category();
     foreach ($tmp_categories as $tmp_cat) {
       $cur_categories[] = $tmp_cat->term_id;
@@ -551,6 +550,9 @@ function list_categories($posts, $categories, $parents, $options) {
         checkCurrentCat($cat,$categories);
       }
     }
+  } 
+  if (is_category() || is_tag()) {
+    $thisCatID = get_query_var('cat');
   }
   $catlink = $wp_rewrite->get_category_permastruct();
 
@@ -566,8 +568,7 @@ function list_categories($posts, $categories, $parents, $options) {
     }
     if ($cat->parent!=0 )
       continue;
-    if ((is_category() || is_tag()) && 
-        (in_array($cat->term_id, $cur_categories))) {
+    if ((is_category() || is_tag()) && ($cat->term_id==$thisCatID)) {
       $self="class='self'";
     } else {
       $self="";

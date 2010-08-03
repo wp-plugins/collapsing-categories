@@ -328,6 +328,9 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
+= 1.2.2 (2010.xx.xx) =
+* fixed self class for category archive pages (error pointed out by ltache)
+
 = 1.2.1 (2010.07.25) =
 * Fixed bug where top-level categories did not show up if only had posts in
   sub-sub categories.
