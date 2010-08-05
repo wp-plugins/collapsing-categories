@@ -553,6 +553,8 @@ function list_categories($posts, $categories, $parents, $options) {
   } 
   if (is_category() || is_tag()) {
     $thisCatID = get_query_var('cat');
+    $thisCat = get_category($thisCatID);
+    checkCurrentCat($thisCat,$categories);
   }
   $catlink = $wp_rewrite->get_category_permastruct();
 
