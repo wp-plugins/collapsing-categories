@@ -196,7 +196,7 @@ style, in the same manner as the `wp_list_categories` function.
    'postTitleLength' => 0,
    'animate' => 0,
    'catfeed' => 'none',
-   'catTag' => 'cat',
+   'taxonomy' => 'category',
    'showPostDate' => false,
    'postDateAppend' => 'after',
    'postDateFormat' => 'm/d',
@@ -265,11 +265,13 @@ style, in the same manner as the `wp_list_categories` function.
         * 'none' (default)
         * 'text' shows RSS
         * 'image' shows an RSS icon
-* catTag
-    * Whether to include categories, tags, or both. Possible values:
-        * 'cat' (default)
-        * 'tag'
-        * 'both'
+* taxonomy
+    * Type of taxonmy to display. Possible values:
+        * 'category' (default)
+        * 'link_category'
+        * 'post_tag'
+        * 'both' (categories and tags)
+        * any other registered taxononmy (e.g. recipe press uses recipe-categories)
 *   showPostDate 
     * When true, show the date of each post
 *   postDateAppend
@@ -330,6 +332,10 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == CHANGELOG ==
+
+= 1.3 (2010.xx.xx) =
+* Can now use custom taxonomies
+* Easier style handling
 
 = 1.2.2 (2010.08.05) =
 * fixed self class for category archive pages (error pointed out by ltache)

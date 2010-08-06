@@ -1,6 +1,6 @@
 <?php
 /*
-collapsing categories version: 1.2.2
+collapsing categories version: 1.3
 copyright 2007-2010 robert felty
 
 this file is part of collapsing categories
@@ -406,10 +406,6 @@ function get_collapscat_fromdb($args='') {
     $inExcludeQuery ="AND t.slug NOT IN ($inExclusions)";
   }
 
-  $isPage='';
-  if (!$showPages) {
-    $isPage="AND p.post_type='post'";
-  }
   if ($catSort!='') {
     if ($catSort=='catName') {
       $catSortColumn="ORDER BY t.name";
@@ -439,14 +435,19 @@ function get_collapscat_fromdb($args='') {
   } else {
 	  $autoExpand = array();
   }
-
-	if ($catTag == 'tag') {
-	  $catTagQuery= "'post_tag'";
-	} elseif ($catTag == 'both') {
-	  $catTagQuery= "'category','post_tag'";
+  /* Now allowing custom taxonomies, but we put this in for backwards compatibility */
+  if (isset($catTag) && !isset($taxonomy))
+    $taxonomy = $catTag;
+	if ($taxonomy == 'tag') {
+	  $taxonomyQuery= "'post_tag'";
+	} elseif ($taxonomy == 'both') {
+	  $taxonomyQuery= "'category','post_tag'";
+	} elseif ($taxonomy == 'cat') {
+	  $taxonomyQuery= "'category'";
 	} else {
-	  $catTagQuery= "'category'";
-	}
+	  $taxonomyQuery= "'$taxonomy'";
+  }
+
 	if ($olderThan > 0) {
 		$now = date('U');
 		$olderThanQuery= "AND  date(post_date) > '" . 
@@ -456,7 +457,7 @@ function get_collapscat_fromdb($args='') {
 
   $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN
       $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
-      ($catTagQuery) $inExcludeQuery AND t.slug!='blogroll' 
+      ($taxonomyQuery) $inExcludeQuery AND t.slug!='blogroll' 
       $catSortColumn $catSortOrder ";
   $posts = NULL;
   if ($showPosts) {
@@ -470,7 +471,7 @@ function get_collapscat_fromdb($args='') {
          $olderThanQuery
          AND post_status='publish'
          AND tr.term_taxonomy_id = tt.term_taxonomy_id 
-         AND tt.taxonomy IN ($catTagQuery) $isPage $postSortColumn $postSortOrder";
+         AND tt.taxonomy IN ($taxonomyQuery) $postSortColumn $postSortOrder";
     $posts= $wpdb->get_results($postquery); 
     foreach ($posts as $post) {
       if (!$postsInCat[$post->term_id]) {
