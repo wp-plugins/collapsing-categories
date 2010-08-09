@@ -333,9 +333,9 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
-= 1.3 (2010.xx.xx) =
-* Can now use custom taxonomies
-* Easier style handling
+= 1.2.3 (2010.xx.xx) =
+* Fixed bug with extraneous li when not showing posts (thanks neoen for
+  pointing it out)
 
 = 1.2.2 (2010.08.05) =
 * fixed self class for category archive pages (error pointed out by ltache)
