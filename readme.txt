@@ -333,6 +333,12 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
+= 2.0 (2010.xx.xx) =
+* Can now use custom taxonomies
+* TODO: easier style handling
+* TODO: Updated settings page
+* TODO: update coding standards
+
 = 1.2.3 (2010.xx.xx) =
 * Fixed bug with extraneous li when not showing posts (thanks neoen for
   pointing it out)

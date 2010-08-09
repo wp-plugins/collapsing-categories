@@ -40,8 +40,6 @@
 <?php
 // get taxonomy types
 global $wp_taxonomies;
-//$query = 'SELECT taxonomy FROM wp_term_taxonomy GROUP BY taxonomy';
-//$taxonomies = $wpdb->get_results($query);
 ?>
     <p>Taxonomy type::
     <select name="<?php echo $this->get_field_name('taxonomy'); ?> id="<?php echo $this->get_field_id('taxonomy'); ?>"">
