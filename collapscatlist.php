@@ -546,7 +546,6 @@ function list_categories($posts, $categories, $parents, $options) {
       $cur_terms, $thisPost, $wp_rewrite, $catlink, $postsInCat;
   extract($options);
   $cur_terms = array();
-  print_r($wp_query->post);
   if (is_single()) {
     $tmp_terms = wp_get_object_terms($wp_query->post->ID, $taxonomy);
     foreach ($tmp_terms as $tmp_cat) {
