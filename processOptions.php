@@ -19,6 +19,7 @@
     $linkToCat='yes';
     $animate='1';
     $debug='0';
+    $showEmptyCat=false;
     $catfeed='none';
     $taxonomy='category';
     $olderThan=0;
@@ -45,6 +46,7 @@
     $linkToCat = $options[$number]['linkToCat'];
     $animate = $options[$number]['animate'];
     $debug = $options[$number]['debug'];
+    $showEmptyCat = $options[$number]['showEmptyCat'];
     $showTopLevel = $options[$number]['showTopLevel'];
     $postsBeforeCats = $options[$number]['postsBeforeCats'];
     $catfeed = $options[$number]['catfeed'];

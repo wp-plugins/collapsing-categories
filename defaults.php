@@ -26,6 +26,7 @@ $defaults=array(
    'useCookies' => true,
    'postsBeforeCats' => false,
    'expandCatPost' => true,
+   'showEmptyCat' => false,
    'showTopLevel' => true
 );
 ?>

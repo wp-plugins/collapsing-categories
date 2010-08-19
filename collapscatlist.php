@@ -1,6 +1,6 @@
 <?php
 /*
-collapsing categories version: 1.3
+collapsing categories version: 2.0
 copyright 2007-2010 robert felty
 
 this file is part of collapsing categories
@@ -586,7 +586,7 @@ function list_categories($posts, $categories, $parents, $options) {
         getSubPosts($postsInCat[$cat->term_id],$cat, $showPosts, $theID);
       
     $theCount=$subCatPostCount2 + $totalCatPostCount;
-    if ($theCount>0) {
+    if ($theCount>0 || $showEmptyCat) {
       $expanded='none';
       $theID='collapsCat-' . $cat->term_id . ":$number";
       if (((in_array($cat->name, $autoExpand) ||

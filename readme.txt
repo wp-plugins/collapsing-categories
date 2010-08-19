@@ -18,6 +18,8 @@ category will be expanded.
 
 = What's New?=
 
+* 1.2.3 (2010.08.19) 
+
 * 1.2.2 (2010.08.05)
     * fixed self class for category archive pages (error pointed out by ltache)
 
@@ -303,6 +305,10 @@ style, in the same manner as the `wp_list_categories` function.
       automatically be expanded on a single post page.
          * 1 (true) (default)
          * 0 (false)
+* showEmptyCat
+    * When set to true, empty categories are shown
+         * 0 (false) (default)
+         * 1 (true) 
 * debug
     * When set to true, extra debugging information will be displayed in the
       underlying code of your page (but not visible from the browser). Use
@@ -333,9 +339,10 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
-= 1.2.3 (2010.xx.xx) =
+= 2.0 (2010.xx.xx) =
 * Fixed bug with extraneous li when not showing posts (thanks neoen for
   pointing it out)
+* Added option to show empty categories
 
 = 1.2.2 (2010.08.05) =
 * fixed self class for category archive pages (error pointed out by ltache)

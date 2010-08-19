@@ -71,6 +71,10 @@
       if (isset($new_instance['debug'])) {
         $debug= true ;
       }
+      $showEmptyCat=false;
+      if (isset($new_instance['showEmptyCat'])) {
+        $showEmptyCat= true ;
+      }
       $useCookies=true;
       if (!isset($new_instance['useCookies'])) {
         $useCookies= false ;
@@ -107,6 +111,7 @@
           'expand','inExclude','inExcludeCats','postSort','postSortOrder',
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
           'taxonomy', 'linkToCat', 'showPostDate', 'postDateFormat',
+          'showEmptyCat',
           'olderThan', 'postDateAppend','postTitleLength', 'useCookies',
           'showTopLevel', 'postsBeforeCats', 'catfeed', 'addMisc',
           'addMiscTitle', 'expandCatPost');
