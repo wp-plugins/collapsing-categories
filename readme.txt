@@ -4,7 +4,7 @@ Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget
 Requires at least: 2.8
-Tested up to: 3.0
+Tested up to: 3.0.1
 Stable tag: 1.2.2
 
 This plugin uses Javascript to dynamically expand or collapsable the set of
@@ -340,6 +340,11 @@ behavior in wordpress anyways)
 == CHANGELOG ==
 
 = 2.0 (2010.xx.xx) =
+* Can now use custom taxonomies
+* Don't display any tags for title if title is empty
+* TODO: easier style handling
+* TODO: Updated settings page
+* TODO: update coding standards
 * Fixed bug with extraneous li when not showing posts (thanks neoen for
   pointing it out)
 * Added option to show empty categories

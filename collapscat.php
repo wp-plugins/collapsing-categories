@@ -29,7 +29,7 @@ This file is part of Collapsing Categories
 
 $url = get_settings('siteurl');
 global $collapsCatVersion;
-$collapsCatVersion = '1.2.2';
+$collapsCatVersion = '2.0';
 
 if (!is_admin()) {
   $inFooter = get_option('collapsCatInFooter');
