@@ -342,7 +342,7 @@ behavior in wordpress anyways)
 = 2.0 (2010.xx.xx) =
 * Can now use custom taxonomies
 * Don't display any tags for title if title is empty
-* TODO: easier style handling
+* Easier style handling
 * TODO: Updated settings page
 * TODO: update coding standards
 * Fixed bug with extraneous li when not showing posts (thanks neoen for

@@ -1,77 +1,137 @@
 <?php
-$style="#sidebar span.collapsing.categories {
+$styleOptions = array(
+'kubrick' => 'Kubrick',
+'twentyten' => 'Twenty Ten',
+'block' => 'Block',
+'noarrows' => 'No arrows'
+);
+
+$defaultStyles= array(
+'kubrick' => "{ID} span.collapsing.categories {
         border:0;
         padding:0; 
         margin:0; 
         cursor:pointer;
-}
-#sidebar li.collapsing.categories.item a.self {font-weight:bold}
-#sidebar ul.collapsing.categories.list ul.collapsing.categories.list:before {content:'';} 
-#sidebar ul.collapsing.categories.list li.collapsing.categories.item:before {content:'';} 
-#sidebar ul.collapsing.categories.list li.collapsing.categories.item {list-style-type:none}
-#sidebar ul.collapsing.categories.list li.collapsing.categories {
+} 
+
+{ID} li.widget_collapspage h2 span.sym {float:right;padding:0 .5em}
+{ID} li.collapsing.categories a.self {font-weight:bold}
+{ID}:before {content:'';} 
+{ID}  li.collapsing.categories:before {content:'';} 
+{ID}  li.collapsing.categories {list-style-type:none}
+{ID}  li.collapsing.categories{
+       padding:0 0 0 1em;
        text-indent:-1em;
-       padding-left:1em;
-       margin:0;
 }
-#sidebar ul.collapsing.categories.list li.collapsing.categories.item:before {content: '\\\\00BB \\\\00A0' !important;} 
-#sidebar ul.collapsing.categories.list .sym {
+{ID} li.collapsing.categories.item:before {content: '\\00BB \\00A0' !important;} 
+{ID} li.collapsing.categories .sym {
+   cursor:pointer;
    font-size:1.2em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
-    cursor:pointer;
-    padding-right:5px;}";
+    padding-right:5px;}",
 
-$default=$style;
-
-$block="#sidebar li.collapsing.categories.item a {
-            display:inline-block;
+'block' => "{ID} li a {
+            display:block;
             text-decoration:none;
             margin:0;
-            padding:0;
+            width:100%;
+            padding:0 10em 0 1em;
             }
-#sidebar li.collapsing.categories.item ul li.collapsing.categories.item a {
-            display:block;
+{ID}.collapsing.categories, {ID} li.collapsing.categories ul {
+margin-left:0;
+padding:0;
+
 }
-#sidebar li.collapsing.categories.item a:hover {
-            background:#CCC;
+{ID} li li a {
+padding-left:1em;
+}
+{ID} li li li a {
+padding-left:2em;
+}
+{ID} li a:hover {
             text-decoration:none;
           }
-#sidebar span.collapsing.categories {
+{ID} span.collapsing.categories {
         border:0;
         padding:0; 
         margin:0; 
         cursor:pointer;
 }
-#sidebar li.collapsing.categories.item a.self {font-weight:bold}
-#sidebar ul.collapsing.categories.list ul.collapsing.categories.list:before {content:'';} 
-#sidebar ul.collapsing.categories.list li.collapsing.categories.item:before {content:'';} 
-#sidebar ul.collapsing.categories.list li.collapsing.categories.item {list-style-type:none}
-#sidebar ul.collapsing.categories.list li.collapsing.categories.item {
-      }
-#sidebar ul.collapsing.categories.list .sym {
+
+{ID} li.widget_collapspage h2 span.sym {float:right;padding:0 .5em}
+{ID} span.sym {
+float:right;
+}
+{ID} li.collapsing.categories a.self {
+ font-weight:bold;
+}
+{ID}:before {content:'';} 
+{ID} li.collapsing.categories {
+list-style-type:none;
+}
+{ID} li.collapsing.categories.item:before, 
+  {ID} li.collapsing.categories:before {
+       content:'';
+  } 
+{ID}  li.collapsing.categories .sym {
+  /*
+   cursor:pointer;
    font-size:1.2em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
     float:left;
-    cursor:pointer;
     padding-right:5px;
-}
-";
+    */
+}",
 
-$noArrows="#sidebar span.collapsing.categories {
+'twentyten' => "
+{ID} span.collapsing.categories {
+        border:0;
+        padding:0; 
+        margin:0; 
+        cursor:pointer;
+} 
+
+{ID} h3 span.sym {float:right;padding:0 .5em}
+{ID} li.collapsing.categories a.self {font-weight:bold}
+{ID}:before {content:'';} 
+{ID} li.collapsing.categories.expand:before {content:'';} 
+{ID} li.collapsing.categories.expand,
+{ID} li.collapsing.categories.collapse {
+       list-style:none;
+       padding:0 0 0 .9em;
+       margin-left:-1em;
+       text-indent:-1.1em;
+}
+{ID} li.collapsing.categories.item {
+  padding:0;
+  text-indent:0;
+}
+
+{ID} li.collapsing.categories .sym {
+   cursor:pointer;
+   font-size:1.2em;
+   font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
+    padding-right:5px;}
+",
+
+
+'noArrows'=>
+"{ID} span.collapsing.categories {
         border:0;
         padding:0; 
         margin:0; 
         cursor:pointer;
 }
-#sidebar li.collapsing.categories.item a.self {font-weight:bold}
-#sidebar ul.collapsing.categories.list ul.collapsing.categories.list:before {content:'';} 
-#sidebar ul.collapsing.categories.list li.collapsing.categories.item:before {content:'';} 
-#sidebar ul.collapsing.categories.list li.collapsing.categories.item {list-style-type:none}
-#sidebar ul.collapsing.categories.list .sym {
+{ID} li.collapsing.categories a.self {font-weight:bold}
+
+{ID} li.widget_collapspage h2 span.sym {float:right;padding:0 .5em}
+{ID}:before {content:'';} 
+{ID} li.collapsing.categories:before {content:'';} 
+{ID} li.collapsing.categories {list-style-type:none}
+{ID} li.collapsing.categories .sym {
+   cursor:pointer;
    font-size:1.2em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
-    cursor:pointer;
-    padding-right:5px;}";
-$selected='default';
-$custom=get_option('collapsCatStyle');
+    padding-right:5px;"
+    );
 ?>

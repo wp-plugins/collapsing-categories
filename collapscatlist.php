@@ -68,7 +68,7 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   /* this function will group posts into a miscellaneous sub-category */
   global $options, $collapsCatItems, $cur_terms;
   extract($options);
-  $showHide='expand';
+  $show='expand';
   $symbol=$expandSym;
   $expanded='none';
   $theID='collapsCat-' . $cat->term_id . ":$number-misc";
@@ -78,11 +78,11 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
     $expanded='block';
   }
   if ($expanded=='block') {
-    $showHide='collapse';
+    $show='collapse';
     $symbol=$collapseSym;
   }
-  $miscposts="      <li class='collapsing categories'>".
-      "<span class='collapsing categories $showHide' ".
+  $miscposts="      <li class='collapsing categories $show'>".
+      "<span class='collapsing categories $show' ".
       "onclick='expandCollapse(event, \"$expandSymJS\", \"$collapseSymJS\", $animate, " .
       "\"collapsing categories\"); return false'>".
       "<span class='sym'>$symbol</span>";
@@ -238,14 +238,14 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
           if ($showPosts) {
             if ($expanded=='block') {
-              $showHide='collapse';
+              $show='collapse';
               $symbol=$collapseSym;
             } else {
-              $showHide='expand';
+              $show='expand';
               $symbol=$expandSym;
             }
-            $subCatLinks.=( "<li class='collapsing categories $self $parent'>".
-                "<span class='collapsing categories $showHide' ".
+            $subCatLinks.=( "<li class='collapsing categories $self $parent $show'>".
+                "<span class='collapsing categories $show' ".
                 "onclick='expandCollapse(event, \"$expandSymJS\",".
                 "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>" . 
                 "<span class='sym'>$symbol</span>" );
@@ -286,14 +286,14 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             continue;
           }
           if ($expanded=='block') {
-            $showHide='collapse';
+            $show='collapse';
             $symbol=$collapseSym;
           } else {
-            $showHide='expand';
+            $show='expand';
             $symbol=$expandSym;
           }
-          $subCatLinks.=( "<li class='collapsing categories $self $parent'>".
-              "<span class='collapsing categories $showHide' ".
+          $subCatLinks.=( "<li class='collapsing categories $self $parent $show'>".
+              "<span class='collapsing categories $show' ".
               "onclick='expandCollapse(event, \"$expandSymJS\",".
               "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>" . 
               "<span class='sym'>$symbol</span>" );
@@ -453,7 +453,8 @@ function get_collapscat_fromdb($args='') {
 	} else {
 	  $taxonomyQuery= "'$taxonomy'";
   }
-
+ /* we also need to specify post types */
+ $post_type_query = "AND post_type='$post_type'";
 	if ($olderThan > 0) {
 		$now = date('U');
 		$olderThanQuery= "AND  date(post_date) > '" . 
@@ -477,7 +478,7 @@ function get_collapscat_fromdb($args='') {
          $olderThanQuery
          AND post_status='publish'
          AND tr.term_taxonomy_id = tt.term_taxonomy_id 
-         AND tt.taxonomy IN ($taxonomyQuery) $postSortColumn $postSortOrder";
+         AND tt.taxonomy IN ($taxonomyQuery) $post_type_query $postSortColumn $postSortOrder";
     $posts= $wpdb->get_results($postquery); 
     foreach ($posts as $post) {
       if (!$postsInCat[$post->term_id]) {
@@ -606,14 +607,14 @@ function list_categories($posts, $categories, $parents, $options) {
       }
       if ($showPosts || $subCatPostCount>0 || $showEmptyCat) {
         if ($expanded=='block') {
-          $showHide='collapse';
+          $show='collapse';
           $symbol=$collapseSym;
         } else {
-          $showHide='expand';
+          $show='expand';
           $symbol=$expandSym;
         }
-        $span= "      <li class='collapsing categories $self $parent'>".
-            "<span class='collapsing categories $showHide' ".
+        $span= "      <li class='collapsing categories $self $parent $show'>".
+            "<span class='collapsing categories $show' ".
             "onclick='expandCollapse(event, \"$expandSymJS\"," .
             "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>".
             "<span class='sym'>$symbol</span>";

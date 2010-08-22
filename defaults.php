@@ -20,6 +20,7 @@ $defaults=array(
    'animate' => 0,
    'catfeed' => 'none',
    'taxonomy' => 'category',
+   'post_type' => 'post',
    'postDateAppend' => 'after',
    'postDateFormat' => 'm/d',
    'showPostDate' => false,

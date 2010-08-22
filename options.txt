@@ -41,11 +41,22 @@
 // get taxonomy types
 global $wp_taxonomies;
 ?>
-    <p>Taxonomy type::
+    <p><?php _e('Taxonomy type','collapsing-categories')?>:
     <select name="<?php echo $this->get_field_name('taxonomy'); ?> id="<?php echo $this->get_field_id('taxonomy'); ?>"">
     <option <?php if($taxonomy=='both') echo 'selected="selected"'; ?> value='both'><?php _e('Categories and Tags', 'collapsing-categories') ?></option>
     <?php foreach ($wp_taxonomies as $tax): ?>
 <option <?php if ($taxonomy == $tax->name) echo "selected='selected'"?> value='<?=$tax->name?>'><?=$tax->label?> (<?=$tax->name?>)</option>
+    <?php endforeach ?>
+    </select>
+    </p>
+<?php
+//get all post types
+global $wp_post_types;
+?>
+    <p><?php _e('Post type','collapsing-categories')?>:
+    <select name="<?php echo $this->get_field_name('post_type'); ?> id="<?php echo $this->get_field_id('post_type'); ?>"">
+    <?php foreach ($wp_post_types as $key=>$post): ?>
+<option <?php if ($post_type == $key) echo "selected='selected'"?> value='<?=$key?>'><?=$post->label?> (<?=$post->name?>)</option>
     <?php endforeach ?>
     </select>
     </p>
@@ -131,6 +142,17 @@ categories A and B when A or B is excluded</label>
      id="<?php echo $this->get_field_id('catfeedImage'); ?>"
      value='image'></input> <label for="catfeedImage"><?php _e('image', 'collapsing-categories') ?> <img src='../wp-includes/images/rss.png' />'</label>
     </p>
+  <p><label for='<?php echo $this->get_field_id("style")?>'><?php _e('Style',
+  'collapsing-categories')?></label>
+  <select id='<?php echo $this->get_field_id("style")?>'
+    name='<?php echo $this->get_field_name("style")?>'>
+  <?php foreach ($styleOptions as $key =>$value): ?>
+  <option value='<?php echo attribute_escape($key) ?>' 
+  <?php if ($style == $key) echo "selected='selected'" ?>>
+  <?php echo $value ?></option>
+  <?php endforeach ?>
+  </select>
+  </p>
   <a style='cursor:pointer' onclick='showAdvanced("<?php echo $this->get_field_id('advanced') ?>", "<?php echo $this->get_field_id('arrow') ?>");'><span id="<?php echo $this->get_field_id('arrow') ?>">&#9654;</span> Advanced options</a>
   <div id="<?php echo $this->get_field_id('advanced') ?>" style='display:none;'>
    <p>

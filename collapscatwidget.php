@@ -20,8 +20,8 @@ class collapsCatWidget extends WP_Widget {
       echo $before_title . $title . $after_title;
     $instance['number'] = $this->get_field_id('top');
     $instance['number'] = preg_replace('/[a-zA-Z-]/', '', $instance['number']);
-    echo "<ul id='" .  $this->get_field_id('top') . "
-        ' class='collapsing categories list'>\n";
+    echo "<ul id='" .  $this->get_field_id('top') . 
+        "' class='collapsing categories list'>\n";
     if( function_exists('collapsCat') ) {
      collapsCat($instance);
     } else {
@@ -39,6 +39,7 @@ class collapsCatWidget extends WP_Widget {
  
   function form($instance) {
     include('defaults.php');
+    include('collapsCatStyles.php');
     $options=wp_parse_args($instance, $defaults);
     extract($options);
 ?>

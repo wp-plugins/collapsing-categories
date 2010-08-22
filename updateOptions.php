@@ -53,6 +53,7 @@
       $customExpand= $new_instance['customExpand'];
       $customCollapse= $new_instance['customCollapse'];
       $taxonomy= $new_instance['taxonomy'];
+      $post_type= $new_instance['post_type'];
       $olderThan= $new_instance['olderThan'];
       $inExclude= 'include' ;
       if($new_instance['inExclude'] == 'exclude') {
@@ -106,12 +107,14 @@
       } else {
         $showPosts=false;
       }
+/* update style settings */
+      $style = $new_instance['style'];
       $instance = compact(
           'title','showPostCount','catSort','catSortOrder','defaultExpand',
           'expand','inExclude','inExcludeCats','postSort','postSortOrder',
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
           'taxonomy', 'linkToCat', 'showPostDate', 'postDateFormat',
-          'showEmptyCat',
+          'showEmptyCat', 'post_type', 'style',
           'olderThan', 'postDateAppend','postTitleLength', 'useCookies',
           'showTopLevel', 'postsBeforeCats', 'catfeed', 'addMisc',
           'addMiscTitle', 'expandCatPost');

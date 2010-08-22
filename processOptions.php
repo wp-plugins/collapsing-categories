@@ -22,6 +22,7 @@
     $showEmptyCat=false;
     $catfeed='none';
     $taxonomy='category';
+    $post_type='post';
     $olderThan=0;
     $excludeAll='0';
     $addMisc=false;
@@ -51,6 +52,7 @@
     $postsBeforeCats = $options[$number]['postsBeforeCats'];
     $catfeed = $options[$number]['catfeed'];
     $taxonomy = $options[$number]['taxonomy'];
+    $post_type = $options[$number]['post_type'];
     $olderThan = $options[$number]['olderThan'];
     $excludeAll = $options[$number]['excludeAll'];
     $addMisc = $options[$number]['addMisc'];
