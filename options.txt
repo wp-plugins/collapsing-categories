@@ -16,7 +16,7 @@
    <input type="text" size='8' name="<?php echo $this->get_field_name('postDateFormat'); ?>" value="<?php echo $postDateFormat; ?>" 
    id="<?php echo $this->get_field_id('postDateFormat'); ?>"></input> 
    </p>
-    <p>Sort Categories by:<br />
+    <p>Sort Categories by:&nbsp;
      <select name="<?php echo $this->get_field_name('catSort'); ?>">
      <option <?php if($catSort=='catName') echo 'selected'; ?> id="sortcatName" value='catName'>category name</option>
      <option <?php if($catSort=='catId') echo 'selected'; ?> id="sortcatId" value='catId'>category id</option>
@@ -24,18 +24,22 @@
      <option <?php if($catSort=='catOrder') echo 'selected'; ?> id="sortcatOrder" value='catOrder'>category (term) Order</option>
      <option <?php if($catSort=='catCount') echo 'selected'; ?> id="sortcatCount" value='catCount'>category Count</option>
     </select>
-     <input type="radio" name="<?php echo $this->get_field_name('catSortOrder'); ?>" <?php if($catSortOrder=='ASC') echo 'checked'; ?> id="<?php echo $this->get_field_id('catSortASC') ?>" value='ASC'></input> <label for="<?php echo $this->get_field_id('catSortASC'); ?>"><?php _e('Ascending', 'collapsing-categories') ?></label>
-     <input type="radio" name="<?php echo $this->get_field_name('catSortOrder'); ?>" <?php if($catSortOrder=='DESC') echo 'checked'; ?> id="<?php echo $this->get_field_id('catSortDESC') ?>" value='DESC'></input> <label for="<?php echo $this->get_field_id('catSortDESC'); ?>"><?php _e('Descending', 'collapsing-categories') ?></label>
+    <select name="<?php echo $this->get_field_name('catSortOrder'); ?>">
+     <option <?php if($catSortOrder=='ASC') echo 'selected="selected"'; ?> id="<?php echo $this->get_field_id('catSortASC') ?>" value='ASC'><?php _e('Ascending', 'collapsing-categories') ?></option>
+     <option <?php if($catSortOrder=='DESC') echo 'selected="selected"'; ?> id="<?php echo $this->get_field_id('catSortDESC') ?>" value='DESC'><?php _e('Descending', 'collapsing-categories') ?></option>
+    </select>
     </p>
-    <p>Sort Posts by:<br />
+    <p>Sort Posts by:&nbsp;
      <select name="<?php echo $this->get_field_name('postSort'); ?>">
      <option <?php if($postSort=='postTitle') echo 'selected'; ?> id="<?php echo $this->get_field_id('sortpostTitle') ?>" value='postTitle'>post title</option>
      <option <?php if($postSort=='postId') echo 'selected'; ?> id="<?php echo $this->get_field_id('sortpostId') ?>" value='postId'>post id</option>
      <option <?php if($postSort=='postComment') echo 'selected'; ?> id="<?php echo $this->get_field_id('sortpostComment') ?>" value='postComment'>number of Comments</option>
      <option <?php if($postSort=='postDate') echo 'selected'; ?> id="<?php echo $this->get_field_id('sortpostOrder') ?>" value='postDate'>post Date</option>
     </select>
-     <input type="radio" name="<?php echo $this->get_field_name('postSortOrder'); ?>" <?php if($postSortOrder=='ASC') echo 'checked'; ?> id="<?php echo $this->get_field_id('postSortASC') ?>" value='ASC'></input> <label for="<?php echo $this->get_field_id('postPostASC'); ?>"><?php _e('Ascending', 'collapsing-categories') ?></label>
-     <input type="radio" name="<?php echo $this->get_field_name('postSortOrder'); ?>" <?php if($postSortOrder=='DESC') echo 'checked'; ?> id="<?php echo $this->get_field_id('postPostDESC') ?>" value='DESC'></input> <label for="<?php echo $this->get_field_id('postPostDESC'); ?>"><?php _e('Descending', 'collapsing-categories') ?></label>
+    <select name="<?php echo $this->get_field_name('postSortOrder'); ?>">
+     <option <?php if($postSortOrder=='ASC') echo 'selected="selected"'; ?> id="<?php echo $this->get_field_id('postSortASC') ?>" value='ASC'><?php _e('Ascending', 'collapsing-categories') ?></option>
+     <option <?php if($postSortOrder=='DESC') echo 'selected="selected"'; ?> id="<?php echo $this->get_field_id('postSortDESC') ?>" value='DESC'><?php _e('Descending', 'collapsing-categories') ?></option>
+    </select>
     </p>
 <?php
 // get taxonomy types
@@ -70,16 +74,15 @@ global $wp_post_types;
    id="<?php echo $this->get_field_id('postTitleLength') ?>" value="<?php echo
    $postTitleLength; ?>"></input> <label
    for="postTitleLength"> characters</label>
-    <p>Clicking on category name:<br />
-     <input type="radio" name="<?php echo $this->get_field_name('linkToCat'); ?>"
-     <?php if($linkToCat) echo 'checked'; ?>
+    <p>Clicking on category name:&nbsp;
+     <select name="<?php echo $this->get_field_name('linkToCat'); ?>">
+     <option <?php if($linkToCat) echo 'select="selected"'; ?>
      id="<?php echo $this->get_field_id('linkToCatYes'); ?>"
-     value='yes'></input> <label for="<?php echo $this->get_field_id('linkToCatYes'); ?>"><?php _e('Links to category archive', 'collapsing-categories') ?></label>
-     <input type="radio" name="<?php echo $this->get_field_name('linkToCat'); ?>"
-     <?php if(!$linkToCat) echo 'checked'; ?>
+     value='yes'><?php _e('Links to category archive', 'collapsing-categories') ?></option>
+     <option <?php if(!$linkToCat) echo 'selected="selected"'; ?>
      id="<?php echo $this->get_field_id('linkToCatNo'); ?>"
-     value='no'></input> <label for="linkToCatNo">Expands to show
-     sub-categories and/or Posts</label>
+     value='no'><?php _e('Expands to show sub-categories and/or Posts', 'collapsing-categories')?></option>
+    </select>
     </p>
     <p>Expanding and collapse characters:<br />
      <strong>html:</strong> <input type="radio" name="<?php echo $this->get_field_name('expand'); ?>" <?php if($expand==0) echo 'checked'; ?> id="<?php echo $this->get_field_id('expand0') ?>" value='0'></input> <label for="<?php echo $this->get_field_id('expand0'); ?>">&#9654;&nbsp;&#9660;</label>
@@ -105,7 +108,7 @@ $this->get_field_id('expand0') ?>" value='3'></input>
      src='<?php echo get_settings('siteurl') .
      "/wp-content/plugins/collapsing-categories/" ?>img/expand.gif' /></label>
     </p>
-    <p>Auto-expand these categories (separated by commas):<br />
+    <p><?php _e('Auto-expand these categories (separated by commas):<br />
      <input type="text" name="<?php echo $this->get_field_name('defaultExpand'); ?>" value="<?php echo $defaultExpand ?>" id="<?php echo $this->get_field_id('defaultExpand') ?>"</input> 
     </p>
     <p> 
@@ -114,13 +117,12 @@ $this->get_field_id('expand0') ?>" value='3'></input>
      <option  <?php if($inExclude=='exclude') echo 'selected'; ?> id="<?php echo $this->get_field_id('inExcludeExclude') ?>" value='exclude'>Exclude</option>
      </select>
      these categories (separated by commas):<br />
-    <input type="text" name="<?php echo $this->get_field_name('inExcludeCats'); ?>" value="<?php echo $inExcludeCats ?>" id="<?php echo $this->get_field_id('inExcludeCats') ?>"</input> 
+    <input type="text" name="<?php echo $this->get_field_name('inExcludeCats'); ?>" value="<?php echo $inExcludeCats ?>" id="<?php echo $this->get_field_id('inExcludeCats') ?>"</input><br /> 
    <input type="checkbox" name="<?php echo $this->get_field_name('excludeAll'); ?>" <?php if ($excludeAll=='1') echo
    'checked'; ?> id="<?php echo $this->get_field_id('excludeAll'); ?>"></input> <label
-   for="<?php echo $this->get_field_id('excludeAll'); ?>">Exclude post X from
-categories A and B when A or B is excluded</label>
+   for="<?php echo $this->get_field_id('excludeAll'); ?>"><?php _e('Exclude post X from categories A and B when A or B is excluded', 'collapsing-categories')?></label>
    <p>
-   Exclude posts older than <input type='text' name="<?php echo $this->get_field_name('olderThan'); ?>" id="<?php echo $this->get_field_id('olderThan'); ?>" size='3' value='<?php echo $olderThan ?>'></input> days
+   <?php _e('Exclude posts older than', 'collapsing-categories')?> <input type='text' name="<?php echo $this->get_field_name('olderThan'); ?>" id="<?php echo $this->get_field_id('olderThan'); ?>" size='3' value='<?php echo $olderThan ?>'></input> days
    </p>
     </p>
    <p>

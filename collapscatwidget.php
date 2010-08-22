@@ -4,7 +4,7 @@ class collapsCatWidget extends WP_Widget {
     $widget_ops = array('classname' => 'widget_collapscat', 'description' =>
     'Collapsible category listing' );
 		$control_ops = array (
-			'width' => '450', 
+			'width' => '550', 
 			'height' => '400'
 			);
     $this->WP_Widget('collapscat', 'Collapsing Categories', $widget_ops,
