@@ -108,7 +108,8 @@ $this->get_field_id('expand0') ?>" value='3'></input>
      src='<?php echo get_settings('siteurl') .
      "/wp-content/plugins/collapsing-categories/" ?>img/expand.gif' /></label>
     </p>
-    <p><?php _e('Auto-expand these categories (separated by commas):<br />
+    <p><?php _e('Auto-expand these categories (separated by commas)',
+'collapsing-categories')?>:<br />
      <input type="text" name="<?php echo $this->get_field_name('defaultExpand'); ?>" value="<?php echo $defaultExpand ?>" id="<?php echo $this->get_field_id('defaultExpand') ?>"</input> 
     </p>
     <p> 
