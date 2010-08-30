@@ -1,4 +1,4 @@
-/*  Collapse Functions, version 1.7
+/*  Collapse Functions, version 1.8
  *
  *--------------------------------------------------------------------------*/
 String.prototype.trim = function() {
@@ -169,4 +169,4 @@ function expandCollapse( e, expand,collapse, animate, collapsClass ) {
   return false;
 }
 
-collapsItems= new Object();
+//collapsItems= new Object();

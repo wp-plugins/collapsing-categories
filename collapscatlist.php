@@ -81,7 +81,7 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
     $show='collapse';
     $symbol=$collapseSym;
   }
-  $miscposts="      <li class='collapsing categories $show'>".
+  $miscposts="      <li class='collapsing categories expandable'>".
       "<span class='collapsing categories $show' ".
       "onclick='expandCollapse(event, \"$expandSymJS\", \"$collapseSymJS\", $animate, " .
       "\"collapsing categories\"); return false'>".
@@ -168,8 +168,8 @@ function getSubPosts($posts, $cat2, $showPosts, $theID) {
             $linktext = "$linktext $theDate";
           }
         }
-        $posttext2.= "<li class='collapsing categories item $self'><a " . 
-            "href='".get_permalink($post2).
+        $posttext2.= "<li class='collapsing categories item" .  $self . 
+            "'><a " .  "href='".get_permalink($post2).
             "' title='$title_text'>$linktext</a></li>\n";
       }
     }
@@ -244,13 +244,15 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $show='expand';
               $symbol=$expandSym;
             }
-            $subCatLinks.=( "<li class='collapsing categories $self $parent $show'>".
+            $subCatLinks.=( "<li class='collapsing categories expandable" . 
+                $self . $parent . "'>".
                 "<span class='collapsing categories $show' ".
                 "onclick='expandCollapse(event, \"$expandSymJS\",".
                 "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>" . 
                 "<span class='sym'>$symbol</span>" );
           } else {
-            $subCatLinks.=( "<li class='collapsing categories item $self $parent'>" );
+            $subCatLinks.=( "<li class='collapsing categories item" .  $self .
+                $parent . "'>" );
           }
           $link2= getCollapsCatLink($cat2,$catlink);
           if ( empty($cat2->description) ) {
@@ -292,7 +294,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             $show='expand';
             $symbol=$expandSym;
           }
-          $subCatLinks.=( "<li class='collapsing categories $self $parent $show'>".
+          $subCatLinks.=( "<li class='collapsing categories expandable" . 
+              $self . $parent . "'>".
               "<span class='collapsing categories $show' ".
               "onclick='expandCollapse(event, \"$expandSymJS\",".
               "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>" . 
@@ -318,8 +321,8 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               // don't include the triangles if posts are not shown and there
               // are no more subcategories
                 $link2 .= apply_filters('single_cat_title',$cat2->name).'</a>';
-                $subCatLinks = "      <li class='collapsing categories item
-                $self'>";
+                $subCatLinks = "      <li class='collapsing categories item" .
+                    $self . "'>";
             }
           }
         }
@@ -613,13 +616,14 @@ function list_categories($posts, $categories, $parents, $options) {
           $show='expand';
           $symbol=$expandSym;
         }
-        $span= "      <li class='collapsing categories $self $parent $show'>".
+        $span= "      <li class='collapsing categories expandable" .  $self .
+            $parent . "'>".
             "<span class='collapsing categories $show' ".
             "onclick='expandCollapse(event, \"$expandSymJS\"," .
             "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>".
             "<span class='sym'>$symbol</span>";
       } else {
-        $span = "      <li class='collapsing categories item $self'>";
+        $span = "      <li class='collapsing categories item" .  $self. "'>";
       }
       $link=getCollapsCatLink($cat,$catlink);
       if ( empty($cat->description) ) {

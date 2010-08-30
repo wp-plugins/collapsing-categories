@@ -94,9 +94,16 @@ list-style-type:none;
 {ID} h3 span.sym {float:right;padding:0 .5em}
 {ID} li.collapsing.categories a.self {font-weight:bold}
 {ID}:before {content:'';} 
-{ID} li.collapsing.categories.expand:before {content:'';} 
-{ID} li.collapsing.categories.expand,
-{ID} li.collapsing.categories.collapse {
+{ID} li.collapsing.categories.expandable:before {content:'';} 
+{ID} li.collapsing.categories {
+  background:none;
+  position:relative;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+}
+{ID} li.collapsing.categories.expandable {
        list-style:none;
        padding:0 0 0 .9em;
        margin-left:-1em;
