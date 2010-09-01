@@ -115,11 +115,17 @@ class collapsCat {
     $widget_options = get_option('widget_collapscat');
     include('collapsCatStyles.php');
     $css = '';
+    $oldStyle=true;
     foreach ($widget_options as $key=>$value) {
       $id = "widget-collapscat-$key-top";
-      $style = $defaultStyles[$value['style']];
-      $css .= str_replace('{ID}', '#' . $id, $style);
+      if (isset($value['style'])) {
+        $oldStyle=false;
+        $style = $defaultStyles[$value['style']];
+        $css .= str_replace('{ID}', '#' . $id, $style);
+      }
     }
+    if ($oldStyle)
+      $css=stripslashes(get_option('collapsCatStyle'));
     return($css);
   }
 }
