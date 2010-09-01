@@ -49,17 +49,16 @@ function getCollapsCatLink($cat,$catlink) {
   /* returns link to category. we use the id of the category if possible,
   because it is faster. otherwise we pass the whole category object */
   if (empty($catlink)) {
-    if ($cat->taxonomy=='post_tag') {
-      $link = "<a href='".get_tag_link($cat->term_id)."' ";
-    } else {
-      $link = "<a href='".get_term_link($cat->term_id, $cat->taxonomy)."' ";
-    }
+    $the_cat=$cat->term_id;
   } else {
-    if ($cat->taxonomy=='post_tag') {
-      $link = "<a href='".get_tag_link($cat)."' ";
-    } else {
-      $link = "<a href='".get_term_link($cat, $cat->taxonomy)."' ";
-    }
+    $the_cat=$cat;
+  }
+  if ($cat->taxonomy=='post_tag') {
+    $link = "<a href='".get_tag_link($the_cat)."' ";
+  } elseif ($cat->taxonomy=='category') {
+    $link = "<a href='".get_category_link($the_cat)."' ";
+  } else {
+    $link = "<a href='".get_term_link($the_cat, $cat->taxonomy)."' ";
   }
   return($link);
 }
