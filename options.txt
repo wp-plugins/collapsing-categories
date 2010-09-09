@@ -163,6 +163,9 @@ $this->get_field_id('expand0') ?>" value='3'></input>
 <?php if ($addMisc)  echo 'checked'; ?> id="<?php echo $this->get_field_id('addMisc'); ?>"></input>    When category X has sub-categories, group posts in a sub-category into a <input type='text' name="<?php echo $this->get_field_name('addMiscTitle'); ?>" id="<?php echo $this->get_field_id('addMiscTitle'); ?>" size='15' value='<?php echo $addMiscTitle ?>'></input> category
    </p>
    <p>
+     <input type="checkbox" id="<?php echo $this->get_field_id('accordion'); ?>" name="<?php echo $this->get_field_name('accordion'); ?>"
+<?php if ($accordion)  echo 'checked'; ?> id="<?php echo $this->get_field_id('accordion'); ?>"></input><label for="<?php echo $this->get_field_id('accordion'); ?>"><?php _e('Accordion style', 'collapsing-categories')?> <a class='help' title='<?php _e('When expanding one category, close all others', 'collapsing-categories')?>'>?</a></label>   </p>
+   <p>
      <input type="checkbox" name="<?php echo $this->get_field_name('useCookies'); ?>"
 <?php if ($useCookies)  echo 'checked'; ?> id="<?php echo $this->get_field_id('useCookies'); ?>"></input>    Remember expanding and collapsing for each visitor (using cookies)
    </p>

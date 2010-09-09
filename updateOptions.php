@@ -96,6 +96,11 @@
       if (isset($new_instance['addMisc'])) {
         $addMisc= true ;
       }
+      if( isset($new_instance['accordion'])) {
+        $accordion= 1 ;
+      } else {
+        $accordion=0;
+      }
       $catfeed=addslashes($new_instance['catfeed']);
       $inExcludeCats=addslashes($new_instance['inExcludeCats']);
       $postDateFormat=addslashes($new_instance['postDateFormat']);
@@ -114,7 +119,7 @@
           'expand','inExclude','inExcludeCats','postSort','postSortOrder',
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
           'taxonomy', 'linkToCat', 'showPostDate', 'postDateFormat',
-          'showEmptyCat', 'post_type', 'style',
+          'showEmptyCat', 'post_type', 'style', 'accordion',
           'olderThan', 'postDateAppend','postTitleLength', 'useCookies',
           'showTopLevel', 'postsBeforeCats', 'catfeed', 'addMisc',
           'addMiscTitle', 'expandCatPost');

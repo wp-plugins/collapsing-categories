@@ -43,10 +43,7 @@ if( isset($_POST['resetOptions']) ) {
   $defaultStyles['selected']=$selectedStyle;
   $defaultStyles['custom']=$_POST['collapsCatStyle'];
 
-  update_option('collapsCatStyle', $style);
-  update_option('collapsCatSidebarId', $_POST['collapsCatSidebarId']);
   update_option('collapsCatInFooter', $_POST['collapsCatInFooter']);
-  update_option('collapsCatDefaultStyles', $defaultStyles);
 
   if ($widgetOn==0) {
     include('updateOptions.php');
@@ -58,51 +55,6 @@ include('processOptions.php');
  <form method="post">
   <h2><? _e('Collapsing Categories Options', 'collapsing-categories'); ?></h2>
   <fieldset name="Collapsing Categories Options">
-    <p>
- <?php _e('Id of the sidebar where collapsing categories appears:', 'collapsing-categories'); ?>
-   <input id='collapsCatSidebarId' name='collapsCatSidebarId' type='text' size='20' value="<?php echo
-   get_option('collapsCatSidebarId')?>" onchange='changeStyle("collapsCatStylePreview","collapsCatStyle", "collapsCatDefaultStyles", "collapsCatSelectedStyle", false);' />
-   <table>
-     <tr>
-       <td>
-  <input type='hidden' id='collapsCatCurrentStyle' value="<?php echo
-stripslashes(get_option('collapsCatStyle')) ?>" />
-  <input type='hidden' id='collapsCatSelectedStyle'
-  name='collapsCatSelectedStyle' />
-<label for="collapsCatStyle"><?php _e('Select style:', 'collapsing-categories'); ?></label>
-       </td>
-       <td>
-       <select name='collapsCatDefaultStyles' id='collapsCatDefaultStyles'
-         onchange='changeStyle("collapsCatStylePreview","collapsCatStyle", "collapsCatDefaultStyles", "collapsCatSelectedStyle", false);' />
-       <?php
-    $url = get_settings('siteurl') . '/wp-content/plugins/collapsing-pages';
-       $styleOptions=get_option('collapsCatDefaultStyles');
-       //print_r($styleOptions);
-       $selected=$styleOptions['selected'];
-       foreach ($styleOptions as $key=>$value) {
-         if ($key!='selected') {
-           if ($key==$selected) {
-             $select=' selected=selected ';
-           } else {
-             $select=' ';
-           }
-           echo '<option' .  $select . 'value="'.
-               stripslashes($value) . '" >'.$key . '</option>';
-         }
-       }
-       ?>
-       </select>
-       </td>
-       <td><?php _e('Preview', 'collapsing-categories'); ?><br />
-       <img style='border:1px solid' id='collapsCatStylePreview' alt='preview'/>
-       </td>
-    </tr>
-    </table>
-    <?php _e('You may also customize your style below if you wish', 'collapsing-categories'); ?><br />
-   <input type='button' value='<?php _e("restore current style", "collapsing-categories"); ?>'
-onclick='restoreStyle();' /><br />
-   <textarea onchange='changeStyle("collapsCatStylePreview","collapsCatStyle", "collapsCatDefaultStyles", "collapsCatSelectedStyle", true);' cols='78' rows='10' id="collapsCatStyle" name="collapsCatStyle"><?php echo stripslashes(get_option('collapsCatStyle'))?></textarea>
-   </p>
    <p>
    <input type="checkbox" name="collapsCatInFooter" id ="collapsCatInFooter"
    <?php if (get_option('collapsCatInFooter')) echo

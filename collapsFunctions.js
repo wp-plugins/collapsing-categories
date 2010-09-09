@@ -84,7 +84,7 @@ function autoExpandCollapse(collapsClass) {
   }
 }
 
-function expandCollapse( e, expand,collapse, animate, collapsClass ) {
+function expandCollapse( e, expand,collapse, animate, collapsClass, accordion ) {
   var classPattern= new RegExp('^' + collapsClass);
   if (expand=='expandImg') {
     expand=expandSym;
@@ -151,6 +151,16 @@ function expandCollapse( e, expand,collapse, animate, collapsClass ) {
     } catch (err) {
     }
   } else {
+    try {
+      if (accordion) {
+        jQuery('.collapse').parent().find('ul').hide('blind', '', 500);
+        jQuery('li.collapsing ul').each(function() {
+          createCookie(this.id, 0, 7);
+        });
+        jQuery('.collapse span.sym').html(expand);
+        jQuery('.collapse').removeClass(hide).addClass(show);
+      }
+    } catch (err) {} 
     createCookie(theId,1,7);
     src.setAttribute('class',hide);
     src.setAttribute('title','click to collapse');

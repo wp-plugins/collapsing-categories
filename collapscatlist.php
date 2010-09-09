@@ -83,7 +83,7 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   $miscposts="      <li class='collapsing categories expandable'>".
       "<span class='collapsing categories $show' ".
       "onclick='expandCollapse(event, \"$expandSymJS\", \"$collapseSymJS\", $animate, " .
-      "\"collapsing categories\"); return false'>".
+      "\"collapsing categories\", $accordion); return false'>".
       "<span class='sym'>$symbol</span>";
   if ($linktocat=='yes') {
     $thislink=getCollapsCatLink($cat,$catlink);
@@ -145,7 +145,7 @@ function getSubPosts($posts, $cat2, $showPosts, $theID) {
           continue;
         }
         if (is_single() && $post2->ID == $thisPost)
-          $self="self";
+          $self=" self";
         else
           $self="";
         $date=preg_replace("/-/", '/', $post2->date);
@@ -205,7 +205,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
     foreach ($categories as $cat2) {
       $subCatLink2=''; // clear info from subCatLink2
       if ((is_category() || is_tag()) && ($cat2->term_id==$thisCatID)) {
-        $self="self";
+        $self=" self";
       } else {
         $self="";
       }
@@ -247,7 +247,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
                 $self . $parent . "'>".
                 "<span class='collapsing categories $show' ".
                 "onclick='expandCollapse(event, \"$expandSymJS\",".
-                "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>" . 
+                "\"$collapseSymJS\", $animate, \"collapsing categories\", $accordion); return false'>" . 
                 "<span class='sym'>$symbol</span>" );
           } else {
             $subCatLinks.=( "<li class='collapsing categories item" .  $self .
@@ -297,7 +297,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $self . $parent . "'>".
               "<span class='collapsing categories $show' ".
               "onclick='expandCollapse(event, \"$expandSymJS\",".
-              "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>" . 
+              "\"$collapseSymJS\", $animate, \"collapsing categories\", $accordion); return false'>" . 
               "<span class='sym'>$symbol</span>" );
           $link2=getCollapsCatLink($cat2,$catlink);
           if ( empty($cat2->description) ) {
@@ -580,12 +580,12 @@ function list_categories($posts, $categories, $parents, $options) {
     if ($cat->parent!=0 )
       continue;
     if (is_archive() && ($cat->term_id==$thisCatID)) {
-      $self="self";
+      $self=" self";
     } else {
       $self="";
     }
     if (in_array($cat->slug, $autoExpand)) {
-      $parent="parent";
+      $parent=" parent";
     } else {
       $parent="";
     }
@@ -619,7 +619,7 @@ function list_categories($posts, $categories, $parents, $options) {
             $parent . "'>".
             "<span class='collapsing categories $show' ".
             "onclick='expandCollapse(event, \"$expandSymJS\"," .
-            "\"$collapseSymJS\", $animate, \"collapsing categories\"); return false'>".
+            "\"$collapseSymJS\", $animate, \"collapsing categories\", $accordion); return false'>".
             "<span class='sym'>$symbol</span>";
       } else {
         $span = "      <li class='collapsing categories item" .  $self. "'>";
