@@ -1,4 +1,8 @@
     <p>
+<label for="<?php echo $this->get_field_id('title'); ?>">Title: <input  id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /></label>
+<label for="<?php echo $this->get_field_id('title_link'); ?>"><?php _e('Link to', 'collapsing-categories') ?>: <input  id="<?php echo $this->get_field_id('title_link'); ?>" name="<?php echo $this->get_field_name('title_link'); ?>" type="text" value="<?php echo attribute_escape($title_link); ?>" /></label>
+    </p>
+    <p>
      <input type="checkbox" name="<?php echo $this->get_field_name('showPostCount'); ?>" <?php if ($showPostCount)  echo 'checked'; ?> id="<?php echo $this->get_field_id('showPostCount') ?>"></input> <label for="<?php echo $this->get_field_id('showPostCount'); ?>"><?php _e('Show post Count', 'collapsing-categories') ?></label>
     </p>
    <p>

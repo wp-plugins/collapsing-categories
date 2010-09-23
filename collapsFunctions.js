@@ -153,12 +153,20 @@ function expandCollapse( e, expand,collapse, animate, collapsClass, accordion ) 
   } else {
     try {
       if (accordion) {
+        /*
+        //jQuery(childList).slideUp('normal');
+        //alert(jQuery(this).next().html());
+         
+        //alert(jQuery('.collapsing.categories.list span.sym').each(function() { }
+        jQuery('.collapse').parent().find('ul').slideUp('normal')
+        jQuery(childList).slideDown('normal');
+*/
         jQuery('.collapse').parent().find('ul').hide('blind', '', 500);
         jQuery('li.collapsing ul').each(function() {
           createCookie(this.id, 0, 7);
         });
         jQuery('.collapse span.sym').html(expand);
-        jQuery('.collapse').removeClass(hide).addClass(show);
+        jQuery('.collapse').removeClass('collapse').addClass('expand');
       }
     } catch (err) {} 
     createCookie(theId,1,7);

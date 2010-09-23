@@ -36,6 +36,7 @@ if (!is_admin()) {
   wp_enqueue_script('collapsFunctions',
       "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",
       array('jquery'), '1.7', $inFooter);
+  wp_enqueue_script('jquery-ui-core');
   add_action( 'wp_head', array('collapsCat','get_head'));
 } else {
   // call upgrade function if current version is lower than actual version

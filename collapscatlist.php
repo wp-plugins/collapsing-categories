@@ -384,8 +384,8 @@ function get_collapscat_fromdb($args='') {
     $expandSym=$customExpand;
     $collapseSym=$customCollapse;
   } else {
-    $expandSym='▶';
-    $collapseSym='▼';
+    $expandSym='&#9658;';
+    $collapseSym='&#9660;';
   }
   if ($expand==3) {
     $expandSymJS='expandImg';

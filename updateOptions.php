@@ -1,5 +1,6 @@
 <?php
       $title=$new_instance['title'];
+      $title_link=$new_instance['title_link'];
       if ($new_instance['linkToCat']=='yes') {
         $linkToCat=true;
       } else {
@@ -119,7 +120,7 @@
           'expand','inExclude','inExcludeCats','postSort','postSortOrder',
           'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
           'taxonomy', 'linkToCat', 'showPostDate', 'postDateFormat',
-          'showEmptyCat', 'post_type', 'style', 'accordion',
+          'showEmptyCat', 'post_type', 'style', 'accordion', 'title_link',
           'olderThan', 'postDateAppend','postTitleLength', 'useCookies',
           'showTopLevel', 'postsBeforeCats', 'catfeed', 'addMisc',
           'addMiscTitle', 'expandCatPost');

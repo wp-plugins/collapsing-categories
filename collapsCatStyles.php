@@ -166,7 +166,8 @@ list-style-type:none;
 {ID} li.collapsing.categories .sym {
    cursor:pointer;
    font-size:1.2em;
-   font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
+   font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier',
+   monospace;
     padding-right:5px;}
 ",
 
