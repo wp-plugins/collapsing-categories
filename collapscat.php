@@ -32,11 +32,7 @@ global $collapsCatVersion;
 $collapsCatVersion = '2.0';
 
 if (!is_admin()) {
-  $inFooter = get_option('collapsCatInFooter');
-  wp_enqueue_script('collapsFunctions',
-      "$url/wp-content/plugins/collapsing-categories/collapsFunctions.js",
-      array('jquery'), '1.7', $inFooter);
-  wp_enqueue_script('jquery-ui-core');
+  wp_enqueue_script('jquery');
   add_action( 'wp_head', array('collapsCat','get_head'));
 } else {
   // call upgrade function if current version is lower than actual version
@@ -141,6 +137,8 @@ function collapsCat($args='', $print=true) {
     list($collapsCatText, $postsInCat) = list_categories($posts, $categories,
         $parents, $options);
     $url = get_settings('siteurl');
+    extract($options);
+    include('symbols.php');
     if ($print) {
       print($collapsCatText);
       echo "<li style='display:none'><script type=\"text/javascript\">\n";
@@ -150,24 +148,13 @@ function collapsCat($args='', $print=true) {
       *  $Id$
       * Copyright 2007 Robert Felty (robfelty.com)
       */' . "\n";
-      $expandSym="<img src='". $url .
-           "/wp-content/plugins/collapsing-categories/" . 
-           "img/expand.gif' alt='expand' />";
-      $collapseSym="<img src='". $url .
-           "/wp-content/plugins/collapsing-categories/" . 
-           "img/collapse.gif' alt='collapse' />";
-      echo "var expandSym=\"$expandSym\";\n";
-      echo "var collapseSym=\"$collapseSym\";\n";
-      if ($useCookies) {
-        echo"
-        collapsAddLoadEvent(function() {
-          autoExpandCollapse('collapCat');
-        });
-        ";
-      }
+      echo "var expandSym='$expandSym';\n";
+      echo "var collapseSym='$collapseSym';\n";
       // now we create an array indexed by the id of the ul for posts
       echo collapsCat::phpArrayToJS($collapsCatItems, 'collapsItems');
-
+      include_once('collapsFunctions.js');
+      echo "addExpandCollapse('widget-collapscat-$number-top'," . 
+          "'$expandSym', '$collapseSym', " . $options['accordion'] . ")";
       echo "// ]]>\n</script></li>\n";
     } else {
       return(array($collapsCatText, $postsInCat));

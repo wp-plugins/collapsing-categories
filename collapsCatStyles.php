@@ -141,7 +141,7 @@ list-style-type:none;
 } 
 
 {ID} h3 span.sym {float:right;padding:0 .5em}
-{ID} li.collapsing.categories.self a {font-weight:bold}
+{ID} li.collapsing.categories.self > a {font-weight:bold}
 {ID}:before {content:'';} 
 {ID} li.collapsing.categories.expandable:before {content:'';} 
 {ID} li.collapsing.categories {

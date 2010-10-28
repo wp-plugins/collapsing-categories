@@ -81,9 +81,7 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
     $symbol=$collapseSym;
   }
   $miscposts="      <li class='collapsing categories expandable'>".
-      "<span class='collapsing categories $show' ".
-      "onclick='expandCollapse(event, \"$expandSymJS\", \"$collapseSymJS\", $animate, " .
-      "\"collapsing categories\", $accordion); return false'>".
+      "<span class='collapsing categories $show'>".
       "<span class='sym'>$symbol</span>";
   if ($linktocat=='yes') {
     $thislink=getCollapsCatLink($cat,$catlink);
@@ -94,11 +92,11 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   if( $showPostCount=='yes') {
     $miscposts.=' (' . $subcatpostcount2.')';
   }
-  $miscposts.= "\n     <ul id='$theID' style=\"display:$expanded\">\n" ;
+  $miscposts.= "\n     <div id='$theID' style=\"display:$expanded\">\n" ;
   $miscposts.=$posttext;
-  $miscposts.="    </ul></li>\n";
+  $miscposts.="    </div></li>\n";
   if ($theID!='' && !$collapsCatItems[$theID]) {
-    $collapsCatItems[$theID] = $posttext;
+  $collapsCatItems[$theID] = "<ul>$posttext</ul>";
   }
   return($miscposts);
 }
@@ -229,7 +227,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         if (!in_array($cat2->term_id, $parents)) {
 					// check to see if there are more subcategories under this one
           if ($theID!='' && !$collapsCatItems[$theID]) {
-            $collapsCatItems[$theID] = $posttext2;
+            $collapsCatItems[$theID] = "<ul>$posttext2</ul>";
           }
           $subCatCount=0;
           if ($subCatPostCount2<1) {
@@ -245,9 +243,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             }
             $subCatLinks.=( "<li class='collapsing categories expandable" . 
                 $self . $parent . "'>".
-                "<span class='collapsing categories $show' ".
-                "onclick='expandCollapse(event, \"$expandSymJS\",".
-                "\"$collapseSymJS\", $animate, \"collapsing categories\", $accordion); return false'>" . 
+                "<span class='collapsing categories $show'>".
                 "<span class='sym'>$symbol</span>" );
           } else {
             $subCatLinks.=( "<li class='collapsing categories item" .  $self .
@@ -295,9 +291,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
           }
           $subCatLinks.=( "<li class='collapsing categories expandable" . 
               $self . $parent . "'>".
-              "<span class='collapsing categories $show' ".
-              "onclick='expandCollapse(event, \"$expandSymJS\",".
-              "\"$collapseSymJS\", $animate, \"collapsing categories\", $accordion); return false'>" . 
+              "<span class='collapsing categories $show'>".
               "<span class='sym'>$symbol</span>" );
           $link2=getCollapsCatLink($cat2,$catlink);
           if ( empty($cat2->description) ) {
@@ -333,25 +327,25 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $rssLink=addFeedLink($catfeed,$cat2);
         $subCatLinks.=$rssLink;
         if (($subCatCount>0) || ($showPosts)) {
-          $subCatLinks.="\n<ul id='$theID' style=\"display:$expanded\">\n";
+          $subCatLinks.="\n<div id='$theID' style=\"display:$expanded\">\n";
           if ($subCatCount>0 && $posttext2!='' && $addMisc) {
             $posttext2=miscPosts($cat2,$catlink,$subCatPostCount2,
                 $posttext2);
           }
           if ($expanded=='block') {
-            $subCatLinks.=$posttext2;
+            $subCatLinks.="<ul>$posttext2</ul>";
           } else {
-            $subCatLinks.='<li></li>';
+            $subCatLinks.='';
           }
         }
         // add in additional subcategory information
         $subCatLinks.="$subCatLink2";
         if ($theID!='' && !$collapsCatItems[$theID]) {
-          $collapsCatItems[$theID] =  $posttext2 . $subCatLink2;
+          $collapsCatItems[$theID] = "<ul>$posttext2" . "$subCatLink2</ul>";
         }
         // close <ul> and <li> before starting a new category
         if (($subCatCount>0) || ($showPosts)) {
-          $subCatLinks.= "          </ul>\n";
+          $subCatLinks.= "          </div>\n";
         }
         $subCatLinks.= "         </li> <!-- ending subcategory -->\n";
       }
@@ -361,39 +355,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
 }
 
 function get_collapscat_fromdb($args='') {
-  global $expandSym,$collapseSym,$expandSymJS, $collapseSymJS, 
-      $wpdb,$options,$wp_query, $autoExpand, $postsToExclude, 
-      $postsInCat;
+  global $expandSym,$collapseSym, $wpdb,$options,$wp_query, 
+      $autoExpand, $postsToExclude, $postsInCat;
   include('defaults.php');
   $options=wp_parse_args($args, $defaults);
   extract($options);
-  if ($expand==1) {
-    $expandSym='+';
-    $collapseSym='—';
-  } elseif ($expand==2) {
-    $expandSym='[+]';
-    $collapseSym='[—]';
-  } elseif ($expand==3) {
-    $expandSym="<img src='". get_settings('siteurl') .
-         "/wp-content/plugins/collapsing-categories/" . 
-         "img/expand.gif' alt='expand' />";
-    $collapseSym="<img src='". get_settings('siteurl') .
-         "/wp-content/plugins/collapsing-categories/" . 
-         "img/collapse.gif' alt='collapse' />";
-  } elseif ($expand==4) {
-    $expandSym=$customExpand;
-    $collapseSym=$customCollapse;
-  } else {
-    $expandSym='&#9658;';
-    $collapseSym='&#9660;';
-  }
-  if ($expand==3) {
-    $expandSymJS='expandImg';
-    $collapseSymJS='collapseImg';
-  } else {
-    $expandSymJS=$expandSym;
-    $collapseSymJS=$collapseSym;
-  }
+  include('symbols.php');
 	$inExclusionArray = array();
 	if ( !empty($inExcludeCats )) {
 		$exterms = preg_split('/[,]+/',$inExcludeCats);
@@ -520,8 +487,7 @@ function get_collapscat_fromdb($args='') {
 		}
 	}
   // add in computed options to options array
-  $computedOptions = compact('includeCatArray', 'expandSym', 'expandSymJS', 
-      'collapseSym', 'collapseSymJS');
+  $computedOptions = compact('includeCatArray', 'expandSym', 'collapseSym');
   $options = array_merge($options, $computedOptions);
   if ($debug==1) {
     echo "<li style='display:none' >";
@@ -617,9 +583,7 @@ function list_categories($posts, $categories, $parents, $options) {
         }
         $span= "      <li class='collapsing categories expandable" .  $self .
             $parent . "'>".
-            "<span class='collapsing categories $show' ".
-            "onclick='expandCollapse(event, \"$expandSymJS\"," .
-            "\"$collapseSymJS\", $animate, \"collapsing categories\", $accordion); return false'>".
+            "<span class='collapsing categories $show'>".
             "<span class='sym'>$symbol</span>";
       } else {
         $span = "      <li class='collapsing categories item" .  $self. "'>";
@@ -667,7 +631,7 @@ function list_categories($posts, $categories, $parents, $options) {
       if ($showTopLevel) {
         $collapsCatText.=$span . $link;
         if (($subCatPostCount>0) || ($showPosts)) {
-          $collapsCatText .= "\n     <ul id='$theID'" . 
+          $collapsCatText .= "\n     <div id='$theID'" . 
               " style=\"display:$expanded\">\n";
         }
       }
@@ -685,20 +649,20 @@ function list_categories($posts, $categories, $parents, $options) {
         $text = $subCatLinks . $posttext;
       }
       if ($theID!='' && !$collapsCatItems[$theID]) {
-        $collapsCatItems[$theID] = $text;
+        $collapsCatItems[$theID] = "<ul>$text</ul>";
       }
       if ($expanded!='block' && $showTopLevel && $showPosts) {
-        $posttext='<li></li>';
+        $posttext='';
       } 
       if ($postsBeforeCats) {
         $text =$posttext . $subCatLinks;
       } else {
         $text = $subCatLinks . $posttext;
       }
-      $collapsCatText .= $text;
+      $collapsCatText .= "<ul>$text</ul>";
       if ($showTopLevel) {
         if ($subCatPostCount>0 || $showPosts) {
-          $collapsCatText .= "        </ul>\n";
+          $collapsCatText .= "        </div>\n";
         }
         $collapsCatText .= "      </li> <!-- ending category -->\n";
       }

@@ -348,6 +348,8 @@ behavior in wordpress anyways)
 * Fixed bug with extraneous li when not showing posts (thanks neoen for
   pointing it out)
 * Added option to show empty categories
+* Fixed bugs with styling in IE
+* Added accordion option
 
 = 1.2.2 (2010.08.05) =
 * fixed self class for category archive pages (error pointed out by ltache)

@@ -50,10 +50,10 @@
 global $wp_taxonomies;
 ?>
     <p><?php _e('Taxonomy type','collapsing-categories')?>:
-    <select name="<?php echo $this->get_field_name('taxonomy'); ?> id="<?php echo $this->get_field_id('taxonomy'); ?>"">
+    <select name="<?php echo $this->get_field_name('taxonomy'); ?>" id="<?php echo $this->get_field_id('taxonomy'); ?>">
     <option <?php if($taxonomy=='both') echo 'selected="selected"'; ?> value='both'><?php _e('Categories and Tags', 'collapsing-categories') ?></option>
     <?php foreach ($wp_taxonomies as $tax): ?>
-<option <?php if ($taxonomy == $tax->name) echo "selected='selected'"?> value='<?=$tax->name?>'><?=$tax->label?> (<?=$tax->name?>)</option>
+<option <?php if ($taxonomy == $tax->name) echo "selected='selected'"?> value='<?php echo $tax->name?>'><?php echo $tax->label?> (<?php echo $tax->name?>)</option>
     <?php endforeach ?>
     </select>
     </p>
@@ -62,9 +62,9 @@ global $wp_taxonomies;
 global $wp_post_types;
 ?>
     <p><?php _e('Post type','collapsing-categories')?>:
-    <select name="<?php echo $this->get_field_name('post_type'); ?> id="<?php echo $this->get_field_id('post_type'); ?>"">
+    <select name="<?php echo $this->get_field_name('post_type'); ?>" id="<?php echo $this->get_field_id('post_type'); ?>">
     <?php foreach ($wp_post_types as $key=>$post): ?>
-<option <?php if ($post_type == $key) echo "selected='selected'"?> value='<?=$key?>'><?=$post->label?> (<?=$post->name?>)</option>
+<option <?php if ($post_type == $key) echo "selected='selected'"?> value='<?php echo $key?>'><?php echo $post->label?> (<?php echo $post->name?>)</option>
     <?php endforeach ?>
     </select>
     </p>
