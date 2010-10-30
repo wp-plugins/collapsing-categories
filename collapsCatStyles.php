@@ -27,7 +27,7 @@ $defaultStyles= array(
 {ID} li.collapsing.categories.item:before {content: '\\00BB \\00A0' !important;} 
 {ID} li.collapsing.categories .sym {
    cursor:pointer;
-   font-size:1.2em;
+   font-size:1.3em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
     padding-right:5px;}",
 
@@ -73,7 +73,7 @@ list-style-type:none;
   } 
 {ID}  li.collapsing.categories .sym {
    cursor:pointer;
-   font-size:1.2em;
+   font-size:1.3em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
     float:left;
     padding-right:5px;
@@ -125,7 +125,7 @@ list-style-type:none;
 {ID}  li.collapsing.categories .sym {
   /*
    cursor:pointer;
-   font-size:1.2em;
+   font-size:1.3em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
     float:left;
     padding-right:5px;
@@ -165,7 +165,7 @@ list-style-type:none;
 
 {ID} li.collapsing.categories .sym {
    cursor:pointer;
-   font-size:1.2em;
+   font-size:1.3em;
    font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier',
    monospace;
     padding-right:5px;}

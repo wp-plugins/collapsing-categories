@@ -36,15 +36,19 @@ function eraseCookie(name) {
 }
     //jQuery(this).parent().find('ul').html('<li>foo</li>').slideDown();
 function addExpandCollapse(id, expandSym, collapseSym, accordion) {
-  jQuery('.expand').live('click', function() {
+  jQuery('#' + id + ' .expand').live('click', function() {
     if (accordion==1) {
       var theDiv = jQuery('#' + id + ' .collapse').parent().find('div');
       jQuery(theDiv).slideUp('normal');
-      jQuery('#' + id + ' .collapse').removeClass('collapse').addClass('expand');
+      //jQuery('#' + id + ' .collapse').removeClass('collapse').addClass('expand');
+      jQuery('#' + id + ' .collapse').removeClass('collapse').addClass('expand').html('<span class="sym">'+expandSym+'</span>').each(function() {
+        var closedDiv = jQuery(this).parent().find('div');
+        createCookie(closedDiv.attr('id'), 0, 7);
+      });
     }
     expandList(this, expandSym, collapseSym);
   });
-  jQuery('.collapse').live('click', function() {
+  jQuery('#' + id + ' .collapse').live('click', function() {
     collapseList(this, expandSym, collapseSym);
   });
 }
