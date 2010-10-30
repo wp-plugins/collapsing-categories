@@ -69,9 +69,9 @@ global $wp_post_types;
     </select>
     </p>
     <p>Expanding shows:
-     <input type="radio" name="<?php echo $this->get_field_name('showPosts'); ?>" <?php if($showPosts==true) echo 'checked'; ?> id="<?php echo $this->get_field_id('showPostsYes') ?>" value='yes'></input> <label for="showPostsYes"><?php _e('Sub-categories and Posts', 'collapsing-categories') ?></label>
+     <input type="radio" name="<?php echo $this->get_field_name('showPosts'); ?>" <?php if($showPosts==true) echo 'checked'; ?> id="<?php echo $this->get_field_id('showPostsYes') ?>" value='1'></input> <label for="showPostsYes"><?php _e('Sub-categories and Posts', 'collapsing-categories') ?></label>
      <input type="radio" name="<?php echo $this->get_field_name('showPosts'); ?>"
-     <?php if($showPosts==false) echo 'checked'; ?> id="showPostsNo" value='no'></input> <label for="showPostsNO"><?php _e('Just Sub-categories', 'collapsing-categories') ?></label>
+     <?php if($showPosts==false) echo 'checked'; ?> id="showPostsNo" value='0'></input> <label for="showPostsNO"><?php _e('Just Sub-categories', 'collapsing-categories') ?></label>
     </p>
    <p> Truncate Post Title to
    <input type="text" size='3' name="<?php echo $this->get_field_name('postTitleLength') ?>"
@@ -82,10 +82,10 @@ global $wp_post_types;
      <select name="<?php echo $this->get_field_name('linkToCat'); ?>">
      <option <?php if($linkToCat) echo 'select="selected"'; ?>
      id="<?php echo $this->get_field_id('linkToCatYes'); ?>"
-     value='yes'><?php _e('Links to category archive', 'collapsing-categories') ?></option>
+     value='1'><?php _e('Links to category archive', 'collapsing-categories') ?></option>
      <option <?php if(!$linkToCat) echo 'selected="selected"'; ?>
      id="<?php echo $this->get_field_id('linkToCatNo'); ?>"
-     value='no'><?php _e('Expands to show sub-categories and/or Posts', 'collapsing-categories')?></option>
+     value='0'><?php _e('Expands to show sub-categories and/or Posts', 'collapsing-categories')?></option>
     </select>
     </p>
     <p>Expanding and collapse characters:<br />

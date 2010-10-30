@@ -1,7 +1,7 @@
 <?php
       $title=$new_instance['title'];
       $title_link=$new_instance['title_link'];
-      if ($new_instance['linkToCat']=='yes') {
+      if ($new_instance['linkToCat']) {
         $linkToCat=true;
       } else {
         $linkToCat=false;
@@ -108,7 +108,7 @@
       $defaultExpand=addslashes($new_instance['defaultExpand']);
       $postTitleLength=addslashes($new_instance['postTitleLength']);
       $addMiscTitle=addslashes($new_instance['addMiscTitle']);
-      if ($new_instance['showPosts']=='yes') {
+      if ($new_instance['showPosts']) {
         $showPosts= true ;
       } else {
         $showPosts=false;

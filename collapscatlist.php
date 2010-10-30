@@ -89,7 +89,7 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   } else {
     $miscposts.="$addMiscTitle</span>";
   }
-  if( $showPostCount=='yes') {
+  if( $showPostCount) {
     $miscposts.=' (' . $subcatpostcount2.')';
   }
   $miscposts.= "\n     <div id='$theID' style=\"display:$expanded\">\n" ;
@@ -319,7 +319,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             }
           }
         }
-        if( $showPostCount=='yes') {
+        if( $showPostCount) {
           $theCount=$subCatPostCount2;
           $link2 .= ' ('.$theCount.')';
         }
@@ -332,8 +332,10 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             $posttext2=miscPosts($cat2,$catlink,$subCatPostCount2,
                 $posttext2);
           }
+          if (($expanded=='block' AND $showPosts) OR $subCatCount>0)
+            $subCatLinks.="<ul>";
           if ($expanded=='block') {
-            $subCatLinks.="<ul>$posttext2</ul>";
+            $subCatLinks.="$posttext2";
           } else {
             $subCatLinks.='';
           }
@@ -341,9 +343,11 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         // add in additional subcategory information
         $subCatLinks.="$subCatLink2";
         if ($theID!='' && !$collapsCatItems[$theID]) {
-          $collapsCatItems[$theID] = "<ul>$posttext2" . "$subCatLink2</ul>";
+          $collapsCatItems[$theID] = "$posttext2" . "$subCatLink2";
         }
         // close <ul> and <li> before starting a new category
+        if (($expanded=='block' AND $showPosts) OR $subCatCount>0)
+          $subCatLinks.="</ul>";
         if (($subCatCount>0) || ($showPosts)) {
           $subCatLinks.= "          </div>\n";
         }
@@ -620,7 +624,7 @@ function list_categories($posts, $categories, $parents, $options) {
         list ($subCatPostCount, $posttext) = getSubPosts($posts, $cat,
             $collapsCatItems, $showPosts);
       }
-      if( $showPostCount=='yes') {
+      if( $showPostCount) {
         $link .= ' (' . $theCount.')';
       }
       $link.=$rssLink;
