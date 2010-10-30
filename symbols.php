@@ -16,7 +16,7 @@
     $expandSym=$customExpand;
     $collapseSym=$customCollapse;
   } else {
-    $expandSym='&#x25B6;';
+    $expandSym='&#x25BA;';
     $collapseSym='&#x25BC;';
   }
 ?>

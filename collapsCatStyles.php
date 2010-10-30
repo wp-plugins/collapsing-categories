@@ -27,8 +27,8 @@ $defaultStyles= array(
 {ID} li.collapsing.categories.item:before {content: '\\00BB \\00A0' !important;} 
 {ID} li.collapsing.categories .sym {
    cursor:pointer;
-   font-size:1.3em;
-   font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
+   font-size:1.1em;
+   font-family:Arial, Helvetica;
     padding-right:5px;}",
 
 'block_left' => "{ID} li a {
@@ -73,8 +73,8 @@ list-style-type:none;
   } 
 {ID}  li.collapsing.categories .sym {
    cursor:pointer;
-   font-size:1.3em;
-   font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
+   font-size:1.1em;
+   font-family:Arial, Helvetica;
     float:left;
     padding-right:5px;
 }",
@@ -125,9 +125,9 @@ list-style-type:none;
 {ID}  li.collapsing.categories .sym {
   /*
    cursor:pointer;
-   font-size:1.3em;
-   font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
+   font-size:1.1em;
     float:left;
+   font-family:Arial, Helvetica;
     padding-right:5px;
     */
 }",
@@ -165,9 +165,8 @@ list-style-type:none;
 
 {ID} li.collapsing.categories .sym {
    cursor:pointer;
-   font-size:1.3em;
-   font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier',
-   monospace;
+   font-size:1.1em;
+   font-family:Arial, Helvetica;
     padding-right:5px;}
 ",
 
@@ -187,8 +186,8 @@ list-style-type:none;
 {ID} li.collapsing.categories {list-style-type:none}
 {ID} li.collapsing.categories .sym {
    cursor:pointer;
-   font-size:1.2em;
-   font-family:Monaco, 'Andale Mono', 'FreeMono', 'Courier new', 'Courier', monospace;
+   font-size:1.1em;
+   font-family:Arial, Helvetica;
     padding-right:5px;"
     );
 ?>
