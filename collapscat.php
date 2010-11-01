@@ -154,7 +154,7 @@ function collapsCat($args='', $print=true) {
       echo collapsCat::phpArrayToJS($collapsCatItems, 'collapsItems');
       include_once('collapsFunctions.js');
       echo "addExpandCollapse('widget-collapscat-$number-top'," . 
-          "'$expandSym', '$collapseSym', " . $options['accordion'] . ")";
+          "'$expandSym', '$collapseSym', " . $accordion . ")";
       echo "// ]]>\n</script></li>\n";
     } else {
       return(array($collapsCatText, $postsInCat));
