@@ -17,7 +17,6 @@ $defaults=array(
    'defaultExpand' => '',
    'debug'=>'0',
    'postTitleLength' => 0,
-   'animate' => 0,
    'catfeed' => 'none',
    'taxonomy' => 'category',
    'post_type' => 'post',

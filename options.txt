@@ -130,11 +130,6 @@ $this->get_field_id('expand0') ?>" value='3'></input>
    <?php _e('Exclude posts older than', 'collapsing-categories')?> <input type='text' name="<?php echo $this->get_field_name('olderThan'); ?>" id="<?php echo $this->get_field_id('olderThan'); ?>" size='3' value='<?php echo $olderThan ?>'></input> days
    </p>
     </p>
-   <p>
-   <input type="checkbox" name="<?php echo $this->get_field_name('animate'); ?>" <?php if ($animate==1) echo
-   'checked'; ?> id="<?php echo $this->get_field_id('animate') ?>"></input> <label
-   for="<?php echo $this->get_field_id('animate'); ?>">Animate collapsing and expanding</label>
-   </p>
     <p>Include RSS link
      <input type="radio" name="<?php echo $this->get_field_name('catfeed'); ?>"
      <?php if($catfeed=='none') echo 'checked'; ?>

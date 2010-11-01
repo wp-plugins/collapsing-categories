@@ -64,11 +64,6 @@
       if($new_instance['postDateAppend'] == 'before') {
         $postDateAppend= 'before' ;
       }
-      if( isset($new_instance['animate'])) {
-        $animate= 1 ;
-      } else {
-        $animate=0;
-      }
       $debug=false;
       if (isset($new_instance['debug'])) {
         $debug= true ;
@@ -118,7 +113,7 @@
       $instance = compact(
           'title','showPostCount','catSort','catSortOrder','defaultExpand',
           'expand','inExclude','inExcludeCats','postSort','postSortOrder',
-          'animate', 'debug', 'showPosts', 'customExpand', 'customCollapse',
+          'debug', 'showPosts', 'customExpand', 'customCollapse',
           'taxonomy', 'linkToCat', 'showPostDate', 'postDateFormat',
           'showEmptyCat', 'post_type', 'style', 'accordion', 'title_link',
           'olderThan', 'postDateAppend','postTitleLength', 'useCookies',
