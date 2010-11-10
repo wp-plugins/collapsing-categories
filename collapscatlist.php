@@ -385,7 +385,7 @@ function collapscat_catfilter($categories) {
   }
   return $categories;
 }
-function collapscat_orderbyfilter($orderby, $args) {
+function collapscat_orderbyfilter($orderby, $args='') {
   global $options;
   extract($options);
   if ($catSort!='') {

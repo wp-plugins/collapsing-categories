@@ -34,17 +34,14 @@ function readCookie(name) {
 function eraseCookie(name) {
   createCookie(name,"",-1);
 }
-    //jQuery(this).parent().find('ul').html('<li>foo</li>').show();
+
 function addExpandCollapse(id, expandSym, collapseSym, accordion) {
   jQuery('#' + id + ' .expand').live('click', function() {
     if (accordion==1) {
-      var theDiv = jQuery('#' + id + ' .collapse').parent().find('div');
+      var theDiv = jQuery(this).parent().parent().find('span.collapse').parent().find('div');
       jQuery(theDiv).hide('normal');
-      //jQuery('#' + id + ' .collapse').removeClass('collapse').addClass('expand');
-      jQuery('#' + id + ' .collapse').removeClass('collapse').addClass('expand').each(function() {
-        var closedDiv = jQuery(this).parent().find('div');
-        createCookie(closedDiv.attr('id'), 0, 7);
-      });
+      jQuery(this).parent().parent().find('span.collapse').removeClass('collapse').addClass('expand');
+        createCookie(theDiv.attr('id'), 0, 7);
     }
     jQuery('#' + id + ' .expand .sym').html(expandSym);
     expandCat(this, expandSym, collapseSym);
@@ -65,7 +62,6 @@ function expandCat(symbol, expandSym, collapseSym) {
 }
 function collapseCat(symbol, expandSym, collapseSym) {
     var theDiv = jQuery(symbol).parent().find('div');
-    //var theDiv = jQuery('#' + id + ' .collapse').parent().find('div');
     jQuery(theDiv).hide('normal');
     jQuery(symbol).removeClass('collapse').addClass('expand');
     jQuery(symbol).find('.sym').html(expandSym);
