@@ -357,6 +357,52 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   }
   return(array($subCatLinks,$subCatCount,$subCatPostCount));
 }
+function collapscat_catfilter($categories) {
+  global $options;
+  extract($options);
+	$inExclusionArray = array();
+	if ( !empty($inExcludeCats )) {
+		$exterms = preg_split('/\s*[,]+\s*/',$inExcludeCats);
+		if ( count($exterms) ) {
+			foreach ( $exterms as $exterm ) {
+        $sanitizedTitle = sanitize_title(trim($exterm));
+			  $inExclusionArray[] = $sanitizedTitle;
+      }
+    }
+	}
+  for ($i-0; $i<count($categories); $i++) {
+    if ($inExcludeCat=='include') {
+      if (!in_array($categories[$i]->slug, $inExclusionArray) OR
+          !in_array($categories[$i]->term_id, $inExclusionArray)) {
+        unset($categories[$i]);
+      }
+    } else {
+      if (in_array($categories[$i]->slug, $inExclusionArray) OR
+          in_array($categories[$i]->term_id, $inExclusionArray)) {
+        unset($categories[$i]);
+      }
+    }
+  }
+  return $categories;
+}
+function collapscat_orderbyfilter($orderby, $args) {
+  global $options;
+  extract($options);
+  if ($catSort!='') {
+    if ($catSort=='catName') {
+      $orderby="t.name";
+    } elseif ($catSort=='catId') {
+      $orderby="t.term_id";
+    } elseif ($catSort=='catSlug') {
+      $orderby="t.slug";
+    } elseif ($catSort=='catOrder') {
+      $orderby="t.term_order";
+    } elseif ($catSort=='catCount') {
+      $orderby="tt.count";
+    }
+  } 
+  return $orderby;
+}
 
 function get_collapscat_fromdb($args='') {
   global $expandSym,$collapseSym, $wpdb,$options,$wp_query, 
@@ -385,19 +431,6 @@ function get_collapscat_fromdb($args='') {
     $inExcludeQuery ="AND t.slug NOT IN ($inExclusions)";
   }
 
-  if ($catSort!='') {
-    if ($catSort=='catName') {
-      $catSortColumn="ORDER BY t.name";
-    } elseif ($catSort=='catId') {
-      $catSortColumn="ORDER BY t.term_id";
-    } elseif ($catSort=='catSlug') {
-      $catSortColumn="ORDER BY t.slug";
-    } elseif ($catSort=='catOrder') {
-      $catSortColumn="ORDER BY t.term_order";
-    } elseif ($catSort=='catCount') {
-      $catSortColumn="ORDER BY tt.count";
-    }
-  } 
   if ($postSort!='') {
     if ($postSort=='postDate') {
       $postSortColumn="ORDER BY p.post_date";
@@ -407,6 +440,8 @@ function get_collapscat_fromdb($args='') {
       $postSortColumn="ORDER BY p.post_title";
     } elseif ($postSort=='postComment') {
       $postSortColumn="ORDER BY p.comment_count";
+    } elseif ($postSort=='postOrder') {
+      $postSortColumn="ORDER BY p.menu_order";
     }
   } 
 	if ($defaultExpand!='') {
@@ -460,7 +495,10 @@ function get_collapscat_fromdb($args='') {
       array_push($postsInCat[$post->term_id], $post);
     }
   }
-  $categories = $wpdb->get_results($catquery);
+  //$categories = $wpdb->get_results($catquery);
+  add_filter('get_terms', 'collapscat_catfilter');
+  add_filter('get_terms_orderby', 'collapscat_orderbyfilter');
+  $categories = get_terms($taxonomy, "order=$catSortOrder");
   $totalPostCount=count($posts);
   if ($totalPostCount>5000) {
     $options['showPosts']=false;

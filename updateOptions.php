@@ -46,6 +46,8 @@
         $postSort= 'postComments' ;
       } elseif ($new_instance['postSort'] == 'postDate') {
         $postSort= 'postDate' ;
+      } elseif ($new_instance['postSort'] == 'postOrder') {
+        $postSort= 'postOrder' ;
       } elseif ($new_instance['postSort'] == '') {
         $postSort= '' ;
         $postSortOrder= '' ;

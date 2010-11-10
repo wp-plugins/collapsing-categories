@@ -38,7 +38,8 @@
      <option <?php if($postSort=='postTitle') echo 'selected'; ?> id="<?php echo $this->get_field_id('sortpostTitle') ?>" value='postTitle'>post title</option>
      <option <?php if($postSort=='postId') echo 'selected'; ?> id="<?php echo $this->get_field_id('sortpostId') ?>" value='postId'>post id</option>
      <option <?php if($postSort=='postComment') echo 'selected'; ?> id="<?php echo $this->get_field_id('sortpostComment') ?>" value='postComment'>number of Comments</option>
-     <option <?php if($postSort=='postDate') echo 'selected'; ?> id="<?php echo $this->get_field_id('sortpostOrder') ?>" value='postDate'>post Date</option>
+     <option <?php if($postSort=='postDate') echo 'selected'; ?> id="<?php echo $this->get_field_id('sortpostDate') ?>" value='postDate'>post Date</option>
+     <option <?php if($postSort=='postOrder') echo 'selected'; ?> id="<?php echo $this->get_field_id('sortpostOrder') ?>" value='postOrder'>Menu order</option>
     </select>
     <select name="<?php echo $this->get_field_name('postSortOrder'); ?>">
      <option <?php if($postSortOrder=='ASC') echo 'selected="selected"'; ?> id="<?php echo $this->get_field_id('postSortASC') ?>" value='ASC'><?php _e('Ascending', 'collapsing-categories') ?></option>

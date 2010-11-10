@@ -47,23 +47,23 @@ function addExpandCollapse(id, expandSym, collapseSym, accordion) {
       });
     }
     jQuery('#' + id + ' .expand .sym').html(expandSym);
-    expandList(this, expandSym, collapseSym);
+    expandCat(this, expandSym, collapseSym);
     return false;
   });
   jQuery('#' + id + ' .collapse').live('click', function() {
-    collapseList(this, expandSym, collapseSym);
+    collapseCat(this, expandSym, collapseSym);
     return false;
   });
 }
 
-function expandList(symbol, expandSym, collapseSym) {
+function expandCat(symbol, expandSym, collapseSym) {
     var theDiv = jQuery(symbol).parent().find('div');
     jQuery(theDiv).html(collapsItems[jQuery(theDiv).attr('id')]).show('normal');
     jQuery(symbol).removeClass('expand').addClass('collapse');
     jQuery(symbol).find('.sym').html(collapseSym);
   createCookie(theDiv.attr('id'), 1, 7);
 }
-function collapseList(symbol, expandSym, collapseSym) {
+function collapseCat(symbol, expandSym, collapseSym) {
     var theDiv = jQuery(symbol).parent().find('div');
     //var theDiv = jQuery('#' + id + ' .collapse').parent().find('div');
     jQuery(theDiv).hide('normal');
