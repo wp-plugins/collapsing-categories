@@ -196,7 +196,7 @@ style, in the same manner as the `wp_list_categories` function.
    'expand' => '0',
    'defaultExpand' => '',
    'postTitleLength' => 0,
-   'animate' => 0,
+   'accordion' => 0,
    'catfeed' => 'none',
    'taxonomy' => 'category',
    'showPostDate' => false,
@@ -239,6 +239,7 @@ style, in the same manner as the `wp_list_categories` function.
         * 'postId' the Id of the post
         * 'postTitle' the title of the post
         * 'postComment' the number of comments on the post
+        * 'postOrder' sort by menu order
 * postSortOrder
     * Whether post should be sorted in normal or reverse
       order. Possible values:
@@ -260,8 +261,8 @@ style, in the same manner as the `wp_list_categories` function.
 * postTitleLength
     * Truncate post titles to this number of characters (default: 0 = don't
       truncate)
-* animate
-    * When set to true, collapsing and expanding will be animated
+* accordion
+    * When set to true, expanding one category closes all others at that level
 * catfeed
     * Whether to add a link to the rss feed for a category. Possible values:
         * 'none' (default)
@@ -347,9 +348,10 @@ behavior in wordpress anyways)
 * TODO: update coding standards
 * Fixed bug with extraneous li when not showing posts (thanks neoen for
   pointing it out)
-* Added option to show empty categories
 * Fixed bugs with styling in IE
+* Added option to show empty categories
 * Added accordion option
+* Added ability to sort posts by menu order
 
 = 1.2.2 (2010.08.05) =
 * fixed self class for category archive pages (error pointed out by ltache)
