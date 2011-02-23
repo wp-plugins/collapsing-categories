@@ -340,7 +340,7 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
-= 2.0 (2010.xx.xx) =
+= 2.0 (2011.01.02) =
 * Can now use custom taxonomies
 * Don't display any tags for title if title is empty
 * Easier style handling

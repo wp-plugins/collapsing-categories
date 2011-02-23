@@ -230,7 +230,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
             $collapsCatItems[$theID] = "<ul>$posttext2</ul>";
           }
           $subCatCount=0;
-          if ($subCatPostCount2<1) {
+          if ($subCatPostCount2<1 AND !$showEmptyCat) {
             continue;
           }
           if ($showPosts) {
@@ -279,7 +279,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
               $subCatPostCount2,$expanded, $depth);
           $subCatCount=1;
           $subCatPostCount+=$subCatPostCount2;
-          if ($subCatPostCount2<1) {
+          if ($subCatPostCount2<1 AND !$showEmptyCat) {
             continue;
           }
           if ($expanded=='block') {
@@ -498,7 +498,10 @@ function get_collapscat_fromdb($args='') {
   //$categories = $wpdb->get_results($catquery);
   add_filter('get_terms', 'collapscat_catfilter');
   add_filter('get_terms_orderby', 'collapscat_orderbyfilter');
-  $categories = get_terms($taxonomy, "order=$catSortOrder");
+  $args = array('order' => $catSortOrder);
+  if ($showEmptyCat)
+    $args['hide_empty'] = false;
+  $categories = get_terms($taxonomy, $args);
   $totalPostCount=count($posts);
   if ($totalPostCount>5000) {
     $options['showPosts']=false;
