@@ -208,7 +208,7 @@ function get_sub_cat($cat, $categories, $parents, $posts,
         $self="";
       }
       if (in_array($cat2->slug, $autoExpand)) {
-        $parent="parent";
+        $parent=" parent";
       } else {
         $parent="";
       }
