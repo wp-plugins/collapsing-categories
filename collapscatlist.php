@@ -83,7 +83,7 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   $miscposts="      <li class='collapsing categories expandable'>".
       "<span class='collapsing categories $show'>".
       "<span class='sym'>$symbol</span>";
-  if ($linktocat=='yes') {
+  if ($linkToCat=='yes') {
     $thislink=getCollapsCatLink($cat,$catlink);
     $miscposts.="</span>$thislink>$addMiscTitle</a>";
   } else {
@@ -92,9 +92,9 @@ function miscPosts($cat,$catlink,$subcatpostcount2, $posttext) {
   if( $showPostCount) {
     $miscposts.=' (' . $subcatpostcount2.')';
   }
-  $miscposts.= "\n     <div id='$theID' style=\"display:$expanded\">\n" ;
+  $miscposts.= "\n     <div id='$theID' style=\"display:$expanded\"><ul>\n" ;
   $miscposts.=$posttext;
-  $miscposts.="    </div></li>\n";
+  $miscposts.="    </ul></div></li>\n";
   if ($theID!='' && !$collapsCatItems[$theID]) {
   $collapsCatItems[$theID] = "<ul>$posttext</ul>";
   }
