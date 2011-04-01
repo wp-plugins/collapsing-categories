@@ -704,7 +704,8 @@ function list_categories($posts, $categories, $parents, $options) {
       } else {
         $text = $subCatLinks . $posttext;
       }
-      $collapsCatText .= "<ul>$text</ul>";
+      if ($text!='')
+        $collapsCatText .= "<ul>$text</ul>";
       if ($showTopLevel) {
         if ($subCatPostCount>0 || $showPosts) {
           $collapsCatText .= "        </div>\n";
