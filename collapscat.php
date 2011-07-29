@@ -40,7 +40,6 @@ if (!is_admin()) {
   if (!$dbversion || $collapsCatVersion != $dbversion)
     collapscat::init();
 }
-add_action('admin_menu', array('collapsCat','setup'));
 add_action('init', array('collapsCat','init_textdomain'));
 register_activation_hook(__FILE__, array('collapsCat','init'));
 
