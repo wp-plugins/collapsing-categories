@@ -80,18 +80,6 @@ class collapsCat {
 
 	}
 
-	function setup() {
-		if( function_exists('add_options_page') ) {
-      if (current_user_can('manage_options')) {
-				add_options_page(__('Collapsing Categories'),
-            __('Collapsing Categories'),1,
-            basename(__FILE__),array('collapscat','ui'));
-			}
-		}
-	}
-	function ui() {
-		include_once( 'collapscatUI.php' );
-	}
 
 	function get_head() {
     echo "<style type='text/css'>\n";

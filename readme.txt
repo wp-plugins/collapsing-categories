@@ -2,45 +2,41 @@
 Contributors: robfelty
 Donate link: http://blog.robfelty.com/plugins
 Plugin URI: http://blog.robfelty.com/plugins
-Tags: categories, sidebar, widget
+Tags: categories, sidebar, widget, navigation
 Requires at least: 2.8
 Tested up to: 3.0.1
 Stable tag: 1.2.2
 
-This plugin uses Javascript to dynamically expand or collapsable the set of
+Adds a widget which uses Javascript to dynamically expand or collapse the set of
 posts for each category.
 
 == Description ==
+Collapsing Categories creates an expandable list of categories and
+subcategories. It can also expand to show posts. The primary usage is as a
+widget, but you can also use the code in your theme manually if you wish (see
+installation instructions)
 
-This is a very simple plugin that uses Javascript to form a collapsable set of
-links in the sidebar for the categories. Every post corresponding to a given
-category will be expanded.
 
 = What's New?=
 
-* 1.2.3 (2010.08.19) 
+* 2.0 (2011.07.29) 
+    * Can now use custom taxonomies
+    * Don't display any tags for title if title is empty
+    * Easier style handling
+    * Updated settings page
+    * Fixed bug with extraneous li when not showing posts (thanks neoen for
+      pointing it out)
+    * Fixed bugs with styling in IE
+    * Added option to show empty categories
+    * Added accordion option
+    * Added ability to sort posts by menu order
 
-* 1.2.2 (2010.08.05)
-    * fixed self class for category archive pages (error pointed out by ltache)
 
-* 1.2.1 (2010.07.25)
-    * Fixed bug where top-level categories did not show up if only had posts in
-      sub-sub categories.
-    * Fixed post counting errors
 
-* 1.2 (2010.06.18)
-    * Added option to automatically expand categories to which a post is
-      assigned on single post pages
-    * Storing posts in a javascript array and only adding to the DOM when
-      requested (speeds page load)
-    * fixed bug where empty subcategory with non-empty subsubcategory doesn't
-      show up
-
-= CSS Class changes = 
-Version 1.1 introduces different css classes to the collapsing categories and
-posts, which should make it easier to style in the future, and more consistent
-across my other collapsing plugins
-Please see below for an explanation of the css classes
+= Style changes = 
+Version 2.0 introduces a simpler method for styling widgets, and each widget
+can be styled separately. Several options are included. If you don't like
+those options, you can also use your own css in your theme.
 
 == Installation ==
 
@@ -75,18 +71,6 @@ echo "</ul>\n";
 
 == Frequently Asked Questions ==
 
-
-=  What is the option about the ID of the sidebar? =
-
-Here is the deal. If you have a rule in your theme like:
-`#sidebar ul li ul li {color:blue}`
-it will override a rule like
-`li.collapsArch {color:red}`
-because it uses an ID, instead of a class. That is the way CSS works. So if
-you change our rule to:
-`#sidebar li.collapsArch {color:red}`
-then this alleviates that problem. 
-The option for the ID of the sidebar does this automatically for you.
 
 = How do I use different symbols for collapsing and expanding? =
 
@@ -125,8 +109,8 @@ you are using the widget)
 
 =  How do I change the style of the collapsing categories lists? =
 
-As of version 0.9, there are several default styles that come with
-collapsing-categories. You can choose from these in the settings panel, or you
+As of version 2.0, there are several default styles that come with
+collapsing-categories. You can choose from these in the widget settings , or you
 can create your own custom style. A good strategy is to choose a default, then
 modify it slightly to your needs. 
 
@@ -171,7 +155,8 @@ An example:
 == Screenshots ==
 
 1. a few expanded categories with default theme, showing nested categories
-2. available options 
+2. Standard Widget options 
+3. Advanced options
 
 == Options ==
 Style options can be set via the settings panel. All other options can be set
@@ -340,12 +325,11 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
-= 2.0 (2011.01.02) =
+= 2.0 (2011.07.29) =
 * Can now use custom taxonomies
 * Don't display any tags for title if title is empty
 * Easier style handling
-* TODO: Updated settings page
-* TODO: update coding standards
+* Updated settings page
 * Fixed bug with extraneous li when not showing posts (thanks neoen for
   pointing it out)
 * Fixed bugs with styling in IE
