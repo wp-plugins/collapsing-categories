@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget, navigation
 Requires at least: 2.8
 Tested up to: 3.2.1
-Stable tag: 2.0
+Stable tag: 2.0.1
 
 Adds a widget which uses Javascript to dynamically expand or collapse the set of
 posts for each category.
@@ -18,6 +18,9 @@ installation instructions)
 
 
 = What's New?=
+
+* 2.0.1 (2011.08.08)
+    * fixed include category option
 
 * 2.0 (2011.07.29) 
     * Can now use custom taxonomies
@@ -324,6 +327,9 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == CHANGELOG ==
+
+= 2.0.1 (2011.08.08) =
+* fixed include category option
 
 = 2.0 (2011.07.29) =
 * Can now use custom taxonomies

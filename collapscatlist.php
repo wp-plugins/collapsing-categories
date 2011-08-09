@@ -370,13 +370,8 @@ function collapscat_catfilter($categories) {
       }
     }
 	}
-  for ($i-0; $i<count($categories); $i++) {
-    if ($inExcludeCat=='include') {
-      if (!in_array($categories[$i]->slug, $inExclusionArray) OR
-          !in_array($categories[$i]->term_id, $inExclusionArray)) {
-        unset($categories[$i]);
-      }
-    } else {
+  for ($i=0; $i<count($categories); $i++) {
+    if ($inExclude=='exclude' && !empty($inExclusionArray)) {
       if (in_array($categories[$i]->slug, $inExclusionArray) OR
           in_array($categories[$i]->term_id, $inExclusionArray)) {
         unset($categories[$i]);
@@ -512,7 +507,7 @@ function get_collapscat_fromdb($args='') {
   foreach ($categories as $cat) {
     // if only including certain categories, we build an array of those
     // category ids 
-    if ($inExclude=='include' && $inExclusionArray!='') {
+    if ($inExclude=='include' && !empty($inExclusionArray)) {
       $includes = add_to_includes($cat, $inExclusionArray);
       if (!empty($includes)) {
         $includeCatArray = array_merge($includeCatArray, $includes);
@@ -549,6 +544,7 @@ function get_collapscat_fromdb($args='') {
     print_r($posts);
     echo "</li>";
   }
+
   return(array($posts, $categories, $parents, $options));
 }
 
