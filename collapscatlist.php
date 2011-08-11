@@ -1,6 +1,6 @@
 <?php
 /*
-collapsing categories version: 2.0
+collapsing categories version: 2.0.1
 copyright 2007-2010 robert felty
 
 this file is part of collapsing categories
