@@ -5,7 +5,7 @@ Plugin URI: http://blog.robfelty.com/plugins
 Tags: categories, sidebar, widget, navigation
 Requires at least: 2.8
 Tested up to: 3.2.1
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 
 Adds a widget which uses Javascript to dynamically expand or collapse the set of
 posts for each category.
@@ -18,6 +18,9 @@ installation instructions)
 
 
 = What's New?=
+
+* 2.0.2 (2011.11.01)
+    * removed link to spammy site
 
 * 2.0.1 (2011.08.08)
     * fixed include category option
@@ -328,6 +331,9 @@ behavior in wordpress anyways)
 
 == CHANGELOG ==
 
+= 2.0.2 (2011.11.01) =
+* removed link to spammy site
+
 = 2.0.1 (2011.08.08) =
 * fixed include category option
 
@@ -384,7 +390,7 @@ behavior in wordpress anyways)
     * Changed css classes to make them more consistent with other collapsing
       plugins (thanks Bernhard Reiter)
 * Internationalization and localization
-    * Added Russian localization (thanks fatcow.com)
+    * Added Russian localization 
     * Added German localization (thanks Bernhard Reiter)
 
 = 1.0.2 (2009.07.19) =
