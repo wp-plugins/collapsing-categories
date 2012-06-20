@@ -1,11 +1,11 @@
 === Collapsing Categories ===
 Contributors: robfelty
-Donate link: http://blog.robfelty.com/plugins
-Plugin URI: http://blog.robfelty.com/plugins
+Donate link: http://robfelty.com/plugins
+Plugin URI: http://robfelty.com/plugins
 Tags: categories, sidebar, widget, navigation
 Requires at least: 2.8
-Tested up to: 3.2.1
-Stable tag: 2.0.2
+Tested up to: 3.4
+Stable tag: 2.0.3
 
 Adds a widget which uses Javascript to dynamically expand or collapse the set of
 posts for each category.
@@ -18,6 +18,9 @@ installation instructions)
 
 
 = What's New?=
+
+* 2.0.2 (2012.06.20)
+    * fixed jquery loading for WP 3.4
 
 * 2.0.2 (2011.11.01)
     * removed link to spammy site
@@ -319,7 +322,7 @@ This will produce a list with:
 
 == Demo ==
 
-I use this plugin in my blog at http://blog.robfelty.com
+I use this plugin in my blog at http://robfelty.com
 
 
 == CAVEAT ==
@@ -330,6 +333,9 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == CHANGELOG ==
+
+= 2.0.3 (2012.06.20) =
+* fixed jquery loading for WP 3.4
 
 = 2.0.2 (2011.11.01) =
 * removed link to spammy site
