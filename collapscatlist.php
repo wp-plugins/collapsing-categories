@@ -1,6 +1,6 @@
 <?php
 /*
-collapsing categories version: 2.0.3
+collapsing categories version: 2.0.4
 copyright 2007-2010 robert felty
 
 this file is part of collapsing categories
@@ -357,6 +357,12 @@ function get_sub_cat($cat, $categories, $parents, $posts,
   }
   return(array($subCatLinks,$subCatCount,$subCatPostCount));
 }
+function collapscat_replace_newlines($text) {
+  if (strpos($text,"\n")!==false || strpos($text,"\r")!==false) {
+    $text = preg_replace("/[\r\n][\r\n]?/", "<br />", $text);
+  }
+  return $text;
+}
 function collapscat_catfilter($categories) {
   global $options;
   extract($options);
@@ -491,6 +497,7 @@ function get_collapscat_fromdb($args='') {
     }
   }
   //$categories = $wpdb->get_results($catquery);
+  add_filter('description', 'collapscat_replace_newlines');
   add_filter('get_terms', 'collapscat_catfilter');
   add_filter('get_terms_orderby', 'collapscat_orderbyfilter');
   $args = array('order' => $catSortOrder);
