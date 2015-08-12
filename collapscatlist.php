@@ -1,6 +1,6 @@
 <?php
 /*
-collapsing categories version: 2.0.5
+collapsing categories version: 2.0.6
 copyright 2007-2010 robert felty
 
 this file is part of collapsing categories
@@ -471,10 +471,6 @@ function get_collapscat_fromdb($args='') {
 	}
 
 
-  $catquery = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN
-      $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN
-      ($taxonomyQuery) $inExcludeQuery AND t.slug!='blogroll' 
-      $catSortColumn $catSortOrder ";
   $posts = NULL;
   if ($showPosts) {
     $postsInCat=array();
@@ -496,7 +492,6 @@ function get_collapscat_fromdb($args='') {
       array_push($postsInCat[$post->term_id], $post);
     }
   }
-  //$categories = $wpdb->get_results($catquery);
   add_filter('description', 'collapscat_replace_newlines');
   add_filter('get_terms', 'collapscat_catfilter');
   add_filter('get_terms_orderby', 'collapscat_orderbyfilter');
@@ -543,7 +538,6 @@ function get_collapscat_fromdb($args='') {
     print_r($options);
     echo "\npostsToExclude:\n";
     print_r($postsToExclude);
-    echo "CATEGORY QUERY: \n $catquery\n";
     echo "\nCATEGORY QUERY RESULTS\n";
     print_r($categories);
     echo "POST QUERY:\n $postquery\n";

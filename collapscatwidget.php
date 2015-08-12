@@ -1,6 +1,6 @@
 <?php 
 class collapsCatWidget extends WP_Widget {
-  function collapsCatWidget() {
+  function __construct() {
     $widget_ops = array('classname' => 'widget_collapscat', 'description' =>
     'Collapsible category listing' );
 		$control_ops = array (

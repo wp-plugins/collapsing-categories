@@ -2,9 +2,9 @@
 /*
 Plugin Name: Collapsing Categories
 Plugin URI: http://blog.robfelty.com/plugins
-Description: Uses javascript to expand and collapse categories to show the posts that belong to the category 
+Description: Adds a new categories widget which uses javascript to expand and collapse categories to show the posts that belong to the category <a href='http://wordpress.org/extend/plugins/collapsing-categories/other_notes'>Manual</a> | <a href='http://wordpress.org/extend/plugins/collapsing-categories/faq'>FAQ</a>
 Author: Robert Felty
-Version: 2.0.5
+Version: 2.0.6
 Author URI: http://robfelty.com
 Tags: sidebar, widget, categories, menu, navigation, posts
 
@@ -135,7 +135,7 @@ function collapsCat($args='', $print=true) {
       echo "<li style='display:none'><script type=\"text/javascript\">\n";
       echo "// <![CDATA[\n";
       echo '/* These variables are part of the Collapsing Categories Plugin 
-      *  Version: 2.0.5
+      *  Version: 2.0.6
       *  $Id$
       * Copyright 2007 Robert Felty (robfelty.com)
       */' . "\n";

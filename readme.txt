@@ -4,8 +4,8 @@ Donate link: http://robfelty.com/plugins
 Plugin URI: http://robfelty.com/plugins
 Tags: categories, sidebar, widget, navigation
 Requires at least: 2.8
-Tested up to: 4.0
-Stable tag: 2.0.5
+Tested up to: 4.3
+Stable tag: 2.0.6
 
 Adds a widget which uses Javascript to dynamically expand or collapse the set of
 posts for each category.
@@ -18,6 +18,9 @@ installation instructions)
 
 
 = What's New?=
+
+* 2.0.6 (2015.08.12)
+    * Compatible with WP 4.3
 
 * 2.0.5 (2014.09.05)
     * Compatible with WP 4.0
@@ -339,6 +342,9 @@ posts, but the links to the categories will still work (which is the default
 behavior in wordpress anyways)
 
 == CHANGELOG ==
+
+= 2.0.6 (2015.08.12) =
+* Compatible with WP 4.3
 
 = 2.0.5 (2014.09.05) =
 * Compatible with WP 4.0
